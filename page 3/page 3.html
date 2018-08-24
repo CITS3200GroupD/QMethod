@@ -23,10 +23,6 @@
                     ev.preventDefault();
                 }
             }
-
-            function noDrop(ev) {
-                ev.preventDefault();
-            }
         </script>
         <style>
             .container {
@@ -52,24 +48,24 @@
 
     <body>
         <header>Lorem ipsum</header>
-        <div class="statement" style="height: 80px">
-            <div class="statement" draggable="true" ondragstart="drag(event)" id="drag1" ondrop="noDrop(event)">
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr
+        <div class="statement" style="height: 100px">
+            <div class="statement" draggable="true" ondragstart="drag(event)" id="drag1">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
             </div>
         </div>
 
         <br>
         <div class="column">
             <h2>Disagree</h2>
-            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style= "background-color:red"></div>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style="background-color:red"></div>
         </div>
         <div class="column">
             <h2>Neutral</h2>
-            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style= "background-color:yellow"></div>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style="background-color:yellow"></div>
         </div>
         <div class="column">
             <h2>Agree</h2>
-            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style= "background-color:green"></div>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style="background-color:green"></div>
         </div>
     </body>
 </html>
