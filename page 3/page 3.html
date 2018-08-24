@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="UTF-8">
+        <title> Step 3 </title>
+        <link href="style.css" rel="stylesheet">
+        <script>
+            function allowDrop(ev) {
+                ev.preventDefault();
+            }
+            
+            function drag(ev) {
+                ev.dataTransfer.setData("text", ev.target.id);
+            }
+            
+            function drop(ev) {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");
+                ev.target.appendChild(document.getElementById(data));
+            }
+        </script>
+    </head>
+
+    <body>
+        <header>Lorem ipsum</header>
+        <div class="container" style="border: none">
+            <div class="statement" draggable="true" ondragstart="drag(event)" id="drag1">
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr
+            </div>
+        </div>
+
+        <br>
+        <div class="column">
+            <h2>Disagree</h2>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <div class="column">
+            <h2>Neutral</h2>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+        <div class="column">
+            <h2>Agree</h2>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+    </body>
+</html>
