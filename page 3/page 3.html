@@ -14,24 +14,34 @@
             }
             
             function drop(ev) {
-                ev.preventDefault();
                 var data = ev.dataTransfer.getData("text");
-                ev.target.appendChild(document.getElementById(data));
+
+                if (ev.target.className === "container") {
+                    ev.preventDefault();
+                    ev.target.appendChild(document.getElementById(data));
+                } else {
+                    ev.preventDefault();
+                }
+            }
+
+            function noDrop(ev) {
+                ev.preventDefault();
             }
         </script>
         <style>
             .container {
                 width: 200px;
-                height: 100px;
+                height: 300px;
                 margin: 20px;
                 border: 1px solid black;
+                overflow: auto;
             }
 
             .statement {
-                width: 90%;
-                height: 80%;
-                background-color: aquamarine;
+                width: 180px;
                 padding: 10px;
+
+                background-color:rgba(255, 255, 255, 0.3);
             }
 
             .column {
@@ -42,8 +52,8 @@
 
     <body>
         <header>Lorem ipsum</header>
-        <div class="container" style="border: none">
-            <div class="statement" draggable="true" ondragstart="drag(event)" id="drag1">
+        <div class="statement" style="height: 80px">
+            <div class="statement" draggable="true" ondragstart="drag(event)" id="drag1" ondrop="noDrop(event)">
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr
             </div>
         </div>
@@ -51,15 +61,15 @@
         <br>
         <div class="column">
             <h2>Disagree</h2>
-            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style= "background-color:red"></div>
         </div>
         <div class="column">
             <h2>Neutral</h2>
-            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style= "background-color:yellow"></div>
         </div>
         <div class="column">
             <h2>Agree</h2>
-            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div class="container" ondrop="drop(event)" ondragover="allowDrop(event)" style= "background-color:green"></div>
         </div>
     </body>
 </html>
