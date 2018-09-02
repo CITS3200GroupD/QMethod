@@ -10,9 +10,15 @@
   <tbody>
       <tr *ngFor="let survey of surveys">
           <td>{{ survey.survey_name }}</td>
-          <td>{{ survey.survey_kurt }}</td>
+          <td>
+            <div *ngFor="let option of kurtOptions">
+                <div *ngIf="survey.survey_kurt==option.val">
+                    {{option.label}}
+                </div>
+            </div>
+          </td>
           <td><a [routerLink]="['/edit', survey._id]" class="btn btn-primary">Edit</a></td>
-          <td><a [routerLink]="" class="btn btn-danger">Delete</a></td>
+          <td><button (click)="deleteSurvey(survey._id)"  class="btn btn-danger">Delete</button></td>
       </tr>
   </tbody>
 </table>

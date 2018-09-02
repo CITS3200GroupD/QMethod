@@ -30,7 +30,10 @@ export class EditComponent implements OnInit {
     updateSurvey(survey_name, survey_kurt) {
         this.route.params.subscribe(params => {
            this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
-           this.router.navigate(['index']);
+           setTimeout(() => {
+            this.router.navigate(['index']);
+           },
+           80);
         });
     }
 
