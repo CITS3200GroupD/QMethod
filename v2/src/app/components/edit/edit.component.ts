@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { Survey } from '../index/Survey';
+import KurtOptions from '../index/Survey';
 import { SurveyService } from '../../survey.service';
 
 @Component({
@@ -10,6 +11,8 @@ import { SurveyService } from '../../survey.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
+
+  kurtOptions = KurtOptions;
 
   survey: any = {};
   angForm: FormGroup;

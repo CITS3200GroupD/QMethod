@@ -24,10 +24,12 @@ export class IndexComponent implements OnInit {
   constructor(private surveyservice: SurveyService, private router: Router) { }
 
   deleteSurvey(id) {
-    this.surveyservice.deleteSurvey(id).subscribe(res => {
-        this.ngOnInit();
-        console.log('Deleted');
-    });
+    if (window.confirm('Are you sure you wish to delete this survey?')){
+      this.surveyservice.deleteSurvey(id).subscribe(res => {
+          this.ngOnInit();
+          console.log('Deleted');
+      });
+    }
   }
 
   ngOnInit() {
