@@ -37,7 +37,6 @@ export class IndexComponent implements OnInit {
       .getSurveys()
       .subscribe((data: Survey[]) => {
       this.surveys = data;
-      console.log(data);
     });
   }
 }

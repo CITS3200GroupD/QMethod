@@ -28,19 +28,19 @@
       </td>
       <td>
         <div class="btn-group">
-          <a [routerLink]="['/edit', survey._id]" class="btn btn-secondary">
+          <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
             <i class="fa fa-cog"></i> Edit
           </a>
-          <a [routerLink]="['/edit', survey._id]" class="btn btn-secondary">
+          <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
             <!-- TODO: Routing, Share component-->
             <i class="fa fa-external-link"></i> Share
           </a>
         </div>
       </td>
       <td>
-          <button (click)="deleteSurvey(survey._id)"  class="btn btn-danger">
+          <button (click)="deleteSurvey(survey._id)" class="btn btn-danger">
               <i class="fa fa-trash-o"></i>
-            </button>
+          </button>
       </td>
     </tr>
   </tbody>

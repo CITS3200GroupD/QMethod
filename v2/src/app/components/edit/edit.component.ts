@@ -23,27 +23,35 @@ export class EditComponent implements OnInit {
     private fb: FormBuilder) {
       this.createForm();
     }
+
     createForm() {
       this.angForm = this.fb.group({
+            survey_id: ['', Validators.required ],
             survey_name: ['', Validators.required ],
-            survey_kurt: ['', Validators.required ]
+            survey_kurt: ['', Validators.required ],
+            //survey_statements: ['', Validators.required ],
          });
       }
     
     updateSurvey(survey_name, survey_kurt) {
         this.route.params.subscribe(params => {
-           this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
-           setTimeout(() => {
+          this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
+          setTimeout(() => {
             this.router.navigate(['index']);
-           },
-           80);
+          },
+          500);
         });
+    }
+
+    empty() {
+      console.log('empty()');
     }
 
     ngOnInit() {
       this.route.params.subscribe(params => {
         this.surveyservice.editSurvey(params['id']).subscribe(res => {
           this.survey = res;
+          //console.log(this.survey);
       });
     });
   }
