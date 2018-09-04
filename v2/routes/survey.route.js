@@ -43,6 +43,7 @@ surveyRoutes.route('/update/:id').post(function (req, res) {
     if (!survey)
       return next(new Error('Could not load Document'));
     else {
+        // Fields
         survey.survey_name = req.body.survey_name;
         survey.survey_kurt = req.body.survey_kurt;
 

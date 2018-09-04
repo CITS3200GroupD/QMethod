@@ -1,5 +1,6 @@
 // ng imports
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';   // Routing
 import { HttpClientModule } from '@angular/common/http'; // http client for ng<->express 
@@ -42,6 +43,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     SlimLoadingBarModule,
