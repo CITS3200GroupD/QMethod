@@ -9,7 +9,7 @@ import { NavigationCancel,
   NavigationError,
   NavigationStart,
   Router } from '@angular/router';
-  
+
 
 // Components Core
 @Component({

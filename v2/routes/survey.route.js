@@ -1,5 +1,6 @@
 const express = require('express');
-const app = express();
+//const app = express();
+express();
 const surveyRoutes = express.Router();
 
 // Require Survey model in our routes module
@@ -9,10 +10,10 @@ let Survey = require('../models/Survey');
 surveyRoutes.route('/add').post(function (req, res) {
   let survey = new Survey(req.body);
   survey.save()
-    .then(game => {
+    .then(function(){
     res.status(200).json({'survey': 'Survey in added successfully'});
     })
-    .catch(err => {
+    .catch(function(){
     res.status(400).send("unable to save to database");
     });
 });
@@ -47,10 +48,10 @@ surveyRoutes.route('/update/:id').post(function (req, res) {
         survey.survey_name = req.body.survey_name;
         survey.survey_kurt = req.body.survey_kurt;
 
-        survey.save().then(survey => {
+        survey.save().then(function() {
           res.json('Update complete');
       })
-      .catch(err => {
+      .catch(function(){
             res.status(400).send("unable to update the database");
       });
     }
@@ -59,7 +60,7 @@ surveyRoutes.route('/update/:id').post(function (req, res) {
 
 // Delete survey item from database
 surveyRoutes.route('/delete/:id').get(function (req, res) {
-    Survey.findByIdAndRemove({_id: req.params.id}, function(err, survey){
+    Survey.findByIdAndRemove({_id: req.params.id}, function(err){
         if(err) res.json(err);
         else res.json('Successfully removed');
     });

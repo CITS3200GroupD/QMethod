@@ -17,8 +17,8 @@ export class CreateComponent implements OnInit {
 
   angForm: FormGroup;
 
-  constructor(private surveyservice: SurveyService, 
-    private router: Router, private fb: FormBuilder) { 
+  constructor(private surveyservice: SurveyService,
+    private router: Router, private fb: FormBuilder) {
     this.createForm();
   }
 
@@ -32,15 +32,15 @@ export class CreateComponent implements OnInit {
 
   addSurvey(survey_name, survey_kurt) {
     this.surveyservice.addSurvey(survey_name, survey_kurt);
-    console.log(survey_kurt)
+    // console.log(survey_kurt);
     setTimeout(() => {
       this.router.navigate(['index']);
     },
     350);
   }
 
-  compareFn(c1: any, c2:any): boolean {     
-    return c1 && c2 ? c1.id === c2.id : c1 === c2; 
+  compareFn(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
   ngOnInit() {

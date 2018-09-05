@@ -29,10 +29,10 @@ export class EditComponent implements OnInit {
             survey_id: ['', Validators.required ],
             survey_name: ['', Validators.required ],
             survey_kurt: ['', Validators.required ],
-            //survey_statements: ['', Validators.required ],
+            // survey_statements: ['', Validators.required ],
          });
       }
-    
+
     updateSurvey(survey_name, survey_kurt) {
         this.route.params.subscribe(params => {
           this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
@@ -51,7 +51,7 @@ export class EditComponent implements OnInit {
       this.route.params.subscribe(params => {
         this.surveyservice.editSurvey(params['id']).subscribe(res => {
           this.survey = res;
-          //console.log(this.survey);
+          // console.log(this.survey);
       });
     });
   }
