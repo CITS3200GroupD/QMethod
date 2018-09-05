@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="angForm" novalidate>
+
+      <div class="form-group">
+        <label class="col-md-4">Survey ID</label>
+        <input type="text" class="form-control" formControlName="survey_id" [(ngModel)]= "survey._id" disabled>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4">Survey Name</label>
+        <input type="text" class="form-control" formControlName="survey_name" #survey_name [(ngModel)] = "survey.survey_name"/>
+      </div>
+
+      <div *ngIf="angForm.controls['survey_name'].invalid && (angForm.controls['survey_name'].dirty || angForm.controls['survey_name'].touched)" class="alert alert-danger">
+        <div *ngIf="angForm.controls['survey_name'].errors.required">
+          Survey Name is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4">Kurtosis</label>
+        <select class="form-control" formControlName="survey_kurt" #survey_kurt [(ngModel)] = "survey.survey_kurt">
+          <option  [value]=option.val *ngFor="let option of kurtOptions">{{option.label}}</option>
+        </select>
+      </div>
+
+      <div *ngIf="angForm.controls['survey_kurt'].invalid && (angForm.controls['survey_kurt'].dirty || angForm.controls['survey_kurt'].touched)" class="alert alert-danger">
+        <div *ngIf="angForm.controls['survey_kurt'].errors.required">
+          Kurtosis is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+          <label class="col-md-4">Statements</label>
+          <table class="table table-hover">
+            <tr *ngFor="let statement of survey.statements">
+              <td>{{statement}}</td>
+              <td>
+                  <div class="btn-group">
+                    <button (click)="empty()" class="btn btn-light">
+                      <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button (click)="empty()" class="btn btn-danger">
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </div>
+              </td>
+            </tr>
+          </table>
+          <!-- TODO: Statements component-->
+          <input type="text" class="form-control" disabled/>
+      </div>
+
+      <div class="form-group">
+        <button (click)="updateSurvey(survey_name.value, survey_kurt.value)" [disabled]="angForm.invalid" class="btn btn-primary">Update</button>
+      </div>
+
+    </form>
+  </div>
+</div>

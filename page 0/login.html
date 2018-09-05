@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="utf-8"/>
+
 <link rel="stylesheet" 
       type="text/css"
 	  href="Login.css">
@@ -12,14 +13,20 @@
   
   <button class="button" onclick="document.getElementById('login').style.display='block'">Click Here to Reset</button>
 </div>
+
+<title>QMethod</title>
+  <!-- Button to open the modal login form -->
+  <div class="container">
+  <button onclick="document.getElementById('login').style.display='block'" class="button">Admin Login</button>
+  <button onclick="window.location.href='../page 1/instructions.html'" class="button">Start Survey</button>
+</div>
   <!-- The Modal -->
   <div id="login" class="modal">
     <span onclick="document.getElementById('login').style.display='none'" 
   class="close" title="Close Modal">&times;</span>
 
     <!-- Modal Content -->
-    <form class="modal-content animate" action="/action_page.php">
-
+    <form class="modal-content animate" action="../page 1/instructions.html">
       <div class="container">
         <label for="uname"><b>Username</b></label>
         <input class="input" type="text" placeholder="Enter Username" name="uname" required>
@@ -27,7 +34,10 @@
         <label for="psw"><b>Password</b></label>
         <input class= "input" type="password" placeholder="Enter Password" name="psw" required>
 
-        <button class="button" type="submit">Login</button>
+     
+
+        <button type="submit" class="button" onclick="window.location.href='../page 1/instructions.html'">Login</button>
+
       </div>
 
       <div class="container">
