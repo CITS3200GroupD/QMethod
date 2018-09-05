@@ -3,13 +3,11 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema for Surveys
 let Survey = new Schema({
-  survey_name: {
-    type: String
-  },
-  survey_kurt: {
-    type: Number
-  }
-},{
+  survey_name: String,
+  survey_kurt:  Number,
+  statements: [String]
+},
+{
     collection: 'surveys'
 });
 
