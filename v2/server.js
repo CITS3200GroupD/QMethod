@@ -23,6 +23,7 @@ const express = require('express'),
     const surveyRoutes = require('./routes/survey.route');
     app.use('/surveys', surveyRoutes);
 
-    const server = app.listen(port, function(){
+    // const server =
+    app.listen(port, function(){
      console.log('Listening on port ' + port);
     });

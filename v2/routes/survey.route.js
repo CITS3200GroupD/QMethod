@@ -48,7 +48,7 @@ surveyRoutes.route('/update/:id').post(function (req, res) {
         survey.survey_name = req.body.survey_name;
         survey.survey_kurt = req.body.survey_kurt;
 
-        survey.save().then(survey => {
+        survey.save().then(function() {
           res.json('Update complete');
       })
       .catch(function(){

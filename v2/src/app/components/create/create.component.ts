@@ -32,7 +32,7 @@ export class CreateComponent implements OnInit {
 
   addSurvey(survey_name, survey_kurt) {
     this.surveyservice.addSurvey(survey_name, survey_kurt);
-    //console.log(survey_kurt);
+    // console.log(survey_kurt);
     setTimeout(() => {
       this.router.navigate(['index']);
     },
