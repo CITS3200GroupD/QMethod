@@ -25,7 +25,7 @@ export class SurveyService {
            .http
            .get(`${this.uri}`);
   }
-  
+
   editSurvey(id) {
     return this
             .http
