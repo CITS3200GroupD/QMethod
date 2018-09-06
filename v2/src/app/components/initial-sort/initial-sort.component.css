@@ -1,0 +1,18 @@
+.container {
+    width: 200px;
+    height: 300px;
+    margin: 20px;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.statement {
+    width: 180px;
+    padding: 10px;
+
+    background-color:rgba(255, 255, 255, 0.3);
+}
+
+.column {
+    float: left;
+}
