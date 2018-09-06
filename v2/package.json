@@ -26,6 +26,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "mongoose": "^5.2.12",
+    "ng-drag-drop": "^5.0.0",
     "ng2-slim-loading-bar": "^4.0.0",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.3.1",

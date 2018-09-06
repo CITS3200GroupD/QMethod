@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';   // Routing
 import { HttpClientModule } from '@angular/common/http'; // http client for ng<->express
 import { ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
+import { NgDragDropModule } from 'ng-drag-drop';
 
 // ng services
 import { SurveyService } from './survey.service';   // survey creation http requests
@@ -16,7 +17,8 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
 import { AppComponent } from './app.component';
 import { CreateComponent } from './components/create/create.component'; // Create Survey page
 import { IndexComponent } from './components/index/index.component';    // List of all Survey Pages
-import { EditComponent } from './components/edit/edit.component';       // Edit Survey
+import { EditComponent } from './components/edit/edit.component';
+import { InitialSortComponent } from './components/initial-sort/initial-sort.component';       // Edit Survey
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -32,6 +34,10 @@ const routes: Routes = [
     path: 'index',
     component: IndexComponent
   },
+  {
+    path: 'initial-sort',
+    component: InitialSortComponent
+  },
 ];
 // Declaring vars for ng
 @NgModule({
@@ -39,7 +45,8 @@ const routes: Routes = [
     AppComponent,
     CreateComponent,
     IndexComponent,
-    EditComponent
+    EditComponent,
+    InitialSortComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +54,8 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     SlimLoadingBarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgDragDropModule.forRoot()
   ],
   providers: [SurveyService],
   bootstrap: [AppComponent]
