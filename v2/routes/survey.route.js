@@ -40,19 +40,19 @@ surveyRoutes.route('/edit/:id').get(function (req, res) {
 
 // Update survey item and push to database
 surveyRoutes.route('/update/:id').post(function (req, res) {
-    Survey.findById(req.params.id, function(err, survey) {
+  Survey.findById(req.params.id, function(err, survey) {
     if (!survey)
       return next(new Error('Could not load Document'));
     else {
-        // Fields
-        survey.survey_name = req.body.survey_name;
-        survey.survey_kurt = req.body.survey_kurt;
+      // Fields
+      survey.survey_name = req.body.survey_name;
+      survey.survey_kurt = req.body.survey_kurt;
 
-        survey.save().then(function() {
-          res.json('Update complete');
+      survey.save().then(function() {
+        res.json('Update complete');
       })
       .catch(function(){
-            res.status(400).send("unable to update the database");
+        res.status(400).send("unable to update the database");
       });
     }
   });
@@ -64,6 +64,17 @@ surveyRoutes.route('/delete/:id').get(function (req, res) {
         if(err) res.json(err);
         else res.json('Successfully removed');
     });
+});
+
+// Delete survey item from database
+surveyRoutes.route('/delete/:id/s/:statement_id').get(function (req, res) {
+  Survey.findById(req.params.id, function(err, survey) {
+    if (!survey)
+      return next(new Error('Could not load Document'));
+    else {
+      console.log(survey);
+    }
+  });
 });
 
 module.exports = surveyRoutes;

@@ -19,7 +19,7 @@ import { CreateComponent } from './components/create/create.component'; // Creat
 import { IndexComponent } from './components/index/index.component';    // List of all Survey Pages
 import { EditComponent } from './components/edit/edit.component';
 import { InitialSortComponent } from './components/initial-sort/initial-sort.component';
-import { EditStatementsComponent } from './edit-statements/edit-statements.component';       // Edit Survey
+import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';       // Edit Survey
 
 // Configuring Routes and linking to components
 const routes: Routes = [

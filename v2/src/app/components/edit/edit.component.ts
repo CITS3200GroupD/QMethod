@@ -29,11 +29,13 @@ export class EditComponent implements OnInit {
             survey_id: ['', Validators.required ],
             survey_name: ['', Validators.required ],
             survey_kurt: ['', Validators.required ]
+            // statements
          });
       }
 
     updateSurvey(survey_name, survey_kurt) {
       this.route.params.subscribe(params => {
+        // console.log(params);
         this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
         setTimeout(() => {
           this.router.navigate(['index']);
@@ -44,6 +46,7 @@ export class EditComponent implements OnInit {
 
     ngOnInit() {
       this.route.params.subscribe(params => {
+        // console.log(params);
         this.surveyservice.editSurvey(params['id']).subscribe(res => {
           this.survey = res;
           // console.log(this.survey);
