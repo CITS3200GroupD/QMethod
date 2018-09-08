@@ -18,7 +18,8 @@ import { AppComponent } from './app.component';
 import { CreateComponent } from './components/create/create.component'; // Create Survey page
 import { IndexComponent } from './components/index/index.component';    // List of all Survey Pages
 import { EditComponent } from './components/edit/edit.component';
-import { InitialSortComponent } from './components/initial-sort/initial-sort.component';       // Edit Survey
+import { InitialSortComponent } from './components/initial-sort/initial-sort.component';
+import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';       // Edit Survey
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -46,7 +47,8 @@ const routes: Routes = [
     CreateComponent,
     IndexComponent,
     EditComponent,
-    InitialSortComponent
+    InitialSortComponent,
+    EditStatementsComponent
   ],
   imports: [
     BrowserModule,

@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['index']);
     },
-    350);
+    500);
   }
 
   compareFn(c1: any, c2: any): boolean {
