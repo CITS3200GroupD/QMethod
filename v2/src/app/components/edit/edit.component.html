@@ -38,6 +38,7 @@
 
       <div class="form-group">
         <button (click)="updateSurvey(survey_name.value, survey_kurt.value)" [disabled]="angForm.invalid" class="btn btn-primary">Update</button>
+        <a [routerLink]="['/admin']" class="btn btn-light">Cancel</a>
       </div>
 
     </form>

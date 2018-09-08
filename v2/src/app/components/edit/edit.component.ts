@@ -38,7 +38,7 @@ export class EditComponent implements OnInit {
         // console.log(params);
         this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
         setTimeout(() => {
-          this.router.navigate(['index']);
+          this.router.navigate(['admin']);
         },
         500);
       });

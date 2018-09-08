@@ -32,7 +32,7 @@ const routes: Routes = [
     component: EditComponent
   },
   {
-    path: 'index',
+    path: 'admin',
     component: IndexComponent
   },
   {
