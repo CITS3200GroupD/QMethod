@@ -1,8 +1,6 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { Survey } from '../index/Survey';
-import KurtOptions from '../index/Survey';
 import { SurveyService } from '../../survey.service';
 
 
@@ -15,32 +13,42 @@ import { SurveyService } from '../../survey.service';
 export class EditStatementsComponent implements OnInit {
   
   @Input() statements: any[];
+  @Output() status = new EventEmitter<boolean>();
+
+  angForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private surveyservice: SurveyService,
-    private fb: FormBuilder) { 
-
+    private fb: FormBuilder) {
+      this.createForm();
     }
-  
-  updateStatement(statement, statementIndex) {
-    console.log(statement);
-    console.log(statementIndex);
+
+    createForm() {
+      this.angForm = this.fb.group({
+        statement: ['', Validators.required ]
+      });
+    }
+
+  addStatement(statement: string) {
+    this.route.params.subscribe(params => {
+      console.log(statement);
+      this.surveyservice.addStatement(params['id'], statement).subscribe(res => {
+        this.status.emit(true);
+      });
+    });
   }
 
   deleteStatement(statement_id) {
     this.route.params.subscribe(params => {
       if (window.confirm('Are you sure you wish to delete this statement?')) {
-        this.surveyservice.deleteStatement(params['id'], statement_id);
+        this.surveyservice.deleteStatement(params['id'], statement_id).subscribe(res => {
+          this.status.emit(true);
+        });
       }
     });
   }
 
-  delStatement(statementIndex) {
-    console.log(statementIndex);
-  }
-
   ngOnInit() {
   }
-
 }

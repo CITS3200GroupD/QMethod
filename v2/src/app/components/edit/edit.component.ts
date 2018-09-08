@@ -26,12 +26,12 @@ export class EditComponent implements OnInit {
 
     createForm() {
       this.angForm = this.fb.group({
-            survey_id: ['', Validators.required ],
+            survey_id: [{value: '', disabled: true}, Validators.required ],
             survey_name: ['', Validators.required ],
             survey_kurt: ['', Validators.required ]
             // statements
-         });
-      }
+      });
+    }
 
     updateSurvey(survey_name, survey_kurt) {
       this.route.params.subscribe(params => {
@@ -49,6 +49,10 @@ export class EditComponent implements OnInit {
         // console.log(params);
         this.surveyservice.editSurvey(params['id']).subscribe(res => {
           this.survey = res;
+          
+          this.angForm.get('survey_id').setValue(this.survey._id);
+          this.angForm.get('survey_name').setValue(this.survey.survey_name);
+          this.angForm.get('survey_kurt').setValue(this.survey.survey_kurt);
           // console.log(this.survey);
       });
     });

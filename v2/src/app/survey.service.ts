@@ -13,7 +13,10 @@ export class SurveyService {
     const obj = {
       survey_name: survey_name,
       survey_kurt: survey_kurt,
-      statements: [ "Testing 1", "Testing 2", "Testing 3", "Testing 4"]
+      // TODO: Statement importing - remove this
+      statements: [ "Testing 1", "Testing 2", "Testing 3", "Testing 4", "Testing 5", 
+                    "Testing 6", "Testing 7", "Testing 8", "Testing 9", "Testing 10",
+                  "Super long statement to test if this is a viable or not in the long run. Most statements should be this length or lower."]
     };
     console.log(obj);
     this.http.post(`${this.uri}/add`, obj)
@@ -50,11 +53,18 @@ export class SurveyService {
               .get(`${this.uri}/delete/${id}`);
   }
 
-  deleteStatement(id, statement_id) {
-    console.log(id);
-    console.log(statement_id);
+  addStatement(id, statement: string) {
+    const obj = {
+      statement: statement
+    }
     return this
-            .http
-            .get(`${this.uri}/delete/${id}/s/${statement_id}`);
+              .http
+              .post(`${this.uri}/add/s/${id}`, obj); 
+  }
+
+  deleteStatement(id, statement_id) {
+    return this
+              .http
+              .get(`${this.uri}/delete/${id}/s/${statement_id}`);
   }
 }

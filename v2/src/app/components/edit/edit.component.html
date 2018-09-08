@@ -1,15 +1,15 @@
 <div class="card">
   <div class="card-body">
-    <form [formGroup]="angForm" novalidate>
+    <form class="form-horizontal" [formGroup]="angForm" novalidate>
 
       <div class="form-group">
         <label class="col-md-4">Survey ID</label>
-        <input type="text" class="form-control" formControlName="survey_id" [(ngModel)]= "survey._id" disabled>
+        <input type="text" class="form-control" formControlName="survey_id">
       </div>
 
       <div class="form-group">
         <label class="col-md-4">Survey Name</label>
-        <input type="text" class="form-control" formControlName="survey_name" #survey_name [(ngModel)] = "survey.survey_name"/>
+        <input type="text" class="form-control" formControlName="survey_name" #survey_name />
       </div>
 
       <div *ngIf="angForm.controls['survey_name'].invalid && (angForm.controls['survey_name'].dirty || angForm.controls['survey_name'].touched)" class="alert alert-danger">
@@ -20,7 +20,7 @@
 
       <div class="form-group">
         <label class="col-md-4">Kurtosis</label>
-        <select class="form-control" formControlName="survey_kurt" #survey_kurt [(ngModel)] = "survey.survey_kurt">
+        <select class="form-control" formControlName="survey_kurt" #survey_kurt >
           <option  [value]=option.val *ngFor="let option of kurtOptions">{{option.label}}</option>
         </select>
       </div>
@@ -33,9 +33,7 @@
 
       <div class="form-group">
           <label class="col-md-4">Statements</label>
-          <app-edit-statements [statements]="survey.statements"></app-edit-statements>
-          <!-- TODO: Statements component
-          <input type="text" class="form-control"/> -->
+          <app-edit-statements [statements]="survey.statements" (status)="ngOnInit()"></app-edit-statements>
       </div>
 
       <div class="form-group">
