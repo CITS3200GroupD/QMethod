@@ -1,6 +1,6 @@
 # QMethod v2
 QMethod Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.0.1a
+Version 0.0.2a
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
 
