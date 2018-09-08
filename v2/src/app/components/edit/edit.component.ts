@@ -49,7 +49,7 @@ export class EditComponent implements OnInit {
         // console.log(params);
         this.surveyservice.editSurvey(params['id']).subscribe(res => {
           this.survey = res;
-          
+
           this.angForm.get('survey_id').setValue(this.survey._id);
           this.angForm.get('survey_name').setValue(this.survey.survey_name);
           this.angForm.get('survey_kurt').setValue(this.survey.survey_kurt);

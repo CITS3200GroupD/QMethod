@@ -11,7 +11,7 @@ import { SurveyService } from '../../survey.service';
 })
 
 export class EditStatementsComponent implements OnInit {
-  
+
   @Input() statements: any[];
   @Output() status = new EventEmitter<boolean>();
 
