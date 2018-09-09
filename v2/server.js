@@ -17,11 +17,11 @@ const express = require('express'),
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
-    const port = process.env.PORT || 4000;
+    const port = process.env.PORT || 8080;
     
     // Route for survey list
     const surveyRoutes = require('./routes/survey.route');
-    app.use('/surveys', surveyRoutes);
+    app.use('/api', surveyRoutes);
 
     // const server =
     app.listen(port, function(){

@@ -3,25 +3,45 @@ const express = require('express');
 express();
 const surveyRoutes = express.Router();
 
+/***
+ * Survey RESTful API
+ * ============================================================================
+ * <url>/api/ 
+ * GET  | getSurveys()            | respond with json of all surveys
+ * ============================================================================
+ * <url>/api/ add/ 
+ * POST = addSurvey(n, k)         | create a new survey item in database
+ * ============================================================================
+ * <url>/api/ :id
+ * GET  = editSurvey(id)          | respond with survey item corresponding to id
+ * POST = updateSurvey(n, k, id)  | update survey item corresponding to id
+ * DEL  = deleteSurvey(id)        | remove survey item corresponding to id
+ * ============================================================================
+ * <url>/api/ addState/:id
+ * POST = addStatement(id, s)     | append new statement to survey item s array
+ * <url>/api/ delState/ :id/:s_id    
+ * DEL = deleteStatement(id, s_id)| delete statement corresponding to s_id in survey id
+ * ============================================================================
+ */
+
 // Require Survey model in our routes module
 let Survey = require('../models/Survey');
 
 // Add new survey item to database
-surveyRoutes.route('/add').post(function (req, res) {
+surveyRoutes.route('/add').post( (req, res) => {
   let survey = new Survey(req.body);
   survey.save()
-    .then(function() {
-      res.send('Survey in added successfully');
+    .then(() => {
       console.log('Added Survey');
     })
-    .catch(function() {
+    .catch(() => {
       res.status(400).send("Unable to save to database");
     });
 });
 
 // Get data (index or listing)
-surveyRoutes.route('/').get(function (req, res) {
-    Survey.find(function (err, surveys){
+surveyRoutes.route('/').get( (req, res) => {
+    Survey.find( (err, surveys) => {
     if (err) {
       res.status(400).json(err);
     }
@@ -32,9 +52,10 @@ surveyRoutes.route('/').get(function (req, res) {
 });
 
 // Access existing survey item for editing
-surveyRoutes.route('/edit/:id').get(function (req, res) {
+// surveyRoutes.route('/edit/:id').get( (req, res) => {
+surveyRoutes.route('/:id').get( (req, res) => {
   let id = req.params.id;
-  Survey.findById(id, function (err, survey) {
+  Survey.findById(id, (err, survey) => {
       if (!survey) {
         res.status(400).json(err);
       }
@@ -43,8 +64,9 @@ surveyRoutes.route('/edit/:id').get(function (req, res) {
 });
 
 // Update survey item and push to database
-surveyRoutes.route('/update/:id').post(function (req, res) {
-  Survey.findById(req.params.id, function(err, survey) {
+// surveyRoutes.route('/update/:id').post( (req, res) => {
+surveyRoutes.route('/:id').post( (req, res) => {
+  Survey.findById(req.params.id, (err, survey) => {
     if (!survey) {
       res.status(400).json(err);
     }
@@ -53,11 +75,10 @@ surveyRoutes.route('/update/:id').post(function (req, res) {
       survey.survey_name = req.body.survey_name;
       survey.survey_kurt = req.body.survey_kurt;
 
-      survey.save().then(function() {
-        res.send('Update complete');
+      survey.save().then(() => {
         console.log('Updated Survey');
       })
-      .catch(function() {
+      .catch(() => {
         res.status(400).send("unable to update the database");
       });
     }
@@ -65,8 +86,9 @@ surveyRoutes.route('/update/:id').post(function (req, res) {
 });
 
 // Delete survey item from database
-surveyRoutes.route('/delete/:id').get(function (req, res) {
-  Survey.findByIdAndRemove({_id: req.params.id}, function(err){
+// surveyRoutes.route('/delete/:id').get( (req, res) => {
+surveyRoutes.route('/:id').delete( (req, res) => {
+  Survey.findByIdAndRemove({_id: req.params.id}, (err) => {
     if (err) res.json(err);
     else {
       res.json('Successfully removed');
@@ -76,11 +98,12 @@ surveyRoutes.route('/delete/:id').get(function (req, res) {
 });
 
 // Add new statement
-surveyRoutes.route('/add/s/:id').post(function (req, res) {
+// surveyRoutes.route('/add/s/:id').post( (req, res) => {
+surveyRoutes.route('/addState/:id').post( (req, res) => {
   let statement = req.body.statement;
 
   if (typeof statement === 'string' || statement instanceof String) {
-    Survey.findById(req.params.id, function(err, survey) {
+    Survey.findById(req.params.id, (err, survey) => {
       if (!survey) {
         res.status(400).json(err);
       }
@@ -89,11 +112,11 @@ surveyRoutes.route('/add/s/:id').post(function (req, res) {
         console.log(statement);
         statements.push(statement); // TODO: Reject statements that are too long
 
-        survey.save().then(function() {
+        survey.save().then(() => {
           res.json('Successfully added new statement');
           console.log('Added Statement');
         })
-        .catch(function() {
+        .catch(() => {
           res.status(400).send("Unable to update the database");
         });
       }
@@ -106,8 +129,9 @@ surveyRoutes.route('/add/s/:id').post(function (req, res) {
 });
 
 // Delete statement from database
-surveyRoutes.route('/delete/:id/s/:statement_id').get(function (req, res) {
-  Survey.findById(req.params.id, function(err, survey) {
+//surveyRoutes.route('/delete/:id/s/:statement_id').get( (req, res)=> {
+surveyRoutes.route('/delState/:id/:statement_id').delete( (req, res)=> {
+  Survey.findById(req.params.id, (err, survey) => {
     if (!survey) {
       res.status(400).json(err);
     }
@@ -118,11 +142,11 @@ surveyRoutes.route('/delete/:id/s/:statement_id').get(function (req, res) {
 
         statements.splice(statement_index, 1);
 
-        survey.save().then(function() {
+        survey.save().then(() => {
           res.json('Successfully removed');
           console.log('Removed Statement');
         })
-        .catch(function(){
+        .catch(() => {
           res.status(400).send("Unable to update the database");
         });
       }
