@@ -11,7 +11,7 @@ surveyRoutes.route('/add').post(function (req, res) {
   let survey = new Survey(req.body);
   survey.save()
     .then(function() {
-      res.status(200).send('Survey in added successfully');
+      res.send('Survey in added successfully');
       console.log('Added Survey');
     })
     .catch(function() {
@@ -26,7 +26,7 @@ surveyRoutes.route('/').get(function (req, res) {
       res.status(400).json(err);
     }
     else {
-      res.status(200).json(surveys);
+      res.json(surveys);
     }
   });
 });
@@ -38,7 +38,7 @@ surveyRoutes.route('/edit/:id').get(function (req, res) {
       if (!survey) {
         res.status(400).json(err);
       }
-      res.status(200).json(survey);
+      res.json(survey);
   });
 });
 
@@ -54,7 +54,7 @@ surveyRoutes.route('/update/:id').post(function (req, res) {
       survey.survey_kurt = req.body.survey_kurt;
 
       survey.save().then(function() {
-        res.status(200).send('Update complete');
+        res.send('Update complete');
         console.log('Updated Survey');
       })
       .catch(function() {
@@ -69,7 +69,7 @@ surveyRoutes.route('/delete/:id').get(function (req, res) {
   Survey.findByIdAndRemove({_id: req.params.id}, function(err){
     if (err) res.json(err);
     else {
-      res.status(200).json('Successfully removed');
+      res.json('Successfully removed');
       console.log('Survey deleted');
     }
   });
@@ -90,7 +90,7 @@ surveyRoutes.route('/add/s/:id').post(function (req, res) {
         statements.push(statement); // TODO: Reject statements that are too long
 
         survey.save().then(function() {
-          res.status(200).json('Successfully added new statement');
+          res.json('Successfully added new statement');
           console.log('Added Statement');
         })
         .catch(function() {
@@ -119,7 +119,7 @@ surveyRoutes.route('/delete/:id/s/:statement_id').get(function (req, res) {
         statements.splice(statement_index, 1);
 
         survey.save().then(function() {
-          res.status(200).json('Successfully removed');
+          res.json('Successfully removed');
           console.log('Removed Statement');
         })
         .catch(function(){

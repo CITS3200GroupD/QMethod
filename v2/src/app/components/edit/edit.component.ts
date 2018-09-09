@@ -12,9 +12,12 @@ import { SurveyService } from '../../survey.service';
 })
 export class EditComponent implements OnInit {
 
+  Arr = Array;
   kurtOptions = KurtOptions;
 
   survey: any = {};
+  label_x: number;
+  range_y: number;
   angForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
@@ -38,7 +41,8 @@ export class EditComponent implements OnInit {
         // console.log(params);
         this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
         setTimeout(() => {
-          this.router.navigate(['admin']);
+          // this.router.navigate(['admin']);
+          this.ngOnInit();
         },
         500);
       });
@@ -53,6 +57,8 @@ export class EditComponent implements OnInit {
           this.angForm.get('survey_id').setValue(this.survey._id);
           this.angForm.get('survey_name').setValue(this.survey.survey_name);
           this.angForm.get('survey_kurt').setValue(this.survey.survey_kurt);
+          this.label_x = Math.floor(this.survey.survey_kurt/2);
+          this.range_y = this.label_x + 2;
           // console.log(this.survey);
       });
     });
