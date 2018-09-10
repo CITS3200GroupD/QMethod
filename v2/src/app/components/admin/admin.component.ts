@@ -5,16 +5,18 @@ import KurtOptions from '../../Survey';
 import { SurveyService } from '../../survey.service';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css']
 })
-export class IndexComponent implements OnInit {
+export class AdminComponent implements OnInit {
 
   kurtOptions = KurtOptions;
   surveys: Survey[];
 
-  constructor(private surveyservice: SurveyService, private router: Router) { }
+  constructor(private surveyservice: SurveyService, 
+    private router: Router
+  ) {} 
 
   deleteSurvey(id) {
     if (window.confirm('Are you sure you wish to delete this survey?')) {

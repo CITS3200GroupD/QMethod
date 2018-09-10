@@ -23,7 +23,7 @@
       </td>
       -->
       <td>{{ survey.statements.length }}</td>
-      <td>0</td>
+      <td>0</td> <!-- TODO: Replace with actual user count-->
       <td>
         <div class="btn-group">
           <a [routerLink]="['/edit', survey._id]" class="btn btn-primary">
@@ -37,10 +37,12 @@
           <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
             <i class="fas fa-wrench"></i><div class="d-none d-lg-inline"> Edit</div>
           </a>
-          <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
-            <!-- TODO: Routing, Share component-->
+          <!-- TODO: Routing, Share component-->
+          <!-- <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
             <i class="fas fa-external-link-alt"></i> <div class="d-none d-lg-inline"> Link</div>
           </a>
+          -->
+          <app-admin-link [survey]="survey"></app-admin-link>
         </div>
       </td>
       <td>

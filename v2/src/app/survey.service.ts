@@ -67,11 +67,12 @@ export class SurveyService {
             .get(`${this.uri}/${id}`);
   }
 
-  updateSurvey(name, range, id) {
+  updateSurvey(name, range, publish, id) {
 
     const obj = {
       name: name,
-      range: range
+      range: range,
+      publish: publish,
     };
     this
       .http
