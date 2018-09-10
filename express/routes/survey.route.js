@@ -6,10 +6,10 @@ const surveyRoutes = express.Router();
 /***
  * Survey RESTful API
  * ============================================================================
- * <url>/api/ 
+ * <url>/api/
  * GET  | getSurveys()            | respond with json of all surveys
  * ============================================================================
- * <url>/api/ add/ 
+ * <url>/api/ add/
  * POST = addSurvey(n, k)         | create a new survey item in database
  * ============================================================================
  * <url>/api/ :id
@@ -19,7 +19,7 @@ const surveyRoutes = express.Router();
  * ============================================================================
  * <url>/api/ addState/:id
  * POST = addStatement(id, s)     | append new statement to survey item s array
- * <url>/api/ delState/ :id/:s_id    
+ * <url>/api/ delState/ :id/:s_id
  * DEL = deleteStatement(id, s_id)| delete statement corresponding to s_id in survey id
  * ============================================================================
  */
@@ -72,8 +72,8 @@ surveyRoutes.route('/:id').post( (req, res) => {
     }
     else {
       // Fields
-      survey.survey_name = req.body.survey_name;
-      survey.survey_kurt = req.body.survey_kurt;
+      survey.name = req.body.name;
+      survey.range = req.body.range;
 
       survey.save().then(() => {
         console.log('Updated Survey');

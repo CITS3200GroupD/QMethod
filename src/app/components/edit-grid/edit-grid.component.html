@@ -1,0 +1,25 @@
+<table class="table compress">
+  <tr>
+    <!-- 
+    <td *ngFor="let sk of Arr(range_x).fill(1); let i = index" [attr.data-index]="i">
+      {{i - label_x}}
+      <div class="cell" *ngFor="let ry of Arr(range_y).fill(1); let j = index" [attr.data-index]="j">
+      [{{i}},{{j}}]
+      <input type="checkbox">
+      </div>
+    </td>
+    -->
+    <td *ngFor="let max_col of TemporaryMaxArray; let i = index" [attr.data-index]="i">
+      <div class="text-center"> {{i - temp_label_x}}
+        <div class="cell" *ngFor="let row of Arr(max_col).fill(1); let j = index" [attr.data-index]="j">
+          
+          <div *ngIf="j == TemporaryArray[i]-1 && j < TemporaryArray[i]" class="btn btn-light delete" (click)="deleteBtn(i, j)"> </div>
+          <div *ngIf="j == TemporaryArray[i] && j != TemporaryMaxArray[i]" class="btn btn-outline-light" (click)="addBtn(i, j)"> + </div>
+          <div *ngIf="j != TemporaryMaxArray[i]-1 && j != TemporaryArray[i]-1 && j < TemporaryArray[i]" class="btn btn-light disabled"> </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+</table>
+
+

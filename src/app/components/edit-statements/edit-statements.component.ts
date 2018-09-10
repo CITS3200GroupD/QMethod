@@ -32,7 +32,7 @@ export class EditStatementsComponent implements OnInit {
 
   addStatement(statement: string) {
     this.route.params.subscribe(params => {
-      console.log(statement);
+      // console.log(statement);
       this.surveyservice.addStatement(params['id'], statement).subscribe(res => {
         this.status.emit(true);
       });
