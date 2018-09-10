@@ -1,5 +1,6 @@
 export interface Survey {
     id: Number;
+    publish: Boolean;
     survey_name: String;
     survey_kurt: Number;
 }
