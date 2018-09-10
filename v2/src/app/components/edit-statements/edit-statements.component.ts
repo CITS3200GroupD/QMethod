@@ -39,13 +39,11 @@ export class EditStatementsComponent implements OnInit {
           this.status.emit(true);
         });
       });
-    }
-    else {
+    } else {
       try {
-        throw new Error("Attempted to update a published server");
-      } 
-      catch (e) {
-        alert(e.name+": "+e.message);
+        throw new Error('Attempted to update a published server');
+      } catch (e) {
+        alert(e.name + ': ' + e.message);
       }
     }
   }
@@ -62,10 +60,9 @@ export class EditStatementsComponent implements OnInit {
     }
     else {
       try {
-        throw new Error("Attempted to update a published server");
-      } 
-      catch (e) {
-        alert(e.name+": "+e.message);
+        throw new Error('Attempted to update a published server');
+      } catch (e) {
+        alert(e.name + ': ' + e.message);
       }
     }
   }

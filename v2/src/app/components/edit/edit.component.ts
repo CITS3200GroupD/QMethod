@@ -35,14 +35,14 @@ export class EditComponent implements OnInit {
     }
 
     updateRange(range) {
-      if (!this.survey.publish)
+      if (!this.survey.publish) {
         this.survey.range = range;
+      }
       else {
         try {
-          throw new Error("Attempted to update a published server");
-        } 
-        catch (e) {
-          alert(e.name+": "+e.message);
+          throw new Error('Attempted to update a published server');
+        } catch (e) {
+          alert(e.name + ': ' + e.message);
         }
       }
     }
@@ -57,13 +57,11 @@ export class EditComponent implements OnInit {
           },
           500);
         });
-      }
-      else {
+      } else {
         try {
-          throw new Error("Attempted to update a published server");
-        } 
-        catch (e) {
-          alert(e.name+": "+e.message);
+          throw new Error('Attempted to update a published server');
+        } catch (e) {
+          alert( e.name + ': ' + e.message );
         }
       }
     }
@@ -81,7 +79,7 @@ export class EditComponent implements OnInit {
         });
       }
     }
-    
+
   /* TODO: Private Method to check that totalStatements and numStatements (in grid) are the same value
    * ONLY enable publishing when totalStatements=numStatements
    */

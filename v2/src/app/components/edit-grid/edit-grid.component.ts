@@ -29,8 +29,8 @@ export class EditGridComponent implements OnInit {
     try {
       this.numState = survey.statements.length;
     } catch (e) {
-      if (e instanceof TypeError) {}
-      else throw e;
+      if (e instanceof TypeError) {
+      } else { throw e; }
     }
 
     this.disabled = survey.publish;
@@ -47,7 +47,7 @@ export class EditGridComponent implements OnInit {
       if (parseInt(value) == range) {
         this.max_grid = Array.from(item.defaultGrid);
         this.grid = Array.from(this.max_grid);
-        this.totalStatements = this.grid.reduce((a, b) => a + b, 0)
+        this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
         // console.log(this.max_grid);
       }
     });
@@ -69,10 +69,10 @@ export class EditGridComponent implements OnInit {
     }
     else {
       try {
-        throw new Error("Attempted to update a published server");
+        throw new Error('Attempted to update a published server');
       } 
       catch (e) {
-        alert(e.name+": "+e.message);
+        alert(e.name + ': ' + e.message);
       }
     }
   }
@@ -82,16 +82,14 @@ export class EditGridComponent implements OnInit {
       this.grid[col] -= 1;
       // console.log(col.toString()+','+row.toString());
       // console.log(this.grid);
-      this.totalStatements = this.grid.reduce((a, b) => a + b, 0)
+      this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
       console.log( this.totalStatements );
       this.ngOnInit();
-    }
-    else {
+    } else {
       try {
-        throw new Error("Attempted to update a published server");
-      } 
-      catch (e) {
-        alert(e.name+": "+e.message);
+        throw new Error('Attempted to update a published server');
+      } catch (e) {
+        alert(e.name + ': ' + e.message);
       }
     }
   }
