@@ -74,6 +74,7 @@ surveyRoutes.route('/:id').post( (req, res) => {
       // Fields
       survey.name = req.body.name;
       survey.range = req.body.range;
+      survey.publish = req.body.publish;
 
       survey.save().then(() => {
         console.log('Updated Survey');

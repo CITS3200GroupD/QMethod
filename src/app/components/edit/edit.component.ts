@@ -25,26 +25,63 @@ export class EditComponent implements OnInit {
       this.createForm();
     }
 
-    createForm() {
+    private createForm() {
       this.angForm = this.fb.group({
-            survey_id: [{value: '', disabled: true}, Validators.required ],
-            survey_name: ['', Validators.required ],
-            survey_range: ['', Validators.required ]
-            // survey_grid: ['', Validators.required]
+        survey_id: [{value: '', disabled: true}, Validators.required ],
+        survey_name: ['', Validators.required ],
+        survey_range: ['', Validators.required ]
+        // survey_grid: ['', Validators.required]
       });
     }
 
-    updateSurvey(name, range) {
-      this.route.params.subscribe(params => {
-        // console.log(params);
-        this.surveyservice.updateSurvey(name, range, params['id']);
-        setTimeout(() => {
-          // this.router.navigate(['admin']);
-          this.ngOnInit();
-        },
-        500);
-      });
+    updateRange(range) {
+      if (!this.survey.publish) {
+        this.survey.range = range;
+      } else {
+        try {
+          throw new Error('Attempted to update a published server');
+        } catch (e) {
+          alert(e.name + ': ' + e.message);
+        }
+      }
     }
+
+    updateSurvey(name, range) {
+      if (!this.survey.publish) {
+        this.route.params.subscribe(params => {
+          this.surveyservice.updateSurvey(name, range, false, params['id']);
+          setTimeout(() => {
+            // this.router.navigate(['admin']);
+            this.ngOnInit();
+          },
+          500);
+        });
+      } else {
+        try {
+          throw new Error('Attempted to update a published server');
+        } catch (e) {
+          alert( e.name + ': ' + e.message );
+        }
+      }
+    }
+
+    publishSurvey() {
+      if (window.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
+        this.survey.publish = true;
+        this.route.params.subscribe(params => {
+          this.surveyservice.updateSurvey(this.survey.name, this.survey.range, true, params['id']);
+          setTimeout(() => {
+            this.router.navigate(['admin']);
+            // this.ngOnInit();
+          },
+          500);
+        });
+      }
+    }
+
+  /* TODO: Private Method to check that totalStatements and numStatements (in grid) are the same value
+   * ONLY enable publishing when totalStatements=numStatements
+   */
 
     ngOnInit() {
       this.route.params.subscribe(params => {
@@ -55,9 +92,10 @@ export class EditComponent implements OnInit {
           this.angForm.get('survey_id').setValue(this.survey._id);
           this.angForm.get('survey_name').setValue(this.survey.name);
           this.angForm.get('survey_range').setValue(this.survey.range);
-          this.label_x = Math.floor( this.survey.range/2 );
-          this.range_y = this.label_x + 2;
-          // console.log(this.survey.range);
+          // If survey has been published, disable all editing
+          if (this.survey.publish) {
+            this.angForm.disable();
+          }
       });
     });
   }

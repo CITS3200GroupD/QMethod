@@ -1,3 +1,5 @@
-.table td, .table thd {
-    padding: 0.1rem;
+.list-group {
+    height:400px;
+    line-height:5px;
+    overflow-y: scroll;
 }

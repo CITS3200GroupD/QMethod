@@ -8,10 +8,10 @@ import { HttpClient } from '@angular/common/http';    // ng<->express client
 /***
  * Survey RESTful API
  * ============================================================================
- * <url>/api/ 
+ * <url>/api/
  * GET  | getSurveys()            | respond with json of all surveys
  * ============================================================================
- * <url>/api/ add/ 
+ * <url>/api/ add/
  * POST = addSurvey(n, k)         | create a new survey item in database
  * ============================================================================
  * <url>/api/ :id
@@ -21,7 +21,7 @@ import { HttpClient } from '@angular/common/http';    // ng<->express client
  * ============================================================================
  * <url>/api/ addState/:id
  * POST = addStatement(id, s)     | append new statement to survey item s array
- * <url>/api/ delState/ :id/:s_id    
+ * <url>/api/ delState/ :id/:s_id
  * DEL = deleteStatement(id, s_id)| delete statement corresponding to s_id in survey id
  * ============================================================================
  */
@@ -33,8 +33,7 @@ export class SurveyService {
   constructor(private http: HttpClient) {
     if (isDevMode()) {
       this.uri = 'http://localhost:8080/api';   // For local testing
-    }
-    else {
+    } else {
       this.uri = '/api';      // Production/Deployment
     }
   }
@@ -63,19 +62,20 @@ export class SurveyService {
   editSurvey(id) {
     return this
             .http
-            //.get(`${this.uri}/edit/${id}`);
+            // .get(`${this.uri}/edit/${id}`);
             .get(`${this.uri}/${id}`);
   }
 
-  updateSurvey(name, range, id) {
+  updateSurvey(name, range, publish, id) {
 
     const obj = {
       name: name,
-      range: range
+      range: range,
+      publish: publish,
     };
     this
       .http
-      //.post(`${this.uri}/update/${id}`, obj)
+      // .post(`${this.uri}/update/${id}`, obj)
       .post(`${this.uri}/${id}`, obj)
       .subscribe(res => console.log('Done'));
   }
@@ -83,7 +83,7 @@ export class SurveyService {
   deleteSurvey(id) {
     return this
               .http
-              //.get(`${this.uri}/delete/${id}`);
+              // .get(`${this.uri}/delete/${id}`);
               .delete(`${this.uri}/${id}`);
   }
 
@@ -93,7 +93,7 @@ export class SurveyService {
     };
     return this
               .http
-              //.post(`${this.uri}/add/s/${id}`, obj);
+              // .post(`${this.uri}/add/s/${id}`, obj);
               .post(`${this.uri}/addState/${id}`, obj);
   }
 
@@ -101,7 +101,6 @@ export class SurveyService {
     return this
               .http
               .delete(`${this.uri}/delState/${id}/${statement_id}`);
-              //.get(`${this.uri}/delete/${id}/s/${statement_id}`);
-              
+              // .get(`${this.uri}/delete/${id}/s/${statement_id}`);
   }
 }

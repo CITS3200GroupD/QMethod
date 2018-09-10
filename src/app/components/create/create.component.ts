@@ -22,7 +22,7 @@ export class CreateComponent implements OnInit {
     this.createForm();
   }
 
-  createForm() {
+  private createForm() {
     this.angForm = this.fb.group({
 
       survey_name: ['', Validators.required ],
