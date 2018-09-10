@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';           // ng core
+import {  isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';    // ng<->express client
 
 @Injectable({
@@ -27,10 +27,17 @@ import { HttpClient } from '@angular/common/http';    // ng<->express client
  */
 
 export class SurveyService {
-  uri = 'http://localhost:8080/api';      // For local testing
-  // uri = '/api';
 
-  constructor(private http: HttpClient) { }
+  uri: String;
+
+  constructor(private http: HttpClient) {
+    if (isDevMode()) {
+      this.uri = 'http://localhost:8080/api';   // For local testing
+    }
+    else {
+      this.uri = '/api';      // Production/Deployment
+    }
+  }
 
   addSurvey(survey_name, survey_kurt) {
     const obj = {

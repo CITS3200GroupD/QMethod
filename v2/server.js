@@ -12,16 +12,22 @@ const express = require('express'),
       err => { console.log('Can not connect to the database'+ err)}
     );
 
-
     // init express
     const app = express();
+    app.use(express.static(__dirname + '/dist'));
     app.use(bodyParser.json());
     app.use(cors());
     const port = process.env.PORT || 8080;
     
-    // Route for survey list
-    const surveyRoutes = require('./routes/survey.route');
+    // Routes for RESTful API for Survey Data
+    const surveyRoutes = require('./express/routes/survey.route');
     app.use('/api', surveyRoutes);
+
+    // For all GET requests, send back index.html
+    // so that PathLocationStrategy can be used
+    app.get('/*', function(req, res) {
+      res.sendFile(path.join(__dirname + '/dist/index.html'));
+    });
 
     // const server =
     app.listen(port, function(){
