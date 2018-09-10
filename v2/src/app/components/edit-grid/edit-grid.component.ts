@@ -7,14 +7,14 @@ import KurtOptions from '../../Survey';
   styleUrls: ['./edit-grid.component.css']
 })
 export class EditGridComponent implements OnInit {
-  
+
   kurtOptions = KurtOptions;
 
-  // TODO: Backend + Check for publishing 
+  // TODO: Backend + Check for publishing
   disabled: boolean;
   grid: number[];
   max_grid: number[];
-  
+
   offset: number;
   max_rows: number;
 
@@ -25,7 +25,7 @@ export class EditGridComponent implements OnInit {
 
   @Input()
   set survey(survey: any) {
-  
+
     try {
       this.numState = survey.statements.length;
     } catch (e) {
@@ -38,13 +38,13 @@ export class EditGridComponent implements OnInit {
 
   @Input()
   set range(range: number) {
-    
+  
     this.offset = Math.floor( range/2 );
     this.max_rows = this.offset + 2;
 
     this.kurtOptions.forEach( (item) => {
       let value = item.val;
-      if (parseInt(value) == range) {
+      if (Number(value) === range) {
         this.max_grid = Array.from(item.defaultGrid);
         this.grid = Array.from(this.max_grid);
         this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
@@ -63,15 +63,14 @@ export class EditGridComponent implements OnInit {
       this.grid[col] += 1;
       // console.log(col.toString()+','+row.toString());
       // console.log(this.grid);
-      this.totalStatements = this.grid.reduce((a, b) => a + b, 0)
+      this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
       console.log( this.totalStatements );
       this.ngOnInit();
     }
     else {
       try {
         throw new Error('Attempted to update a published server');
-      } 
-      catch (e) {
+      } catch (e) {
         alert(e.name + ': ' + e.message);
       }
     }

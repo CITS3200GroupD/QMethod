@@ -37,8 +37,7 @@ export class EditComponent implements OnInit {
     updateRange(range) {
       if (!this.survey.publish) {
         this.survey.range = range;
-      }
-      else {
+      } else {
         try {
           throw new Error('Attempted to update a published server');
         } catch (e) {
