@@ -14,9 +14,9 @@ export class AdminComponent implements OnInit {
   kurtOptions = KurtOptions;
   surveys: Survey[];
 
-  constructor(private surveyservice: SurveyService, 
+  constructor(private surveyservice: SurveyService,
     private router: Router
-  ) {} 
+  ) {}
 
   deleteSurvey(id) {
     if (window.confirm('Are you sure you wish to delete this survey?')) {
