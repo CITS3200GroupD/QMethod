@@ -57,8 +57,7 @@ export class EditStatementsComponent implements OnInit {
           });
         }
       });
-    }
-    else {
+    } else {
       try {
         throw new Error('Attempted to update a published server');
       } catch (e) {

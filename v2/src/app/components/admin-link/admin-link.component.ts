@@ -16,10 +16,10 @@ export class AdminLinkComponent implements OnInit {
   @Input() survey: any = {};
 
   // @Input() survey_id: String;
-  
+
   angForm: FormGroup;
 
-  constructor(private modalService: NgbModal, 
+  constructor(private modalService: NgbModal,
     private router: ActivatedRoute,
     private fb: FormBuilder) {
     this.createForm();
@@ -38,6 +38,6 @@ export class AdminLinkComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.angForm.get('private_link').setValue( window.location.hostname+'/start/'+this.survey._id );
+    this.angForm.get('private_link').setValue( window.location.hostname + '/start/' + this.survey._id );
   }
 }

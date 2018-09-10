@@ -38,12 +38,12 @@ export class EditGridComponent implements OnInit {
 
   @Input()
   set range(range: number) {
-  
-    this.offset = Math.floor( range/2 );
+
+    this.offset = Math.floor( range / 2 );
     this.max_rows = this.offset + 2;
 
     this.kurtOptions.forEach( (item) => {
-      let value = item.val;
+      const value = item.val;
       if (Number(value) === range) {
         this.max_grid = Array.from(item.defaultGrid);
         this.grid = Array.from(this.max_grid);
@@ -66,8 +66,7 @@ export class EditGridComponent implements OnInit {
       this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
       console.log( this.totalStatements );
       this.ngOnInit();
-    }
-    else {
+    } else {
       try {
         throw new Error('Attempted to update a published server');
       } catch (e) {
