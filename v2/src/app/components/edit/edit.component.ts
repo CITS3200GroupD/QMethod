@@ -29,15 +29,15 @@ export class EditComponent implements OnInit {
       this.angForm = this.fb.group({
             survey_id: [{value: '', disabled: true}, Validators.required ],
             survey_name: ['', Validators.required ],
-            survey_kurt: ['', Validators.required ]
+            survey_range: ['', Validators.required ]
             // survey_grid: ['', Validators.required]
       });
     }
 
-    updateSurvey(survey_name, survey_kurt) {
+    updateSurvey(name, range) {
       this.route.params.subscribe(params => {
         // console.log(params);
-        this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
+        this.surveyservice.updateSurvey(name, range, params['id']);
         setTimeout(() => {
           // this.router.navigate(['admin']);
           this.ngOnInit();
@@ -53,11 +53,11 @@ export class EditComponent implements OnInit {
           this.survey = res;
 
           this.angForm.get('survey_id').setValue(this.survey._id);
-          this.angForm.get('survey_name').setValue(this.survey.survey_name);
-          this.angForm.get('survey_kurt').setValue(this.survey.survey_kurt);
-          this.label_x = Math.floor( this.survey.survey_kurt/2 );
+          this.angForm.get('survey_name').setValue(this.survey.name);
+          this.angForm.get('survey_range').setValue(this.survey.range);
+          this.label_x = Math.floor( this.survey.range/2 );
           this.range_y = this.label_x + 2;
-          //console.log(this.survey);
+          // console.log(this.survey.range);
       });
     });
   }

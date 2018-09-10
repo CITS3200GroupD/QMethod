@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema for Surveys
 let Survey = new Schema({
-  survey_name: String,
-  survey_kurt: Number,
+  name: String,
+  range: Number,
   publish: Boolean,
   statements: [String]
 },

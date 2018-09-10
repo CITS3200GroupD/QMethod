@@ -19,19 +19,19 @@
       </div>
 
       <div class="form-group">
-        <label class="col-md-4">Kurtosis</label>
-        <select class="form-control" formControlName="survey_kurt" #survey_kurt >
+        <label class="col-md-4">Range </label>
+        <select class="form-control" formControlName="survey_range" #survey_range >
           <option [value]=option.val *ngFor="let option of kurtOptions">{{option.label}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label class="col-md-4">Grid</label>
-          <app-edit-grid [kurtosis]="survey.survey_kurt" [label_x]="label_x" [range_y]="range_y" (status)="ngOnInit()"></app-edit-grid>
+          <app-edit-grid [range_x]="survey.range" [label_x]="label_x" [range_y]="range_y" (status)="ngOnInit()"></app-edit-grid>
       </div>
 
       <div class="form-group">
-        <button (click)="updateSurvey(survey_name.value, survey_kurt.value)" [disabled]="angForm.invalid" class="btn btn-primary">Update</button>
+        <button (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid" class="btn btn-primary">Update</button>
         <a [routerLink]="['/admin']" class="btn btn-light">Cancel</a>
       </div>
 

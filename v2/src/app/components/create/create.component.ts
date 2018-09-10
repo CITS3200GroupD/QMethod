@@ -26,12 +26,12 @@ export class CreateComponent implements OnInit {
     this.angForm = this.fb.group({
 
       survey_name: ['', Validators.required ],
-      survey_kurt: ['', Validators.required ]
+      survey_range: ['', Validators.required ]
    });
   }
 
-  addSurvey(survey_name, survey_kurt) {
-    this.surveyservice.addSurvey(survey_name, survey_kurt);
+  addSurvey(name, range) {
+    this.surveyservice.addSurvey(name, range);
     setTimeout(() => {
       this.router.navigate(['admin']);
     },
@@ -43,7 +43,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.angForm.get('survey_kurt').setValue(9);
+    this.angForm.get('survey_range').setValue(9);
   }
 
 }
