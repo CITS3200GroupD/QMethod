@@ -1,0 +1,28 @@
+<table class="table compress">
+  <tr>
+    <td *ngFor="let max_col of max_grid; let i = index" [attr.data-index]="i">
+      <div class="text-center"> {{i - offset}}
+        <div class="cell" *ngFor="let row of arr(max_col).fill(1); let j = index" [attr.data-index]="j">
+          
+          <div *ngIf="j == grid[i]-1 && j < grid[i]"> 
+            <div *ngIf="!disabled" class="btn btn-light delete" (click)="deleteBtn(i, j)"> </div>
+            <div *ngIf="disabled" class="btn btn-light disabled"> </div>
+          </div>
+          <div *ngIf="j == grid[i] && j != max_grid[i]">
+            <div *ngIf="!disabled" class="btn btn-outline-light" (click)="addBtn(i, j)"> + </div>
+            <div *ngIf="disabled" class="btn btn-light disabled"> </div>
+          </div>
+          <div *ngIf="j != max_grid[i]-1 && j != grid[i]-1 && j < grid[i]" class="btn btn-light disabled"> </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+</table>
+<div *ngIf="totalStatements != numState" class="alert alert-danger text-center"> 
+  <h5 class="alert-heading"> Invalid grid </h5>
+  <p style="font-size: 0.875rem"> Number of statements do not match current grid configuration. Grid Spaces: {{ totalStatements }} Statements: {{ numState }} </p>
+</div>
+
+<div *ngIf="(totalStatements != numState) && disabled" class="alert alert-danger text-center"> 
+  <p style="font-size: 0.875rem"> INVALID/CORRUPT Survey! Please delete/verify database with mongoDB Compass!</p>
+</div>
