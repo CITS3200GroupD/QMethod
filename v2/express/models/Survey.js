@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Define collection and schema for Surveys
 let Survey = new Schema({
   survey_name: String,
-  survey_kurt:  Number,
+  survey_kurt: Number,
   publish: Boolean,
   statements: [String]
 },

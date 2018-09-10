@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Survey } from './Survey';
-import KurtOptions from './Survey';
+import { Survey } from '../../Survey';
+import KurtOptions from '../../Survey';
 import { SurveyService } from '../../survey.service';
 
 @Component({
@@ -12,14 +12,7 @@ import { SurveyService } from '../../survey.service';
 export class IndexComponent implements OnInit {
 
   kurtOptions = KurtOptions;
-
   surveys: Survey[];
-
-  surveys2: {
-      id: Number;
-      survey_name: String;
-      survey_kurt: String;
-  }[];
 
   constructor(private surveyservice: SurveyService, private router: Router) { }
 

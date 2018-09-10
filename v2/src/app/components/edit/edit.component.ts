@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { Survey } from '../index/Survey';
-import KurtOptions from '../index/Survey';
+import KurtOptions from '../../Survey';
 import { SurveyService } from '../../survey.service';
 
 @Component({
@@ -12,13 +11,12 @@ import { SurveyService } from '../../survey.service';
 })
 export class EditComponent implements OnInit {
 
-  Arr = Array;
   kurtOptions = KurtOptions;
 
   survey: any = {};
+  angForm: FormGroup;
   label_x: number;
   range_y: number;
-  angForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -32,7 +30,7 @@ export class EditComponent implements OnInit {
             survey_id: [{value: '', disabled: true}, Validators.required ],
             survey_name: ['', Validators.required ],
             survey_kurt: ['', Validators.required ]
-            // statements
+            // survey_grid: ['', Validators.required]
       });
     }
 
@@ -57,9 +55,9 @@ export class EditComponent implements OnInit {
           this.angForm.get('survey_id').setValue(this.survey._id);
           this.angForm.get('survey_name').setValue(this.survey.survey_name);
           this.angForm.get('survey_kurt').setValue(this.survey.survey_kurt);
-          this.label_x = Math.floor(this.survey.survey_kurt/2);
+          this.label_x = Math.floor( this.survey.survey_kurt/2 );
           this.range_y = this.label_x + 2;
-          // console.log(this.survey);
+          //console.log(this.survey);
       });
     });
   }

@@ -1,0 +1,11 @@
+<table>
+  <tr>
+    <td *ngFor="let sk of Arr(kurtosis).fill(1); let i = index" [attr.data-index]="i">
+      {{i - label_x}}
+      <div class="cell" *ngFor="let ry of Arr(range_y).fill(1); let j = index" [attr.data-index]="j">
+      <!-- [{{i}},{{j}}] -->
+      <input type="checkbox">
+      </div>
+    </td>
+  </tr>
+</table>
