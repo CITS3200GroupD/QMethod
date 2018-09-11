@@ -159,6 +159,9 @@ surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
 /***
  * Users RESTful API
  * ============================================================================
+ * <url>/api/ :id/users/
+ * GET   | respond with all user_data for this survey {id}                  <PRIVATE>
+ * ============================================================================
  * <url>/api/ :id/user/:user_id
  * GET   | respond with user_data corresponding to {user_id} in survey {id} [PUBLIC]
  * POST  | update with user_data corresponding to {user_id} in survey {id}  <PRIVATE>
