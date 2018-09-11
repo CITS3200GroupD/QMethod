@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';    // ng<->express client
  * Survey RESTful API
  * ============================================================================
  * <url>/api/
- * GET  | getSurveys()            | respond with json of all surveys
+ * GET  = getSurveys()            | respond with json of all surveys
  * ============================================================================
  * <url>/api/ add/
  * POST = addSurvey(n, k)         | create a new survey item in database
@@ -44,7 +44,8 @@ export class SurveyService {
       range: range,
       cols: [],
       publish: false,
-      statements: statements
+      statements: statements,
+      users: []
     };
     this.http.post(`${this.uri}/add`, obj)
         .subscribe(res => console.log('Done'));
@@ -59,7 +60,6 @@ export class SurveyService {
   editSurvey(id) {
     return this
             .http
-            // .get(`${this.uri}/edit/${id}`);
             .get(`${this.uri}/${id}`);
   }
 
@@ -73,7 +73,6 @@ export class SurveyService {
     };
     this
       .http
-      // .post(`${this.uri}/update/${id}`, obj)
       .post(`${this.uri}/${id}`, obj)
       .subscribe(res => console.log('Done'));
   }
@@ -81,7 +80,6 @@ export class SurveyService {
   deleteSurvey(id) {
     return this
               .http
-              // .get(`${this.uri}/delete/${id}`);
               .delete(`${this.uri}/${id}`);
   }
 
@@ -91,14 +89,12 @@ export class SurveyService {
     };
     return this
               .http
-              // .post(`${this.uri}/add/s/${id}`, obj);
-              .post(`${this.uri}/addState/${id}`, obj);
+              .post(`${this.uri}/${id}/addState`, obj);
   }
 
   deleteStatement(id, statement_id) {
     return this
               .http
-              .delete(`${this.uri}/delState/${id}/${statement_id}`);
-              // .get(`${this.uri}/delete/${id}/s/${statement_id}`);
+              .delete(`${this.uri}/${id}/delState/${statement_id}`);
   }
 }

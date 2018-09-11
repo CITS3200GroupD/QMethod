@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+const Users = require('./User');
 const Schema = mongoose.Schema;
 
 // Define collection and schema for Surveys
-let Survey = new Schema({
+
+const surveySchema = new Schema({
   name: {
     type: String,
     required: [true, 'No name']
@@ -27,10 +29,13 @@ let Survey = new Schema({
   statements: {
     type: [String],
     required: [true, 'Statements']
+  },
+  users: {
+    type: [Users.schema]
   }
 },
 {
     collection: 'surveys'
 });
 
-module.exports = mongoose.model('Survey', Survey);
+module.exports = mongoose.model('Survey', surveySchema);
