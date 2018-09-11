@@ -40,7 +40,7 @@ export class EditComponent implements OnInit {
 
   private throwError(error) {
     try {
-      throw new Error(error); 
+      throw new Error(error);
     } catch (e) {
       alert(`${e.name}: ${e.message}`);
     }
