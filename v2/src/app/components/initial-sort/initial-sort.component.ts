@@ -8,43 +8,63 @@ import { Component, OnInit } from '@angular/core';
 export class InitialSortComponent implements OnInit {
 
   statements = [
-    {id: 1, statement: 'statement 1'},
-    {id: 2, statement: 'statement 2'},
-    {id: 3, statement: 'statement 3'}
+    {statement: 'statement 1'},
+    {statement: 'statement 2'},
+    {statement: 'statement 3'},
+    {statement: 'statement 4'},
+    {statement: 'statement 5'},
+    {statement: 'statement 6'},
+    {statement: 'statement 7'},
   ];
 
   disagree = [];
   neutral = [];
   agree = [];
 
-
   onDisagreeDrop(e: any) {
     this.disagree.push(e.dragData);
+    this.removeStatement(e.dragData);
+    this.removeNeutral(e.dragData);
+    this.removeAgree(e.dragData);
   }
 
   onNeutralDrop(e: any) {
     this.neutral.push(e.dragData);
+    this.removeStatement(e.dragData);
+    this.removeDisagree(e.dragData);
+    this.removeAgree(e.dragData);
   }
 
   onAgreeDrop(e: any) {
     this.agree.push(e.dragData);
+    this.removeStatement(e.dragData);
+    this.removeDisagree(e.dragData);
+    this.removeNeutral(e.dragData);
   }
 
-  // not done: statement does not dissapear after dropping
-  /*removeItem(e: any) {
-    if (this.statements.indexOf(e.id) > -1) {
-      var index = this.statements.indexOf(e.id);
-      this.statements.splice(index, 1);
-      console.log("statement " + index);
-    }
+  removeStatement(e: any) {
+      this.statements.forEach( (item, index) => {
+        if (item.statement == e.statement) this.statements.splice(index, 1);
+      });
+  }
 
+  removeDisagree(e: any) {
+    this.disagree.forEach( (item, index) => {
+      if (item.statement == e.statement) this.disagree.splice(index, 1);
+    });
+  }
 
-      var index = this.disagree.indexOf(e.statement);
-      this.disagree.splice(index, 1);
-      console.log("disagree " + e.id);
-      console.log(index);
+  removeNeutral(e: any) {
+    this.neutral.forEach( (item, index) => {
+      if (item.statement == e.statement) this.neutral.splice(index, 1);
+    });
+  }
 
-  }*/
+  removeAgree(e: any) {
+    this.agree.forEach( (item, index) => {
+      if (item.statement == e.statement) this.agree.splice(index, 1);
+    });
+  }
 
   constructor() { }
 
