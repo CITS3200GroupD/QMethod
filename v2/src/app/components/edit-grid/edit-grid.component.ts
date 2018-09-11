@@ -75,18 +75,18 @@ export class EditGridComponent implements OnInit {
 
   constructor() {
   }
-  
+
   private throwError(error) {
-    try { 
-      throw new Error(error); 
-    } catch (e) { 
-      alert(`${e.name}: ${e.message}`); 
+    try {
+      throw new Error(error);
+    } catch (e) {
+      alert(`${e.name}: ${e.message}`);
     }
   }
 
   addBtn(col, row) {
     if (this.disabled) {
-      this.throwError('Attempted to update a published server'); 
+      this.throwError('Attempted to update a published server');
     } else {
       this.grid[col] += 1;
       // console.log(col.toString()+','+row.toString());
@@ -99,7 +99,7 @@ export class EditGridComponent implements OnInit {
 
   deleteBtn(col, row) {
     if (this.disabled) {
-      this.throwError('Attempted to update a published server'); 
+      this.throwError('Attempted to update a published server');
     } else {
       this.grid[col] -= 1;
       // console.log(col.toString()+','+row.toString());

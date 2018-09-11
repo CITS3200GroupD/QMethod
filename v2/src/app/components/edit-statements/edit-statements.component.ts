@@ -35,18 +35,16 @@ export class EditStatementsComponent implements OnInit {
   }
 
   private throwError(error) {
-    try { 
-      throw new Error(error); 
-    } catch (e) { 
-      alert(`${e.name}: ${e.message}`); 
+    try {
+      throw new Error(error);
+    } catch (e) {
+      alert(`${e.name}: ${e.message}`);
     }
   }
 
-    
-
   addStatement(statement: string) {
     if (this.disabled) {
-      this.throwError('Attempted to update a published server'); 
+      this.throwError('Attempted to update a published server');
     } else {
       this.route.params.subscribe(params => {
         // console.log(statement);
@@ -59,7 +57,7 @@ export class EditStatementsComponent implements OnInit {
 
   deleteStatement(statement_id) {
     if (this.disabled) {
-      this.throwError('Attempted to update a published server'); 
+      this.throwError('Attempted to update a published server');
     } else {
       this.route.params.subscribe(params => {
         if (window.confirm('Are you sure you wish to delete this statement?')) {

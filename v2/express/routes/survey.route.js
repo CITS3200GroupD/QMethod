@@ -3,9 +3,9 @@ const express = require('express');
 express();
 const surveyRoutes = express.Router();
 
-const STATE_LIMIT = 80;
-const NAME_LIMIT = 100;
-const CHAR_LIMIT = 350;
+// const STATE_LIMIT = 80;
+// const NAME_LIMIT = 100;
+// const CHAR_LIMIT = 350;
 
 /***
  * Survey RESTful API

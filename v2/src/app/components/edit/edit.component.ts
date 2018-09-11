@@ -39,16 +39,16 @@ export class EditComponent implements OnInit {
   }
 
   private throwError(error) {
-    try { 
+    try {
       throw new Error(error); 
-    } catch (e) { 
-      alert(`${e.name}: ${e.message}`); 
+    } catch (e) {
+      alert(`${e.name}: ${e.message}`);
     }
   }
 
   updateRange(range) {
     if (this.survey.publish) {
-      this.throwError('Attempted to update a published server'); 
+      this.throwError('Attempted to update a published server');
     } else {
       this.range = range;
     }
@@ -60,13 +60,13 @@ export class EditComponent implements OnInit {
     }
   }
 
-  isInvalidGrid(bool){
+  isInvalidGrid(bool) {
     this.valid_grid = bool;
   }
 
   updateSurvey(name, range) {
     if (this.survey.publish) {
-      this.throwError('Attempted to update a published server'); 
+      this.throwError('Attempted to update a published server');
     } else if (!this.valid_grid) {
       this.throwError('Invalid Grid');
     } else {
