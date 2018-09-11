@@ -1,24 +1,27 @@
-<div class="statement" style="height: 100px">
-  <div draggable *ngFor="let statement of statements" [dragData]="statement">{{statement.statement}}
+<div>
+  <h2>Sort the following statements</h2>
+  <div class="statement" style="height: 100px; overflow: auto;">
+    <div draggable *ngFor="let statement of statements" [dragData]="statement">{{statement.statement}}</div>
   </div>
 </div>
 
-<br>
-<div class="column">
-  <h2>Disagree</h2>
-    <div class = "container" style="background-color:red" droppable (onDrop)="onDisagreeDrop($event)">
-      <div class="statement" *ngFor="let statement of disagree" draggable [dragData]="statement" (onDragEnter)="removeItem($event)">{{statement.statement}}</div>
-    </div>
-</div>
-<div class="column">
-  <h2>Neutral</h2>
-  <div class = "container" style="background-color:yellow" droppable (onDrop)="onNeutralDrop($event)">
-      <div class="statement" *ngFor="let statement of neutral" draggable [dragData]="statement">{{statement.statement}}</div>
-    </div>
-</div>
-<div class="column">
-  <h2>Agree</h2>
-  <div class = "container" style="background-color:green" droppable (onDrop)="onAgreeDrop($event)">
-      <div class="statement" *ngFor="let statement of agree" draggable [dragData]="statement">{{statement.statement}}</div>
-    </div>
+<div>
+  <div class="column">
+    <h2>Disagree</h2>
+      <div class = "container" style="background-color:red" droppable (onDrop)="onDisagreeDrop($event)">
+        <div class="statement" *ngFor="let statement of disagree" draggable [dragData]="statement">{{statement.statement}}</div>
+      </div>
+  </div>
+  <div class="column">
+    <h2>Neutral</h2>
+    <div class = "container" style="background-color:yellow" droppable (onDrop)="onNeutralDrop($event)">
+        <div class="statement" *ngFor="let statement of neutral" draggable [dragData]="statement">{{statement.statement}}</div>
+      </div>
+  </div>
+  <div class="column">
+    <h2>Agree</h2>
+    <div class = "container" style="background-color:green" droppable (onDrop)="onAgreeDrop($event)">
+        <div class="statement" *ngFor="let statement of agree" draggable [dragData]="statement">{{statement.statement}}</div>
+      </div>
+  </div>
 </div>

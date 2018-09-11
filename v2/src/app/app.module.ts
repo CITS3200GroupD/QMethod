@@ -47,10 +47,6 @@ const routes: Routes = [
     path: 'initial-sort',
     component: InitialSortComponent
   },
-  {
-    path: 'initial-sort',
-    component: InitialSortComponent
-  },
 ];
 // Declaring vars for ng
 @NgModule({
