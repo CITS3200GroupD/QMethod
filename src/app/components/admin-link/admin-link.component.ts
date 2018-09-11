@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { isDevMode, Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute} from '@angular/router'; // ng router
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng reactive  form
@@ -38,6 +38,11 @@ export class AdminLinkComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.angForm.get('private_link').setValue( window.location.hostname + '/start/' + this.survey._id );
+    if (isDevMode()) {
+      this.angForm.get('private_link').setValue( `localhost:4200/survey/${this.survey._id}/start`);
+    }
+    else {
+      this.angForm.get('private_link').setValue( `${window.location.hostname}/survey/${this.survey._id}/start`);
+    }
   }
 }

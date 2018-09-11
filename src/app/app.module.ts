@@ -22,13 +22,18 @@ import { EditComponent } from './components/edit/edit.component';
 import { InitialSortComponent } from './components/initial-sort/initial-sort.component';
 import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';
 import { EditGridComponent } from './components/edit-grid/edit-grid.component';
-import { AdminLinkComponent } from './components/admin-link/admin-link.component';       // Edit Survey
+import { AdminLinkComponent } from './components/admin-link/admin-link.component';
+import { UserIndexComponent } from './components/user-index/user-index.component';       // Edit Survey
 
 // Configuring Routes and linking to components
 const routes: Routes = [
   {
     path: 'create',
     component: CreateComponent
+  },
+  {
+    path: 'survey/:id/start',
+    component: UserIndexComponent
   },
   {
     path: 'edit/:id',
@@ -53,7 +58,8 @@ const routes: Routes = [
     InitialSortComponent,
     EditStatementsComponent,
     EditGridComponent,
-    AdminLinkComponent
+    AdminLinkComponent,
+    UserIndexComponent
   ],
   imports: [
     BrowserModule,

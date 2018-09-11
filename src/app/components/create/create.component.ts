@@ -31,7 +31,10 @@ export class CreateComponent implements OnInit {
   }
 
   addSurvey(name, range) {
-    this.surveyservice.addSurvey(name, range);
+    const statements = [ 'Testing 1', 'Testing 2', 'Testing 3', 'Testing 4', 'Testing 5',
+                    'Testing 6', 'Testing 7', 'Testing 8', 'Testing 9', 'Testing 10',
+                  'Super long statements should be this length to test if this is a viable or not in the long run.'];
+    this.surveyservice.addSurvey(name, range, statements);
     setTimeout(() => {
       this.router.navigate(['admin']);
     },

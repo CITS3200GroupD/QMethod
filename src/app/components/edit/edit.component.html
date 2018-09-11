@@ -27,7 +27,7 @@
 
       <div class="form-group">
         <label class="col-md-4">Grid</label>
-          <app-edit-grid [survey]="survey" [range]="survey.range" (status)="ngOnInit()"></app-edit-grid>
+          <app-edit-grid [survey]="survey" [range]="range" (output_grid)="updateGrid($event)"></app-edit-grid>
       </div>
       <div class="form-group">
           <app-edit-statements [statements]="survey.statements" [disabled]="survey.publish" (status)="ngOnInit()"></app-edit-statements>

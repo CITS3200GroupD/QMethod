@@ -10,7 +10,7 @@ export class EditGridComponent implements OnInit {
 
   kurtOptions = KurtOptions;
 
-  // TODO: Backend + Check for publishing
+  // init: boolean;
   disabled: boolean;
   grid: number[];
   max_grid: number[];
@@ -23,37 +23,54 @@ export class EditGridComponent implements OnInit {
 
   arr = Array;
 
+  // Seperated input as this is called when range input drop-down menu is changed
+  // TODO: might cause issues if range is never called
   @Input()
   set survey(survey: any) {
 
     try {
       this.numState = survey.statements.length;
+      this.grid = survey.cols;
     } catch (e) {
       if (e instanceof TypeError) {
       } else { throw e; }
     }
 
     this.disabled = survey.publish;
+
+    this.offset = Math.floor( survey.range / 2 );
+    this.max_rows = this.offset + 2;
+
+    this.kurtOptions.forEach( (item) => {
+      const value = item.val;
+      if (Number(value) == survey.range) {
+        this.max_grid = Array.from(item.defaultGrid);
+        this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
+        this.ngOnInit();
+      }
+    });
   }
 
+  // Seperated input as this is called when range input drop-down menu is changed
+  // TODO: might cause issues if range is called after survey
   @Input()
   set range(range: number) {
-
     this.offset = Math.floor( range / 2 );
     this.max_rows = this.offset + 2;
 
     this.kurtOptions.forEach( (item) => {
       const value = item.val;
-      if (Number(value) === range) {
+      if (Number(value) == range) {
         this.max_grid = Array.from(item.defaultGrid);
         this.grid = Array.from(this.max_grid);
         this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
-        // console.log(this.max_grid);
+        this.output_grid.emit(this.grid);
+        this.ngOnInit();
       }
     });
   }
 
-  @Output() status = new EventEmitter<boolean>();
+  @Output() output_grid = new EventEmitter<number[]>();
 
   constructor() {
   }
@@ -64,7 +81,8 @@ export class EditGridComponent implements OnInit {
       // console.log(col.toString()+','+row.toString());
       // console.log(this.grid);
       this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
-      console.log( this.totalStatements );
+      // console.log( this.totalStatements );
+      this.output_grid.emit(this.grid);
       this.ngOnInit();
     } else {
       try {
@@ -81,7 +99,8 @@ export class EditGridComponent implements OnInit {
       // console.log(col.toString()+','+row.toString());
       // console.log(this.grid);
       this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
-      console.log( this.totalStatements );
+      // console.log( this.totalStatements );
+      this.output_grid.emit(this.grid);
       this.ngOnInit();
     } else {
       try {
@@ -92,7 +111,6 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
