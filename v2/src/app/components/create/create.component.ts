@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core'; // ng core
 import { Router } from '@angular/router'; // ng router
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng reactive  form
 import { SurveyService } from '../../survey.service';     // survey service
+import { gridTemplates } from '../../Survey';
 
-import KurtOptions from '../../Survey';
+const DEFAULT_RANGE = 11;
 
 // core
 @Component({
@@ -13,7 +14,7 @@ import KurtOptions from '../../Survey';
 })
 export class CreateComponent implements OnInit {
 
-  kurtOptions = KurtOptions;
+  gridTemplates = gridTemplates;
 
   angForm: FormGroup;
 
@@ -31,7 +32,10 @@ export class CreateComponent implements OnInit {
   }
 
   addSurvey(name, range) {
-    this.surveyservice.addSurvey(name, range);
+    const statements = [ 'Testing 1', 'Testing 2', 'Testing 3', 'Testing 4', 'Testing 5',
+                    'Testing 6', 'Testing 7', 'Testing 8', 'Testing 9', 'Testing 10',
+                  'Super long statements should be this length to test if this is a viable or not in the long run.'];
+    this.surveyservice.addSurvey(name, range, statements);
     setTimeout(() => {
       this.router.navigate(['admin']);
     },
@@ -43,7 +47,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.angForm.get('survey_range').setValue(9);
+    this.angForm.get('survey_range').setValue(DEFAULT_RANGE);
   }
 
 }

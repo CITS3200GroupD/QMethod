@@ -1,5 +1,6 @@
-import {  isDevMode, Injectable } from '@angular/core';           // ng core
+import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';    // ng<->express client
+import { gridTemplates } from './Survey';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { HttpClient } from '@angular/common/http';    // ng<->express client
  * Survey RESTful API
  * ============================================================================
  * <url>/api/
- * GET  | getSurveys()            | respond with json of all surveys
+ * GET  = getSurveys()            | respond with json of all surveys
  * ============================================================================
  * <url>/api/ add/
  * POST = addSurvey(n, k)         | create a new survey item in database
@@ -28,6 +29,7 @@ import { HttpClient } from '@angular/common/http';    // ng<->express client
 
 export class SurveyService {
 
+  gridTemplates = gridTemplates;
   uri: String;
 
   constructor(private http: HttpClient) {
@@ -38,19 +40,27 @@ export class SurveyService {
     }
   }
 
-  addSurvey(name, range) {
-    const obj = {
-      name: name,
-      range: range,
-      publish: false,
-      // TODO: Statement importing - remove this
-      statements: [ 'Testing 1', 'Testing 2', 'Testing 3', 'Testing 4', 'Testing 5',
-                    'Testing 6', 'Testing 7', 'Testing 8', 'Testing 9', 'Testing 10',
-                  'Super long statements should be this length to test if this is a viable or not in the long run.']
-    };
-    // console.log(obj);
-    this.http.post(`${this.uri}/add`, obj)
-        .subscribe(res => console.log('Done'));
+  addSurvey(name, range, statements) {
+    let cols;
+    this.gridTemplates.forEach( (item) => {
+      const value = item.val;
+      // Find default grid
+      if (Number(value) == range) {
+        cols = Array.from(item.defaultGrid);
+      }
+    });
+    if (cols) {
+      const obj = {
+        name: name,
+        range: range,
+        cols: cols,
+        publish: false,
+        statements: statements,
+        users: []
+      };
+      this.http.post(`${this.uri}/add`, obj)
+          .subscribe(res => console.log('Done'));
+    }
   }
 
   getSurveys() {
@@ -62,20 +72,20 @@ export class SurveyService {
   editSurvey(id) {
     return this
             .http
-            // .get(`${this.uri}/edit/${id}`);
             .get(`${this.uri}/${id}`);
   }
 
-  updateSurvey(name, range, publish, id) {
+  updateSurvey(name, range, cols, publish, users, id) {
 
     const obj = {
       name: name,
       range: range,
+      cols: cols,
       publish: publish,
+      users: users
     };
     this
       .http
-      // .post(`${this.uri}/update/${id}`, obj)
       .post(`${this.uri}/${id}`, obj)
       .subscribe(res => console.log('Done'));
   }
@@ -83,7 +93,6 @@ export class SurveyService {
   deleteSurvey(id) {
     return this
               .http
-              // .get(`${this.uri}/delete/${id}`);
               .delete(`${this.uri}/${id}`);
   }
 
@@ -93,14 +102,12 @@ export class SurveyService {
     };
     return this
               .http
-              // .post(`${this.uri}/add/s/${id}`, obj);
-              .post(`${this.uri}/addState/${id}`, obj);
+              .post(`${this.uri}/${id}/addState`, obj);
   }
 
   deleteStatement(id, statement_id) {
     return this
               .http
-              .delete(`${this.uri}/delState/${id}/${statement_id}`);
-              // .get(`${this.uri}/delete/${id}/s/${statement_id}`);
+              .delete(`${this.uri}/${id}/delState/${statement_id}`);
   }
 }
