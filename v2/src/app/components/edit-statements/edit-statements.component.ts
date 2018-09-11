@@ -12,6 +12,9 @@ import { SurveyService } from '../../survey.service';
 
 export class EditStatementsComponent implements OnInit {
 
+  CHAR_LIMIT = 350;
+  STATE_LIMIT = 80;
+
   @Input() statements: any[];
   @Input() disabled: boolean;
   @Output() status = new EventEmitter<boolean>();
@@ -25,31 +28,39 @@ export class EditStatementsComponent implements OnInit {
       this.createForm();
     }
 
-    createForm() {
-      this.angForm = this.fb.group({
-        statement: ['', Validators.required ]
-      });
+  private createForm() {
+    this.angForm = this.fb.group({
+      statement: ['', Validators.required ]
+    });
+  }
+
+  private throwError(error) {
+    try { 
+      throw new Error(error); 
+    } catch (e) { 
+      alert(`${e.name}: ${e.message}`); 
     }
+  }
+
+    
 
   addStatement(statement: string) {
-    if (!this.disabled) {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server'); 
+    } else {
       this.route.params.subscribe(params => {
         // console.log(statement);
         this.surveyservice.addStatement(params['id'], statement).subscribe(res => {
           this.status.emit(true);
         });
       });
-    } else {
-      try {
-        throw new Error('Attempted to update a published server');
-      } catch (e) {
-        alert(e.name + ': ' + e.message);
-      }
     }
   }
 
   deleteStatement(statement_id) {
-    if (!this.disabled) {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server'); 
+    } else {
       this.route.params.subscribe(params => {
         if (window.confirm('Are you sure you wish to delete this statement?')) {
           this.surveyservice.deleteStatement(params['id'], statement_id).subscribe(res => {
@@ -57,12 +68,6 @@ export class EditStatementsComponent implements OnInit {
           });
         }
       });
-    } else {
-      try {
-        throw new Error('Attempted to update a published server');
-      } catch (e) {
-        alert(e.name + ': ' + e.message);
-      }
     }
   }
 

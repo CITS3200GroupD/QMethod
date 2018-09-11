@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Survey } from '../../Survey';
-import KurtOptions from '../../Survey';
 import { SurveyService } from '../../survey.service';
 
 @Component({
@@ -11,7 +10,6 @@ import { SurveyService } from '../../survey.service';
 })
 export class AdminComponent implements OnInit {
 
-  kurtOptions = KurtOptions;
   surveys: Survey[];
 
   constructor(private surveyservice: SurveyService,

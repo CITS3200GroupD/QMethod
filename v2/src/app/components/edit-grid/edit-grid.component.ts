@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import KurtOptions from '../../Survey';
+import { gridTemplates } from '../../Survey';
 
 @Component({
   selector: 'app-edit-grid',
@@ -8,7 +8,7 @@ import KurtOptions from '../../Survey';
 })
 export class EditGridComponent implements OnInit {
 
-  kurtOptions = KurtOptions;
+  gridTemplates = gridTemplates;
 
   // init: boolean;
   disabled: boolean;
@@ -41,11 +41,11 @@ export class EditGridComponent implements OnInit {
     this.offset = Math.floor( survey.range / 2 );
     this.max_rows = this.offset + 2;
 
-    this.kurtOptions.forEach( (item) => {
+    this.gridTemplates.forEach( (item) => {
       const value = item.val;
       if (Number(value) == survey.range) {
         this.max_grid = Array.from(item.defaultGrid);
-        this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
+        this.updateStatementCount();
         this.ngOnInit();
       }
     });
@@ -58,12 +58,12 @@ export class EditGridComponent implements OnInit {
     this.offset = Math.floor( range / 2 );
     this.max_rows = this.offset + 2;
 
-    this.kurtOptions.forEach( (item) => {
+    this.gridTemplates.forEach( (item) => {
       const value = item.val;
       if (Number(value) == range) {
         this.max_grid = Array.from(item.defaultGrid);
         this.grid = Array.from(this.max_grid);
-        this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
+        this.updateStatementCount();
         this.output_grid.emit(this.grid);
         this.ngOnInit();
       }
@@ -71,43 +71,51 @@ export class EditGridComponent implements OnInit {
   }
 
   @Output() output_grid = new EventEmitter<number[]>();
+  @Output() is_valid = new EventEmitter<boolean>();
 
   constructor() {
   }
+  
+  private throwError(error) {
+    try { 
+      throw new Error(error); 
+    } catch (e) { 
+      alert(`${e.name}: ${e.message}`); 
+    }
+  }
 
   addBtn(col, row) {
-    if (!this.disabled) {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server'); 
+    } else {
       this.grid[col] += 1;
       // console.log(col.toString()+','+row.toString());
       // console.log(this.grid);
-      this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
-      // console.log( this.totalStatements );
+      this.updateStatementCount();
       this.output_grid.emit(this.grid);
       this.ngOnInit();
-    } else {
-      try {
-        throw new Error('Attempted to update a published server');
-      } catch (e) {
-        alert(e.name + ': ' + e.message);
-      }
     }
   }
 
   deleteBtn(col, row) {
-    if (!this.disabled) {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server'); 
+    } else {
       this.grid[col] -= 1;
       // console.log(col.toString()+','+row.toString());
       // console.log(this.grid);
-      this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
-      // console.log( this.totalStatements );
+      this.updateStatementCount();
       this.output_grid.emit(this.grid);
       this.ngOnInit();
+    }
+  }
+
+  private updateStatementCount() {
+    this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
+    if (this.totalStatements != this.numState) {
+      this.is_valid.emit(false);
     } else {
-      try {
-        throw new Error('Attempted to update a published server');
-      } catch (e) {
-        alert(e.name + ': ' + e.message);
-      }
+      this.is_valid.emit(true);
     }
   }
 

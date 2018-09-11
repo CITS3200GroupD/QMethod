@@ -3,6 +3,10 @@ const express = require('express');
 express();
 const surveyRoutes = express.Router();
 
+const STATE_LIMIT = 80;
+const NAME_LIMIT = 100;
+const CHAR_LIMIT = 350;
+
 /***
  * Survey RESTful API
  * ============================================================================
@@ -39,9 +43,12 @@ surveyRoutes.route('/add').post( (req, res) => {
     .catch(() => {
       res.status(400).send("Unable to save to database");
     });
+  
 });
 
 // Get data (index or listing)
+
+// TODO: Check that response data is valid before returning to client
 surveyRoutes.route('/').get( (req, res) => {
     Survey.find( (err, surveys) => {
     if (err) {
@@ -54,9 +61,11 @@ surveyRoutes.route('/').get( (req, res) => {
 });
 
 // Access existing survey item for editing
+
+// TODO: Check that response data is valid before returning to client
 surveyRoutes.route('/:id').get( (req, res) => {
   // console.log(req.headers);
-  let id = req.params.id;
+  const id = req.params.id;
   Survey.findById(id, (err, survey) => {
       if (!survey) {
         res.status(400).json(err);
@@ -100,6 +109,8 @@ surveyRoutes.route('/:id').delete( (req, res) => {
 });
 
 // Add new statement
+// Validates that statement is both under CHAR_LIMIT and that
+// total statements is under STATE_LIMIT.
 surveyRoutes.route('/:id/addState').post( (req, res) => {
   let statement = req.body.statement;
 
@@ -109,9 +120,7 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
         res.status(400).json(err);
       }
       else {
-        let statements = survey.statements;
-        console.log(statement);
-        statements.push(statement); // TODO: Reject statements that are too long
+        statements.push(statement);
 
         survey.save().then(() => {
           res.json('Successfully added new statement');
@@ -122,10 +131,9 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
         });
       }
     });
-  }
-  else {
-    res.status(400).send("Bad param");
-  }
+    } else {
+      res.status(400).send("Unable to update the database: Maximum character length exceeded");
+    }
 });
 
 // Delete statement from database
