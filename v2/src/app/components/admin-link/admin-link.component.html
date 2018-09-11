@@ -1,0 +1,31 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-private-link">Private Link</h4>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="angForm">
+          <label>URL for survey</label>
+          <div class="input-group">
+            <input class="form-control" formControlName="private_link" #private_linkreadonly>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-clipboard"></i>
+              </button>
+            </div>
+          </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Done</button>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="survey.publish" class="btn btn-light" (click)="open(content)">
+      <i class="fas fa-external-link-alt"></i> <div class="d-none d-lg-inline"> Link</div>
+  </button>
+  <button *ngIf="!survey.publish" class="btn btn-outline-light disabled">
+      <i class="fas fa-external-link-alt"></i> <div class="d-none d-lg-inline"> Link</div>
+  </button>

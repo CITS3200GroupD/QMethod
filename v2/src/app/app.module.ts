@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';   // Routing
 import { HttpClientModule } from '@angular/common/http'; // http client for ng<->express
 import { ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
 import { NgDragDropModule } from 'ng-drag-drop';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
 
 // ng services
 import { SurveyService } from './survey.service';   // survey creation http requests
@@ -16,9 +17,13 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
 // Components
 import { AppComponent } from './app.component';
 import { CreateComponent } from './components/create/create.component'; // Create Survey page
-import { IndexComponent } from './components/index/index.component';    // List of all Survey Pages
+import { AdminComponent } from './components/admin/admin.component';    // List of all Survey Pages
 import { EditComponent } from './components/edit/edit.component';
-import { InitialSortComponent } from './components/initial-sort/initial-sort.component';       // Edit Survey
+import { InitialSortComponent } from './components/initial-sort/initial-sort.component';
+import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';
+import { EditGridComponent } from './components/edit-grid/edit-grid.component';
+import { AdminLinkComponent } from './components/admin-link/admin-link.component';
+import { UserIndexComponent } from './components/user-index/user-index.component';       // Edit Survey
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -27,12 +32,20 @@ const routes: Routes = [
     component: CreateComponent
   },
   {
+    path: 'survey/:id/start',
+    component: UserIndexComponent
+  },
+  {
     path: 'edit/:id',
     component: EditComponent
   },
   {
-    path: 'index',
-    component: IndexComponent
+    path: 'admin',
+    component: AdminComponent
+  },
+  {
+    path: 'initial-sort',
+    component: InitialSortComponent
   },
   {
     path: 'initial-sort',
@@ -44,9 +57,13 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     CreateComponent,
-    IndexComponent,
+    AdminComponent,
     EditComponent,
-    InitialSortComponent
+    InitialSortComponent,
+    EditStatementsComponent,
+    EditGridComponent,
+    AdminLinkComponent,
+    UserIndexComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +72,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     SlimLoadingBarModule,
     ReactiveFormsModule,
-    NgDragDropModule.forRoot()
+    NgDragDropModule.forRoot(),
+    NgbModule
   ],
   providers: [SurveyService],
   bootstrap: [AppComponent]

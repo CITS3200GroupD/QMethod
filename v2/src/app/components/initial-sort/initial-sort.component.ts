@@ -8,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class InitialSortComponent implements OnInit {
 
   statements = [
-    {id: 1, statement: "statement 1"},
-    {id: 2, statement: "statement 2"},
-    {id: 3, statement: "statement 3"}
+    {id: 1, statement: 'statement 1'},
+    {id: 2, statement: 'statement 2'},
+    {id: 3, statement: 'statement 3'}
   ];
 
   disagree = [];
@@ -30,7 +30,7 @@ export class InitialSortComponent implements OnInit {
     this.agree.push(e.dragData);
   }
 
-  //not done: statement does not dissapear after dropping
+  // not done: statement does not dissapear after dropping
   /*removeItem(e: any) {
     if (this.statements.indexOf(e.id) > -1) {
       var index = this.statements.indexOf(e.id);
@@ -38,12 +38,10 @@ export class InitialSortComponent implements OnInit {
       console.log("statement " + index);
     }
 
-    
       var index = this.disagree.indexOf(e.statement);
       this.disagree.splice(index, 1);
       console.log("disagree " + e.id);
       console.log(index);
-    
   }*/
 
   constructor() { }

@@ -1,0 +1,25 @@
+<label class="col-md-4">Statements</label>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let statement of statements; let i = index" [attr.data-index]="i"> 
+      <p> {{statement}}
+        <span class="btn-group float-right">
+          <button *ngIf="!disabled" (click)="deleteStatement(i)" class="btn btn-danger btn-sm">
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </span>
+      </p>
+  </li>
+</ul>
+
+<form [formGroup]="angForm" *ngIf="!disabled" >
+    <div class="input-group">
+      <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="statement" #statement /> 
+      
+      <div class="input-group-append">
+          <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="statements.length >= STATE_LIMIT" class="btn btn-secondary">
+            <i class="fas fa-plus"></i> Add
+          </button>
+      </div>
+    </div>
+  </form>

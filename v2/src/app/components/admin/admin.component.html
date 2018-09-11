@@ -2,7 +2,8 @@
   <thead>
   <tr>
     <td>Survey</td>
-    <td>Kurtosis</td>
+    <td>Statements</td>
+    <td>Responses</td>
     <td>View</td>
     <td>Actions</td>
   </tr>
@@ -10,31 +11,24 @@
 
   <tbody>
     <tr *ngFor="let survey of surveys">
-      <td>{{ survey.survey_name }}</td>
-      <td>
-        <div *ngFor="let option of kurtOptions">
-          <div *ngIf="survey.survey_kurt==option.val">
-            {{option.label}}
-          </div>
-        </div>
-      </td>
+      <td>{{ survey.name }}</td>
+      <td>{{ survey.statements.length }}</td>
+      <td>0</td> <!-- TODO: Replace with actual user count-->
       <td>
         <div class="btn-group">
           <a [routerLink]="['/edit', survey._id]" class="btn btn-primary">
             <!-- TODO: Routing, Results component-->
-            <i class="fa fa-list"></i> Results
+            <i class="fa fa-list"></i> <div class="d-none d-lg-inline"> Results</div>
           </a>
         </div>
       </td>
       <td>
         <div class="btn-group">
           <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
-            <i class="fas fa-wrench"></i> Edit
+            <i class="fas fa-wrench"></i><div class="d-none d-lg-inline"> Edit</div>
           </a>
-          <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
-            <!-- TODO: Routing, Share component-->
-            <i class="fas fa-external-link-alt"></i> Link
-          </a>
+          <!-- TODO: Routing, Share component-->
+          <app-admin-link [survey]="survey"></app-admin-link>
         </div>
       </td>
       <td>
@@ -45,3 +39,6 @@
     </tr>
   </tbody>
 </table>
+<a [routerLink]="['/create']" class="btn btn-secondary btn-block">
+  Create New Survey
+</a>
