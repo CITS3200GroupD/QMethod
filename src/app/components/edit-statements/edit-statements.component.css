@@ -11,3 +11,7 @@
 p {
     margin-bottom: 5px;
 }
+
+::-webkit-scrollbar { 
+    display: none; 
+}
