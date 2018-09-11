@@ -1,5 +1,6 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';    // ng<->express client
+import { gridTemplates } from './Survey';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ import { HttpClient } from '@angular/common/http';    // ng<->express client
 
 export class SurveyService {
 
+  gridTemplates = gridTemplates;
   uri: String;
 
   constructor(private http: HttpClient) {
@@ -39,16 +41,26 @@ export class SurveyService {
   }
 
   addSurvey(name, range, statements) {
-    const obj = {
-      name: name,
-      range: range,
-      cols: [],
-      publish: false,
-      statements: statements,
-      users: []
-    };
-    this.http.post(`${this.uri}/add`, obj)
-        .subscribe(res => console.log('Done'));
+    let cols;
+    this.gridTemplates.forEach( (item) => {
+      const value = item.val;
+      // Find default grid
+      if (Number(value) == range) {
+        cols = Array.from(item.defaultGrid);
+      }
+    });
+    if (cols) {
+      const obj = {
+        name: name,
+        range: range,
+        cols: cols,
+        publish: false,
+        statements: statements,
+        users: []
+      };
+      this.http.post(`${this.uri}/add`, obj)
+          .subscribe(res => console.log('Done'));
+    }
   }
 
   getSurveys() {
@@ -63,13 +75,14 @@ export class SurveyService {
             .get(`${this.uri}/${id}`);
   }
 
-  updateSurvey(name, range, cols, publish, id) {
+  updateSurvey(name, range, cols, publish, users, id) {
 
     const obj = {
       name: name,
-      cols: cols,
       range: range,
+      cols: cols,
       publish: publish,
+      users: users
     };
     this
       .http

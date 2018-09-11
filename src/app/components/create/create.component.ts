@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core'; // ng core
 import { Router } from '@angular/router'; // ng router
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng reactive  form
 import { SurveyService } from '../../survey.service';     // survey service
+import { gridTemplates } from '../../Survey';
 
-import KurtOptions from '../../Survey';
+const DEFAULT_RANGE = 11;
 
 // core
 @Component({
@@ -13,7 +14,7 @@ import KurtOptions from '../../Survey';
 })
 export class CreateComponent implements OnInit {
 
-  kurtOptions = KurtOptions;
+  gridTemplates = gridTemplates;
 
   angForm: FormGroup;
 
@@ -46,7 +47,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.angForm.get('survey_range').setValue(9);
+    this.angForm.get('survey_range').setValue(DEFAULT_RANGE);
   }
 
 }

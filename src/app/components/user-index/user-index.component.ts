@@ -11,9 +11,9 @@ export class UserIndexComponent implements OnInit {
   id: String;
 
   constructor(private route: ActivatedRoute,
-    private router: Router) { 
+    private router: Router) {
       this.route.params.subscribe(params => {
-        this.id = params['id']
+        this.id = params['id'];
       });
     }
 
