@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row justify-content-center" style="padding-top:25px">
+      <div class="col align-self-center">
+        <div class="card main-card" *ngIf="!statements.length"></div>
+        <div class="card main-card text-center" *ngIf="statements.length" draggable [dragData]="statements[0]"> 
+          <div class="card-body">
+            <h3>{{statements[0].statement}}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center" style="padding-top:25px">
+      <div class="btn-group">
+        <div class="btn btn-light"> <i class="fas fa-chevron-left"></i> </div>
+        <div class="btn btn-light disabled"> 34/34 </div>
+        <div class="btn btn-light"> <i class="fas fa-chevron-right"></i> </div>
+      </div>
+    </div>
+
+    <div class="row" style="padding-top:25px">
+      <div class="col-md-4">
+        <div class="list-group" >
+          <li class="list-group-item bg-danger">
+            <h5>Disagree</h5>
+          </li>
+        </div>
+        <div class="list-group scroll-box" droppable (onDrop)="onDisagreeDrop($event)">
+          <li class="list-group-item no-gap" *ngFor="let statement of disagree" draggable [dragData]="statement">
+            <p>{{statement.statement}}</p>
+          </li>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="list-group">
+          <li class="list-group-item bg-warning">
+            <h5>Neutral</h5>
+          </li>
+        </div>
+        <div class="list-group scroll-box" droppable (onDrop)="onNeutralDrop($event)">
+          <li class="list-group-item no-gap" *ngFor="let statement of neutral" draggable [dragData]="statement">
+            <p>{{statement.statement}}</p>
+          </li>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="list-group">
+          <li class="list-group-item bg-success">
+            <h5>Agree</h5>
+          </li>
+        </div>
+        <div class="list-group scroll-box" droppable (onDrop)="onAgreeDrop($event)">
+          <li class="list-group-item no-gap" *ngFor="let statement of agree" draggable [dragData]="statement">
+            <p>{{statement.statement}}</p>
+          </li>
+        </div>
+      </div>
+
+    </div>
+  </div>

@@ -1,0 +1,28 @@
+.main-card {
+    text-align: center;
+    vertical-align: middle;
+    height: 15rem;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.scroll-box {
+    height: 425px;
+    overflow-y: scroll;
+}
+
+.list-group .no-gap{
+    padding-bottom: 0.1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.fixed-dropboxes {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}

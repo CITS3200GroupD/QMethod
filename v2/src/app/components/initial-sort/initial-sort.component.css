@@ -1,8 +1,4 @@
-.card {
-    margin-bottom: 1px;
-}
-
-.custom-temp {
+.container {
     width: 200px;
     height: 300px;
     margin: 20px;
@@ -13,20 +9,10 @@
 .statement {
     width: 180px;
     padding: 10px;
-    
+
     background-color:rgba(255, 255, 255, 0.3);
 }
 
 .column {
     float: left;
-}
-
-.scroll-box {
-    height:425px;
-    overflow-y: scroll;
-}
-.list-group .no-gap{
-    padding-bottom: 0.1rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
 }

@@ -1,69 +1,27 @@
-<div class="container">
-  <div class="row">
-    <div>
-      <h2>Sort the following statements</h2>
-      <div class="statement" style="height: 100px; overflow: auto;">
-        <div draggable *ngFor="let statement of statements" [dragData]="statement">{{statement.statement}}</div>
-      </div>
-    </div>
-    
-    <div>
-      <div class="column">
-        <h2>Disagree</h2>
-          <div class = "custom-temp" style="background-color:red" droppable (onDrop)="onDisagreeDrop($event)">
-            <div class="statement" *ngFor="let statement of disagree" draggable [dragData]="statement">{{statement.statement}}</div>
-          </div>
-      </div>
-      <div class="column">
-        <h2>Neutral</h2>
-        <div class = "custom-temp" style="background-color:yellow" droppable (onDrop)="onNeutralDrop($event)">
-          <div class="statement" *ngFor="let statement of neutral" draggable [dragData]="statement">{{statement.statement}}</div>
-        </div>
-      </div>
-      <div class="column">
-        <h2>Agree</h2>
-        <div class = "custom-temp" style="background-color:green" droppable (onDrop)="onAgreeDrop($event)">
-          <div class="statement" *ngFor="let statement of agree" draggable [dragData]="statement">{{statement.statement}}</div>
-        </div>
-      </div>
-    </div>
+<div>
+  <h2>Sort the following statements</h2>
+  <div class="statement" style="height: 100px; overflow: auto;">
+    <div draggable *ngFor="let statement of statements" [dragData]="statement">{{statement.statement}}</div>
   </div>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="list-group">
-        <li class="list-group-item bg-danger">
-          <h5>Disagree</h5>
-        </li>
+</div>
+
+<div>
+  <div class="column">
+    <h2>Disagree</h2>
+      <div class = "container" style="background-color:red" droppable (onDrop)="onDisagreeDrop($event)">
+        <div class="statement" *ngFor="let statement of disagree" draggable [dragData]="statement">{{statement.statement}}</div>
       </div>
-      <div class="list-group scroll-box">
-        <li class="list-group-item no-gap">
-            <p>This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-        </li>
+  </div>
+  <div class="column">
+    <h2>Neutral</h2>
+    <div class = "container" style="background-color:yellow" droppable (onDrop)="onNeutralDrop($event)">
+        <div class="statement" *ngFor="let statement of neutral" draggable [dragData]="statement">{{statement.statement}}</div>
       </div>
-    </div>
-    <div class="col-md-4">
-        <div class="list-group">
-          <li class="list-group-item bg-warning">
-            <h5>Neutral</h5>
-          </li>
-        </div>
-        <div class="list-group scroll-box">
-          <li class="list-group-item no-gap">
-              <p>This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-          </li>
-        </div>
+  </div>
+  <div class="column">
+    <h2>Agree</h2>
+    <div class = "container" style="background-color:green" droppable (onDrop)="onAgreeDrop($event)">
+        <div class="statement" *ngFor="let statement of agree" draggable [dragData]="statement">{{statement.statement}}</div>
       </div>
-      <div class="col-md-4">
-          <div class="list-group">
-            <li class="list-group-item bg-success">
-              <h5>Agree</h5>
-            </li>
-          </div>
-          <div class="list-group scroll-box">
-            <li class="list-group-item no-gap">
-                <p>This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-            </li>
-          </div>
-        </div>
   </div>
 </div>
