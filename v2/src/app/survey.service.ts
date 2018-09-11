@@ -1,4 +1,4 @@
-import {  isDevMode, Injectable } from '@angular/core';           // ng core
+import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';    // ng<->express client
 
 @Injectable({

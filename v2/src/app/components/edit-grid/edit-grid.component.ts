@@ -62,7 +62,7 @@ export class EditGridComponent implements OnInit {
       const value = item.val;
       if (Number(value) == range) {
         this.max_grid = Array.from(item.defaultGrid);
-        this.grid = Array.from(this.max_grid);  
+        this.grid = Array.from(this.max_grid);
         this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
         this.output_grid.emit(this.grid);
         this.ngOnInit();
@@ -73,7 +73,6 @@ export class EditGridComponent implements OnInit {
   @Output() output_grid = new EventEmitter<number[]>();
 
   constructor() {
-    console.log("constructor");
   }
 
   addBtn(col, row) {
