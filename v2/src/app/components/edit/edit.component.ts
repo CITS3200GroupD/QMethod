@@ -14,7 +14,9 @@ export class EditComponent implements OnInit {
   kurtOptions = KurtOptions;
 
   survey: any = {};
+  range: number;
   angForm: FormGroup;
+  cols: number[];
   label_x: number;
   range_y: number;
 
@@ -35,8 +37,8 @@ export class EditComponent implements OnInit {
     }
 
     updateRange(range) {
+      this.range = range;
       if (!this.survey.publish) {
-        this.survey.range = range;
       } else {
         try {
           throw new Error('Attempted to update a published server');
@@ -46,10 +48,16 @@ export class EditComponent implements OnInit {
       }
     }
 
+    updateGrid(cols) {
+      if (!this.survey.publish) {
+        this.cols = cols;
+      }
+    }
+
     updateSurvey(name, range) {
       if (!this.survey.publish) {
         this.route.params.subscribe(params => {
-          this.surveyservice.updateSurvey(name, range, false, params['id']);
+          this.surveyservice.updateSurvey(name, range, this.cols, false, params['id']);
           setTimeout(() => {
             // this.router.navigate(['admin']);
             this.ngOnInit();
@@ -69,7 +77,7 @@ export class EditComponent implements OnInit {
       if (window.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
         this.survey.publish = true;
         this.route.params.subscribe(params => {
-          this.surveyservice.updateSurvey(this.survey.name, this.survey.range, true, params['id']);
+          this.surveyservice.updateSurvey(this.survey.name, this.survey.range, this.cols, true, params['id']);
           setTimeout(() => {
             this.router.navigate(['admin']);
             // this.ngOnInit();

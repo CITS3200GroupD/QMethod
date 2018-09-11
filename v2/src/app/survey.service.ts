@@ -38,17 +38,14 @@ export class SurveyService {
     }
   }
 
-  addSurvey(name, range) {
+  addSurvey(name, range, statements) {
     const obj = {
       name: name,
       range: range,
+      cols: [],
       publish: false,
-      // TODO: Statement importing - remove this
-      statements: [ 'Testing 1', 'Testing 2', 'Testing 3', 'Testing 4', 'Testing 5',
-                    'Testing 6', 'Testing 7', 'Testing 8', 'Testing 9', 'Testing 10',
-                  'Super long statements should be this length to test if this is a viable or not in the long run.']
+      statements: statements
     };
-    // console.log(obj);
     this.http.post(`${this.uri}/add`, obj)
         .subscribe(res => console.log('Done'));
   }
@@ -66,10 +63,11 @@ export class SurveyService {
             .get(`${this.uri}/${id}`);
   }
 
-  updateSurvey(name, range, publish, id) {
+  updateSurvey(name, range, cols, publish, id) {
 
     const obj = {
       name: name,
+      cols: cols,
       range: range,
       publish: publish,
     };

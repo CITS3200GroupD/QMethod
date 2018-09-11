@@ -3,6 +3,7 @@ export interface Survey {
     publish: boolean;
     name: String;
     range: number;
+    grid: number[];
 }
 
 export const KurtOptions = [
