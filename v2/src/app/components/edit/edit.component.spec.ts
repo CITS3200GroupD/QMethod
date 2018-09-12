@@ -13,9 +13,9 @@ describe('EditComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditComponent ],
-      imports: [ RouterTestingModule, 
-                FormsModule, 
-                ReactiveFormsModule, 
+      imports: [ RouterTestingModule,
+                FormsModule,
+                ReactiveFormsModule,
                 HttpClientModule],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
