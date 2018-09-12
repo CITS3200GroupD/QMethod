@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyService } from '../../survey.service';     // Survey API
+// import { UserService } from '../../user.service';      // User API
 
 @Component({
   selector: 'app-initial-sort',
@@ -21,40 +23,65 @@ export class InitialSortComponent implements OnInit {
   ];
   */
 
-  // error = boolean;                     // TODO: Error message on invalid survey id
-  TEMP_id = "5b979b3df196c457ac0ddbe2";   // Placeholder
+  // error = boolean;                     // TODO: Invalid survey message box on invalid survey id
+
+  id: String;
   survey: any = {};
 
-  current_index: number;
-
   // TODO: Change to index display
-  statementObjs: object[];                 // TODO: Store statements as { id: number, string: String }
-  disagree: String[];
-  neutral: String[];
-  agree: String[];
+  current_index: number = 0;
+  statementObjs: object[] = [];                 // TODO: Store statements as { id: number, string: String }
 
-  constructor( private surveyservice: SurveyService) { 
-    this.surveyservice.getSurvey(this.TEMP_id).subscribe(res => {
-      this.survey = res;
-      this.disagree = [];
-      this.neutral = [];
-      this.agree = [];
+  disagree: String[] = [];
+  neutral: String[] = [];
+  agree: String[] = [];
 
-      // TODO: Loop over statements array, record index in { id: __ } and string in {string:___ }
-      this.generateStatementsArray();
+  disagree_update: number[] = [];
+  neutral_update: number[] = [];
+  agree_update: number[] = [];
+
+  TEMP_int_disagree: number[] = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  TEMP_int_neutral: number[] = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+  TEMP_int_agree: number[] =  [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42];
+
+  constructor( private route: ActivatedRoute,
+    private router: Router,
+    private surveyservice: SurveyService,
+    // private userservice: UserService
+  ) {
+    this.route.params.subscribe(params => {
+      this.surveyservice.getSurvey(params['id']).subscribe(res => {
+        this.survey = res;
+        this.statementObjs = this.survey.statements;    // TODO: Comment out
+
+        // TODO: Loop over statements array, record index in { id: __ } and string in {string:___ }
+        this.generateStatementsArray();
+      });
     });
   }
 
   // TODO: Loop over statements array, record index in { id: __ } and string in {string:___ }
   private generateStatementsArray() {
     // this.statements.forEach( (item, index) => { }
-    console.log("generateStatementsArray() called");
-    console.log(this.statementObjs);
+    console.log('generateStatementsArray() called');
+    // console.log(this.statementObjs);
+  }
+
+  increaseIndex() {
+    if (this.current_index+1 < this.statementObjs.length) {
+      this.current_index++;
+    }
+  }
+
+  decreaseIndex() {
+    if (this.current_index > 0) {
+      this.current_index--;
+    }
   }
 
   onDisagreeDrop(e: any) {
     this.removeDisagree(e.dragData);
-    this.disagree.push(e.dragData);
+    this.disagree.push(e.dragData);   // TODO: push string to disagree and index value to disagree_update
     this.removeStatement(e.dragData);
     this.removeNeutral(e.dragData);
     this.removeAgree(e.dragData);
@@ -62,7 +89,7 @@ export class InitialSortComponent implements OnInit {
 
   onNeutralDrop(e: any) {
     this.removeNeutral(e.dragData);
-    this.neutral.push(e.dragData);
+    this.neutral.push(e.dragData);  // TODO: push string to disagree and index value to disagree_update
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeAgree(e.dragData);
@@ -70,36 +97,39 @@ export class InitialSortComponent implements OnInit {
 
   onAgreeDrop(e: any) {
     this.removeAgree(e.dragData);
-    this.agree.push(e.dragData);
+    this.agree.push(e.dragData); // TODO: push string to disagree and index value to disagree_update
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeNeutral(e.dragData);
   }
 
   removeStatement(e: any) {
-    // TODO: use statementsObj array instead of survey.statements
-    this.survey.statements.forEach( (item, index) => {
-      if (item == e) this.survey.statements.splice(index, 1);
+    // TODO: use item.string == e.string
+    this.statementObjs.forEach( (item, index) => {
+      if (item == e) this.statementObjs.splice(index, 1);
     });
+    if (this.current_index >= this.statementObjs.length) {
+      --this.current_index;
+    }
   }
 
   removeDisagree(e: any) {
     this.disagree.forEach( (item, index) => {
-      // TODO: use statementsObj instead of statements string
+      // TODO: use item.string == e.string
       if (item == e) this.disagree.splice(index, 1);
     });
   }
 
   removeNeutral(e: any) {
     this.neutral.forEach( (item, index) => {
-      // TODO: use statementsObj instead of statements string
+      // TODO: use item.string == e.string
       if (item == e) this.neutral.splice(index, 1);
     });
   }
 
   removeAgree(e: any) {
     this.agree.forEach( (item, index) => {
-      // TODO: use statementsObj instead of statements string
+      // TODO: use item.string == e.string
       if (item == e) this.agree.splice(index, 1);
     });
   }
@@ -107,6 +137,14 @@ export class InitialSortComponent implements OnInit {
   // TODO: button (hidden when arrays are not filled) that
   // 1) submits userdata to user api 
   // 2) goes to q-sort page
+  publishSortContinue() {
+    console.log('publishSortContinue()');
+    //this.userservice.updateUser(this.TEMP_int_disagree, this.TEMP_int_neutral, this.TEMP_int_agree, this.id);
+    setTimeout(() => {
+      //this.router.navigate(['q-sort']);
+    },
+    500);
+  }
 
   ngOnInit() {
   }

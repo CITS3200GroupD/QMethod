@@ -1,11 +1,11 @@
 <div class="container">
     <div class="row justify-content-center" style="padding-top:25px">
       <div class="col align-self-center">
-        <!-- TODO: find and replace "survey.statements" with "statementObjs" -->
-        <div class="card main-card" *ngIf="!survey.statements.length"></div>
-        <div class="card main-card text-center" *ngIf="survey.statements.length" draggable [dragData]="survey.statements[0]"> 
+        <div class="card main-card" *ngIf="!statementObjs.length"></div>
+        <div class="card main-card text-center" *ngIf="statementObjs.length" draggable [dragData]="statementObjs[0]"> 
           <div class="card-body">
-            <h3>{{ survey.statements[0] }}</h3>
+            <!-- TODO: find and replace "statementObjs[current_index]" with "statementObjs[current_index].string" -->
+            <h3>{{ statementObjs[current_index] }}</h3>
           </div>
         </div>
       </div>
@@ -13,16 +13,20 @@
     <!-- TODO: Error message on invalid survey id -->
     <div class="row justify-content-center" style="padding-top:25px">
       <div class="btn-group">
-        <div class="btn btn-light"> <i class="fas fa-chevron-left"></i> </div>
-        <!-- TODO: find and replace "survey.statements" with "statementObjs" -->
-        <div class="btn btn-light disabled"> 1/{{ survey.statements.length }}</div>
-        <div class="btn btn-light"> <i class="fas fa-chevron-right"></i> </div>
+        <button class="btn btn-light" (click)="decreaseIndex()" [disabled]="current_index <= 0"><i class="fas fa-chevron-left"></i></button>
+        <div class="btn btn-light disabled"> {{current_index+1}}/{{ statementObjs.length }}</div>
+        <button class="btn btn-light" (click)="increaseIndex()" [disabled]="current_index+1 >= statementObjs.length"><i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
+    
+    <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
+      <!-- button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
+      <button class="btn btn-block btn-outline-primary" *ngIf="!statementObjs.length" (click)="publishSortContinue()"><h5>continue</h5></button>
+    </div>
 
-    <div class="row" style="padding-top:25px">
+    <div class="row" style="padding-top:10px">
       <div class="col-md-4">
-        <div class="list-group" >
+        <div class="list-group">
           <li class="list-group-item bg-danger">
             <h5>Disagree</h5>
           </li>
@@ -62,6 +66,5 @@
           </li>
         </div>
       </div>
-
     </div>
   </div>

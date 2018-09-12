@@ -17,7 +17,7 @@
       <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="statement" #statement /> 
       
       <div class="input-group-append">
-          <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="statements.length >= STATE_LIMIT" class="btn btn-secondary">
+          <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="statementsLength >= STATE_LIMIT" class="btn btn-secondary">
             <i class="fas fa-plus"></i> Add
           </button>
       </div>

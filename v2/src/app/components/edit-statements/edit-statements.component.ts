@@ -14,8 +14,13 @@ export class EditStatementsComponent implements OnInit {
 
   CHAR_LIMIT = 350;
   STATE_LIMIT = 80;
+  statementsLength: number;
 
-  @Input() statements: any[];
+  @Input() set statements(statements: String[]) {
+    if (statements) {
+      this.statementsLength = statements.length;
+    }
+  }
   @Input() disabled: boolean;
   @Output() status = new EventEmitter<boolean>();
 
