@@ -69,7 +69,7 @@ export class SurveyService {
            .get(`${this.uri}`);
   }
 
-  editSurvey(id) {
+  getSurvey(id) {
     return this
             .http
             .get(`${this.uri}/${id}`);
