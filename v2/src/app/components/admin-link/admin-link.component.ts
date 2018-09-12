@@ -36,12 +36,34 @@ export class AdminLinkComponent implements OnInit {
       this.modalService.open(content, {ariaLabelledBy: 'modal-private-link'});
     }
   }
+  /**
+   * Copy input to clipboard
+   * Sourced from: https://stackoverflow.com/questions/36328159/how-do-i-copy-to-clipboard-in-angular-2-typescript
+   * @param input String input
+   */
+  copy(input) {
+
+    const selBox = document.createElement('textarea');
+
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = input;
+
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+}
 
   ngOnInit() {
     if (isDevMode()) {
-      this.angForm.get('private_link').setValue( `localhost:4200/survey/${this.survey._id}/start`);
+      this.angForm.get('private_link').setValue( `localhost:4200/survey/${this.survey._id}`);
     } else {
-      this.angForm.get('private_link').setValue( `${window.location.hostname}/survey/${this.survey._id}/start`);
+      this.angForm.get('private_link').setValue( `${window.location.hostname}/survey/${this.survey._id}`);
     }
   }
 }

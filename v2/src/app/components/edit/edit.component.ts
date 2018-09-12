@@ -104,7 +104,7 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       // console.log(params);
-      this.surveyservice.editSurvey(params['id']).subscribe(res => {
+      this.surveyservice.getSurvey(params['id']).subscribe(res => {
         this.survey = res;
 
         this.angForm.get('survey_id').setValue(this.survey._id);

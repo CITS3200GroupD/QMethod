@@ -32,7 +32,7 @@ const routes: Routes = [
     component: CreateComponent
   },
   {
-    path: 'survey/:id/start',
+    path: 'survey/:id',
     component: UserIndexComponent
   },
   {
@@ -44,7 +44,7 @@ const routes: Routes = [
     component: AdminComponent
   },
   {
-    path: 'initial-sort',
+    path: 'initial-sort/:id',
     component: InitialSortComponent
   },
 ];
