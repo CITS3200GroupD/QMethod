@@ -1,5 +1,5 @@
 import { isDevMode, Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute} from '@angular/router'; // ng router
+import { ActivatedRoute } from '@angular/router'; // ng router
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng reactive  form
 
@@ -14,8 +14,6 @@ export class AdminLinkComponent implements OnInit {
   survey_id: String;
 
   @Input() survey: any = {};
-
-  // @Input() survey_id: String;
 
   angForm: FormGroup;
 

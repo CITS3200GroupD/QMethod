@@ -74,6 +74,6 @@ const routes: Routes = [
     NgbModule
   ],
   providers: [SurveyService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

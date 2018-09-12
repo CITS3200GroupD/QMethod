@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { EditStatementsComponent } from './edit-statements.component';
+import { CreateComponent } from './create.component';
 
 import { RouterTestingModule  } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('EditStatementsComponent', () => {
-  let component: EditStatementsComponent;
-  let fixture: ComponentFixture<EditStatementsComponent>;
+describe('CreateComponent', () => {
+  let component: CreateComponent;
+  let fixture: ComponentFixture<CreateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditStatementsComponent ],
+      declarations: [ CreateComponent ],
       imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditStatementsComponent);
+    fixture = TestBed.createComponent(CreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
