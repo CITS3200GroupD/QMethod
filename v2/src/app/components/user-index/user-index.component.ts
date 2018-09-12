@@ -24,9 +24,12 @@ export class UserIndexComponent implements OnInit {
         });
       });
     }
+
+  
+
   // TODO: Placeholder function
   nextPage() {
-    const nextPage = `initial-sort/${this.id}`
+    const nextPage = `initial-sort/${this.id}`;
     this.router.navigate([nextPage]);
   }
 

@@ -37,13 +37,13 @@ export class AdminLinkComponent implements OnInit {
     }
   }
   /**
-   * https://stackoverflow.com/questions/36328159/how-do-i-copy-to-clipboard-in-angular-2-typescript
-   * Copy 
+   * Copy input to clipboard
+   * Sourced from: https://stackoverflow.com/questions/36328159/how-do-i-copy-to-clipboard-in-angular-2-typescript
    * @param input String input
    */
   copy(input) {
 
-    let selBox = document.createElement('textarea');
+    const selBox = document.createElement('textarea');
 
     selBox.style.position = 'fixed';
     selBox.style.left = '0';

@@ -29,7 +29,7 @@ export class InitialSortComponent implements OnInit {
   survey: any = {};
 
   // TODO: Change to index display
-  current_index: number = 0;
+  current_index = 0;
   statementObjs: object[] = [];                 // TODO: Store statements as { id: number, string: String }
 
   disagree: String[] = [];
@@ -68,7 +68,7 @@ export class InitialSortComponent implements OnInit {
   }
 
   increaseIndex() {
-    if (this.current_index+1 < this.statementObjs.length) {
+    if (this.current_index + 1 < this.statementObjs.length) {
       this.current_index++;
     }
   }
@@ -106,7 +106,7 @@ export class InitialSortComponent implements OnInit {
   removeStatement(e: any) {
     // TODO: use item.string == e.string
     this.statementObjs.forEach( (item, index) => {
-      if (item == e) this.statementObjs.splice(index, 1);
+      if (item == e) { this.statementObjs.splice(index, 1); }
     });
     if (this.current_index >= this.statementObjs.length) {
       --this.current_index;
@@ -116,32 +116,32 @@ export class InitialSortComponent implements OnInit {
   removeDisagree(e: any) {
     this.disagree.forEach( (item, index) => {
       // TODO: use item.string == e.string
-      if (item == e) this.disagree.splice(index, 1);
+      if (item == e) { this.disagree.splice(index, 1); }
     });
   }
 
   removeNeutral(e: any) {
     this.neutral.forEach( (item, index) => {
       // TODO: use item.string == e.string
-      if (item == e) this.neutral.splice(index, 1);
+      if (item == e) { this.neutral.splice(index, 1); }
     });
   }
 
   removeAgree(e: any) {
     this.agree.forEach( (item, index) => {
       // TODO: use item.string == e.string
-      if (item == e) this.agree.splice(index, 1);
+      if (item == e) { this.agree.splice(index, 1); }
     });
   }
 
   // TODO: button (hidden when arrays are not filled) that
-  // 1) submits userdata to user api 
+  // 1) submits userdata to user api
   // 2) goes to q-sort page
   publishSortContinue() {
     console.log('publishSortContinue()');
-    //this.userservice.updateUser(this.TEMP_int_disagree, this.TEMP_int_neutral, this.TEMP_int_agree, this.id);
+    // this.userservice.updateUser(this.TEMP_int_disagree, this.TEMP_int_neutral, this.TEMP_int_agree, this.id);
     setTimeout(() => {
-      //this.router.navigate(['q-sort']);
+      // this.router.navigate(['q-sort']);
     },
     500);
   }
