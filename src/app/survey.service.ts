@@ -13,11 +13,11 @@ import { gridTemplates } from './Survey';
  * GET  = getSurveys()            | respond with json of all surveys
  * ============================================================================
  * <url>/api/ add/
- * POST = addSurvey(n, k)         | create a new survey item in database
+ * POST = addSurvey(n, r)         | create a new survey item in database
  * ============================================================================
  * <url>/api/ :id
- * GET  = editSurvey(id)          | respond with survey item corresponding to id
- * POST = updateSurvey(n, k, id)  | update survey item corresponding to id
+ * GET  = getSurvey(id)           | respond with public survey item corresponding to id
+ * POST = updateSurvey( ... , id) | update survey item corresponding to id
  * DEL  = deleteSurvey(id)        | remove survey item corresponding to id
  * ============================================================================
  * <url>/api/ addState/:id
@@ -63,13 +63,14 @@ export class SurveyService {
     }
   }
 
+  // TODO: Pass private api key along with data for authentication (if exists) as administrator for full survey list access
   getSurveys() {
     return this
            .http
            .get(`${this.uri}`);
   }
 
-  editSurvey(id) {
+  getSurvey(id) {
     return this
             .http
             .get(`${this.uri}/${id}`);

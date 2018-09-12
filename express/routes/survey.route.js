@@ -120,6 +120,7 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
         res.status(400).json(err);
       }
       else {
+        let statements = survey.statements;
         statements.push(statement);
 
         survey.save().then(() => {

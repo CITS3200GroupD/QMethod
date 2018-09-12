@@ -9,9 +9,9 @@
       <form [formGroup]="angForm">
           <label>URL for survey</label>
           <div class="input-group">
-            <input class="form-control" formControlName="private_link" #private_linkreadonly>
+            <input class="form-control" formControlName="private_link" #private_link>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">
+              <button class="btn btn-outline-secondary" (click)="copy(private_link.value)" type="button">
                 <i class="fas fa-clipboard"></i>
               </button>
             </div>
