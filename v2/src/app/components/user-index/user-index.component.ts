@@ -14,8 +14,7 @@ export class UserIndexComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private surveyservice: SurveyService
-  ) {
+    private surveyservice: SurveyService) {
       this.route.params.subscribe(params => {
           this.surveyservice.getSurvey(params['id']).subscribe(res => {
             this.id = params['id'];
@@ -23,10 +22,7 @@ export class UserIndexComponent implements OnInit {
             this.valid = true;
         });
       });
-    }
-
-  
-
+  }
   // TODO: Placeholder function
   nextPage() {
     const nextPage = `initial-sort/${this.id}`;
