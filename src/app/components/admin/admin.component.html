@@ -1,3 +1,12 @@
+<!-- Search -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="input-group stylish-input-group">
+      <input type="text" class="form-control" [(ngModel)]="filter" placeholder="Search">
+    </div>
+  </div>
+</div>
+
 <!-- Table of Surveys -->
 <table class="table table-hover">
   <!-- Categories -->
@@ -13,7 +22,7 @@
   <!-- Content -->
   <tbody>
     <!-- For every survey in this.surveys -->
-    <tr *ngFor="let survey of surveys | paginate: {itemsPerPage: 9, currentPage:page, id: '1'}; let i = index">
+    <tr *ngFor="let survey of surveys | filterSurveyNames:filter | paginate: {itemsPerPage: 9, currentPage:page, id: '1'}; let i = index">
       <!-- Display name and number of statements and user count -->
       <td>{{ survey.name }}</td>
       <td>{{ survey.statements.length }}</td>
