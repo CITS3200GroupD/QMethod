@@ -10,7 +10,6 @@ import { SurveyService } from '../../survey.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-
   NAME_LIMIT = 100;
 
   gridTemplates = gridTemplates;
@@ -22,6 +21,7 @@ export class EditComponent implements OnInit {
   cols: number[];
   label_x: number;
   range_y: number;
+  page: number;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
