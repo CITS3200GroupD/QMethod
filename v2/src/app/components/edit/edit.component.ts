@@ -71,7 +71,7 @@ export class EditComponent implements OnInit {
     } else {
       this.route.params.subscribe(params => {
         this.surveyservice.updateSurvey(name, range, this.cols, false, this.survey.users, params['id'])
-          .subscribe( res => this.successfulUpdate(res, false), 
+          .subscribe( res => this.successfulUpdate(res, false),
                       err => this.failedUpdate(err));
       });
     }
@@ -100,7 +100,7 @@ export class EditComponent implements OnInit {
     } else {
       if (window.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
         this.survey.publish = true;
-        this.route.params.subscribe(params => { 
+        this.route.params.subscribe(params => {
           this.surveyservice.updateSurvey(this.survey.name, this.survey.range, this.cols, true, this.survey.users, params['id'])
             .subscribe( res => this.successfulUpdate(res, true) );
         });
