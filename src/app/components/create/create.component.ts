@@ -15,6 +15,7 @@ const DEFAULT_RANGE = 11;
 export class CreateComponent implements OnInit {
 
   gridTemplates = gridTemplates;
+  statements: string[];
 
   angForm: FormGroup;
 
@@ -34,18 +35,48 @@ export class CreateComponent implements OnInit {
   }
 
   addSurvey(name, range) {
-    const statements = [ 'Testing 1', 'Testing 2', 'Testing 3', 'Testing 4', 'Testing 5',
-                    'Testing 6', 'Testing 7', 'Testing 8', 'Testing 9', 'Testing 10',
-                  'Super long statements should be this length to test if this is a viable or not in the long run.'];
-    this.surveyservice.addSurvey(name, range, statements);
+    const TEMP_statements = [ 
+      'I can see myself fostering understanding between Australia and yyy', 
+      'I can see myself enjoying recreational activities with yyy people',
+      'I can see myself speaking yyy better than many other Australians',
+      'I can see myself studying in yyy',
+      'I can see myself taking the WACE exam in yyy',
+      'I can see myself as a more knowledgeable person',
+      'I can see myself able to better understand people from any other culture',
+      'I can see myself fostering understanding between Australia and yyy 2', 
+      'I can see myself enjoying recreational activities with yyy people 2',
+      'I can see myself speaking yyy better than many other Australians 2',
+      'I can see myself studying in yyy 2',
+      'I can see myself taking the WACE exam in yyy 2',
+      'I can see myself as a more knowledgeable person 2',
+      'I can see myself able to better understand people from any other culture 2',
+      'I can see myself fostering understanding between Australia and yyy 3', 
+      'I can see myself enjoying recreational activities with yyy people 3',
+      'I can see myself speaking yyy better than many other Australians 3',
+      'I can see myself studying in yyy 3',
+      'I can see myself taking the WACE exam in yyy 3',
+      'I can see myself as a more knowledgeable person 3',
+      'I can see myself able to better understand people from any other culture 3',
+      'I can see myself fostering understanding between Australia and yyy 4', 
+      'I can see myself enjoying recreational activities with yyy people 4',
+      'I can see myself speaking yyy better than many other Australians 4',
+      'I can see myself studying in yyy 4',
+      'I can see myself taking the WACE exam in yyy 4',
+      'I can see myself as a more knowledgeable person 4',
+      'I can see myself able to better understand people from any other culture 4',
+      'I can see myself fostering understanding between Australia and yyy 5', 
+      'I can see myself enjoying recreational activities with yyy people 5',
+      'I can see myself speaking yyy better than many other Australians 5',
+      'I can see myself studying in yyy 5',
+      'I can see myself taking the WACE exam in yyy 5',
+      'I can see myself as a more knowledgeable person 5',
+      'I can see myself able to better understand people from any other culture 5'
+    ];
+    this.surveyservice.addSurvey(name, range, TEMP_statements);
     setTimeout(() => {
       this.router.navigate(['admin']);
     },
     500);
-  }
-
-  compareFn(c1: any, c2: any): boolean {
-    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
   ngOnInit() {

@@ -39,9 +39,10 @@ surveyRoutes.route('/add').post( (req, res) => {
   survey.save()
     .then(() => {
       console.log('Added Survey');
+      res.status(200).json('Successfully Updated');
     })
-    .catch(() => {
-      res.status(400).send("Unable to save to database");
+    .catch((err) => {
+      res.status(400).send(`Unable to update - ${err.message}`);
     });
   
 });
@@ -55,7 +56,7 @@ surveyRoutes.route('/').get( (req, res) => {
       res.status(400).json(err);
     }
     else {
-      res.json(surveys);
+      res.status(200).json(surveys);
     }
   });
 });
@@ -70,7 +71,7 @@ surveyRoutes.route('/:id').get( (req, res) => {
       if (!survey) {
         res.status(400).json(err);
       }
-      res.json(survey);
+      res.status(200).json(survey);
   });
 });
 
@@ -89,9 +90,10 @@ surveyRoutes.route('/:id').post( (req, res) => {
 
       survey.save().then(() => {
         console.log('Updated Survey');
+        res.status(200).json('Successfully Updated');
       })
-      .catch(() => {
-        res.status(400).send("Unable to update the database");
+      .catch((err) => {
+        res.status(400).send(`Unable to update - ${err.message}`);
       });
     }
   });
@@ -100,9 +102,11 @@ surveyRoutes.route('/:id').post( (req, res) => {
 // Delete survey item from database
 surveyRoutes.route('/:id').delete( (req, res) => {
   Survey.findByIdAndRemove({_id: req.params.id}, (err) => {
-    if (err) res.json(err);
+    if (err) { 
+      res.status(400).json(err);
+    }
     else {
-      res.json('Successfully removed');
+      res.status(200).json('Successfully removed');
       console.log('Survey deleted');
     }
   });
@@ -124,11 +128,11 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
         statements.push(statement);
 
         survey.save().then(() => {
-          res.json('Successfully added new statement');
+          res.status(200).json('Successfully added new statement');
           console.log('Added Statement');
         })
-        .catch(() => {
-          res.status(400).send("Unable to update the database");
+        .catch((err) => {
+          res.status(400).send(`Unable to update - ${err.message}`);
         });
       }
     });
@@ -151,11 +155,11 @@ surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
         statements.splice(statement_index, 1);
 
         survey.save().then(() => {
-          res.json('Successfully removed');
+          res.status(200).json('Successfully removed');
           console.log('Removed Statement');
         })
-        .catch(() => {
-          res.status(400).send("Unable to update the database");
+        .catch((err) => {
+          res.status(400).send(`Unable to update - ${err.message}`);
         });
       }
       else {
