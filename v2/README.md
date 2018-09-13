@@ -1,6 +1,6 @@
 # QMethod v2
 
-[![CodeFactor](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod/badge)](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod/badge)
+[![CodeFactor](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod/badge)](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod)
 [![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
 
 QMethod Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
