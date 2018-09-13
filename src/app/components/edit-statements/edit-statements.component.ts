@@ -16,12 +16,12 @@ export class EditStatementsComponent implements OnInit {
 
   CHAR_LIMIT = 350;
   STATE_LIMIT = 80;
-  numStatements = 0;
+  statements: String[];
 
-  @Input() set statements(statements: String[]) {
+  @Input() set statements_input(statements_input: String[]) {
     // Fix for calling of input with undefined value
-    if (statements) {
-      this.numStatements = statements.length;
+    if (statements_input) {
+      this.statements = statements_input;
     }
   }
   @Input() disabled: boolean;
