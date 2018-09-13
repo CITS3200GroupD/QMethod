@@ -9,7 +9,8 @@ import { SurveyService } from '../../survey.service';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-
+  
+  filter: string;
   page: number;
   surveys: Survey[];
 
