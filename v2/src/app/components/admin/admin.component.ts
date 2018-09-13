@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { Survey } from '../../Survey';
 import { SurveyService } from '../../survey.service';
@@ -9,7 +9,9 @@ import { SurveyService } from '../../survey.service';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-
+  
+  filter: string;
+  page: number;
   surveys: Survey[];
 
   constructor(private surveyservice: SurveyService,
@@ -31,5 +33,18 @@ export class AdminComponent implements OnInit {
       .subscribe((data: Survey[]) => {
       this.surveys = data;
     });
+  }
+}
+/**
+ * Pipe for searching through survey data
+ * from https://stackoverflow.com/questions/51649758/contact-list-with-search-filter
+ */
+@Pipe({name: 'filterSurveyNames'})
+export class SurveyPipe implements PipeTransform {
+  transform(surveys: Survey[], filter: string): Survey[] {
+    if(!surveys) return null;
+    if(!filter) return surveys;
+
+    return surveys.filter(n => n.name.indexOf(filter) >= 0);
   }
 }

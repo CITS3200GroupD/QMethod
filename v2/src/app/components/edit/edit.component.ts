@@ -10,7 +10,6 @@ import { SurveyService } from '../../survey.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-
   NAME_LIMIT = 100;
 
   gridTemplates = gridTemplates;
@@ -71,12 +70,27 @@ export class EditComponent implements OnInit {
       this.throwError('Invalid Grid');
     } else {
       this.route.params.subscribe(params => {
-        this.surveyservice.updateSurvey(name, range, this.cols, false, this.survey.users, params['id']);
-        setTimeout(() => {
-          this.ngOnInit();
-        },
-        500);
+        this.surveyservice.updateSurvey(name, range, this.cols, false, this.survey.users, params['id'])
+          .subscribe( res => this.successfulUpdate(res, false), 
+                      err => this.failedUpdate(err));
       });
+    }
+  }
+
+  private successfulUpdate(res, go_home) {
+    if (window.confirm('Successfully Updated!')) {
+      if (go_home) {
+        this.router.navigate(['admin']);
+      } else {
+        this.ngOnInit();
+      }
+    }
+  }
+
+  private failedUpdate(err) {
+    console.error(err);
+    if (window.confirm(`${err.error}`)) {
+      this.ngOnInit();
     }
   }
 
@@ -86,12 +100,9 @@ export class EditComponent implements OnInit {
     } else {
       if (window.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
         this.survey.publish = true;
-        this.route.params.subscribe(params => {
-          this.surveyservice.updateSurvey(this.survey.name, this.survey.range, this.cols, true, this.survey.users, params['id']);
-          setTimeout(() => {
-            this.router.navigate(['admin']);
-          },
-          500);
+        this.route.params.subscribe(params => { 
+          this.surveyservice.updateSurvey(this.survey.name, this.survey.range, this.cols, true, this.survey.users, params['id'])
+            .subscribe( res => this.successfulUpdate(res, true) );
         });
       }
     }
@@ -106,6 +117,7 @@ export class EditComponent implements OnInit {
       // console.log(params);
       this.surveyservice.getSurvey(params['id']).subscribe(res => {
         this.survey = res;
+        this.cols = this.survey.cols;
 
         this.angForm.get('survey_id').setValue(this.survey._id);
         this.angForm.get('survey_name').setValue(this.survey.name);

@@ -1,8 +1,16 @@
 # QMethod v2
+
+[![CodeFactor](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod/badge)](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod/badge)
+
+
 QMethod Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.0.3a
+Version 0.0.6a
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
+
+## Deployment
+
+Please read the following for either [a basic]() or [advanced](https://github.com/CITS3200GroupD/QMethod/wiki/Advanced-Deployment-to-Heroku) guide to deploying this MEAN stack powered application to the Heroku Cloud. 
 
 ## Development server
 

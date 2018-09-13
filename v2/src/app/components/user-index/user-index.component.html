@@ -1,8 +1,10 @@
 <div *ngIf="valid">
+<!-- Start Survey -->
 <p>
-  <button class="btn btn-primary btn-block text-center" (click)="nextPage()"><h1>Start Survey</h1></button>
+  <button class="btn btn-primary btn-block text-center" (click)="nextPage()"><h3>Start Survey</h3></button>
 </p>
 </div>
+<!--TODO: Need proper error page when invalid statement ID is passed-->
 <div *ngIf="!valid">
-  404
+  Error: Invalid Survey
 </div>

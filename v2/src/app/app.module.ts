@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http'; // http client for ng<-
 import { ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
 import { NgDragDropModule } from 'ng-drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
+import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 
 // ng services
 import { SurveyService } from './survey.service';   // survey creation http requests
@@ -16,15 +17,15 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
 
 // Components
 import { AppComponent } from './app.component';
-import { CreateComponent } from './components/create/create.component'; // Create Survey page
-import { AdminComponent } from './components/admin/admin.component';    // List of all Survey Pages
+import { CreateComponent } from './components/create/create.component';
+import { AdminComponent, SurveyPipe } from './components/admin/admin.component';
 import { EditComponent } from './components/edit/edit.component';
 import { InitialSortComponent } from './components/initial-sort/initial-sort.component';
 import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';
 import { EditGridComponent } from './components/edit-grid/edit-grid.component';
 import { AdminLinkComponent } from './components/admin-link/admin-link.component';
 import { UserIndexComponent } from './components/user-index/user-index.component';
-import { AdminUserListComponent } from './components/admin-user-list/admin-user-list.component';       // Edit Survey
+import { AdminUserListComponent } from './components/admin-user-list/admin-user-list.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -61,7 +62,8 @@ const routes: Routes = [
     EditGridComponent,
     AdminLinkComponent,
     UserIndexComponent,
-    AdminUserListComponent
+    AdminUserListComponent,
+    SurveyPipe
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ const routes: Routes = [
     SlimLoadingBarModule,
     ReactiveFormsModule,
     NgDragDropModule.forRoot(),
-    NgbModule
+    NgbModule,
+    Ng2PaginationModule
   ],
   providers: [SurveyService],
   bootstrap: [AppComponent],

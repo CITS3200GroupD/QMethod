@@ -1,9 +1,14 @@
+<!-- @Input() => [statements] -->
 <label class="col-md-4">Statements</label>
 
+<!-- List of statements -->
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let statement of statements; let i = index" [attr.data-index]="i"> 
+  <!-- Create list item for each statement & Paginate -->
+  <li class="list-group-item" *ngFor="let statement of statements | paginate: {itemsPerPage: 5, currentPage:page, id: '1'}; let i = index" [attr.data-index]="i"> 
       <p> {{statement}}
+        <!-- float delete button to right -->
         <span class="btn-group float-right">
+          <!-- Delete statement button (only if not published) -->
           <button *ngIf="!disabled" (click)="deleteStatement(i)" class="btn btn-danger btn-sm">
             <i class="far fa-trash-alt"></i>
           </button>
@@ -12,14 +17,27 @@
   </li>
 </ul>
 
+<!-- Statement Input (Only if not published) -->
 <form [formGroup]="angForm" *ngIf="!disabled" >
-    <div class="input-group">
-      <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="statement" #statement /> 
-      
-      <div class="input-group-append">
-          <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="statements.length >= STATE_LIMIT" class="btn btn-secondary">
-            <i class="fas fa-plus"></i> Add
-          </button>
-      </div>
+  <!-- Text Input (with character limit) -->
+  <div class="input-group">
+    <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="statement" #statement />
+    <!-- Add button -->
+    <div class="input-group-append">
+        <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="numStatements >= STATE_LIMIT" class="btn btn-secondary">
+          <i class="fas fa-plus"></i> Add
+        </button>
     </div>
-  </form>
+  </div>
+</form>
+
+<!-- Pagination Controls -->
+<div class="row justify-content-center">
+  <pagination-controls class="my-pagination"(pageChange)="page = $event" id="1"
+    maxSize="5"
+    directionLinks="true"
+    autoHide="true"
+    previousLabel=""
+    nextLabel="">
+  </pagination-controls>
+</div>
