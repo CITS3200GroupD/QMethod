@@ -8,9 +8,20 @@ Version 0.0.6a
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
 
+## Supported Browsers
+
+* Chrome 45+
+* Firefox 38+
+* Edge 12+
+* Internet Explorer 10+
+* iOS 9+
+* Safari 9+
+* Android 4.4+
+* Opera 30+
+
 ## Deployment
 
-Please read the following for either [a basic]() or [advanced](https://github.com/CITS3200GroupD/QMethod/wiki/Advanced-Deployment-to-Heroku) guide to deploying this MEAN stack powered application to the Heroku Cloud. 
+Please read the following for either [a basic]() or [advanced](https://github.com/CITS3200GroupD/QMethod/wiki/Advanced-Deployment-to-Heroku) guide to deploying this MEAN stack powered application to the Heroku Cloud.
 
 ## Development server
 
@@ -37,3 +48,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Dependencies
+
+* Bootstrap 5.1.3
