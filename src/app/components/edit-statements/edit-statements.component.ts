@@ -12,6 +12,8 @@ import { SurveyService } from '../../survey.service';
 
 export class EditStatementsComponent implements OnInit {
 
+  page: number;
+
   CHAR_LIMIT = 350;
   STATE_LIMIT = 80;
   numStatements = 0;

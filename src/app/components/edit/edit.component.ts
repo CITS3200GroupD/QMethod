@@ -21,7 +21,6 @@ export class EditComponent implements OnInit {
   cols: number[];
   label_x: number;
   range_y: number;
-  page: number;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
