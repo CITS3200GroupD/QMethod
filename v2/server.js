@@ -5,9 +5,14 @@ const express = require('express'),
     mongoose = require('mongoose'),
     config = require('./config/DB');
 
+    // For dev builds, use test database
+    if (process.argv[2] == 'test') {
+      process.env['MONGODB_URI'] = config.TEST_DB;
+    }
+
     // init mongoDB
     mongoose.Promise = global.Promise;
-    mongoose.connect(config.DB, {useNewUrlParser: true}).then(
+    mongoose.connect(process.env['MONGODB_URI'], {useNewUrlParser: true}).then(
       () => {console.log('Database is connected') },
       err => { console.log('Can not connect to the database'+ err)}
     );
@@ -18,6 +23,21 @@ const express = require('express'),
     app.use(bodyParser.json());
     app.use(cors());
     const port = process.env.PORT || 8080;
+
+    /**
+     * If an incoming request uses a protocol other than HTTPS,
+     * redirect that request to the same url but with HTTPS
+     */
+    const forceSSL = function() {
+      return function (req, res, next) {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+          return res.redirect(
+          ['https://', req.get('Host'), req.url].join('')
+          );
+        }
+        next();
+      }
+    }
     
     // Routes for RESTful API for Survey Data
     const surveyRoutes = require('./express/routes/survey.route');
