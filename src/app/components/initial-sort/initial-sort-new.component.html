@@ -1,5 +1,7 @@
 <div class="container">
+    <!-- Gap on top - Row 1-->
     <div class="row justify-content-center" style="padding-top:25px">
+      <!-- Main Card -->
       <div class="col align-self-center">
         <div class="card main-card" *ngIf="!statementObjs.length"></div>
         <div class="card main-card text-center" *ngIf="statementObjs.length" draggable [dragData]="statementObjs[0]"> 
@@ -11,7 +13,9 @@
       </div>
     </div>
     <!-- TODO: Error message on invalid survey id -->
+    <!-- Gap on top - Row 2 -->
     <div class="row justify-content-center" style="padding-top:25px">
+      <!-- { < | Current/Total | > } -->
       <div class="btn-group">
         <button class="btn btn-light" (click)="decreaseIndex()" [disabled]="current_index <= 0"><i class="fas fa-chevron-left"></i></button>
         <div class="btn btn-light disabled"> {{current_index+1}}/{{ statementObjs.length }}</div>
@@ -19,52 +23,69 @@
       </div>
     </div>
     
+    <!-- {          Continue              } -->
     <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
-      <!-- button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
+      <!-- TODO: button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
       <button class="btn btn-block btn-outline-primary" *ngIf="!statementObjs.length" (click)="publishSortContinue()"><h5>continue</h5></button>
     </div>
 
+    <!-- Row 3 - Agree/Disagree/Neutral Panels -->
     <div class="row" style="padding-top:10px">
+
+      <!-- Disagree List -->
       <div class="col-md-4">
+        <!-- Header -->
         <div class="list-group">
           <li class="list-group-item bg-danger">
             <h5>Disagree</h5>
           </li>
         </div>
+        <!-- Body -->
         <div class="list-group scroll-box" droppable (onDrop)="onDisagreeDrop($event)">
           <!-- TODO: find and replace "statement" with "statement.string" -->
+          <!-- New list item for each statement -->
           <li class="list-group-item no-gap" *ngFor="let statement of disagree" draggable [dragData]="statement">
             <p>{{ statement }}</p>
           </li>
         </div>
       </div>
 
+      <!-- Neutral List -->
       <div class="col-md-4">
+        <!-- Header -->
         <div class="list-group">
           <li class="list-group-item bg-warning">
             <h5>Neutral</h5>
           </li>
         </div>
+        <!-- Body -->
         <div class="list-group scroll-box" droppable (onDrop)="onNeutralDrop($event)">
           <!-- TODO: find and replace "statement" with "statement.string" -->
+          <!-- New list item for each statement -->
           <li class="list-group-item no-gap" *ngFor="let statement of neutral" draggable [dragData]="statement">
             <p>{{ statement }}</p>
           </li>
         </div>
       </div>
       
+       <!-- Agree List -->
       <div class="col-md-4">
+        <!-- Header -->
         <div class="list-group">
           <li class="list-group-item bg-success">
             <h5>Agree</h5>
           </li>
         </div>
+        <!-- Body -->
         <div class="list-group scroll-box" droppable (onDrop)="onAgreeDrop($event)">
           <!-- TODO: find and replace "statement" with "statement.string" -->
+          <!-- New list item for each statement -->
           <li class="list-group-item no-gap" *ngFor="let statement of agree" draggable [dragData]="statement">
             <p>{{ statement }}</p>
           </li>
         </div>
       </div>
+
     </div>
+  
   </div>
