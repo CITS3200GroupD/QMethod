@@ -42,8 +42,8 @@ export class AdminComponent implements OnInit {
 @Pipe({name: 'filterSurveyNames'})
 export class SurveyPipe implements PipeTransform {
   transform(surveys: Survey[], filter: string): Survey[] {
-    if(!surveys) return null;
-    if(!filter) return surveys;
+    if (!surveys) { return null; }
+    if (!filter) { return surveys; }
 
     return surveys.filter(n => n.name.indexOf(filter) >= 0);
   }
