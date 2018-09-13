@@ -1,22 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule  } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
-import { UserIndexComponent } from './user-index.component';
+import { CreateComponent } from './create.component';
 
-describe('UserIndexComponent', () => {
-  let component: UserIndexComponent;
-  let fixture: ComponentFixture<UserIndexComponent>;
+import { RouterTestingModule  } from '@angular/router/testing';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+describe('CreateComponent', () => {
+  let component: CreateComponent;
+  let fixture: ComponentFixture<CreateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserIndexComponent ],
-      imports: [ HttpClientModule, RouterTestingModule ]
+      declarations: [ CreateComponent ],
+      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserIndexComponent);
+    fixture = TestBed.createComponent(CreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

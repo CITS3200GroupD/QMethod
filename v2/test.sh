@@ -1,3 +1,3 @@
 #!/bin/bash
-nodemon server &
+nodemon server test &
 ng serve --open

@@ -1,23 +1,44 @@
+<!-- @Input() => [survey, grid] -->
+<!--
+  User grid answer data will be stored as [col][cell]
+  Grid display is [ cellcount, ... ]
+  i.e. [2, 3, 4, 3, 4, 3, 2] =>
+        _ _ _ _ _ _ _
+        _ _ _ _ _ _ _
+          _ _ _ _ _
+            _   _
+-->
 <table class="table compress">
   <tr>
-    <td *ngFor="let max_col of max_grid; let i = index" [attr.data-index]="i">
+    <!-- Columns -->
+    <td class *ngFor="let max_col of max_grid; let i = index" [attr.data-index]="i">
+      <!-- Range Display -->
       <div class="text-center"> {{i - offset}}
+        <!-- Cells -->
         <div class="cell" *ngFor="let row of arr(max_col).fill(1); let j = index" [attr.data-index]="j">
-          
+
+          <!-- If this is the last valid cell on our current grid, create a delete button -->
           <div *ngIf="j == grid[i]-1 && j < grid[i]"> 
             <div *ngIf="!disabled" class="btn btn-light delete" (click)="deleteBtn(i, j)"> </div>
+            <!-- If published, override with disabled button -->
             <div *ngIf="disabled" class="btn btn-light disabled"> </div>
           </div>
+          <!-- If this is the a cell after the last valid cell of our current grid, create an add button -->
           <div *ngIf="j == grid[i] && j != max_grid[i]">
             <div *ngIf="!disabled" class="btn btn-outline-light" (click)="addBtn(i, j)"> + </div>
+            <!-- If published, override with disabled button -->
             <div *ngIf="disabled" class="btn btn-light disabled"> </div>
           </div>
+          <!-- else create a disabled button -->
           <div *ngIf="j != max_grid[i]-1 && j != grid[i]-1 && j < grid[i]" class="btn btn-light disabled"> </div>
+
         </div>
       </div>
     </td>
   </tr>
 </table>
+
+<!-- Error Messages for Grid -->
 <div *ngIf="totalStatements != numState" class="alert alert-danger text-center"> 
   <h5 class="alert-heading"> Invalid grid </h5>
   <p style="font-size: 0.875rem"> Number of statements do not match current grid configuration. Grid Spaces: {{ totalStatements }} Statements: {{ numState }} </p>

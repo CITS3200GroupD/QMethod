@@ -12,10 +12,18 @@ import { SurveyService } from '../../survey.service';
 
 export class EditStatementsComponent implements OnInit {
 
+  page: number;
+
   CHAR_LIMIT = 350;
   STATE_LIMIT = 80;
+  statements: String[];
 
-  @Input() statements: any[];
+  @Input() set statements_input(statements_input: String[]) {
+    // Fix for calling of input with undefined value
+    if (statements_input) {
+      this.statements = statements_input;
+    }
+  }
   @Input() disabled: boolean;
   @Output() status = new EventEmitter<boolean>();
 

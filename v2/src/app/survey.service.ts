@@ -58,8 +58,7 @@ export class SurveyService {
         statements: statements,
         users: []
       };
-      this.http.post(`${this.uri}/add`, obj)
-          .subscribe(res => console.log('Done'));
+      this.http.post(`${this.uri}/add`, obj);
     }
   }
 
@@ -85,10 +84,9 @@ export class SurveyService {
       publish: publish,
       users: users
     };
-    this
-      .http
-      .post(`${this.uri}/${id}`, obj)
-      .subscribe(res => console.log('Done'));
+    return this
+              .http
+              .post(`${this.uri}/${id}`, obj);
   }
 
   deleteSurvey(id) {

@@ -21,11 +21,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Deployment
 
-Please read the following for either [a basic]() or [advanced](https://github.com/CITS3200GroupD/QMethod/wiki/Advanced-Deployment-to-Heroku) guide to deploying this MEAN stack powered application to the Heroku Cloud.
+Please read the following for either [a basic](https://github.com/CITS3200GroupD/QMethod/wiki/Fast-Basic-Deployment-Heroku) or [advanced](https://github.com/CITS3200GroupD/QMethod/wiki/Advanced-Deployment-to-Heroku) guide to deploying this MEAN stack powered application to the Heroku Cloud.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+If you have not installed nodemon as a global npm dependecy, do so by running `npm i -g nodemon`.
+
+Run `npm install` to update your dependencies.
+
+Run `nodemon server` and `ng serve` for a dev server. Shell scripts are provided for this in `test.bat` and `test.sh`.
+
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -52,3 +58,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Dependencies
 
 * Bootstrap 5.1.3
+* Angular 6
+* Express 4
+* Mongoose
+* Nodejs
