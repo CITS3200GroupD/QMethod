@@ -23,7 +23,8 @@ import { InitialSortComponent } from './components/initial-sort/initial-sort.com
 import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';
 import { EditGridComponent } from './components/edit-grid/edit-grid.component';
 import { AdminLinkComponent } from './components/admin-link/admin-link.component';
-import { UserIndexComponent } from './components/user-index/user-index.component';       // Edit Survey
+import { UserIndexComponent } from './components/user-index/user-index.component';
+import { AdminUserListComponent } from './components/admin-user-list/admin-user-list.component';       // Edit Survey
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -59,7 +60,8 @@ const routes: Routes = [
     EditStatementsComponent,
     EditGridComponent,
     AdminLinkComponent,
-    UserIndexComponent
+    UserIndexComponent,
+    AdminUserListComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,6 @@ const routes: Routes = [
     NgbModule
   ],
   providers: [SurveyService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,22 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AdminComponent } from './admin.component';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { UserIndexComponent } from './user-index.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-describe('UserIndexComponent', () => {
-  let component: UserIndexComponent;
-  let fixture: ComponentFixture<UserIndexComponent>;
+describe('AdminComponent', () => {
+  let component: AdminComponent;
+  let fixture: ComponentFixture<AdminComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserIndexComponent ],
-      imports: [ HttpClientModule, RouterTestingModule ]
+      declarations: [ AdminComponent ],
+      imports: [ RouterTestingModule, HttpClientModule],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserIndexComponent);
+    fixture = TestBed.createComponent(AdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

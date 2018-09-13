@@ -6,17 +6,19 @@
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]="angForm">
-          <label>URL for survey</label>
-          <div class="input-group">
-            <input class="form-control" formControlName="private_link" #private_link>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" (click)="copy(private_link.value)" type="button">
-                <i class="fas fa-clipboard"></i>
-              </button>
+      <div [formGroup]="angForm">
+        <form>
+            <label>URL for survey</label>
+            <div class="input-group">
+              <input class="form-control" formControlName="private_link" #private_link>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="copy(private_link.value)" type="button">
+                  <i class="fas fa-clipboard"></i>
+                </button>
+              </div>
             </div>
-          </div>
-      </form>
+        </form>
+      </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Done</button>

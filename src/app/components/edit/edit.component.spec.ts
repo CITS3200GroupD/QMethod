@@ -1,24 +1,29 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { EditStatementsComponent } from './edit-statements.component';
+import { EditComponent } from './edit.component';
 
 import { RouterTestingModule  } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-describe('EditStatementsComponent', () => {
-  let component: EditStatementsComponent;
-  let fixture: ComponentFixture<EditStatementsComponent>;
+describe('EditComponent', () => {
+  let component: EditComponent;
+  let fixture: ComponentFixture<EditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditStatementsComponent ],
-      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule]
+      declarations: [ EditComponent ],
+      imports: [ RouterTestingModule,
+                FormsModule,
+                ReactiveFormsModule,
+                HttpClientModule],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditStatementsComponent);
+    fixture = TestBed.createComponent(EditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

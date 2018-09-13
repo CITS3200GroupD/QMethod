@@ -23,9 +23,10 @@ export class EditGridComponent implements OnInit {
 
   arr = Array;
 
+
   // Seperated input as this is called when range input drop-down menu is changed
   // TODO: might cause issues if range is never called
-  @Input()
+  @Input('survey')
   set survey(survey: any) {
 
     try {
@@ -53,7 +54,7 @@ export class EditGridComponent implements OnInit {
 
   // Seperated input as this is called when range input drop-down menu is changed
   // TODO: might cause issues if range is called after survey
-  @Input()
+  @Input('range')
   set range(range: number) {
     this.offset = Math.floor( range / 2 );
     this.max_rows = this.offset + 2;

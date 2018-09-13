@@ -5,6 +5,12 @@ module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    files: [
+      '../node_modules/bootstrap/dist/css/bootstrap.min.css',
+      '../node_modules/@fortawesome/fontawesome-free/css/all.css',
+      './styles.css',
+      './assets/flatly.css'
+    ],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
