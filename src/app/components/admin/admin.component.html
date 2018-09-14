@@ -1,0 +1,75 @@
+<!-- Search -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="input-group stylish-input-group">
+      <input type="text" class="form-control" [(ngModel)]="filter" placeholder="Search">
+    </div>
+  </div>
+</div>
+
+<!-- Table of Surveys -->
+<table class="table table-hover">
+  <!-- Categories -->
+  <thead>
+  <tr>
+    <td>Survey</td>
+    <td>Statements</td>
+    <td>Responses</td>
+    <td>View</td>
+    <td>Actions</td>
+  </tr>
+  </thead>
+  <!-- Content -->
+  <tbody>
+    <!-- For every survey in this.surveys -->
+    <tr *ngFor="let survey of surveys | filterSurveyNames:filter | paginate: {itemsPerPage: 9, currentPage:page, id: '1'}; let i = index">
+      <!-- Display name and number of statements and user count -->
+      <td>{{ survey.name }}</td>
+      <td>{{ survey.statements.length }}</td>
+      <td>0</td> <!-- TODO: Replace with actual user count-->
+
+      <td>
+        <!-- { Results } -->
+        <div class="btn-group">
+          <a [routerLink]="['/edit', survey._id]" class="btn btn-primary">
+            <i class="fa fa-list"></i> <div class="d-none d-lg-inline"> Results</div> <!-- TODO: Routing, Results component-->
+          </a>
+        </div>
+      </td>
+
+      <td>
+        <!-- { Edit | Link } buttons -->
+        <div class="btn-group">
+          <!-- Edit -->
+          <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
+            <i class="fas fa-wrench"></i><div class="d-none d-lg-inline"> Edit</div>
+          </a>
+          <!-- Link sub-component -->
+          <app-admin-link [survey]="survey"></app-admin-link>
+        </div>
+      </td>
+
+      <td>
+        <!-- { Delete } button -->
+        <button (click)="deleteSurvey(survey._id)" class="btn btn-danger">
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+<!-- Create New Survey -->
+<a [routerLink]="['/create']" class="btn btn-secondary btn-block">
+  Create New Survey
+</a>
+<!-- Pagination Controls -->
+<div class="row justify-content-center">
+  <pagination-controls class="my-pagination"(pageChange)="page = $event" id="1"
+    maxSize="5"
+    directionLinks="true"
+    autoHide="true"
+    previousLabel=""
+    nextLabel="">
+  </pagination-controls>
+</div>

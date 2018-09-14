@@ -1,0 +1,38 @@
+<!-- @Input() => [survey] -->
+<ng-template #content let-modal>
+    <!-- Head -->
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-private-link">Private Link</h4>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="modal-body">
+      <form [formGroup]="angForm">
+        <!-- Label -->
+        <label>URL for survey</label>
+          <div class="input-group">
+            <!-- Private Link URL-->
+            <input class="form-control" formControlName="private_link" #private_link>
+            <div class="input-group-append">
+              <!-- Copy to clipboard button -->
+              <button class="btn btn-outline-secondary" (click)="copy(private_link.value)" type="button">
+                <i class="fas fa-clipboard"></i>
+              </button>
+            </div>
+          </div>
+      </form>
+    </div>
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Done</button>
+    </div>
+  </ng-template>
+  <!-- Display link button depending on survey.publish flag -->
+  <button *ngIf="survey.publish" class="btn btn-light" (click)="open(content)">
+      <i class="fas fa-external-link-alt"></i> <div class="d-none d-lg-inline"> Link</div>
+  </button>
+  <button *ngIf="!survey.publish" class="btn btn-outline-light disabled">
+      <i class="fas fa-external-link-alt"></i> <div class="d-none d-lg-inline"> Link</div>
+  </button>
