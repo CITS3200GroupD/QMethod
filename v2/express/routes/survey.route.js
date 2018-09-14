@@ -10,23 +10,7 @@ const surveyRoutes = express.Router();
 /***
  * Survey RESTful API
  * ============================================================================
- * <url>/api/
- * GET   | respond with json of all surveys                           <PRIVATE>
- * ============================================================================
- * <url>/api/ add
- * POST  | create a new survey item in database                       <PRIVATE>
- * ============================================================================
- * <url>/api/ :id
- * GET   | respond with survey data (scrubbed) corresponding to id     [PUBLIC]
- * GET   | respond with survey item corresponding to id               <PRIVATE>
- * POST  | update survey item corresponding to id                     <PRIVATE>
- * DEL   | remove survey item corresponding to id                     <PRIVATE>
- * ============================================================================
- * <url>/api/ :id/addState
- * POST  | append new statement to survey item s array                <PRIVATE>
- * ============================================================================
- * <url>/api/ :id/delState/ :s_id
- * DEL   | delete statement corresponding to s_id in survey id        <PRIVATE>
+ * See https://qmethod.gitbook.io/project/documentation/survey-api
  * ============================================================================
  */
 
@@ -44,7 +28,7 @@ surveyRoutes.route('/add').post( (req, res) => {
     .catch((err) => {
       res.status(400).send(`Unable to update - ${err.message}`);
     });
-  
+
 });
 
 // Get data (index or listing)
@@ -102,7 +86,7 @@ surveyRoutes.route('/:id').post( (req, res) => {
 // Delete survey item from database
 surveyRoutes.route('/:id').delete( (req, res) => {
   Survey.findByIdAndRemove({_id: req.params.id}, (err) => {
-    if (err) { 
+    if (err) {
       res.status(400).json(err);
     }
     else {
@@ -169,19 +153,12 @@ surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
   });
 });
 
+
 /***
  * Users RESTful API
  * ============================================================================
- * <url>/api/ :id/users/
- * GET   | respond with all user_data for this survey {id}                  <PRIVATE>
+ * See https://qmethod.gitbook.io/project/documentation/user-api
  * ============================================================================
- * <url>/api/ :id/user/:user_id
- * GET   | respond with user_data corresponding to {user_id} in survey {id} [PUBLIC]
- * POST  | update with user_data corresponding to {user_id} in survey {id}  <PRIVATE>
- * DEL   | delete user_data corresponding to {user_id} in survey {id}       <PRIVATE>
- * ============================================================================
- * <url>/api/ :id/addUser/
- * POST  | append new user to survey {id} users array
  */
 
 module.exports = surveyRoutes;

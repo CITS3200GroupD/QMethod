@@ -7,23 +7,9 @@ import { gridTemplates } from './Survey';
 })
 
 /***
- * Survey RESTful API
+ * Survey RESTful API Middleware
  * ============================================================================
- * <url>/api/
- * GET  = getSurveys()            | respond with json of all surveys
- * ============================================================================
- * <url>/api/ add/
- * POST = addSurvey(n, r)         | create a new survey item in database
- * ============================================================================
- * <url>/api/ :id
- * GET  = getSurvey(id)           | respond with public survey item corresponding to id
- * POST = updateSurvey( ... , id) | update survey item corresponding to id
- * DEL  = deleteSurvey(id)        | remove survey item corresponding to id
- * ============================================================================
- * <url>/api/ addState/:id
- * POST = addStatement(id, s)     | append new statement to survey item s array
- * <url>/api/ delState/ :id/:s_id
- * DEL = deleteStatement(id, s_id)| delete statement corresponding to s_id in survey id
+ * See https://qmethod.gitbook.io/project/documentation/survey-api
  * ============================================================================
  */
 
