@@ -17,8 +17,10 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
 
 // Components
 import { AppComponent } from './app.component';
+
 import { CreateComponent } from './components/create/create.component';
 import { AdminComponent, SurveyPipe } from './components/admin/admin.component';
+import { QsortComponent } from './components/qsort/qsort.component';
 import { EditComponent } from './components/edit/edit.component';
 import { InitialSortComponent } from './components/initial-sort/initial-sort.component';
 import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';
@@ -55,6 +57,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     CreateComponent,
+    QsortComponent,
     AdminComponent,
     EditComponent,
     InitialSortComponent,

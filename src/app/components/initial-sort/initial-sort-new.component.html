@@ -4,7 +4,7 @@
       <!-- Main Card -->
       <div class="col align-self-center">
         <div class="card main-card" *ngIf="!statementObjs.length"></div>
-        <div class="card main-card text-center" *ngIf="statementObjs.length" draggable [dragData]="statementObjs[0]"> 
+        <div class="card main-card text-center" *ngIf="statementObjs.length" draggable [dragData]="statementObjs[0]">
           <div class="card-body">
             <!-- TODO: find and replace "statementObjs[current_index]" with "statementObjs[current_index].string" -->
             <h3>{{ statementObjs[current_index] }}</h3>
@@ -22,7 +22,7 @@
         <button class="btn btn-light" (click)="increaseIndex()" [disabled]="current_index+1 >= statementObjs.length"><i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
-    
+
     <!-- {          Continue              } -->
     <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
       <!-- TODO: button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
@@ -67,7 +67,7 @@
           </li>
         </div>
       </div>
-      
+
        <!-- Agree List -->
       <div class="col-md-4">
         <!-- Header -->
@@ -85,7 +85,5 @@
           </li>
         </div>
       </div>
-
     </div>
-  
   </div>

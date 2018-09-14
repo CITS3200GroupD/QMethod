@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditStatementsComponent } from './edit-statements.component';
+import { Ng2PaginationModule  } from 'ng2-pagination';
 
 import { RouterTestingModule  } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -12,7 +13,7 @@ describe('EditStatementsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditStatementsComponent ],
-      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule]
+      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, Ng2PaginationModule]
     })
     .compileComponents();
   }));

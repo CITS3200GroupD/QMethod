@@ -1,12 +1,38 @@
 # QMethod v2
+
+[![CodeFactor](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod/badge)](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod)
+[![Docs Status](https://img.shields.io/badge/docs-ready-orange.svg)](https://qmethod.gitbook.io/project/)
+[![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
+
 QMethod Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.0.3a
+Version 0.0.6a
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
 
+## Supported Browsers
+
+* Chrome 45+
+* Firefox 38+
+* Edge 12+
+* Internet Explorer 10+
+* iOS 9+
+* Safari 9+
+* Android 4.4+
+* Opera 30+
+
+## Deployment
+
+Please read the following for either [a basic](https://qmethod.gitbook.io/project/installation/basic-deploy) or [advanced](https://qmethod.gitbook.io/project/installation/advanced-deploy) guide to deploying this MEAN stack powered application to the Heroku Cloud.
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+If you have not installed nodemon as a global npm dependecy, do so by running `npm i -g nodemon`.
+
+Run `npm install` to update your dependencies.
+
+Run `nodemon server` and `ng serve` for a dev server. Shell scripts are provided for this in `test.bat` and `test.sh`.
+
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -29,3 +55,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Dependencies
+
+* Bootstrap 5.1.3
+* Angular 6
+* Express 4
+* Mongoose
+* Nodejs

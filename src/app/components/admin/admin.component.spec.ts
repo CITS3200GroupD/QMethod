@@ -1,8 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdminComponent } from './admin.component';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SurveyPipe } from './admin.component';
+import { Ng2PaginationModule } from 'ng2-pagination';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -10,8 +13,11 @@ describe('AdminComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminComponent ],
-      imports: [ RouterTestingModule, HttpClientModule],
+      declarations: [ AdminComponent, SurveyPipe ],
+      imports: [ RouterTestingModule,
+        FormsModule,
+        HttpClientModule,
+        Ng2PaginationModule],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();

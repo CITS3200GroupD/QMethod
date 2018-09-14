@@ -9,20 +9,20 @@
     </div>
     <!-- Body -->
     <div class="modal-body">
-        <form [formGroup]="angForm">
-            <!-- Label -->
-            <label>URL for survey</label>
-            <div class="input-group">
-              <!-- Private Link URL-->
-              <input class="form-control" formControlName="private_link" #private_link>
-              <div class="input-group-append">
-                <!-- Copy to clipboard button -->
-                <button class="btn btn-outline-secondary" (click)="copy(private_link.value)" type="button">
-                  <i class="fas fa-clipboard"></i>
-                </button>
-              </div>
+      <form [formGroup]="angForm">
+        <!-- Label -->
+        <label>URL for survey</label>
+          <div class="input-group">
+            <!-- Private Link URL-->
+            <input class="form-control" formControlName="private_link" #private_link>
+            <div class="input-group-append">
+              <!-- Copy to clipboard button -->
+              <button class="btn btn-outline-secondary" (click)="copy(private_link.value)" type="button">
+                <i class="fas fa-clipboard"></i>
+              </button>
             </div>
-        </form>
+          </div>
+      </form>
     </div>
     <!-- Footer -->
     <div class="modal-footer">
