@@ -57,7 +57,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     CreateComponent,
-    QsortComponent
+    QsortComponent,
     AdminComponent,
     EditComponent,
     InitialSortComponent,
