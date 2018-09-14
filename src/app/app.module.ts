@@ -28,6 +28,9 @@ import { EditGridComponent } from './components/edit-grid/edit-grid.component';
 import { AdminLinkComponent } from './components/admin-link/admin-link.component';
 import { UserIndexComponent } from './components/user-index/user-index.component';
 import { AdminUserListComponent } from './components/admin-user-list/admin-user-list.component';
+import { InstructionsComponent } from './components/instructions/instructions.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -51,6 +54,23 @@ const routes: Routes = [
     path: 'initial-sort/:id',
     component: InitialSortComponent
   },
+  {
+    path: 'q-sort',
+    component: QsortComponent
+  },
+  // Temporary Paths for v1 files
+  {
+    path: 'v1/registration',
+    component: RegistrationComponent
+  },
+  {
+    path: 'v1/questionnaire',
+    component: QuestionnaireComponent
+  },
+  {
+    path: 'v1/instructions',
+    component: InstructionsComponent
+  }
 ];
 // Declaring vars for ng
 @NgModule({
@@ -66,7 +86,10 @@ const routes: Routes = [
     AdminLinkComponent,
     UserIndexComponent,
     AdminUserListComponent,
-    SurveyPipe
+    SurveyPipe,
+    InstructionsComponent,
+    RegistrationComponent,
+    QuestionnaireComponent
   ],
   imports: [
     BrowserModule,
