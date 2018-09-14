@@ -16,7 +16,8 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
 import { AppComponent } from './app.component';
 import { CreateComponent } from './components/create/create.component'; // Create Survey page
 import { IndexComponent } from './components/index/index.component';    // List of all Survey Pages
-import { EditComponent } from './components/edit/edit.component';       // Edit Survey
+import { EditComponent } from './components/edit/edit.component';
+import { QsortComponent } from './qsort/qsort.component';       // Edit Survey
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
     AppComponent,
     CreateComponent,
     IndexComponent,
-    EditComponent
+    EditComponent,
+    QsortComponent
   ],
   imports: [
     BrowserModule,
