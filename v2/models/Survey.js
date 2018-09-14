@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 let Survey = new Schema({
   survey_name: String,
   survey_kurt:  Number,
+  publish: Boolean,
   statements: [String]
 },
 {

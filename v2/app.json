@@ -1,0 +1,13 @@
+{
+  "name": "QMethod",
+  "description": "A web application for aiding Q-Method based studies",
+  "repository": "https://github.com/CITS3200GroupD/QMethod/tree/deploy-test",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "angular", "mongodb"],
+  "env": {
+    "MONGODB_URI": {
+      "description": "Driver link for mongoDB database",
+      "value": ""
+    }
+  }
+}

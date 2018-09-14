@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { Survey } from '../index/Survey';
-import KurtOptions from '../index/Survey';
+import { gridTemplates } from '../../Survey';
 import { SurveyService } from '../../survey.service';
 
 @Component({
@@ -11,11 +10,17 @@ import { SurveyService } from '../../survey.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
+  NAME_LIMIT = 100;
 
-  kurtOptions = KurtOptions;
+  gridTemplates = gridTemplates;
 
   survey: any = {};
+  valid_grid: boolean;
+  range: number;
   angForm: FormGroup;
+  cols: number[];
+  label_x: number;
+  range_y: number;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -24,34 +29,103 @@ export class EditComponent implements OnInit {
       this.createForm();
     }
 
-    createForm() {
-      this.angForm = this.fb.group({
-            survey_id: ['', Validators.required ],
-            survey_name: ['', Validators.required ],
-            survey_kurt: ['', Validators.required ],
-            //survey_statements: ['', Validators.required ],
-         });
-      }
-    
-    updateSurvey(survey_name, survey_kurt) {
-        this.route.params.subscribe(params => {
-          this.surveyservice.updateSurvey(survey_name, survey_kurt, params['id']);
-          setTimeout(() => {
-            this.router.navigate(['index']);
-          },
-          500);
-        });
-    }
+  private createForm() {
+    this.angForm = this.fb.group({
+      survey_id: [{value: '', disabled: true}, Validators.required ],
+      survey_name: ['', Validators.required ],
+      survey_range: ['', Validators.required ]
+    });
+  }
 
-    empty() {
-      console.log('empty()');
+  private throwError(error) {
+    try {
+      throw new Error(error);
+    } catch (e) {
+      alert(`${e.name}: ${e.message}`);
     }
+  }
 
-    ngOnInit() {
+  updateRange(range) {
+    if (this.survey.publish) {
+      this.throwError('Attempted to update a published server');
+    } else {
+      this.range = range;
+    }
+  }
+
+  updateGrid(cols) {
+    if (!this.survey.publish && this.valid_grid) {
+      this.cols = cols;
+    }
+  }
+
+  isInvalidGrid(bool) {
+    this.valid_grid = bool;
+  }
+
+  updateSurvey(name, range) {
+    if (this.survey.publish) {
+      this.throwError('Attempted to update a published server');
+    } else if (!this.valid_grid) {
+      this.throwError('Invalid Grid');
+    } else {
       this.route.params.subscribe(params => {
-        this.surveyservice.editSurvey(params['id']).subscribe(res => {
-          this.survey = res;
-          //console.log(this.survey);
+        this.surveyservice.updateSurvey(name, range, this.cols, false, this.survey.users, params['id'])
+          .subscribe( res => this.successfulUpdate(res, false),
+                      err => this.failedUpdate(err));
+      });
+    }
+  }
+
+  private successfulUpdate(res, go_home) {
+    if (window.confirm('Successfully Updated!')) {
+      if (go_home) {
+        this.router.navigate(['admin']);
+      } else {
+        this.ngOnInit();
+      }
+    }
+  }
+
+  private failedUpdate(err) {
+    console.error(err);
+    if (window.confirm(`${err.error}`)) {
+      this.ngOnInit();
+    }
+  }
+
+  publishSurvey() {
+    if (!this.valid_grid) {
+      this.throwError('Invalid Grid');
+    } else {
+      if (window.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
+        this.survey.publish = true;
+        this.route.params.subscribe(params => {
+          this.surveyservice.updateSurvey(this.survey.name, this.survey.range, this.cols, true, this.survey.users, params['id'])
+            .subscribe( res => this.successfulUpdate(res, true) );
+        });
+      }
+    }
+  }
+
+/* TODO: Private Method to check that totalStatements and numStatements (in grid) are the same value
+  * ONLY enable publishing when totalStatements=numStatements
+  */
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      // console.log(params);
+      this.surveyservice.getSurvey(params['id']).subscribe(res => {
+        this.survey = res;
+        this.cols = this.survey.cols;
+
+        this.angForm.get('survey_id').setValue(this.survey._id);
+        this.angForm.get('survey_name').setValue(this.survey.name);
+        this.angForm.get('survey_range').setValue(this.survey.range);
+        // If survey has been published, disable all editing
+        if (this.survey.publish) {
+          this.angForm.disable();
+        }
       });
     });
   }

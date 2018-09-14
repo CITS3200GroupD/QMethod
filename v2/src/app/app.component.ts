@@ -2,14 +2,14 @@
 import { Component } from '@angular/core';
 
 // Navigation elements import
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { NavigationCancel,
   Event,
   NavigationEnd,
   NavigationError,
   NavigationStart,
   Router } from '@angular/router';
-  
+
 
 // Components Core
 @Component({
