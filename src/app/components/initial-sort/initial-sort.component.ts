@@ -142,6 +142,7 @@ export class InitialSortComponent implements OnInit {
     // this.userservice.updateUser(this.TEMP_int_disagree, this.TEMP_int_neutral, this.TEMP_int_agree, this.id);
     setTimeout(() => {
       // this.router.navigate(['q-sort']);
+      this.router.navigate(['q-sort']);
     },
     500);
   }
