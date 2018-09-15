@@ -43,8 +43,17 @@ module.exports = function (config) {
       IE9: {
         base: 'IE',
         'x-ua-compatible': 'IE=EmulateIE9'
+      },
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
       }
     },
     singleRun: false
   });
+
+  if(process.env.TRAVIS){
+    config.browsers = ['Chrome_travis_ci'];
+    config.set({singleRun: true})
+  }
 };
