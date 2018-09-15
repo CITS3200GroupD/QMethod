@@ -9,11 +9,11 @@ describe('SurveyService', () => {
   let service: SurveyService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  const uri = 'http://localhost:8080/api'
+  const uri = 'http://localhost:8080/api';
   const valid_survey_list: Survey[] = [{
     _id: '0131asfd3',
     publish: false,
-    name: "testing1",
+    name: 'testing1',
     range:  7,
     cols: [2, 3, 4, 5, 4, 3, 2],
     statements: ['string'],
@@ -22,7 +22,7 @@ describe('SurveyService', () => {
   {
     _id: '0234asd5',
     publish: true,
-    name: "testing2",
+    name: 'testing2',
     range:  9,
     cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
     statements: ['string'],
@@ -32,7 +32,7 @@ describe('SurveyService', () => {
   const invalid_survey_list: Survey[] = [{
     _id: '0131asfd3',
     publish: false,
-    name: "testing1",
+    name: 'testing1',
     range:  7,
     cols: [3, 4, 5, 4, 3, 2],
     statements: ['string'],
@@ -41,7 +41,7 @@ describe('SurveyService', () => {
   {
     _id: '0234asd5',
     publish: true,
-    name: "testing2",
+    name: 'testing2',
     range:  8,
     cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
     statements: ['string'],
@@ -59,7 +59,7 @@ describe('SurveyService', () => {
     service = new SurveyService(httpClient);
   });
 
-  // After every test, assert that there are no more pending requests.
+  // After every test, check that there are no more pending requests.
   afterEach(() => {
     httpTestingController.verify();
   });
@@ -81,17 +81,20 @@ describe('SurveyService', () => {
   });
 
   // Tests begin
-  it('should be created', inject([SurveyService], (service: SurveyService) => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
-  }));
+  });
 
   it('getSurveys() should return surveys', () => {
-    const return_val = valid_survey_list;
     const test_url = `${uri}`;
+    const return_val = valid_survey_list;
 
+    // Call function
     service.getSurveys().subscribe(res => {
       expect(res).toEqual(return_val);
     });
+
+    // Simulate the response from express server
     const req = httpTestingController.expectOne(`${test_url}`);
     expect(req.request.method).toEqual('GET');
     req.flush(return_val);
@@ -102,10 +105,12 @@ describe('SurveyService', () => {
     const return_val = valid_survey_list[0];
     const test_url = `${uri}/${id}`;
 
+    // Call function
     service.getSurvey(id).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 
+    // Simulate the response from express server
     const req = httpTestingController.expectOne(`${test_url}`);
     expect(req.request.method).toEqual('GET');
     req.flush(return_val);
@@ -120,6 +125,7 @@ describe('SurveyService', () => {
       expect(res).toEqual(return_val);
     });
 
+    // Simulate the response from express server
     const req = httpTestingController.expectOne(`${test_url}`);
     expect(req.request.method).toEqual('POST');
     req.flush(return_val);
@@ -132,10 +138,12 @@ describe('SurveyService', () => {
     const return_val = 'Successfully Updated';
     const test_url = `${uri}/add`;
 
+    // Call function
     service.addSurvey(name, range, statements).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 
+    // Simulate the response from express server
     const req = httpTestingController.expectOne(`${test_url}`);
     expect(req.request.method).toEqual('POST');
     req.flush(return_val);
@@ -146,10 +154,12 @@ describe('SurveyService', () => {
     const return_val = 'Successfully Removed';
     const test_url = `${uri}/${id}`;
 
+    // Call function
     service.deleteSurvey(id).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 
+    // Simulate the response from express server
     const req = httpTestingController.expectOne(`${test_url}`);
     expect(req.request.method).toEqual('DELETE');
     req.flush(return_val);
@@ -160,10 +170,12 @@ describe('SurveyService', () => {
     const return_val = 'Successfully Added Statement';
     const test_url = `${uri}/${id}/addState`;
 
+    // Call function
     service.addStatement(id, 'new_statement').subscribe(res => {
       expect(res).toEqual(return_val);
     });
 
+    // Simulate the response from express server
     const req = httpTestingController.expectOne(`${test_url}`);
     expect(req.request.method).toEqual('POST');
     req.flush(return_val);
@@ -175,10 +187,12 @@ describe('SurveyService', () => {
     const return_val = 'Successfully Removed Statement';
     const test_url = `${uri}/${id}/delState/${statement_id}`;
 
+    // Call function
     service.deleteStatement(id, statement_id).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 
+    // Simulate the response from express server
     const req = httpTestingController.expectOne(`${test_url}`);
     expect(req.request.method).toEqual('DELETE');
     req.flush(return_val);

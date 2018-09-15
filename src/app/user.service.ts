@@ -19,6 +19,7 @@ export class UserService {
 
   // TODO: Implement functions and write documentation in
   // https://qmethod.gitbook.io/project/documentation/user-api
+  // See user.service.spec.ts for unit tests
 
   getAllUsers(survey_id: string) {
     return this
@@ -27,12 +28,9 @@ export class UserService {
   }
 
   addUser(survey_id: string, registration_info: any) {
-    let placeholder = {};
-    // TODO replace placeholder, pass unit test.
-    // See Survey.ts
     return this
               .http
-              .post(`${this.uri}/${survey_id}/addUser`, placeholder);
+              .post(`${this.uri}/${survey_id}/addUser`, registration_info);
   }
 
   getUser(survey_id: string, user_id: string) {
@@ -52,7 +50,4 @@ export class UserService {
               .http
               .delete(`${this.uri}/${survey_id}/user/${user_id}`);
   }
-
-
-  // See user.service.spec.ts for unit tests
 }
