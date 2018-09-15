@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { gridTemplates } from '../../Survey';
+import { GridTemplates } from '../../Survey';
 import { SurveyService } from '../../survey.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { SurveyService } from '../../survey.service';
 export class EditComponent implements OnInit {
   NAME_LIMIT = 100;
 
-  gridTemplates = gridTemplates;
+  cols_templates = GridTemplates;
 
   survey: any = {};
   valid_grid: boolean;
@@ -70,7 +70,9 @@ export class EditComponent implements OnInit {
       this.throwError('Invalid Grid');
     } else {
       this.route.params.subscribe(params => {
-        this.surveyservice.updateSurvey(name, range, this.cols, false, this.survey.users, params['id'])
+        this.survey.name = name;
+        this.survey.range = range;
+        this.surveyservice.updateSurvey(this.survey)
           .subscribe( res => this.successfulUpdate(res, false),
                       err => this.failedUpdate(err));
       });
@@ -78,6 +80,7 @@ export class EditComponent implements OnInit {
   }
 
   private successfulUpdate(res, go_home) {
+    console.log(res);
     if (window.confirm('Successfully Updated!')) {
       if (go_home) {
         this.router.navigate(['admin']);
@@ -101,7 +104,7 @@ export class EditComponent implements OnInit {
       if (window.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
         this.survey.publish = true;
         this.route.params.subscribe(params => {
-          this.surveyservice.updateSurvey(this.survey.name, this.survey.range, this.cols, true, this.survey.users, params['id'])
+          this.surveyservice.updateSurvey(this.survey)
             .subscribe( res => this.successfulUpdate(res, true) );
         });
       }

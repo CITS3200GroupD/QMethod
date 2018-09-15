@@ -9,7 +9,7 @@ import { SurveyService } from '../../survey.service';
 })
 export class UserIndexComponent implements OnInit {
 
-  id: String;
+  id: string;
   valid: boolean;
 
   constructor(private route: ActivatedRoute,
