@@ -26,6 +26,8 @@ For a more detailed explanation of the full feature set of QMethod please read o
 
 Please read the following for either [a basic](https://qmethod.gitbook.io/project/installation/basic-deploy) or [advanced](https://qmethod.gitbook.io/project/installation/advanced-deploy) guide to deploying this MEAN stack powered application to the Heroku Cloud.
 
+[![Video Guide](https://i.imgur.com/jG5lEUu.png)](https://streamable.com/zqjls)
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/CITS3200GroupD/QMethod/tree/master)
 
 ### Supported Browsers
