@@ -26,6 +26,7 @@ surveyRoutes.route('/add').post( (req, res) => {
       res.status(200).json('Successfully Updated');
     })
     .catch((err) => {
+      console.log(err.message);
       res.status(400).send(`Unable to update - ${err.message}`);
     });
 
@@ -90,7 +91,7 @@ surveyRoutes.route('/:id').delete( (req, res) => {
       res.status(400).json(err);
     }
     else {
-      res.status(200).json('Successfully removed');
+      res.status(200).json('Successfully Removed');
       console.log('Survey deleted');
     }
   });
@@ -112,7 +113,7 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
         statements.push(statement);
 
         survey.save().then(() => {
-          res.status(200).json('Successfully added new statement');
+          res.status(200).json('Successfully Added Statement');
           console.log('Added Statement');
         })
         .catch((err) => {
@@ -139,7 +140,7 @@ surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
         statements.splice(statement_index, 1);
 
         survey.save().then(() => {
-          res.status(200).json('Successfully removed');
+          res.status(200).json('Successfully Removed Statement');
           console.log('Removed Statement');
         })
         .catch((err) => {

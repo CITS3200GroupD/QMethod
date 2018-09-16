@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'; // ng core
 import { Router } from '@angular/router'; // ng router
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng reactive  form
 import { SurveyService } from '../../survey.service';     // survey service
-import { gridTemplates } from '../../Survey';
+import { GridTemplates } from '../../Survey';
 
 const DEFAULT_RANGE = 11;
 
@@ -14,7 +14,7 @@ const DEFAULT_RANGE = 11;
 })
 export class CreateComponent implements OnInit {
 
-  gridTemplates = gridTemplates;
+  cols_templates = GridTemplates;
   statements: string[];
 
   angForm: FormGroup;
@@ -72,11 +72,15 @@ export class CreateComponent implements OnInit {
       'I can see myself as a more knowledgeable person 5',
       'I can see myself able to better understand people from any other culture 5'
     ];
-    this.surveyservice.addSurvey(name, range, TEMP_statements);
-    setTimeout(() => {
-      this.router.navigate(['admin']);
-    },
-    500);
+    this.surveyservice.addSurvey(name, range, TEMP_statements)
+      .subscribe(
+        (res) => { this.router.navigate(['admin']); },
+        (err) => {
+          console.error(err.error);
+          if (window.confirm(`${err.error}`)) {
+            this.ngOnInit();
+          }
+        });
   }
 
   ngOnInit() {

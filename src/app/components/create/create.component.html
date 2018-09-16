@@ -16,7 +16,7 @@
       <div class="form-group">
         <label class="col-md-4">Range</label>
         <select formControlName="survey_range" class="form-control" name="survey_range" required #survey_range>
-          <option  [value]=option.val *ngFor="let option of gridTemplates">{{option.label}}</option>
+          <option  [value]=option.val *ngFor="let option of cols_templates">{{option.label}}</option>
         </select>
       </div>
 
