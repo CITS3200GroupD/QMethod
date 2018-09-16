@@ -24,7 +24,7 @@
       <div class="form-group">
         <label class="col-sm-4">Range </label>
         <select class="form-control" formControlName="survey_range" #survey_range (change)="updateRange($event.target.value)" >
-          <option [value]=option.val *ngFor="let option of gridTemplates">{{option.label}}</option>
+          <option [value]=option.val *ngFor="let option of cols_templates">{{option.label}}</option>
         </select>
       </div>
 

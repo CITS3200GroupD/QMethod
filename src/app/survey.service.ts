@@ -1,6 +1,6 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';    // ng<->express client
-import { gridTemplates } from './Survey';
+import { Survey, SurveyInput, GridTemplates } from './Survey';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ import { gridTemplates } from './Survey';
 
 export class SurveyService {
 
-  gridTemplates = gridTemplates;
+  cols_templates = GridTemplates;
   uri: String;
 
   constructor(private http: HttpClient) {
@@ -26,17 +26,17 @@ export class SurveyService {
     }
   }
 
-  addSurvey(name, range, statements) {
-    let cols;
-    this.gridTemplates.forEach( (item) => {
+  addSurvey(name: string, range: number, statements: string[]) {
+    let cols: number[];
+    this.cols_templates.forEach( (item) => {
       const value = item.val;
       // Find default grid
       if (Number(value) == range) {
-        cols = Array.from(item.defaultGrid);
+        cols = Array.from(item.default_cols);
       }
     });
     if (cols) {
-      const obj = {
+      const surveyCreate: SurveyInput = {
         name: name,
         range: range,
         cols: cols,
@@ -44,8 +44,9 @@ export class SurveyService {
         statements: statements,
         users: []
       };
-      this.http.post(`${this.uri}/add`, obj);
+      return this.http.post(`${this.uri}/add`, surveyCreate);
     }
+    return null;
   }
 
   // TODO: Pass private api key along with data for authentication (if exists) as administrator for full survey list access
@@ -55,33 +56,27 @@ export class SurveyService {
            .get(`${this.uri}`);
   }
 
-  getSurvey(id) {
+  getSurvey(id: string) {
     return this
             .http
             .get(`${this.uri}/${id}`);
   }
 
-  updateSurvey(name, range, cols, publish, users, id) {
+  updateSurvey(survey: Survey) {
+    const id = survey._id;
 
-    const obj = {
-      name: name,
-      range: range,
-      cols: cols,
-      publish: publish,
-      users: users
-    };
     return this
               .http
-              .post(`${this.uri}/${id}`, obj);
+              .post(`${this.uri}/${id}`, survey);
   }
 
-  deleteSurvey(id) {
+  deleteSurvey(id: string) {
     return this
               .http
               .delete(`${this.uri}/${id}`);
   }
 
-  addStatement(id, statement: string) {
+  addStatement(id: string, statement: string) {
     const obj = {
       statement: statement
     };
@@ -90,7 +85,7 @@ export class SurveyService {
               .post(`${this.uri}/${id}/addState`, obj);
   }
 
-  deleteStatement(id, statement_id) {
+  deleteStatement(id: string, statement_id: number) {
     return this
               .http
               .delete(`${this.uri}/${id}/delState/${statement_id}`);

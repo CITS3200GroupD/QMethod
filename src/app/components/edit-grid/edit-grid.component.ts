@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { gridTemplates } from '../../Survey';
+import { GridTemplates } from '../../Survey';
 
 @Component({
   selector: 'app-edit-grid',
@@ -8,7 +8,7 @@ import { gridTemplates } from '../../Survey';
 })
 export class EditGridComponent implements OnInit {
 
-  gridTemplates = gridTemplates;
+  cols_templates = GridTemplates;
 
   // init: boolean;
   disabled: boolean;
@@ -42,10 +42,10 @@ export class EditGridComponent implements OnInit {
     this.offset = Math.floor( survey.range / 2 );
     this.max_rows = this.offset + 2;
 
-    this.gridTemplates.forEach( (item) => {
+    this.cols_templates.forEach( (item) => {
       const value = item.val;
       if (Number(value) == survey.range) {
-        this.max_grid = Array.from(item.defaultGrid);
+        this.max_grid = Array.from(item.default_cols);
         this.updateStatementCount();
         this.ngOnInit();
       }
@@ -59,10 +59,10 @@ export class EditGridComponent implements OnInit {
     this.offset = Math.floor( range / 2 );
     this.max_rows = this.offset + 2;
 
-    this.gridTemplates.forEach( (item) => {
+    this.cols_templates.forEach( (item) => {
       const value = item.val;
       if (Number(value) == range) {
-        this.max_grid = Array.from(item.defaultGrid);
+        this.max_grid = Array.from(item.default_cols);
         this.grid = Array.from(this.max_grid);
         this.updateStatementCount();
         this.output_grid.emit(this.grid);
