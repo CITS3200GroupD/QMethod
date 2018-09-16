@@ -12,7 +12,8 @@ const express = require('express'),
 
     // init mongoDB
     mongoose.Promise = global.Promise;
-    mongoose.connect(process.env['MONGODB_URI'], {useNewUrlParser: true}).then(
+    console.log(`${process.env['MONGODB_URI']}&ssl=true`);
+    mongoose.connect(`${process.env['MONGODB_URI']}&ssl=true`, {sslValidate: true, useNewUrlParser: true}).then(
       () => {console.log('Database is connected') },
       err => { console.log('Can not connect to the database'+ err)}
     );
@@ -38,7 +39,7 @@ const express = require('express'),
         next();
       }
     }
-    
+
     // Routes for RESTful API for Survey Data
     const surveyRoutes = require('./express/routes/survey.route');
     app.use('/api', surveyRoutes);

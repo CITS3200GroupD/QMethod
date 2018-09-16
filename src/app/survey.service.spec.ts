@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Survey } from './Survey';
+import { Survey, ValidSurveyList } from './Survey';
 import { SurveyService } from './survey.service';
 
 describe('SurveyService', () => {
@@ -10,24 +10,7 @@ describe('SurveyService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   const uri = 'http://localhost:8080/api';
-  const valid_survey_list: Survey[] = [{
-    _id: '0131asfd3',
-    publish: false,
-    name: 'testing1',
-    range:  7,
-    cols: [2, 3, 4, 5, 4, 3, 2],
-    statements: ['string'],
-    users: []
-  },
-  {
-    _id: '0234asd5',
-    publish: true,
-    name: 'testing2',
-    range:  9,
-    cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
-    statements: ['string'],
-    users: []
-  }];
+  const valid_survey_list = ValidSurveyList;
 
   const invalid_survey_list: Survey[] = [{
     _id: '0131asfd3',
@@ -46,7 +29,6 @@ describe('SurveyService', () => {
     cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
     statements: ['string'],
     users: []
-
   }];
 
   beforeEach(() => {
