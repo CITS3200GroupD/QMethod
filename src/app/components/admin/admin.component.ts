@@ -30,9 +30,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.surveyservice
-      .getSurveys()
-      .subscribe((data: Survey[]) => {
+    this.surveyservice.getSurveys().subscribe((data: Survey[]) => {
       this.surveys = data;
     });
   }

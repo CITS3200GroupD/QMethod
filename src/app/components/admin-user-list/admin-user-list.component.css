@@ -1,0 +1,6 @@
+.my-pagination /deep/ .ng2-pagination .current {
+    background: #2c3e50;
+}
+.my-pagination {
+    padding-left: 0;
+}

@@ -14,6 +14,8 @@ import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
 
+import { MockUserService } from './mockuser.service' // mock userdata middleware
+
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
 
@@ -29,7 +31,7 @@ import { EditStatementsComponent } from './components/edit-statements/edit-state
 import { EditGridComponent } from './components/edit-grid/edit-grid.component';
 import { AdminLinkComponent } from './components/admin-link/admin-link.component';
 import { UserIndexComponent } from './components/user-index/user-index.component';
-import { AdminUserListComponent } from './components/admin-user-list/admin-user-list.component';
+import { AdminUserListComponent, UserPipe } from './components/admin-user-list/admin-user-list.component';
 import { InstructionsComponent } from './components/instructions/instructions.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
@@ -47,6 +49,14 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditComponent
+  },
+  {
+    path: 'results/:id',
+    component: AdminUserListComponent
+  },
+  {
+    path: 'results/:id/users/:user_id',
+    component: AdminUserListComponent
   },
   {
     path: 'admin',
@@ -89,6 +99,7 @@ const routes: Routes = [
     UserIndexComponent,
     AdminUserListComponent,
     SurveyPipe,
+    UserPipe,
     InstructionsComponent,
     RegistrationComponent,
     QuestionnaireComponent
@@ -104,7 +115,7 @@ const routes: Routes = [
     NgbModule,
     Ng2PaginationModule
   ],
-  providers: [SurveyService, UserService, WindowWrap],
+  providers: [SurveyService, UserService, MockUserService, WindowWrap],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
