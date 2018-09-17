@@ -33,10 +33,14 @@ describe('AdminComponent', () => {
   };
 
   class MockWindowWrap {
-    get nativeWindow(): boolean {
-      function confirm(): boolean {
-        return true;
-      }
+    get nativeWindow(): MockWindowWrapInner {
+      let inner = new MockWindowWrapInner
+      return inner;
+    }
+  }
+
+  class MockWindowWrapInner {
+    confirm(): boolean {
       return true;
     }
   }
