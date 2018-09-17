@@ -47,6 +47,6 @@ export class SurveyPipe implements PipeTransform {
     if (!surveys) { return null; }
     if (!filter) { return surveys; }
 
-    return surveys.filter(n => n.name.indexOf(filter) >= 0);
+    return surveys.filter(n => n.name.indexOf(filter) >= 0 || n._id.indexOf(filter) >= 0 );
   }
 }

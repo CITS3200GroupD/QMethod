@@ -7,9 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SurveyPipe } from './admin.component';
 import { Ng2PaginationModule } from 'ng2-pagination';
-import { Survey, ValidSurveyList } from '../../Survey';
+import { Survey } from '../../Survey';
+import { ValidSurveyList } from '../../Testing';
 import { SurveyService } from '../../survey.service';
-import { Observable, of, timer } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { WindowWrap } from '../../window-wrapper';
 
 describe('AdminComponent', () => {
