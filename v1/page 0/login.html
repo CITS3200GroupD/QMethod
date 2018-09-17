@@ -1,51 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+<title>QMethod</title>
 <meta charset="utf-8"/>
 
-<link rel="stylesheet" 
-      type="text/css"
-	  href="Login.css">
- </link>
- <div class="form">
-	  
-  <!-- Button to open the modal login form -->
-  <div class="container">
-  
-  <button class="button" onclick="document.getElementById('login').style.display='block'">Click Here to Reset</button>
-</div>
+<body>
+  <link rel="stylesheet" type="text/css" href="Login.css"/>
+  <div class="form">
+    <button onclick="window.location.href='#openModal'"> Admin Login</button>
+    <button onclick="window.location.href='../page 1/instructions.html'" class="button">Start Survey</button>
 
-<title>QMethod</title>
-  <!-- Button to open the modal login form -->
-  <div class="container">
-  <button onclick="document.getElementById('login').style.display='block'" class="button">Admin Login</button>
-  <button onclick="window.location.href='../page 1/instructions.html'" class="button">Start Survey</button>
-</div>
-  <!-- The Modal -->
-  <div id="login" class="modal">
-    <span onclick="document.getElementById('login').style.display='none'" 
-  class="close" title="Close Modal">&times;</span>
-
-    <!-- Modal Content -->
-    <form class="modal-content animate" action="../page 1/instructions.html">
-      <div class="container">
+    <!-- Model from: https://www.webdesignerdepot.com/2012/10/creating-a-modal-window-with-html5-and-css3/ -->
+    <div id="openModal" class="modalDialog">
+      <div>
+        <a href="#close" title="Close" class="close">X</a>
         <label for="uname"><b>Username</b></label>
         <input class="input" type="text" placeholder="Enter Username" name="uname" required>
 
         <label for="psw"><b>Password</b></label>
         <input class= "input" type="password" placeholder="Enter Password" name="psw" required>
 
-     
-
-        <button type="submit" class="button" onclick="window.location.href='../page 1/instructions.html'">Login</button>
-
+        <button type="submit" class="button" onclick="window.location.href='http://localhost:4200/admin'">Login</button>
       </div>
-
-      <div class="container">
-        <button type="button" class="button" onclick="document.getElementById('login').style.display='none'" class="cancelbtn">Cancel</button>
-      </div>
-    </form>
+    </div>
   </div>
-  <body>
-  </body>
-  </div>
+</body>
 </html>

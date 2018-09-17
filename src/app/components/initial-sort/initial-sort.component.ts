@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SurveyService } from '../../survey.service';     // Survey API
-// import { UserService } from '../../user.service';      // User API
+import { SurveyService } from '../../survey.service';     // Survey API MW
+import { UserService } from '../../user.service';         // User API MW
+
+import { TempIntDisagree, TempIntNeutral, TempIntAgree } from '../../Testing'; // TODO: This will eventually need to be removed entirely
 
 @Component({
   selector: 'app-initial-sort',
@@ -39,10 +41,6 @@ export class InitialSortComponent implements OnInit {
   disagree_update: number[] = [];
   neutral_update: number[] = [];
   agree_update: number[] = [];
-
-  TEMP_int_disagree: number[] = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  TEMP_int_neutral: number[] = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-  TEMP_int_agree: number[] =  [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42];
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -139,7 +137,7 @@ export class InitialSortComponent implements OnInit {
   // 2) goes to q-sort page
   publishSortContinue() {
     console.log('publishSortContinue()');
-    // this.userservice.updateUser(this.TEMP_int_disagree, this.TEMP_int_neutral, this.TEMP_int_agree, this.id);
+    // this.userservice.updateUser(TempIntDisagree, TempIntNeutral, TempIntAgree, this.id);
     setTimeout(() => {
       // this.router.navigate(['q-sort']);
       this.router.navigate(['q-sort']);

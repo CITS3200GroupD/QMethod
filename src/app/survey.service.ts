@@ -1,6 +1,7 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';    // ng<->express client
 import { Survey, SurveyInput, GridTemplates } from './Survey';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ import { Survey, SurveyInput, GridTemplates } from './Survey';
 
 export class SurveyService {
 
-  cols_templates = GridTemplates;
-  uri: String;
+  private cols_templates = GridTemplates;
+  private uri: string;
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
@@ -26,7 +27,7 @@ export class SurveyService {
     }
   }
 
-  addSurvey(name: string, range: number, statements: string[]) {
+  addSurvey(name: string, range: number, statements: string[]) : Observable<Object> {
     let cols: number[];
     this.cols_templates.forEach( (item) => {
       const value = item.val;
@@ -50,19 +51,19 @@ export class SurveyService {
   }
 
   // TODO: Pass private api key along with data for authentication (if exists) as administrator for full survey list access
-  getSurveys() {
+  getSurveys(): Observable<Object> {
     return this
            .http
            .get(`${this.uri}`);
   }
 
-  getSurvey(id: string) {
+  getSurvey(id: string): Observable<Object> {
     return this
             .http
             .get(`${this.uri}/${id}`);
   }
 
-  updateSurvey(survey: Survey) {
+  updateSurvey(survey: Survey): Observable<Object> {
     const id = survey._id;
 
     return this
@@ -70,13 +71,13 @@ export class SurveyService {
               .post(`${this.uri}/${id}`, survey);
   }
 
-  deleteSurvey(id: string) {
+  deleteSurvey(id: string): Observable<Object> {
     return this
               .http
               .delete(`${this.uri}/${id}`);
   }
 
-  addStatement(id: string, statement: string) {
+  addStatement(id: string, statement: string): Observable<Object> {
     const obj = {
       statement: statement
     };
@@ -85,7 +86,7 @@ export class SurveyService {
               .post(`${this.uri}/${id}/addState`, obj);
   }
 
-  deleteStatement(id: string, statement_id: number) {
+  deleteStatement(id: string, statement_id: number): Observable<Object> {
     return this
               .http
               .delete(`${this.uri}/${id}/delState/${statement_id}`);

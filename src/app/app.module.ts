@@ -10,7 +10,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
 import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 
 // ng services
-import { SurveyService } from './survey.service';   // survey creation http requests
+import { WindowWrap } from './window-wrapper';
+import { SurveyService } from './survey.service';   // survey middleware
+import { UserService } from './user.service';       // userdata middleware
 
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
@@ -102,7 +104,7 @@ const routes: Routes = [
     NgbModule,
     Ng2PaginationModule
   ],
-  providers: [SurveyService],
+  providers: [SurveyService, UserService, WindowWrap],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

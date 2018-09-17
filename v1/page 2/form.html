@@ -6,15 +6,15 @@
       type="text/css"
 	  href="form.css">
 </link>
-	  
+
 
 <title>QMethod</title>
 
 <div id="contact-form">
     <h1></h1>
-    <h2></h2> 
-    <p id="failure"></p>  
-    <p id="success"></p>  
+    <h2></h2>
+    <p id="failure"></p>
+    <p id="success"></p>
     <!-- <form method="post" action="emailForm.php">  -->
 
     <form method="post" class="form" action="">
@@ -23,25 +23,25 @@
 
     <table>
         <tr>
-            <td>    
+            <td>
 			    <div class="form_atribute">
-                <label for="age">Birthday: <span class="required">*</span></label>  
+                <label for="age">Birthday: <span class="required">*</span></label>
 				</div>
             </td>
             <td>
 			 <div class="form_atribute">
 			  <div class ="font_change">
-                <input type="date" id="age" name="age" value="" placeholder="" required="required" />  
+                <input type="date" id="age" name="age" value="" placeholder="" required="required" />
             </div>
 			</div>
 			</td>
         </tr>
         <tr>
-            <td>  	  
+            <td>
                 <label for="nation">Nationality: <span class="required">*</span></label>
             </td>
             <td>
-			   
+
                 <select id="nation" name="nation" class="font_change">
                     <option value="  " selected>please select a country</option>
                     <option value="--">none</option>
@@ -224,12 +224,12 @@
                     <option value="RO">Romania</option>
                     <option value="RU">Russian Federation</option>
                     <option value="RW">Rwanda</option>
-                    <option value="KN">Saint Kitts and Nevis</option> 
+                    <option value="KN">Saint Kitts and Nevis</option>
                     <option value="LC">Saint LUCIA</option>
                     <option value="VC">Saint Vincent and the Grenadines</option>
                     <option value="WS">Samoa</option>
                     <option value="SM">San Marino</option>
-                    <option value="ST">Sao Tome and Principe</option> 
+                    <option value="ST">Sao Tome and Principe</option>
                     <option value="SA">Saudi Arabia</option>
                     <option value="SN">Senegal</option>
                     <option value="SC">Seychelles</option>
@@ -286,46 +286,47 @@
                     <option value="ZW">Zimbabwe</option>
                 </select>
                 <!-- <input type="text" id="nation" name="nation" value="" />  -->
-				
+
             </td>
         </tr>
         <tr>
             <td>
 			    <div class="form_atribute">
-                <label for="gender">Gender: <span class="required">*</span></label>  
+                <label for="gender">Gender: <span class="required">*</span></label>
             </td>
             <td>
-                <select id="gender" name="gender" class="font_change">   
+                <select id="gender" name="gender" class="font_change">
                     <option value="male">male</option>
-                    <option value="female">female</option>  
-                    <option value="other">other</option>   
-                </select>  
+                    <option value="female">female</option>
+                    <option value="other">other</option>
+                </select>
 				</div>
             </td>
         </tr>
         <tr>
             <td>
 			 <div class="form_atribute">
-                <label for="language1">Main Spoken Language: <span class="required">*</span></label> 
-			</div>	
+                <label for="language1">Main Spoken Language: <span class="required">*</span></label>
+			</div>
             </td>
             <td>
 			 <div class="form_atribute">
-                <textarea id="language1" name="language1" placeholder="" required="required" maxlength="50"></textarea>  
+                <textarea id="language1" name="language1" placeholder="" required="required" maxlength="50"></textarea>
             </div>
 			</td>
         </tr>
         <tr>
             <td>
-                <label for="language1">Other Languages: <span class="required">*</span></label>  
+                <label for="language1">Other Languages: <span class="required">*</span></label>
             </td>
             <td>
-                <textarea id="language2" name="language2" placeholder="" required="required"></textarea>  
+                <textarea id="language2" name="language2" placeholder="" required="required"></textarea>
             </td>
         </tr>
         <tr>
             <td>
-                <input type="submit" class="button" value="Submit" id="submit" /> 
+                <!-- <input type="submit" class="button" value="Submit" id="submit" /> -->
+                <button onclick="window.location.href='../page 3/page 3.html'" class="button">Submit</button>
             </td>
         </tr>
     </table>
