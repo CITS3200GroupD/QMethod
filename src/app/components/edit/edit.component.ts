@@ -118,18 +118,24 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       // console.log(params);
-      this.surveyservice.getSurvey(params['id']).subscribe(res => {
-        this.survey = res;
-        this.cols = this.survey.cols;
+      this.surveyservice.getSurvey(params['id']).subscribe(
+        res => {
+          this.survey = res;
+          this.cols = this.survey.cols;
 
-        this.angForm.get('survey_id').setValue(this.survey._id);
-        this.angForm.get('survey_name').setValue(this.survey.name);
-        this.angForm.get('survey_range').setValue(this.survey.range);
-        // If survey has been published, disable all editing
-        if (this.survey.publish) {
-          this.angForm.disable();
+          this.angForm.get('survey_id').setValue(this.survey._id);
+          this.angForm.get('survey_name').setValue(this.survey.name);
+          this.angForm.get('survey_range').setValue(this.survey.range);
+          // If survey has been published, disable all editing
+          if (this.survey.publish) {
+            this.angForm.disable();
+          }
+        },
+        err => {
+          console.error(err);
+          // TODO: Error Message Prompt for UX
         }
-      });
+      );
     });
   }
 }
