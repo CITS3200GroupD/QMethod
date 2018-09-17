@@ -1,7 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Survey, ValidSurveyList } from './Survey';
+import { Survey } from './Survey';
+import { ValidSurveyList } from './Testing';
 import { SurveyService } from './survey.service';
 
 describe('SurveyService', () => {
