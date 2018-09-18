@@ -25,12 +25,12 @@
       <td>
         <!-- { Results } -->
         <div class="btn-group">
-          <a [routerLink]="['/results', survey_id, 'users', user._id]" class="btn btn-primary">
+          <button [routerLink]="['/results', survey_id, 'users', user._id]" class="btn btn-primary">
             <i class="fas fa-database"></i><div class="d-none d-lg-inline"> View</div> <!-- TODO: userdata component -->
-          </a>
-          <a [routerLink]="['/results', survey_id, 'users', user._id]" [queryParams]="{ export: true }"class="btn btn-secondary">
+          </button>
+          <button [routerLink]="['/results', survey_id, 'users', user._id]" [queryParams]="{ export: true }" class="btn btn-secondary">
             <i class="fas fa-file-export"></i><div class="d-none d-lg-inline"> Export</div> <!-- TODO: userdata component -->
-          </a>
+          </button>
         </div>
       </td>
       <td>

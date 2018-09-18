@@ -15,6 +15,7 @@ export class AdminUserViewComponent implements OnInit {
   survey: Survey;
   questionnaire: string[];
   register: string[];
+  matrix: number[][];
   offset = 0;
 
   survey_name: string;
@@ -32,6 +33,7 @@ export class AdminUserViewComponent implements OnInit {
         this.userservice.getUser(this.survey_id, this.user_id).subscribe(
           (res: User) => {
             this.user = res;
+            this.matrix = this.user.matrix;
             this.offset = Math.floor( this.user.matrix.length / 2 );
           }
         );

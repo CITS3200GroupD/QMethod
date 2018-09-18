@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdminUserListComponent, UserPipe} from './admin-user-list.component';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -19,6 +18,15 @@ describe('AdminUserListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminUserListComponent],
+      imports: [ RouterTestingModule,
+                HttpClientModule,
+                RouterTestingModule,
+                Ng2PaginationModule,
+                Observable,
+                of,
+                WindowWrap,
+                FormsModule
+              ]
     })
     .compileComponents();
   }));
