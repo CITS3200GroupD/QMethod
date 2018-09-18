@@ -28,7 +28,6 @@ export class EditGridComponent implements OnInit {
   // TODO: might cause issues if range is never called
   @Input('survey')
   set survey(survey: any) {
-
     try {
       this.numState = survey.statements.length;
       this.grid = survey.cols;
@@ -47,7 +46,7 @@ export class EditGridComponent implements OnInit {
       if (Number(value) == survey.range) {
         this.max_grid = Array.from(item.default_cols);
         this.updateStatementCount();
-        this.ngOnInit();
+        // this.ngOnInit();
       }
     });
   }
@@ -66,9 +65,19 @@ export class EditGridComponent implements OnInit {
         this.grid = Array.from(this.max_grid);
         this.updateStatementCount();
         this.output_grid.emit(this.grid);
-        this.ngOnInit();
+        // this.ngOnInit();
       }
     });
+  }
+
+   // Seperated input as this is called when range input drop-down menu is changed
+  // TODO: might cause issues if range is called after survey
+  @Input('statements_length')
+  set statements_length(statements_length: number) {
+    if (statements_length) {
+      this.numState = statements_length;
+      this.updateStatementCount();
+    }
   }
 
   @Output() output_grid = new EventEmitter<number[]>();

@@ -4,7 +4,9 @@ export interface SurveyInput {
     name: string;
     range: number;
     cols: number[];
+    register: string[];
     statements: string[];
+    questionnaire: string[];
     users: User[];
 }
 
@@ -14,18 +16,15 @@ export interface Survey {
     name: string;
     range: number;
     cols: number[];
+    register: string[];
     statements: string[];
+    questionnaire: string[];
     users: User[];
 }
 
 export interface User {
     _id: string;
-    register: {
-        age: string;
-        gender: string;
-        main_lang: string;
-        other_lang: string;
-    };
+    register_ans: string[];
     progress: number;
     questions_ans: string[];
     sort_agree: number[];

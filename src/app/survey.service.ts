@@ -27,7 +27,8 @@ export class SurveyService {
     }
   }
 
-  addSurvey(name: string, range: number, statements: string[]) : Observable<Object> {
+  addSurvey(name: string, range: number, register: string[],
+    statements: string[], questionnaire: string[]) : Observable<Object> {
     let cols: number[];
     this.cols_templates.forEach( (item) => {
       const value = item.val;
@@ -43,6 +44,8 @@ export class SurveyService {
         cols: cols,
         publish: false,
         statements: statements,
+        register: register,
+        questionnaire: questionnaire,
         users: []
       };
       return this.http.post(`${this.uri}/add`, surveyCreate);

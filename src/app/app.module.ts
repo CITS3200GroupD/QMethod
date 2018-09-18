@@ -35,6 +35,7 @@ import { AdminUserListComponent, UserPipe } from './components/admin-user-list/a
 import { InstructionsComponent } from './components/instructions/instructions.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
+import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -102,7 +103,8 @@ const routes: Routes = [
     UserPipe,
     InstructionsComponent,
     RegistrationComponent,
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    EditFormsComponent
   ],
   imports: [
     BrowserModule,

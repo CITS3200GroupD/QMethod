@@ -52,18 +52,21 @@ surveyRoutes.route('/').get( (req, res) => {
 surveyRoutes.route('/:id').get( (req, res) => {
   // console.log(req.headers);
   const id = req.params.id;
+  console.log(id);
   Survey.findById(id, (err, survey) => {
-      if (!survey) {
-        res.status(400).json(err);
-      }
+    if (err || !survey) {
+      res.status(400).json(err);
+    } else if (survey) {
+      console.log('there');
       res.status(200).json(survey);
+    }
   });
 });
 
 // Update survey item and push to database
 surveyRoutes.route('/:id').post( (req, res) => {
   Survey.findById(req.params.id, (err, survey) => {
-    if (!survey) {
+    if (err || !survey) {
       res.status(400).json(err);
     }
     else {
@@ -72,6 +75,9 @@ surveyRoutes.route('/:id').post( (req, res) => {
       survey.range = req.body.range;
       survey.publish = req.body.publish;
       survey.cols = req.body.cols;
+      survey.questionnaire = req.body.questionnaire;
+      survey.register = req.body.register;
+      survey.statements = req.body.statements;
 
       survey.save().then(() => {
         console.log('Updated Survey');
@@ -97,7 +103,7 @@ surveyRoutes.route('/:id').delete( (req, res) => {
   });
 });
 
-// Add new statement
+// Add new statement - To be depreciated in 0.0.8a
 // Validates that statement is both under CHAR_LIMIT and that
 // total statements is under STATE_LIMIT.
 surveyRoutes.route('/:id/addState').post( (req, res) => {
@@ -105,7 +111,7 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
 
   if (typeof statement === 'string' || statement instanceof String) {
     Survey.findById(req.params.id, (err, survey) => {
-      if (!survey) {
+      if (err || !survey) {
         res.status(400).json(err);
       }
       else {
@@ -126,10 +132,10 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
     }
 });
 
-// Delete statement from database
+// Delete statement from database - To be depreciated in 0.0.8a
 surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
   Survey.findById(req.params.id, (err, survey) => {
-    if (!survey) {
+    if (err || !survey) {
       res.status(400).json(err);
     }
     else {
