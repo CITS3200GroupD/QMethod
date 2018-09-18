@@ -36,6 +36,7 @@ import { InstructionsComponent } from './components/instructions/instructions.co
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
+import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -57,7 +58,7 @@ const routes: Routes = [
   },
   {
     path: 'results/:id/users/:user_id',
-    component: AdminUserListComponent
+    component: AdminUserViewComponent
   },
   {
     path: 'admin',
@@ -104,7 +105,8 @@ const routes: Routes = [
     InstructionsComponent,
     RegistrationComponent,
     QuestionnaireComponent,
-    EditFormsComponent
+    EditFormsComponent,
+    AdminUserViewComponent
   ],
   imports: [
     BrowserModule,

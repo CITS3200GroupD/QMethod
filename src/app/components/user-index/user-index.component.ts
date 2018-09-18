@@ -19,6 +19,7 @@ export class UserIndexComponent implements OnInit {
           this.surveyservice.getSurvey(params['id']).subscribe(res => {
             this.id = params['id'];
             // this.surveyservice.getSurvey(this.id);
+            // TODO: Check Validity
             this.valid = true;
         });
       });

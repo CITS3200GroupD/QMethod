@@ -52,12 +52,10 @@ surveyRoutes.route('/').get( (req, res) => {
 surveyRoutes.route('/:id').get( (req, res) => {
   // console.log(req.headers);
   const id = req.params.id;
-  console.log(id);
   Survey.findById(id, (err, survey) => {
     if (err || !survey) {
       res.status(400).json(err);
     } else if (survey) {
-      console.log('there');
       res.status(200).json(survey);
     }
   });
