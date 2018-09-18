@@ -27,7 +27,7 @@ export class EditComponent implements OnInit {
     questionnaire: 0,
     register: 0,
     statements: 0
-  }
+  };
 
   constructor(private route: ActivatedRoute,
     private router: Router,

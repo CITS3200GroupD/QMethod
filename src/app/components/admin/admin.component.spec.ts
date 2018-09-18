@@ -19,7 +19,7 @@ describe('AdminComponent', () => {
   const valid_survey_list: Survey[] = ValidSurveyList;
 
   class MockSurveyService {
-    private uri: string = 'http://localhost:8080/api';
+    private uri = 'http://localhost:8080/api';
 
     deleteSurvey(id: string): Observable<Object> {
       const return_val = 'Successfully Removed';
@@ -29,11 +29,11 @@ describe('AdminComponent', () => {
     getSurveys(): Observable<Object> {
       return of(ValidSurveyList);
     }
-  };
+  }
 
   class MockWindowWrap {
     get nativeWindow(): MockWindowWrapInner {
-      let inner = new MockWindowWrapInner
+      const inner = new MockWindowWrapInner;
       return inner;
     }
   }
@@ -85,5 +85,5 @@ describe('AdminComponent', () => {
       component.deleteSurvey(valid_survey_list[0]._id);
     },
     500);
-  })
+  });
 });
