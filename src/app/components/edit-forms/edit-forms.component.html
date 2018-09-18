@@ -1,0 +1,29 @@
+<!-- List of fields -->
+<ul class="list-group">
+    <!-- Create list item for each field -->
+    <li class="list-group-item" *ngFor="let field of fields; let i = index" [attr.data-index]="i">
+        <p> {{field}}
+          <!-- float delete button to right -->
+          <span class="btn-group float-right">
+            <!-- Delete field button (only if not published) -->
+            <button *ngIf="!disabled" (click)="deleteField(i)" class="btn btn-danger btn-sm">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </span>
+        </p>
+    </li>
+  </ul>
+
+  <!-- String Input (Only if not published) -->
+  <form [formGroup]="angForm" *ngIf="!disabled" >
+    <!-- Text Input (with character limit) -->
+    <div class="input-group">
+      <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="field" #field />
+      <!-- Add button -->
+      <div class="input-group-append">
+          <button *ngIf="!disabled" (click)="addField(field.value)" [disabled]="numFields >= STATE_LIMIT" class="btn btn-secondary">
+            <i class="fas fa-plus"></i> Add
+          </button>
+      </div>
+    </div>
+  </form>

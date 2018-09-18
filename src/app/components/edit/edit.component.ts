@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { GridTemplates } from '../../Survey';
 import { SurveyService } from '../../survey.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-edit',
@@ -11,22 +12,29 @@ import { SurveyService } from '../../survey.service';
 })
 export class EditComponent implements OnInit {
   NAME_LIMIT = 100;
-
+  FORMS_LIMIT = 10;
+  STATE_LIMIT = 80;
   cols_templates = GridTemplates;
+
+  statements_page: number;
 
   survey: any = {};
   valid_grid: boolean;
-  range: number;
   angForm: FormGroup;
-  cols: number[];
-  label_x: number;
-  range_y: number;
+
+  range: number;
+  lengths = {
+    questionnaire: 0,
+    register: 0,
+    statements: 0
+  }
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private surveyservice: SurveyService,
     private fb: FormBuilder) {
       this.createForm();
+      this.cols_templates = GridTemplates;
     }
 
   private createForm() {
@@ -50,12 +58,27 @@ export class EditComponent implements OnInit {
       this.throwError('Attempted to update a published server');
     } else {
       this.range = range;
+      this.survey.range = range;
     }
   }
 
   updateGrid(cols) {
     if (!this.survey.publish && this.valid_grid) {
-      this.cols = cols;
+      this.survey.cols = cols;
+    }
+  }
+
+  updateStatements(statements) {
+    if (!this.survey.publish) {
+      this.survey.statements = statements;
+      this.lengths.statements = statements.length;
+    }
+  }
+
+  updateFields(field, item) {
+    if (!this.survey.publish) {
+      this.survey[field] = item;
+      this.lengths[field] = item.length;
     }
   }
 
@@ -91,7 +114,6 @@ export class EditComponent implements OnInit {
   }
 
   private failedUpdate(err) {
-    console.error(err);
     if (window.confirm(`${err.error}`)) {
       this.ngOnInit();
     }
@@ -118,18 +140,27 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       // console.log(params);
-      this.surveyservice.getSurvey(params['id']).subscribe(res => {
-        this.survey = res;
-        this.cols = this.survey.cols;
+      this.surveyservice.getSurvey(params['id']).subscribe(
+        res => {
+          this.survey = res;
+          this.lengths.statements = this.survey.statements.length;
+          this.lengths.questionnaire = this.survey.questionnaire.length;
+          this.lengths.register = this.survey.register.length;
+          // We deliberately do NOT want to update this.range on initiation.
 
-        this.angForm.get('survey_id').setValue(this.survey._id);
-        this.angForm.get('survey_name').setValue(this.survey.name);
-        this.angForm.get('survey_range').setValue(this.survey.range);
-        // If survey has been published, disable all editing
-        if (this.survey.publish) {
-          this.angForm.disable();
+          this.angForm.get('survey_id').setValue(this.survey._id);
+          this.angForm.get('survey_name').setValue(this.survey.name);
+          this.angForm.get('survey_range').setValue(this.survey.range);
+          // If survey has been published, disable all editing
+          if (this.survey.publish) {
+            this.angForm.disable();
+          }
+        },
+        err => {
+          console.error(err);
+          // TODO: Error Message Prompt for UX
         }
-      });
+      );
     });
   }
 }

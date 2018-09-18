@@ -1,3 +1,54 @@
-<p>
-  admin-user-list works!
-</p>
+<!-- Search -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="input-group stylish-input-group">
+      <input type="text" class="form-control" [(ngModel)]="user_filter" placeholder="Search by name or id...">
+    </div>
+  </div>
+</div>
+
+<!-- Table of Surveys -->
+<table class="table table-hover">
+  <!-- Categories -->
+  <thead>
+  <tr>
+    <td>ID</td>
+    <td>Actions</td>
+  </tr>
+  </thead>
+  <!-- Content -->
+  <tbody>
+    <!-- For every user in this.users -->
+    <tr *ngFor="let user of users | filterUserNames:user_filter | paginate: {itemsPerPage: 9, currentPage:page, id: '1'}; let i = index">
+      <!-- Display name and number of statements and user count -->
+      <td>{{ user._id }}</td>
+      <td>
+        <!-- { Results } -->
+        <div class="btn-group">
+          <button [routerLink]="['/results', survey_id, 'users', user._id]" class="btn btn-primary">
+            <i class="fas fa-database"></i><div class="d-none d-lg-inline"> View</div> <!-- TODO: userdata component -->
+          </button>
+          <button [routerLink]="['/results', survey_id, 'users', user._id]" [queryParams]="{ export: true }" class="btn btn-secondary">
+            <i class="fas fa-file-export"></i><div class="d-none d-lg-inline"> Export</div> <!-- TODO: userdata component -->
+          </button>
+        </div>
+      </td>
+      <td>
+          <!-- { Delete } button -->
+          <button (click)="deleteUser(user._id)" class="btn btn-danger">
+            <i class="far fa-trash-alt"></i>
+          </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Pagination Controls -->
+<div class="row justify-content-center">
+  <pagination-controls class="my-pagination"(pageChange)="page = $event" id="1"
+    maxSize="5"
+    directionLinks="true"
+    autoHide="true"
+    previousLabel=""
+    nextLabel="">
+  </pagination-controls>
+</div>

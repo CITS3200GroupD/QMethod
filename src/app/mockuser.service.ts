@@ -1,14 +1,16 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';               // ng<->express client
 import { User, Survey, SurveyInput } from './Survey';
-import { Observable } from 'rxjs';
+import { ValidSurveyList, ValidUserList } from './Testing';
+import { of, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class MockUserService {
 
   uri: String;
+  private test_users_list = ValidUserList;
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
@@ -23,32 +25,29 @@ export class UserService {
   // See user.service.spec.ts for unit tests
 
   getAllUsers(survey_id: string): Observable<Object> {
-    return this
-              .http
-              .get(`${this.uri}/${survey_id}/users`);
+    return of(this.test_users_list);
   }
 
   addUser(survey_id: string, registration_info: any): Observable<Object>  {
-    return this
-              .http
-              .post(`${this.uri}/${survey_id}/addUser`, registration_info);
+    return of( 'Successfully Updated');
   }
 
   getUser(survey_id: string, user_id: string): Observable<Object>  {
-    return this
-              .http
-              .get(`${this.uri}/${survey_id}/user/${user_id}`);
+    let return_val = of(null);
+    this.test_users_list.forEach( (item) => {
+      if (item._id == user_id) {
+        console.log(item);
+        return_val = of(item);
+      }
+    });
+    return return_val;
   }
 
   updateUser(survey_id: string, user: User): Observable<Object>  {
-    return this
-              .http
-              .post(`${this.uri}/${survey_id}/user/${user._id}`, user);
+    return of( 'Successfully Updated');
   }
 
   deleteUser(survey_id: string, user_id: string): Observable<Object>  {
-    return this
-              .http
-              .delete(`${this.uri}/${survey_id}/user/${user_id}`);
+    return of( 'Successfully Removed');
   }
 }

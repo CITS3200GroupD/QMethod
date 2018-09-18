@@ -7,29 +7,28 @@
   background: #FFFFFF;
   max-width: 480px;
   margin: 0 auto 100px;
-  margin-top:13%;	
+  margin-top:13%;
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form_atribute{
-	
+
 margin: 5%;
-	
-	
+
+
 }
 .font_change{
 	font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   webkit-font-family: "Roboto", sans-serif;
-  
-	
+
 }
 .button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background: #2c3e50;
   width: 100%;
   border: 0px;
   margin-top: 10px;
@@ -41,15 +40,15 @@ margin: 5%;
   cursor: pointer;
 }
 .button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: #2c3e50;
 }
  body {
-  background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
+  background: #5b7b9b; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #5b7b9b, #93b4d4);
+  background: -moz-linear-gradient(right, #5b7b9b, #93b4d4);
+  background: -o-linear-gradient(right, #5b7b9b, #93b4d4);
+  background: linear-gradient(to left, #5b7b9b, #93b4d4);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale;
 }

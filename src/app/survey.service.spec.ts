@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Survey } from './Survey';
+import { ValidSurveyList } from './Testing';
 import { SurveyService } from './survey.service';
 
 describe('SurveyService', () => {
@@ -10,44 +11,7 @@ describe('SurveyService', () => {
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   const uri = 'http://localhost:8080/api';
-  const valid_survey_list: Survey[] = [{
-    _id: '0131asfd3',
-    publish: false,
-    name: 'testing1',
-    range:  7,
-    cols: [2, 3, 4, 5, 4, 3, 2],
-    statements: ['string'],
-    users: []
-  },
-  {
-    _id: '0234asd5',
-    publish: true,
-    name: 'testing2',
-    range:  9,
-    cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
-    statements: ['string'],
-    users: []
-  }];
-
-  const invalid_survey_list: Survey[] = [{
-    _id: '0131asfd3',
-    publish: false,
-    name: 'testing1',
-    range:  7,
-    cols: [3, 4, 5, 4, 3, 2],
-    statements: ['string'],
-    users: []
-  },
-  {
-    _id: '0234asd5',
-    publish: true,
-    name: 'testing2',
-    range:  8,
-    cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
-    statements: ['string'],
-    users: []
-
-  }];
+  const valid_survey_list = ValidSurveyList;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -134,12 +98,14 @@ describe('SurveyService', () => {
   it('addSurvey() should return success', () => {
     const name = valid_survey_list[1].name;
     const range = valid_survey_list[1].range;
+    const register = valid_survey_list[1].register;
     const statements = valid_survey_list[1].statements;
+    const questionnaire = valid_survey_list[1].questionnaire;
     const return_val = 'Successfully Updated';
     const test_url = `${uri}/add`;
 
     // Call function
-    service.addSurvey(name, range, statements).subscribe(res => {
+    service.addSurvey(name, range,  register, statements, questionnaire).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 

@@ -10,7 +10,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
 import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 
 // ng services
-import { SurveyService } from './survey.service';   // survey creation http requests
+import { WindowWrap } from './window-wrapper';
+import { SurveyService } from './survey.service';   // survey middleware
+import { UserService } from './user.service';       // userdata middleware
+
+import { MockUserService } from './mockuser.service' // mock userdata middleware
 
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
@@ -27,10 +31,12 @@ import { EditStatementsComponent } from './components/edit-statements/edit-state
 import { EditGridComponent } from './components/edit-grid/edit-grid.component';
 import { AdminLinkComponent } from './components/admin-link/admin-link.component';
 import { UserIndexComponent } from './components/user-index/user-index.component';
-import { AdminUserListComponent } from './components/admin-user-list/admin-user-list.component';
+import { AdminUserListComponent, UserPipe } from './components/admin-user-list/admin-user-list.component';
 import { InstructionsComponent } from './components/instructions/instructions.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
+import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
+import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -45,6 +51,14 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditComponent
+  },
+  {
+    path: 'results/:id',
+    component: AdminUserListComponent
+  },
+  {
+    path: 'results/:id/users/:user_id',
+    component: AdminUserViewComponent
   },
   {
     path: 'admin',
@@ -87,9 +101,12 @@ const routes: Routes = [
     UserIndexComponent,
     AdminUserListComponent,
     SurveyPipe,
+    UserPipe,
     InstructionsComponent,
     RegistrationComponent,
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    EditFormsComponent,
+    AdminUserViewComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +119,7 @@ const routes: Routes = [
     NgbModule,
     Ng2PaginationModule
   ],
-  providers: [SurveyService],
+  providers: [SurveyService, UserService, MockUserService, WindowWrap],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

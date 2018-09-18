@@ -1,0 +1,68 @@
+<div id="print-section" class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <!-- Show Survey ID -->
+      <div class="form-group">
+        <label class="col-sm-4">Survey ID</label>
+        <input type="text" [value]="survey_id" class="form-control" disabled>
+      </div>
+      <!-- Show Survey Name -->
+      <div class="form-group">
+        <label class="col-sm-4">Survey Name</label>
+        <input type="text" [value]="survey_name" class="form-control" disabled>
+      </div>
+      <!-- Show User ID -->
+      <div class="form-group">
+        <label class="col-sm-4">User ID</label>
+        <input type="text" [value]="user_id" class="form-control" disabled>
+      </div>
+
+
+      <!-- Survey Grid -->
+      <label class="col-sm-4">Grid</label>
+        <!-- Grid -->
+        <!-- TODO: Replace placeholder grid with dynamic grid-->
+      <div class = "container">
+        <div class="row justify-content-center">
+          <!-- Columns -->
+          <div class="col-sm-1" *ngFor="let col of matrix; let i = index">
+            <div class="text-center"> {{ i - offset }}
+              <!-- Cells -->
+              <div class="card" *ngFor="let cell of col; let j = index"> {{matrix[i][j]}} </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Registration -->
+      <div class="form-group">
+          <label class="col-md-4">Registration Details </label>
+          <!-- List of fields -->
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let field of register; let i = index">
+                <p> <b>{{ register[i] }}:</b> {{user.register_ans[i]}} </p>
+            </li>
+          </ul>
+      </div>
+
+      <!-- End of Survey -->
+      <div class="form-group">
+          <label class="col-md-4">End of Survey Questionnaire </label>
+          <!-- List of fields -->
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let field of questionnaire; let i = index">
+                <p> {{ questionnaire[i] }} </p> <p> {{user.questions_ans[i]}} </p>
+            </li>
+          </ul>
+      </div>
+      <!-- { Update | Publish | Cancel } -->
+      <div class="d-flex justify-content-center btn-group form-group">
+        <button class="btn btn-secondary d-print-none" (click)="print()"><i class="fas fa-file-export"></i> Export</button>
+        <button class="btn btn-danger d-print-none">
+            <i class="far fa-trash-alt"></i> Delete</button>
+        <button class="btn btn-light d-print-none" [routerLink]="['/results', survey_id]">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+</div>

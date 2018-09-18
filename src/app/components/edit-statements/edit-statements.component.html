@@ -1,10 +1,7 @@
-<!-- @Input() => [statements] -->
-<label class="col-md-4">Statements</label>
-
 <!-- List of statements -->
 <ul class="list-group">
   <!-- Create list item for each statement & Paginate -->
-  <li class="list-group-item" *ngFor="let statement of statements | paginate: {itemsPerPage: 5, currentPage:page, id: '1'}; let i = index" [attr.data-index]="i"> 
+  <li class="list-group-item" *ngFor="let statement of statements | paginate: {itemsPerPage: 5, currentPage:statements_page, id: '1'}; let i = index" [attr.data-index]="i">
       <p> {{statement}}
         <!-- float delete button to right -->
         <span class="btn-group float-right">
@@ -24,7 +21,7 @@
     <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="statement" #statement />
     <!-- Add button -->
     <div class="input-group-append">
-        <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="numStatements >= STATE_LIMIT" class="btn btn-secondary">
+        <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="statements_length >= STATE_LIMIT" class="btn btn-secondary">
           <i class="fas fa-plus"></i> Add
         </button>
     </div>
@@ -33,7 +30,7 @@
 
 <!-- Pagination Controls -->
 <div class="row justify-content-center">
-  <pagination-controls class="my-pagination"(pageChange)="page = $event" id="1"
+  <pagination-controls class="statements-pagination" (pageChange)="statements_page = $event" id="1"
     maxSize="5"
     directionLinks="true"
     autoHide="true"

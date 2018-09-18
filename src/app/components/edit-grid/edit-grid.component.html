@@ -11,7 +11,7 @@
 <table class="table compress">
   <tr>
     <!-- Columns -->
-    <td class *ngFor="let max_col of max_grid; let i = index" [attr.data-index]="i">
+    <td *ngFor="let max_col of max_grid; let i = index" [attr.data-index]="i">
       <!-- Range Display -->
       <div class="text-center"> {{i - offset}}
         <!-- Cells -->
@@ -19,18 +19,18 @@
 
           <!-- If this is the last valid cell on our current grid, create a delete button -->
           <div *ngIf="j == grid[i]-1 && j < grid[i]">
-            <div *ngIf="!disabled" class="btn btn-light delete" (click)="deleteBtn(i, j)"> </div>
+            <div *ngIf="!disabled" class="btn btn-block btn-light delete" (click)="deleteBtn(i, j)"><i class="fas fa-minus"></i></div>
             <!-- If published, override with disabled button -->
-            <div *ngIf="disabled" class="btn btn-light disabled"> </div>
+            <div *ngIf="disabled" class="btn btn-block btn-light disabled"></div>
           </div>
           <!-- If this is the a cell after the last valid cell of our current grid, create an add button -->
           <div *ngIf="j == grid[i] && j != max_grid[i]">
-            <div *ngIf="!disabled" class="btn btn-outline-light" (click)="addBtn(i, j)"> + </div>
+            <div *ngIf="!disabled" class="btn btn-block btn-outline-light" (click)="addBtn(i, j)"><i class="fas fa-plus"></i></div>
             <!-- If published, override with disabled button -->
-            <div *ngIf="disabled" class="btn btn-light disabled"> </div>
+            <div *ngIf="disabled" class="btn btn-block btn-light disabled"></div>
           </div>
           <!-- else create a disabled button -->
-          <div *ngIf="j != max_grid[i]-1 && j != grid[i]-1 && j < grid[i]" class="btn btn-light disabled"> </div>
+          <div *ngIf="j != max_grid[i]-1 && j != grid[i]-1 && j < grid[i]" class="btn  btn-block btn-light disabled"></div>
 
         </div>
       </div>
