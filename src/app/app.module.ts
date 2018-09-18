@@ -14,7 +14,7 @@ import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
 
-import { MockUserService } from './mockuser.service' // mock userdata middleware
+import { MockUserService } from './mockuser.service'; // mock userdata middleware
 
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar

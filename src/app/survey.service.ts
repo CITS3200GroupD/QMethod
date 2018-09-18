@@ -28,7 +28,7 @@ export class SurveyService {
   }
 
   addSurvey(name: string, range: number, register: string[],
-    statements: string[], questionnaire: string[]) : Observable<Object> {
+    statements: string[], questionnaire: string[]): Observable<Object> {
     let cols: number[];
     this.cols_templates.forEach( (item) => {
       const value = item.val;

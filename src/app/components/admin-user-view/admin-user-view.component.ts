@@ -25,8 +25,7 @@ export class AdminUserViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private userservice: MockUserService,
-    private surveyservice: SurveyService)
-    {
+    private surveyservice: SurveyService) {
       this.route.params.subscribe(params => {
         this.survey_id = params['id'];
         this.user_id = params['user_id'];

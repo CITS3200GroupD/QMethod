@@ -34,7 +34,7 @@ export class EditFormsComponent implements OnInit {
   private createForm() {
     this.angForm = this.fb.group({
       field: ['', Validators.required ]
-    });``
+    });
   }
 
   private throwError(error) {
