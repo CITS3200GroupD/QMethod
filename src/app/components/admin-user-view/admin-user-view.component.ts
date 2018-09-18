@@ -52,9 +52,9 @@ export class AdminUserViewComponent implements OnInit {
           setTimeout(() => {
             print();
           },
-          1000);
+          2000);
         }
-      })
+      });
     }
 
   /**
