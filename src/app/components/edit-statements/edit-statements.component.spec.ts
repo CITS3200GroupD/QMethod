@@ -5,6 +5,7 @@ import { Ng2PaginationModule  } from 'ng2-pagination';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { WindowWrap } from '../../window-wrapper';
 
 describe('EditStatementsComponent', () => {
   let component: EditStatementsComponent;
@@ -13,7 +14,8 @@ describe('EditStatementsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditStatementsComponent ],
-      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, Ng2PaginationModule]
+      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, Ng2PaginationModule],
+      providers: [ WindowWrap ]
     })
     .compileComponents();
   }));

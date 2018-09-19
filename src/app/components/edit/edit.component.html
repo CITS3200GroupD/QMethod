@@ -23,7 +23,7 @@
       <!-- Survey Range -->
       <div class="form-group">
         <label class="col-sm-4">Range </label>
-        <select class="form-control" formControlName="survey_range" #survey_range (change)="updateRange($event.target.value)" >
+        <select class="form-control" formControlName="survey_range" #survey_range (click)="updateRange($event.target.value)" >
           <option [value]=option.val *ngFor="let option of cols_templates">{{option.label}}</option>
         </select>
       </div>
@@ -32,17 +32,44 @@
       <div class="form-group">
         <label class="col-sm-4">Grid</label>
           <!-- edit-grid subcomponent -->
-          <app-edit-grid [survey]="survey" [range]="range" (output_grid)="updateGrid($event)" (is_valid)="isInvalidGrid($event)"></app-edit-grid>
-      </div>
-      <div class="form-group">
-          <app-edit-statements [statements_input]="survey.statements" [disabled]="survey.publish" (status)="ngOnInit()"></app-edit-statements>
+          <app-edit-grid [survey]="survey" [range]="range" [statements_length]="lengths.statements" (output_grid)="updateGrid($event)" (is_valid)="isInvalidGrid($event)"></app-edit-grid>
       </div>
 
+      <ngb-tabset>
+        <ngb-tab title="Registration">
+          <ng-template ngbTabContent>
+            <!-- Registration -->
+            <div class="form-group">
+                <label class="col-md-4">Registration Fields {{lengths.register}}/{{FORMS_LIMIT}}</label>
+                <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish" (fields_out)="updateFields('register', $event)"></app-edit-forms>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Questionnaire">
+          <ng-template ngbTabContent>
+            <!-- End of Survey -->
+            <div class="form-group">
+                <label class="col-md-4">End of Survey Questions {{lengths.questionnaire}}/{{FORMS_LIMIT}}</label>
+                <app-edit-forms [fields_input]="survey.questionnaire" [disabled]="survey.publish" (fields_out)="updateFields('questionnaire', $event)"></app-edit-forms>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Statements">
+            <ng-template ngbTabContent>
+                <!-- Statements -->
+                <div class="form-group">
+                    <label class="col-md-4">Statements {{lengths.statements}}/{{STATE_LIMIT}}</label>
+                    <app-edit-statements [statements_in]="survey.statements" [disabled]="survey.publish" (statements_out)="updateStatements($event)" ></app-edit-statements>
+                </div>
+            </ng-template>
+          </ngb-tab>
+      </ngb-tabset>
+
       <!-- { Update | Publish | Cancel } -->
-      <div class="form-group">
-        <button *ngIf="!survey.publish" (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid || !valid_grid" class="btn btn-primary">Update</button>
-        <button *ngIf="!survey.publish" (click)="publishSurvey()" [disabled]="angForm.invalid || !valid_grid" class="btn btn-danger">Publish</button>
-        <a [routerLink]="['/admin']" class="btn btn-light">Cancel</a>
+      <div class="d-flex justify-content-center btn-group form-group">
+        <button class="btn btn-primary" *ngIf="!survey.publish" (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid || !valid_grid" >Update</button>
+        <button class="btn btn-danger" *ngIf="!survey.publish" (click)="publishSurvey()" [disabled]="angForm.invalid || !valid_grid" >Publish</button>
+        <a class="btn btn-light" [routerLink]="['/admin']" >Cancel</a>
       </div>
 
     </form>

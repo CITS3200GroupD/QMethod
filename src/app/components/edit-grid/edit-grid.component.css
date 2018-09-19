@@ -1,13 +1,15 @@
 .table th, .table td {
-    width: 3%;
     padding: 0.1rem;
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
 
 .btn {
-    width: 95%; 
     height: 2rem;
+}
+
+.btn-light {
+    color:white;
 }
 
 .delete:hover {

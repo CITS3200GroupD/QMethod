@@ -1,7 +1,7 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';               // ng<->express client
 import { User, Survey, SurveyInput } from './Survey';
-import { ValidSurveyList } from './Testing';
+import { ValidSurveyList, ValidUserList } from './Testing';
 import { of, Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { of, Observable } from 'rxjs';
 export class MockUserService {
 
   uri: String;
-  private test_users_list = ValidSurveyList[0].users;
+  private test_users_list = ValidUserList;
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
@@ -33,12 +33,14 @@ export class MockUserService {
   }
 
   getUser(survey_id: string, user_id: string): Observable<Object>  {
+    let return_val = of(null);
     this.test_users_list.forEach( (item) => {
       if (item._id == user_id) {
-        return of(item);
+        console.log(item);
+        return_val = of(item);
       }
     });
-    return of(null);
+    return return_val;
   }
 
   updateUser(survey_id: string, user: User): Observable<Object>  {

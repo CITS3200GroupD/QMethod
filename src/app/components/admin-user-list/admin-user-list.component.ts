@@ -1,6 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { Router } from '@angular/router';
-import { Survey, User } from '../../Survey';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../Survey';
 import { MockUserService } from '../../mockuser.service';
 import { WindowWrap } from '../../window-wrapper';
 
@@ -13,21 +13,30 @@ export class AdminUserListComponent implements OnInit {
 
   user_filter: string;
   page: number;
-  surveys: User[];
-
+  survey_id: string;
+  users: User[];
   constructor(
+    private route: ActivatedRoute,
     private userservice: MockUserService, // TODO: Replace with real user service
     private router: Router,
     private window: WindowWrap
   ) {}
 
-  deleteUser(id: string) {
-    // TODO: Implement deleteUser
+  deleteUser(user_id: string): void {
+    if (this.window.nativeWindow.confirm('Are you sure you wish to delete this user?')) {
+      this.userservice.deleteUser(this.survey_id, user_id).subscribe(res => {
+          this.ngOnInit();
+          // console.log(res);
+      });
+    }
   }
 
-  ngOnInit() {
-    this.userservice.getAllUsers('').subscribe((data: User[]) => {
-      this.surveys = data;
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.survey_id = params['id'];
+      this.userservice.getAllUsers(this.survey_id).subscribe((data: User[]) => {
+        this.users = data;
+      });
     });
   }
 

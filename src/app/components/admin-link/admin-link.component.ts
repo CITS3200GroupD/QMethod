@@ -23,13 +23,13 @@ export class AdminLinkComponent implements OnInit {
     this.createForm();
   }
 
-  private createForm() {
+  private createForm(): void {
     this.angForm = this.fb.group({
       private_link: [{value: '', disabled: true}, Validators.required ]
    });
   }
 
-  open(content) {
+  open(content): void {
     if (this.survey.publish) {
       this.modalService.open(content, {ariaLabelledBy: 'modal-private-link'});
     }
@@ -39,7 +39,7 @@ export class AdminLinkComponent implements OnInit {
    * Sourced from: https://stackoverflow.com/questions/36328159/how-do-i-copy-to-clipboard-in-angular-2-typescript
    * @param input String input
    */
-  copy(input) {
+  copy(input: string): void {
 
     const selBox = document.createElement('textarea');
 
@@ -57,7 +57,7 @@ export class AdminLinkComponent implements OnInit {
     document.body.removeChild(selBox);
 }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (isDevMode()) {
       this.angForm.get('private_link').setValue( `localhost:4200/survey/${this.survey._id}`);
     } else {

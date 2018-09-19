@@ -1,18 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AdminUserListComponent, UserPipe} from './admin-user-list.component';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2PaginationModule } from 'ng2-pagination';
+import { AdminUserViewComponent } from './admin-user-view.component';
 import { WindowWrap } from '../../window-wrapper';
 
-describe('AdminUserListComponent', () => {
-  let component: AdminUserListComponent;
-  let fixture: ComponentFixture<AdminUserListComponent>;
+describe('AdminUserViewComponent', () => {
+  let component: AdminUserViewComponent;
+  let fixture: ComponentFixture<AdminUserViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminUserListComponent, UserPipe ],
+      declarations: [ AdminUserViewComponent ],
       imports: [ RouterTestingModule,
                 HttpClientModule,
                 RouterTestingModule,
@@ -25,11 +25,11 @@ describe('AdminUserListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminUserListComponent);
+    fixture = TestBed.createComponent(AdminUserViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  // TODO: Unit Tests
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

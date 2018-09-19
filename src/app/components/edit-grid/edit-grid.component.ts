@@ -28,7 +28,6 @@ export class EditGridComponent implements OnInit {
   // TODO: might cause issues if range is never called
   @Input('survey')
   set survey(survey: any) {
-
     try {
       this.numState = survey.statements.length;
       this.grid = survey.cols;
@@ -47,7 +46,7 @@ export class EditGridComponent implements OnInit {
       if (Number(value) == survey.range) {
         this.max_grid = Array.from(item.default_cols);
         this.updateStatementCount();
-        this.ngOnInit();
+        // this.ngOnInit();
       }
     });
   }
@@ -66,9 +65,19 @@ export class EditGridComponent implements OnInit {
         this.grid = Array.from(this.max_grid);
         this.updateStatementCount();
         this.output_grid.emit(this.grid);
-        this.ngOnInit();
+        // this.ngOnInit();
       }
     });
+  }
+
+   // Seperated input as this is called when range input drop-down menu is changed
+  // TODO: might cause issues if range is called after survey
+  @Input('statements_length')
+  set statements_length(statements_length: number) {
+    if (statements_length) {
+      this.numState = statements_length;
+      this.updateStatementCount();
+    }
   }
 
   @Output() output_grid = new EventEmitter<number[]>();
@@ -77,7 +86,7 @@ export class EditGridComponent implements OnInit {
   constructor() {
   }
 
-  private throwError(error) {
+  private throwError(error): void {
     try {
       throw new Error(error);
     } catch (e) {
@@ -85,7 +94,7 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  addBtn(col, row) {
+  addBtn(col: number, row: number): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
@@ -98,7 +107,7 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  deleteBtn(col, row) {
+  deleteBtn(col: number, row: number): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
@@ -111,7 +120,7 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  private updateStatementCount() {
+  private updateStatementCount(): void {
     this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
     if (this.totalStatements != this.numState) {
       this.is_valid.emit(false);
@@ -120,6 +129,6 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

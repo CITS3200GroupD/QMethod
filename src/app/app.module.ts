@@ -14,7 +14,7 @@ import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
 
-import { MockUserService } from './mockuser.service' // mock userdata middleware
+import { MockUserService } from './mockuser.service'; // mock userdata middleware
 
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
@@ -35,6 +35,8 @@ import { AdminUserListComponent, UserPipe } from './components/admin-user-list/a
 import { InstructionsComponent } from './components/instructions/instructions.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
+import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
+import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -56,7 +58,7 @@ const routes: Routes = [
   },
   {
     path: 'results/:id/users/:user_id',
-    component: AdminUserListComponent
+    component: AdminUserViewComponent
   },
   {
     path: 'admin',
@@ -102,7 +104,9 @@ const routes: Routes = [
     UserPipe,
     InstructionsComponent,
     RegistrationComponent,
-    QuestionnaireComponent
+    QuestionnaireComponent,
+    EditFormsComponent,
+    AdminUserViewComponent
   ],
   imports: [
     BrowserModule,
