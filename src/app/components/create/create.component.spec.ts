@@ -5,7 +5,7 @@ import { RouterTestingModule  } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { WindowWrap } from '../../window-wrapper';
-import { GridTemplates } from '../../Models';
+import { GridTemplates } from '../../models';
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
