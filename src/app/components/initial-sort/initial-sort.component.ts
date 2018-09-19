@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyService } from '../../survey.service';     // Survey API MW
 import { UserService } from '../../user.service';         // User API MW
 
-import { TempIntDisagree, TempIntNeutral, TempIntAgree } from '../../Testing'; // TODO: This will eventually need to be removed entirely
-
 @Component({
   selector: 'app-initial-sort',
   templateUrl: './initial-sort-new.component.html',
@@ -27,20 +25,20 @@ export class InitialSortComponent implements OnInit {
 
   // error = boolean;                     // TODO: Invalid survey message box on invalid survey id
 
-  id: String;
-  survey: any = {};
+  id: string;
+  survey: any;
 
   // TODO: Change to index display
   current_index = 0;
-  statementObjs: object[] = [];                 // TODO: Store statements as { id: number, string: String }
+  statementObjs: object[] = [];                 // TODO: Store statements as { id: number, string: string }
 
-  disagree: String[] = [];
-  neutral: String[] = [];
-  agree: String[] = [];
+  disagree: string[] = [];
+  neutral: string[] = [];
+  agree: string[] = [];
 
-  disagree_update: number[] = [];
-  neutral_update: number[] = [];
-  agree_update: number[] = [];
+  disagree_update: number[];
+  neutral_update: number[];
+  agree_update: number[];
 
   constructor( private route: ActivatedRoute,
     private router: Router,

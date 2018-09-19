@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { GridTemplates } from '../../Survey';
+import { GridTemplates } from '../../models';
 
 @Component({
   selector: 'app-edit-grid',
@@ -8,7 +8,7 @@ import { GridTemplates } from '../../Survey';
 })
 export class EditGridComponent implements OnInit {
 
-  cols_templates = GridTemplates;
+  private cols_templates = GridTemplates;
 
   // init: boolean;
   disabled: boolean;
@@ -18,8 +18,8 @@ export class EditGridComponent implements OnInit {
   offset: number;
   max_rows: number;
 
-  totalStatements: number;
-  numState: number;
+  grid_statements_count: number;
+  num_statements: number;
 
   arr = Array;
 
@@ -29,7 +29,7 @@ export class EditGridComponent implements OnInit {
   @Input('survey')
   set survey(survey: any) {
     try {
-      this.numState = survey.statements.length;
+      this.num_statements = survey.statements.length;
       this.grid = survey.cols;
     } catch (e) {
       if (e instanceof TypeError) {
@@ -75,7 +75,7 @@ export class EditGridComponent implements OnInit {
   @Input('statements_length')
   set statements_length(statements_length: number) {
     if (statements_length) {
-      this.numState = statements_length;
+      this.num_statements = statements_length;
       this.updateStatementCount();
     }
   }
@@ -121,8 +121,8 @@ export class EditGridComponent implements OnInit {
   }
 
   private updateStatementCount(): void {
-    this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
-    if (this.totalStatements != this.numState) {
+    this.grid_statements_count = this.grid.reduce((a, b) => a + b, 0);
+    if (this.grid_statements_count != this.num_statements) {
       this.is_valid.emit(false);
     } else {
       this.is_valid.emit(true);

@@ -5,6 +5,7 @@ import { RouterTestingModule  } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { WindowWrap } from '../../window-wrapper';
+import { GridTemplates } from '../../models';
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
@@ -27,5 +28,11 @@ describe('CreateComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('check params', () => {
+    expect(component.cols_templates).toBeTruthy();
+    expect(component.statements).toBe(undefined);
+    expect(component.angForm).toBeTruthy();
   });
 });

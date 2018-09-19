@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyService } from '../../survey.service';
-import { MockUserService } from '../../mockuser.service';
-import { Survey, User } from '../../Survey';
+import { MockUserService } from '../../testing/mockuser.service';
+import { Survey, User } from '../../models';
 import { WindowWrap } from '../../window-wrapper';
 
 @Component({

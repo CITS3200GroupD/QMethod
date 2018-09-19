@@ -1,6 +1,6 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';    // ng<->express client
-import { Survey, SurveyInput, GridTemplates } from './Survey';
+import { Survey, SurveyInput, GridTemplates } from './models';
 import { Observable } from 'rxjs';
 
 @Injectable({

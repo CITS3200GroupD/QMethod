@@ -34,15 +34,11 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['Chrome', 'Firefox', 'IE'],
     customLaunchers: {
       IE10: {
         base: 'IE',
         'x-ua-compatible': 'IE=EmulateIE10'
-      },
-      IE9: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=EmulateIE9'
       },
       Chrome_travis_ci: {
         base: 'Chrome',
@@ -52,7 +48,7 @@ module.exports = function (config) {
     singleRun: false
   });
 
-  if(process.env.TRAVIS){
+  if (process.env.TRAVIS){
     config.browsers = ['Chrome_travis_ci'];
     config.set({singleRun: true})
   }

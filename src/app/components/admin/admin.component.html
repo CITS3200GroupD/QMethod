@@ -12,6 +12,7 @@
   <!-- Categories -->
   <thead>
   <tr>
+    <td>#</td>
     <td>Survey</td>
     <td>Statements</td>
     <td>Responses</td>
@@ -22,8 +23,9 @@
   <!-- Content -->
   <tbody>
     <!-- For every survey in this.surveys -->
-    <tr *ngFor="let survey of surveys | filterSurveyNames:filter | paginate: {itemsPerPage: 9, currentPage:page, id: '1'}; let i = index">
+    <tr *ngFor="let survey of surveys | filterSurveyNames:filter | paginate: {itemsPerPage: PAGINATE_TABLES, currentPage:page, id: '1'}; let i = index">
       <!-- Display name and number of statements and user count -->
+      <td>{{ i+1 }}</td>
       <td>{{ survey.name }}</td>
       <td>{{ survey.statements.length }}</td>
       <td>0</td> <!-- TODO: Replace with actual user count-->
@@ -31,9 +33,12 @@
       <td>
         <!-- { Results } -->
         <div class="btn-group">
-          <a [routerLink]="['/results', survey._id]" class="btn btn-primary">
-            <i class="fa fa-list"></i> <div class="d-none d-lg-inline"> Results</div> <!-- TODO: Routing, Results component-->
+          <a *ngIf="survey.publish" [routerLink]="['/results', survey._id]" class="btn btn-primary">
+            <i class="fa fa-list"></i> <div class="d-none d-lg-inline"> Results</div>
           </a>
+          <button *ngIf="!survey.publish" class="btn btn-outline-light disabled">
+            <i class="fa fa-list"></i> <div class="d-none d-lg-inline"> Results</div>
+          </button>
         </div>
       </td>
 
@@ -42,7 +47,12 @@
         <div class="btn-group">
           <!-- Edit -->
           <a [routerLink]="['/edit', survey._id]" class="btn btn-light">
-            <i class="fas fa-wrench"></i><div class="d-none d-lg-inline"> Edit</div>
+            <div *ngIf="survey.publish">
+              <i class="fas fa-eye"></i><div class="d-none d-lg-inline"> View</div>
+            </div>
+            <div *ngIf="!survey.publish">
+              <i class="fas fa-wrench"></i><div class="d-none d-lg-inline"> Edit</div>
+            </div>
           </a>
           <!-- Link sub-component -->
           <app-admin-link [survey]="survey"></app-admin-link>

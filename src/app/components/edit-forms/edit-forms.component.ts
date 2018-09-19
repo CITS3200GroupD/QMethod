@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { WindowWrap } from '../../window-wrapper';
-
+import * as Settings from '../../../../config/Settings';
 
 @Component({
   selector: 'app-edit-forms',
@@ -11,9 +11,9 @@ import { WindowWrap } from '../../window-wrapper';
 
 export class EditFormsComponent implements OnInit {
 
-  FORMS_LIMIT = 10;
-  CHAR_LIMIT = 350;
-  STATE_LIMIT = 80;
+  FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
+  CHAR_LIMIT = Settings.CHAR_LIMIT || 350;
+  STATE_LIMIT = Settings.STATE_LIMIT || 80;
   fields: string[] = [];
 
   @Input() set fields_input(fields_input: string[]) {

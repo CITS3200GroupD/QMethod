@@ -6,11 +6,12 @@ import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Ng2PaginationModule } from 'ng2-pagination';
-import { Survey } from '../../Survey';
-import { ValidSurveyList } from '../../Testing';
+import { Survey } from '../../models';
+import { MockWindowWrap, ValidSurveyList } from '../../testing/Testing';
 import { SurveyService } from '../../survey.service';
 import { Observable, of } from 'rxjs';
 import { WindowWrap } from '../../window-wrapper';
+import * as Settings from '../../../../config/Settings';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -19,7 +20,6 @@ describe('AdminComponent', () => {
   const valid_survey_list: Survey[] = ValidSurveyList;
 
   class MockSurveyService {
-    private uri = 'http://localhost:8080/api';
 
     deleteSurvey(id: string): Observable<Object> {
       const return_val = 'Successfully Removed';
@@ -28,19 +28,6 @@ describe('AdminComponent', () => {
 
     getSurveys(): Observable<Object> {
       return of(ValidSurveyList);
-    }
-  }
-
-  class MockWindowWrap {
-    get nativeWindow(): MockWindowWrapInner {
-      const inner = new MockWindowWrapInner;
-      return inner;
-    }
-  }
-
-  class MockWindowWrapInner {
-    confirm(): boolean {
-      return true;
     }
   }
 
@@ -78,12 +65,11 @@ describe('AdminComponent', () => {
     expect(component.page).toBe(undefined);
     expect(component.filter).toBe(undefined);
     expect(component.surveys).toBe(valid_survey_list);
+    expect(component.PAGINATE_TABLES).toBe(Settings.PAGINATE_TABLES);
   });
 
   it('delete Survey', () => {
-    setTimeout(() => {
-      component.deleteSurvey(valid_survey_list[0]._id);
-    },
-    500);
+    expect(component.deleteSurvey(valid_survey_list[0]._id)).toBe(true);
   });
+
 });

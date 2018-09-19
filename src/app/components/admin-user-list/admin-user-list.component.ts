@@ -1,8 +1,9 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../../Survey';
-import { MockUserService } from '../../mockuser.service';
+import { User } from '../../models';
+import { MockUserService } from '../../testing/mockuser.service';
 import { WindowWrap } from '../../window-wrapper';
+import * as Settings from '../../../../config/Settings';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -10,6 +11,8 @@ import { WindowWrap } from '../../window-wrapper';
   styleUrls: ['./admin-user-list.component.css']
 })
 export class AdminUserListComponent implements OnInit {
+
+  PAGINATE_TABLES = Settings.PAGINATE_TABLES;
 
   user_filter: string;
   page: number;

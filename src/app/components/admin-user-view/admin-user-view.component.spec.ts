@@ -33,4 +33,17 @@ describe('AdminUserViewComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('check params', () => {
+    // TODO: Implement mockuserservice provider
+    // expect(component.user).toBe(undefined);
+    expect(component.survey).toBe(undefined);
+    expect(component.questionnaire).toBe(undefined);
+    expect(component.register).toBe(undefined);
+    expect(component.matrix).toBe(undefined);
+    expect(component.offset).toBe(0);
+    expect(component.survey_name).toBe(undefined);
+    expect(component.survey_id).toBe(undefined);
+    expect(component.user_id).toBe(undefined);
+  });
 });
