@@ -22,7 +22,7 @@ describe('UserService', () => {
     service = new UserService(httpClient);
   });
 
-  // After every test, assert that there are no more pending requests.
+  // After every test check that there are no more pending requests.
   afterEach(() => {
     httpTestingController.verify();
   });

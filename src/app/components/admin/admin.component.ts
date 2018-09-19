@@ -32,7 +32,7 @@ export class AdminComponent implements OnInit {
       }
       this.surveyservice.deleteSurvey(id).subscribe(res => {
         if (isDevMode()) {
-          console.log(`RES <= ${res}`)
+          console.log(`RES <= ${res}`);
           console.log(`Deleted Survey ${id}`);
         }
         status = true;
