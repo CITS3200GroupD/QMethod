@@ -59,7 +59,7 @@ export class MockUserService {
   }
 
   deleteUser(survey_id: string, user_id: string): Observable<Object>  {
-    let id = survey_id;
+    const id = survey_id;
     let continue_flag = false;
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {

@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyService } from '../../survey.service';     // Survey API MW
 import { UserService } from '../../user.service';         // User API MW
 
-import { TempIntDisagree, TempIntNeutral, TempIntAgree } from '../../testing/Testing'; // TODO: This will eventually need to be removed entirely
-
 @Component({
   selector: 'app-initial-sort',
   templateUrl: './initial-sort-new.component.html',

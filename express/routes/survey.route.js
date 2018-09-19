@@ -2,7 +2,6 @@ const express = require('express');
 // const app = express();
 express();
 const surveyRoutes = express.Router();
-const settings = require('../../config/Settings');
 // Depreciated - Checking for lengths - use mongoose model validation
 // const STATE_LIMIT = 80;
 // const NAME_LIMIT = 100;

@@ -11,7 +11,7 @@ export class EditGridComponent implements OnInit {
   private cols_templates = GridTemplates;
 
   // init: boolean;
-  private disabled: boolean;
+  disabled: boolean;
   grid: number[];
   max_grid: number[];
 

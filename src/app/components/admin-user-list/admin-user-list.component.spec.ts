@@ -12,8 +12,8 @@ import * as Settings from '../../../../config/Settings';
 describe('AdminUserListComponent', () => {
   let component: AdminUserListComponent;
   let fixture: ComponentFixture<AdminUserListComponent>;
-  let valid_survey_list = ValidSurveyList;
-  let valid_user_list = ValidUserList;
+  const valid_survey_list = ValidSurveyList;
+  const valid_user_list = ValidUserList;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

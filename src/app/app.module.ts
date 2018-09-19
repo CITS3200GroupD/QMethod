@@ -15,7 +15,7 @@ import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
 
 import { MockUserService } from './testing/mockuser.service'; // mock userdata middleware
-import { MockSurveyService } from './testing/mocksurvey.service'; //mock surveydata middleware
+import { MockSurveyService } from './testing/mocksurvey.service'; // mock surveydata middleware
 
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar

@@ -20,7 +20,7 @@ import { GridTemplates } from '../../models';
 describe('EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
-  let valid_survey_list = ValidSurveyList;
+  const valid_survey_list = ValidSurveyList;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -28,7 +28,7 @@ export class AdminComponent implements OnInit {
     let status = false;
     if (this.window.nativeWindow.confirm('Are you sure you wish to delete this survey?')) {
       if (isDevMode()) {
-        console.log(`SENT => ${id}`)
+        console.log(`SENT => ${id}`);
       }
       this.surveyservice.deleteSurvey(id).subscribe(res => {
         if (isDevMode()) {

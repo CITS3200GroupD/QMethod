@@ -26,7 +26,7 @@ describe('EditGridComponent', () => {
 
 
   it('check params', () => {
-    expect(component['disabled']).toBe(undefined);
+    expect(component.disabled).toBe(undefined);
     expect(component.grid).toBe(undefined);
     expect(component.max_grid).toBe(undefined);
     expect(component.offset).toBe(undefined);
