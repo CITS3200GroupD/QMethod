@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { WindowWrap } from '../../window-wrapper';
 
 
 @Component({
@@ -27,17 +28,17 @@ export class EditFormsComponent implements OnInit {
 
   angForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private window: WindowWrap) {
       this.createForm();
     }
 
-  private createForm() {
+  private createForm(): void {
     this.angForm = this.fb.group({
       field: ['', Validators.required ]
     });
   }
 
-  private throwError(error) {
+  private throwError(error): void {
     try {
       throw new Error(error);
     } catch (e) {
@@ -45,7 +46,7 @@ export class EditFormsComponent implements OnInit {
     }
   }
 
-  addField(field: string) {
+  addField(field: string): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else if (!this.fields) {
@@ -58,14 +59,13 @@ export class EditFormsComponent implements OnInit {
     }
   }
 
-  deleteField(index) {
+  deleteField(index: number): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else if (!this.fields) {
       this.throwError('Invalid fields');
     } else {
-      // TODO: Wrap Window with WindowWrapper
-      if (window.confirm('Are you sure you wish to delete this field?')) {
+      if (this.window.nativeWindow.confirm('Are you sure you wish to delete this field?')) {
         this.fields.splice(index, 1);
         this.fields_out.emit(this.fields);
       }

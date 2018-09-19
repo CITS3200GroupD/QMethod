@@ -4,6 +4,7 @@ import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng re
 import { SurveyService } from '../../survey.service';     // survey service
 import { GridTemplates } from '../../Survey';
 import { TestingRegister, TestingStatements, TestingQuestionnaire } from '../../Testing';
+import { WindowWrap } from '../../window-wrapper';
 
 const DEFAULT_RANGE = 11;
 
@@ -22,12 +23,13 @@ export class CreateComponent implements OnInit {
 
   constructor(private surveyservice: SurveyService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private window: WindowWrap
   ) {
     this.createForm();
   }
 
-  private createForm() {
+  private createForm(): void {
     this.angForm = this.fb.group({
 
       survey_name: ['', Validators.required ],
@@ -35,19 +37,19 @@ export class CreateComponent implements OnInit {
    });
   }
 
-  addSurvey(name, range) {
+  addSurvey(name: string, range: number): void {
     this.surveyservice.addSurvey(name, range, TestingRegister, TestingStatements, TestingQuestionnaire)
       .subscribe(
         (res) => { this.router.navigate(['admin']); },
         (err) => {
           console.error(err.error);
-          if (window.confirm(`${err.error}`)) {
+          if (this.window.nativeWindow.confirm(`${err.error}`)) {
             this.ngOnInit();
           }
         });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.angForm.get('survey_range').setValue(DEFAULT_RANGE);
   }
 

@@ -16,6 +16,7 @@ const surveyRoutes = express.Router();
 
 // Require Survey model in our routes module
 let Survey = require('../models/Survey');
+let User = require('../models/User');
 
 // Add new survey item to database
 surveyRoutes.route('/add').post( (req, res) => {

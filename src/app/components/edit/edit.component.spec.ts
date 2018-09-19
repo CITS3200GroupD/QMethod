@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WindowWrap } from '../../window-wrapper';
 
 describe('EditComponent', () => {
   let component: EditComponent;
@@ -19,7 +20,8 @@ describe('EditComponent', () => {
                 NgbModule,
                 ReactiveFormsModule,
                 HttpClientModule],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      providers: [ WindowWrap ]
     })
     .compileComponents();
   }));

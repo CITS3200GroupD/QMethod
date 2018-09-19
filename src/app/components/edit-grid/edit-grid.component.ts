@@ -86,7 +86,7 @@ export class EditGridComponent implements OnInit {
   constructor() {
   }
 
-  private throwError(error) {
+  private throwError(error): void {
     try {
       throw new Error(error);
     } catch (e) {
@@ -94,7 +94,7 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  addBtn(col, row) {
+  addBtn(col: number, row: number): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
@@ -107,7 +107,7 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  deleteBtn(col, row) {
+  deleteBtn(col: number, row: number): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
@@ -120,7 +120,7 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  private updateStatementCount() {
+  private updateStatementCount(): void {
     this.totalStatements = this.grid.reduce((a, b) => a + b, 0);
     if (this.totalStatements != this.numState) {
       this.is_valid.emit(false);
@@ -129,6 +129,6 @@ export class EditGridComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
 }

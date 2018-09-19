@@ -25,12 +25,12 @@ export class UserIndexComponent implements OnInit {
       });
   }
   // TODO: Placeholder function
-  nextPage() {
+  nextPage(): void {
     const nextPage = `initial-sort/${this.id}`;
     this.router.navigate([nextPage]);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

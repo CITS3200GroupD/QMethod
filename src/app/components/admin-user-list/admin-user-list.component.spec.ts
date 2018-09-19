@@ -3,12 +3,7 @@ import { AdminUserListComponent, UserPipe} from './admin-user-list.component';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Ng2PaginationModule } from 'ng2-pagination';
-import { Survey } from '../../Survey';
-import { ValidSurveyList } from '../../Testing';
-import { SurveyService } from '../../survey.service';
-import { Observable, of } from 'rxjs';
 import { WindowWrap } from '../../window-wrapper';
 
 describe('AdminUserListComponent', () => {
@@ -17,16 +12,14 @@ describe('AdminUserListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminUserListComponent],
+      declarations: [ AdminUserListComponent, UserPipe ],
       imports: [ RouterTestingModule,
                 HttpClientModule,
                 RouterTestingModule,
                 Ng2PaginationModule,
-                Observable,
-                of,
-                WindowWrap,
                 FormsModule
-              ]
+              ],
+      providers: [ WindowWrap ]
     })
     .compileComponents();
   }));
@@ -37,9 +30,7 @@ describe('AdminUserListComponent', () => {
     fixture.detectChanges();
   });
   // TODO: Unit Tests
-  /*
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  */
 });

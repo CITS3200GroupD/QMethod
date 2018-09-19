@@ -4,6 +4,9 @@ import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { GridTemplates } from '../../Survey';
 import { SurveyService } from '../../survey.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WindowWrap } from '../../window-wrapper';
+import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit',
@@ -32,12 +35,13 @@ export class EditComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private surveyservice: SurveyService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private window: WindowWrap) {
       this.createForm();
       this.cols_templates = GridTemplates;
     }
 
-  private createForm() {
+  private createForm(): void {
     this.angForm = this.fb.group({
       survey_id: [{value: '', disabled: true}, Validators.required ],
       survey_name: ['', Validators.required ],
@@ -45,7 +49,7 @@ export class EditComponent implements OnInit {
     });
   }
 
-  private throwError(error) {
+  private throwError(error): void {
     try {
       throw new Error(error);
     } catch (e) {
@@ -53,7 +57,7 @@ export class EditComponent implements OnInit {
     }
   }
 
-  updateRange(range) {
+  updateRange(range: number): void {
     if (this.survey.publish) {
       this.throwError('Attempted to update a published server');
     } else {
@@ -62,31 +66,31 @@ export class EditComponent implements OnInit {
     }
   }
 
-  updateGrid(cols) {
+  updateGrid(cols: number[]): void {
     if (!this.survey.publish && this.valid_grid) {
       this.survey.cols = cols;
     }
   }
 
-  updateStatements(statements) {
+  updateStatements(statements: string[]): void {
     if (!this.survey.publish) {
       this.survey.statements = statements;
       this.lengths.statements = statements.length;
     }
   }
 
-  updateFields(field, item) {
+  updateFields(field: string, item: string[]): void {
     if (!this.survey.publish) {
       this.survey[field] = item;
       this.lengths[field] = item.length;
     }
   }
 
-  isInvalidGrid(bool) {
+  isInvalidGrid(bool: boolean): void {
     this.valid_grid = bool;
   }
 
-  updateSurvey(name, range) {
+  updateSurvey(name, range): void {
     if (this.survey.publish) {
       this.throwError('Attempted to update a published server');
     } else if (!this.valid_grid) {
@@ -102,9 +106,8 @@ export class EditComponent implements OnInit {
     }
   }
 
-  private successfulUpdate(res, go_home) {
-    console.log(res);
-    if (window.confirm('Successfully Updated!')) {
+  private successfulUpdate(res, go_home: boolean): void {
+    if (this.window.nativeWindow.confirm('Successfully Updated!')) {
       if (go_home) {
         this.router.navigate(['admin']);
       } else {
@@ -113,17 +116,17 @@ export class EditComponent implements OnInit {
     }
   }
 
-  private failedUpdate(err) {
-    if (window.confirm(`${err.error}`)) {
+  private failedUpdate(err: HttpErrorResponse): void {
+    if (this.window.nativeWindow.confirm(`${err.error}`)) {
       this.ngOnInit();
     }
   }
 
-  publishSurvey() {
+  publishSurvey(): void {
     if (!this.valid_grid) {
       this.throwError('Invalid Grid');
     } else {
-      if (window.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
+      if (this.window.nativeWindow.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
         this.survey.publish = true;
         this.route.params.subscribe(params => {
           this.surveyservice.updateSurvey(this.survey)
@@ -133,11 +136,7 @@ export class EditComponent implements OnInit {
     }
   }
 
-/* TODO: Private Method to check that totalStatements and numStatements (in grid) are the same value
-  * ONLY enable publishing when totalStatements=numStatements
-  */
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
       // console.log(params);
       this.surveyservice.getSurvey(params['id']).subscribe(

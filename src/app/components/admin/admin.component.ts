@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
     private window: WindowWrap
   ) {}
 
-  deleteSurvey(id) {
+  deleteSurvey(id: string): void {
     if (this.window.nativeWindow.confirm('Are you sure you wish to delete this survey?')) {
       this.surveyservice.deleteSurvey(id).subscribe(res => {
           this.ngOnInit();
@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.surveyservice.getSurveys().subscribe((data: Survey[]) => {
       this.surveys = data;
     });

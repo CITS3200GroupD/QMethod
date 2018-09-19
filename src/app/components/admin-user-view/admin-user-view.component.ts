@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyService } from '../../survey.service';
 import { MockUserService } from '../../mockuser.service';
 import { Survey, User } from '../../Survey';
+import { WindowWrap } from '../../window-wrapper';
 
 @Component({
   selector: 'app-admin-user-view',
@@ -25,7 +26,8 @@ export class AdminUserViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private userservice: MockUserService,
-    private surveyservice: SurveyService) {
+    private surveyservice: SurveyService,
+    private window: WindowWrap) {
       this.route.params.subscribe(params => {
         this.survey_id = params['id'];
         this.user_id = params['user_id'];
@@ -52,7 +54,7 @@ export class AdminUserViewComponent implements OnInit {
           setTimeout(() => {
             print();
           },
-          2000);
+          1500);
         }
       });
     }
@@ -64,13 +66,17 @@ export class AdminUserViewComponent implements OnInit {
   print(): void {
     let printContents, popupWin;
     printContents = document.getElementById('print-section').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin = this.window.nativeWindow.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
       <html>
         <head>
           <title>QMethod Report for ${this.survey._id}:${this.user._id}</title>
           <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+          </style>
+          <style>
+            .list-group-item { padding-top: 5px; padding-bottom: 5px; }
+            p { margin-bottom: 5px; }
           </style>
         </head>
     <body onload="window.print();window.close()">${printContents}</body>
@@ -79,7 +85,7 @@ export class AdminUserViewComponent implements OnInit {
     popupWin.document.close();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

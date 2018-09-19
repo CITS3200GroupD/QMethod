@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { AdminUserViewComponent } from './admin-user-view.component';
+import { WindowWrap } from '../../window-wrapper';
 
 describe('AdminUserViewComponent', () => {
   let component: AdminUserViewComponent;
@@ -18,7 +18,8 @@ describe('AdminUserViewComponent', () => {
                 RouterTestingModule,
                 Ng2PaginationModule,
                 FormsModule
-              ]
+              ],
+      providers: [ WindowWrap ]
     })
     .compileComponents();
   }));
