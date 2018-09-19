@@ -1,8 +1,10 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { isDevMode, Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
-import { Survey } from '../../Survey';
+import { Survey } from '../../models';
 import { SurveyService } from '../../survey.service';
 import { WindowWrap } from '../../window-wrapper';
+import { ValidSurveyList } from '../../testing/Testing';
+import * as Settings from '../../../../config/Settings';
 
 @Component({
   selector: 'app-admin',
@@ -10,6 +12,8 @@ import { WindowWrap } from '../../window-wrapper';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+
+  PAGINATE_TABLES = Settings.PAGINATE_TABLES;
 
   filter: string;
   page: number;
@@ -20,13 +24,22 @@ export class AdminComponent implements OnInit {
     private window: WindowWrap
   ) {}
 
-  deleteSurvey(id: string): void {
+  deleteSurvey(id: string): boolean {
+    let status = false;
     if (this.window.nativeWindow.confirm('Are you sure you wish to delete this survey?')) {
+      if (isDevMode()) {
+        console.log(`SENT => ${id}`)
+      }
       this.surveyservice.deleteSurvey(id).subscribe(res => {
-          this.ngOnInit();
-          // console.log('Deleted');
+        if (isDevMode()) {
+          console.log(`RES <= ${res}`)
+          console.log(`Deleted Survey ${id}`);
+        }
+        status = true;
+        this.ngOnInit();
       });
     }
+    return status;
   }
 
   ngOnInit(): void {

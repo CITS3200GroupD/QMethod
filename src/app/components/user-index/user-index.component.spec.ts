@@ -24,4 +24,9 @@ describe('UserIndexComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('check params', () => {
+    expect(component.id).toBe(undefined);
+    expect(component.valid).toBe(undefined);
+  });
 });

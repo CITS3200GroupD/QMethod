@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { WindowWrap } from '../../window-wrapper';
+import * as Settings from '../../../../config/Settings.js';
 
 
 @Component({
@@ -15,9 +16,10 @@ export class EditStatementsComponent implements OnInit {
   statements_page: number;
   statements_length = 0;
 
-  CHAR_LIMIT = 350;
-  STATE_LIMIT = 80;
+  CHAR_LIMIT = Settings.CHAR_LIMIT || 350;
+  STATE_LIMIT = Settings.STATE_LIMIT || 80;
   statements: string[];
+  settings = Settings;
 
   @Input() set statements_in(statements_in: string[]) {
     // Fix for calling of input with undefined value

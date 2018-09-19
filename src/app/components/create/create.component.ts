@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core'; // ng core
 import { Router } from '@angular/router'; // ng router
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng reactive  form
 import { SurveyService } from '../../survey.service';     // survey service
-import { GridTemplates } from '../../Survey';
-import { TestingRegister, TestingStatements, TestingQuestionnaire } from '../../Testing';
+import { GridTemplates } from '../../models';
+import { TestingRegister, TestingStatements, TestingQuestionnaire } from '../../testing/Testing';
 import { WindowWrap } from '../../window-wrapper';
-
-const DEFAULT_RANGE = 11;
+import * as Settings from '../../../../config/Settings';
 
 // core
 @Component({
@@ -50,7 +49,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.angForm.get('survey_range').setValue(DEFAULT_RANGE);
+    this.angForm.get('survey_range').setValue(Settings.DEFAULT_RANGE);
   }
 
 }

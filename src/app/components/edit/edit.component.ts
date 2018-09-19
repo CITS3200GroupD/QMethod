@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { GridTemplates } from '../../Survey';
+import { GridTemplates } from '../../models';
 import { SurveyService } from '../../survey.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WindowWrap } from '../../window-wrapper';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import * as Settings from '../../../../config/Settings';
 
 @Component({
   selector: 'app-edit',
@@ -14,9 +15,9 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  NAME_LIMIT = 100;
-  FORMS_LIMIT = 10;
-  STATE_LIMIT = 80;
+  NAME_LIMIT = Settings.NAME_LIMIT || 100;
+  FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
+  STATE_LIMIT = Settings.STATE_LIMIT || 80;
   cols_templates = GridTemplates;
 
   statements_page: number;

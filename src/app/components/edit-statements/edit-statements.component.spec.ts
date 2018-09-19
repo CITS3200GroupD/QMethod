@@ -29,4 +29,10 @@ describe('EditStatementsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('check params', () => {
+    expect(component.statements_page).toBe(undefined);
+    expect(component.statements_length).toBe(0);
+    expect(component.statements).toBe(undefined);
+  });
 });
