@@ -26,14 +26,4 @@ describe('InitialSortComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('check params', () => {
-    expect(component.id).toBe(undefined);
-    expect(component.survey).toBe(undefined);
-    expect(component.disagree_update).toBe(undefined);
-    expect(component.neutral_update).toBe(undefined);
-    expect(component.agree_update).toBe(undefined);
-    expect(component.current_index).toBe(0);
-    expect(component.statementObjs).toBeTruthy();
-  });
 });
