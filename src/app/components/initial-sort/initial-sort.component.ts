@@ -9,7 +9,7 @@ import { SurveyService } from '../../survey.service';     // Survey API
   styleUrls: ['./initial-sort.component.css']
 })
 export class InitialSortComponent implements OnInit {
-  
+
   /*statements = [
     { string: 'I can see myself fostering understanding between Australia and yyy'},
     { string: 'I can see myself enjoying recreational activities with yyy people'},
@@ -19,7 +19,7 @@ export class InitialSortComponent implements OnInit {
     { string: 'I can see myself as a more knowledgeable person'},
     { string: 'I can see myself able to better understand people from any other culture'},
   ];*/
-  
+
 
   // error = boolean;                     // TODO: Invalid survey message box on invalid survey id
 
@@ -59,7 +59,7 @@ export class InitialSortComponent implements OnInit {
 
   // TODO: Loop over statements array, record index in { id: __ } and string in {string:___ }
   private generateStatementsArray() {
-    this.survey.statements.forEach( (item, index) => { 
+    this.survey.statements.forEach( (item, index) => {
       var temp = {id: index, string: item};
       this.statementObjs.push(temp);
     });
@@ -81,7 +81,7 @@ export class InitialSortComponent implements OnInit {
 
   onDisagreeDrop(e: any) {
     this.removeDisagree(e.dragData);
-    this.disagree.push(e.dragData);   
+    this.disagree.push(e.dragData);
     this.disagree_update.push(e.dragData.id);
     this.removeStatement(e.dragData);
     this.removeNeutral(e.dragData);
@@ -90,7 +90,7 @@ export class InitialSortComponent implements OnInit {
 
   onNeutralDrop(e: any) {
     this.removeNeutral(e.dragData);
-    this.neutral.push(e.dragData);  
+    this.neutral.push(e.dragData);
     this.neutral_update.push(e.dragData.id);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
@@ -99,7 +99,7 @@ export class InitialSortComponent implements OnInit {
 
   onAgreeDrop(e: any) {
     this.removeAgree(e.dragData);
-    this.agree.push(e.dragData); 
+    this.agree.push(e.dragData);
     this.agree_update.push(e.dragData.id);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
@@ -108,7 +108,7 @@ export class InitialSortComponent implements OnInit {
 
   removeStatement(e: any) {
     this.statementObjs.forEach( (item, index) => {
-      
+
       if (item == e) { this.statementObjs.splice(index, 1); }
     });
     if (this.current_index >= this.statementObjs.length) {
@@ -118,9 +118,9 @@ export class InitialSortComponent implements OnInit {
 
   removeDisagree(e: any) {
     this.disagree.forEach( (item, index) => {
-      
-      if (item == e) { 
-        this.disagree.splice(index, 1); 
+
+      if (item == e) {
+        this.disagree.splice(index, 1);
         this.disagree_update.splice(index, 1);
       }
     });
@@ -128,9 +128,9 @@ export class InitialSortComponent implements OnInit {
 
   removeNeutral(e: any) {
     this.neutral.forEach( (item, index) => {
-  
-      if (item == e) { 
-        this.neutral.splice(index, 1); 
+
+      if (item == e) {
+        this.neutral.splice(index, 1);
         this.neutral_update.splice(index, 1);
       }
     });
@@ -139,8 +139,8 @@ export class InitialSortComponent implements OnInit {
   removeAgree(e: any) {
     this.agree.forEach( (item, index) => {
 
-      if (item == e) { 
-        this.agree.splice(index, 1); 
+      if (item == e) {
+        this.agree.splice(index, 1);
         this.agree_update.splice(index, 1);
       }
     });
