@@ -11,8 +11,6 @@ import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // ng re
 })
 export class AdminLinkComponent implements OnInit {
 
-  survey_id: String;
-
   @Input() survey: any = {};
 
   angForm: FormGroup;

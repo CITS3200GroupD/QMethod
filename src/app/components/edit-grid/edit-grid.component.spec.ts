@@ -33,6 +33,7 @@ describe('EditGridComponent', () => {
     expect(component.max_rows).toBe(undefined);
     expect(component.grid_statements_count).toBe(undefined);
     expect(component.num_statements).toBe(undefined);
+    expect(component.init).toBe(true);
     expect(component['cols_templates']).toBe(GridTemplates);
     expect(typeof component.arr).toBe('function');
 

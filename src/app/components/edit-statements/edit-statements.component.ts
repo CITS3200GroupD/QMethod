@@ -32,6 +32,7 @@ export class EditStatementsComponent implements OnInit {
   @Output() statements_out = new EventEmitter<string[]>();
 
   angForm: FormGroup;
+  editForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -43,6 +44,9 @@ export class EditStatementsComponent implements OnInit {
   private createForm(): void {
     this.angForm = this.fb.group({
       statement: ['', Validators.required ]
+    });
+    this.editForm = this.fb.group({
+      edit_statement: ['', Validators.required ]
     });
   }
 
