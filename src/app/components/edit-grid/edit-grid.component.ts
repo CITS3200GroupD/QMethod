@@ -10,7 +10,7 @@ export class EditGridComponent implements OnInit {
 
   private cols_templates = GridTemplates;
 
-  // init: boolean;
+  init = true;
   disabled: boolean;
   grid: number[];
   max_grid: number[];
@@ -22,7 +22,6 @@ export class EditGridComponent implements OnInit {
   num_statements: number;
 
   arr = Array;
-
 
   // Seperated input as this is called when range input drop-down menu is changed
   // TODO: might cause issues if range is never called
@@ -36,6 +35,9 @@ export class EditGridComponent implements OnInit {
       } else { throw e; }
     }
 
+    if (survey._id != 'BLANK_SURVEY') {
+      this.init = false;
+    }
     this.disabled = survey.publish;
 
     this.offset = Math.floor( survey.range / 2 );

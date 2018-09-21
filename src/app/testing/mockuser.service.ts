@@ -31,7 +31,6 @@ export class MockUserService {
     let return_val = of(null);
     this.valid_user_list.forEach( (item) => {
       if (item._id == user_id) {
-        console.log(item);
         return_val = of(item);
       }
     });

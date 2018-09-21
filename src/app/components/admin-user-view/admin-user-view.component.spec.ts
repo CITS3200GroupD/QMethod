@@ -37,7 +37,7 @@ describe('AdminUserViewComponent', () => {
   it('check params', () => {
     // TODO: Implement mockuserservice provider
     // expect(component.user).toBe(undefined);
-    expect(component.survey).toBe(undefined);
+    expect(component['survey']).toBe(undefined);
     expect(component.questionnaire).toBe(undefined);
     expect(component.register).toBe(undefined);
     expect(component.matrix).toBe(undefined);

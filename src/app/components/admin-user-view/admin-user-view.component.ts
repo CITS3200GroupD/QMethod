@@ -12,8 +12,9 @@ import { WindowWrap } from '../../window-wrapper';
 })
 export class AdminUserViewComponent implements OnInit {
 
+  private survey: Survey;
+
   user: User;
-  survey: Survey;
   questionnaire: string[];
   register: string[];
   matrix: number[][];
@@ -51,6 +52,7 @@ export class AdminUserViewComponent implements OnInit {
       });
       this.route.queryParams.subscribe(params => {
         if (params['export']) {
+          // TODO: Find a better method than timeout
           setTimeout(() => {
             print();
           },

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { GridTemplates } from '../../models';
+import { GridTemplates, BlankSurvey, Survey } from '../../models';
 import { SurveyService } from '../../survey.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WindowWrap } from '../../window-wrapper';
-import { Observable } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import * as Settings from '../../../../config/Settings';
 
@@ -18,15 +17,15 @@ export class EditComponent implements OnInit {
   NAME_LIMIT = Settings.NAME_LIMIT || 100;
   FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
   STATE_LIMIT = Settings.STATE_LIMIT || 80;
-  cols_templates = GridTemplates;
+  private DEFAULT_RANGE =  Settings.DEFAULT_RANGE || 11;
 
   statements_page: number;
-
-  survey: any = {};
   valid_grid: boolean;
   angForm: FormGroup;
 
-  range: number;
+  survey: Survey = BlankSurvey;
+  cols_templates = GridTemplates;
+  range = this.DEFAULT_RANGE;
   lengths = {
     questionnaire: 0,
     register: 0,
@@ -55,6 +54,7 @@ export class EditComponent implements OnInit {
       throw new Error(error);
     } catch (e) {
       alert(`${e.name}: ${e.message}`);
+      console.error(error);
     }
   }
 
@@ -97,18 +97,16 @@ export class EditComponent implements OnInit {
     } else if (!this.valid_grid) {
       this.throwError('Invalid Grid');
     } else {
-      this.route.params.subscribe(params => {
         this.survey.name = name;
         this.survey.range = range;
         this.surveyservice.updateSurvey(this.survey)
-          .subscribe( res => this.successfulUpdate(res, false),
-                      err => this.failedUpdate(err));
-      });
+          .subscribe( (res: HttpResponse<Object>) => this.successfulUpdate(res, false), // Case 1: Normal HTTP response
+                      (err: HttpErrorResponse) => this.failedUpdate(err));              // Case 2: Responded with error
     }
   }
 
-  private successfulUpdate(res, go_home: boolean): void {
-    if (this.window.nativeWindow.confirm('Successfully Updated!')) {
+  private successfulUpdate(res: HttpResponse<Object>, go_home: boolean): void {
+    if (this.window.nativeWindow.confirm(`${res}!`)) {
       if (go_home) {
         this.router.navigate(['admin']);
       } else {
@@ -127,12 +125,12 @@ export class EditComponent implements OnInit {
     if (!this.valid_grid) {
       this.throwError('Invalid Grid');
     } else {
-      if (this.window.nativeWindow.confirm('Are you sure you wish to publish this survey? You can no longer edit this survey once published!')) {
+      if (this.window.nativeWindow.confirm(
+        'Are you sure you wish to publish this survey? You can no longer edit this survey once published!'
+      )) {
         this.survey.publish = true;
-        this.route.params.subscribe(params => {
-          this.surveyservice.updateSurvey(this.survey)
-            .subscribe( res => this.successfulUpdate(res, true) );
-        });
+        this.surveyservice.updateSurvey(this.survey)
+          .subscribe( (res: HttpResponse<Object>) => this.successfulUpdate(res, true) );
       }
     }
   }
@@ -141,7 +139,7 @@ export class EditComponent implements OnInit {
     this.route.params.subscribe(params => {
       // console.log(params);
       this.surveyservice.getSurvey(params['id']).subscribe(
-        res => {
+        (res: Survey) => {
           this.survey = res;
           this.lengths.statements = this.survey.statements.length;
           this.lengths.questionnaire = this.survey.questionnaire.length;

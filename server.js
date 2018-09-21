@@ -6,7 +6,7 @@ const express = require('express'),
     config = require('./config/DB');
 
     // For dev builds, use test database
-    if (process.argv[2] == 'test') {
+    if (process.argv[2] != 'deploy') {
       process.env['MONGODB_URI'] = config.TEST_DB;
     }
 
