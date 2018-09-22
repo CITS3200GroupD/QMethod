@@ -74,12 +74,12 @@ describe('CreateComponent', () => {
   it('create button', () => {
     const html_element: HTMLElement = fixture.nativeElement;
     const button = html_element.querySelector('button');
-    expect(button.attributes["disabled"]).toBeTruthy();
+    expect(button.attributes['disabled']).toBeTruthy();
     component.angForm.get('survey_name').markAsDirty();
     component.angForm.get('survey_name').markAsTouched();
     component.angForm.get('survey_name').setValue('New Survey');
     fixture.detectChanges();
-    expect(button.attributes["disabled"]).toBeFalsy();
+    expect(button.attributes['disabled']).toBeFalsy();
   });
 
   it('html error messages', () => {
@@ -94,6 +94,6 @@ describe('CreateComponent', () => {
     expect(alerts[0].textContent).toContain('Survey Name is required.');
     expect(alerts[1].textContent).toContain('Range is required.');
     const button = html_element.querySelector('button');
-    expect(button.attributes["disabled"]).toBeTruthy();
-  })
+    expect(button.attributes['disabled']).toBeTruthy();
+  });
 });
