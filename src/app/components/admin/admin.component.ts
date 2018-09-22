@@ -35,7 +35,9 @@ export class AdminComponent implements OnInit {
   constructor(private surveyservice: SurveyService,
     private router: Router,
     private window: WindowWrap
-  ) {}
+  ) {
+    this.getSurveyData();
+  }
 
   /**
    * Delete a survey from the surveys list (sync with database)
@@ -53,20 +55,26 @@ export class AdminComponent implements OnInit {
           console.log(`Deleted Survey ${id}`);
         }
         status = true;
-        this.ngOnInit();
+        this.getSurveyData();
       });
+      // TODO: Error message if not successful
     }
     return status;
   }
 
-  /** Function run on init
+  /**
    * Pull survey list data from SurveyService MW
    */
-  ngOnInit(): void {
+  private getSurveyData() {
     this.surveyservice.getSurveys().subscribe((surveys_data: Survey[]) => {
       this.surveys = surveys_data;
+      // TODO: Error message if not successful
     });
+
   }
+
+  /** Function run on init */
+  ngOnInit(): void {}
 }
 /**
  * Pipe for searching through survey data

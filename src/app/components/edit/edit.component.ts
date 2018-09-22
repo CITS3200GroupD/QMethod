@@ -150,7 +150,8 @@ export class EditComponent implements OnInit {
     } else {
         this.survey.name = name;
         this.survey.range = range;                                                // Change this.survey obj name & range
-        this.surveyservice.updateSurvey(this.survey)                                    // Send this.survey => Survey service middleware updateSurvey() func
+        // Send this.survey => Survey service middleware updateSurvey() func
+        this.surveyservice.updateSurvey(this.survey)
           .subscribe( (res: HttpResponse<Object>) => this.successfulUpdate(res, false), // Case 1: Normal HTTP response
                       (err: HttpErrorResponse) => this.failedUpdate(err));              // Case 2: Responded with error
     }

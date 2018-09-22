@@ -35,6 +35,8 @@ export class CreateComponent implements OnInit {
     private window: WindowWrap
   ) {
     this.createForm();
+    // Set default range to QMd default range setting
+    this.angForm.get('survey_range').setValue(Settings.DEFAULT_RANGE);
   }
 
   /**
@@ -54,6 +56,7 @@ export class CreateComponent implements OnInit {
    * @param range Range of survey
    */
   addSurvey(name: string, range: number): boolean {
+    // TODO: Modify function to also send statement, registration and questionnaire list to survey service MW
     let return_val = false;
     if ( isDevMode() ) {
       console.log(`SEND => { ${name}, ${range}, [register], [statements], [questionnaire] }`)
@@ -77,7 +80,5 @@ export class CreateComponent implements OnInit {
   /**
    * Function that is run on init
    */
-  ngOnInit(): void {
-    this.angForm.get('survey_range').setValue(Settings.DEFAULT_RANGE);
-  }
+  ngOnInit(): void {}
 }
