@@ -13,6 +13,9 @@ import { WindowWrap } from '../../window-wrapper';                      // wrapp
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
+/**
+ * Component for handling the edit page for admin interface
+ */
 export class EditComponent implements OnInit {
   /** The maximum length of a Survey's Name */
   NAME_LIMIT = Settings.NAME_LIMIT || 100;
@@ -45,10 +48,10 @@ export class EditComponent implements OnInit {
 
   /**
    * Constructor for EditComponent
-   * @param route ng ActivatedRoute
-   * @param router ng Router
+   * @param route @ng ActivatedRoute
+   * @param router @ng Router
    * @param surveyservice Survey Service Middleware to communicate with express RESTful API server
-   * @param fb FormBuilder to serve dynamic forms
+   * @param fb @ng FormBuilder to serve dynamic forms
    * @param window Wrapper for window
    */
   constructor(private route: ActivatedRoute,
@@ -62,7 +65,7 @@ export class EditComponent implements OnInit {
 
   /**
    * ng reactive form initialisation
-  */
+   */
   private createForm(): void {
     this.angForm = this.fb.group({
       survey_id: [{value: '', disabled: true}, Validators.required ],
@@ -196,6 +199,9 @@ export class EditComponent implements OnInit {
     }
   }
 
+  /**
+   * Function that is run on init
+   */
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       // Get params from ActivatedRoute
