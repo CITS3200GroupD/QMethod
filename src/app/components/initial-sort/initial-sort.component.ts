@@ -60,7 +60,7 @@ export class InitialSortComponent implements OnInit {
   // TODO: Loop over statements array, record index in { id: __ } and string in {string:___ }
   private generateStatementsArray() {
     this.survey.statements.forEach( (item, index) => {
-      var temp = {id: index, string: item};
+      const temp = {id: index, string: item};
       this.statementObjs.push(temp);
     });
 

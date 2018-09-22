@@ -59,7 +59,7 @@ export class CreateComponent implements OnInit {
     // TODO: Modify function to also send statement, registration and questionnaire list to survey service MW
     let return_val = false;
     if ( isDevMode() ) {
-      console.log(`SEND => { ${name}, ${range}, [register], [statements], [questionnaire] }`)
+      console.log(`SEND => { ${name}, ${range}, [register], [statements], [questionnaire] }`);
     }
     this.surveyservice.addSurvey(name, range, TestingRegister, TestingStatements, TestingQuestionnaire)
       .subscribe(
