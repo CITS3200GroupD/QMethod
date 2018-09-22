@@ -8,19 +8,21 @@
 </div>
 
 <!-- Table of Surveys -->
-<table class="table table-hover">
+<table class="table table-striped">
   <!-- Categories -->
   <thead>
   <tr>
-    <td>ID</td>
+    <td>#</td>
+    <td>Respondent ID</td>
     <td>Actions</td>
   </tr>
   </thead>
   <!-- Content -->
   <tbody>
     <!-- For every user in this.users -->
-    <tr *ngFor="let user of users | filterUserNames:user_filter | paginate: {itemsPerPage: 9, currentPage:page, id: '1'}; let i = index">
+    <tr *ngFor="let user of users | filterUserNames:user_filter | paginate: {itemsPerPage: PAGINATE_TABLES, currentPage:page, id: '1'}; let i = index">
       <!-- Display name and number of statements and user count -->
+      <td> {{i+1}} </td>
       <td>{{ user._id }}</td>
       <td>
         <!-- { Results } -->
@@ -52,3 +54,7 @@
     nextLabel="">
   </pagination-controls>
 </div>
+<!-- Go back to admin page -->
+<a [routerLink]="['/admin']" class="btn btn-secondary btn-block">
+  Go Back
+</a>

@@ -2,7 +2,7 @@ const express = require('express');
 // const app = express();
 express();
 const surveyRoutes = express.Router();
-
+// Depreciated - Checking for lengths - use mongoose model validation
 // const STATE_LIMIT = 80;
 // const NAME_LIMIT = 100;
 // const CHAR_LIMIT = 350;

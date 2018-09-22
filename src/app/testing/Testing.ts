@@ -1,4 +1,4 @@
-import { Survey, User } from './Survey';
+import { Survey, User } from '../models';
 
 export const TestingRegister = [
   'Age', 'Gender', 'Nationality', 'Main Language', 'Secondary Languages'
@@ -263,7 +263,6 @@ export const ValidSurveyList: Survey[] = [
   }
 ];
 
-
 export const InvalidSurveyList: Survey[] = [{
   _id: '0131asfd3',
   publish: false,
@@ -290,3 +289,18 @@ export const InvalidSurveyList: Survey[] = [{
 export const TempIntDisagree: number[] = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 export const TempIntNeutral: number[] = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 export const TempIntAgree: number[] =  [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42];
+
+export class MockWindowWrap {
+  get nativeWindow(): MockWindowWrapInner {
+    const inner = new MockWindowWrapInner;
+    return inner;
+  }
+}
+
+export class MockWindowWrapInner {
+  confirm(): boolean {
+    return true;
+  }
+}
+
+export class BlankComponent {}

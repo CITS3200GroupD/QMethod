@@ -1,8 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Survey, User } from './Survey';
-import { ValidSurveyList } from './Testing';
+import { Survey, User } from './models';
+import { ValidSurveyList } from './testing/Testing';
 import { UserService } from './user.service';
 
 describe('UserService', () => {
@@ -22,7 +22,7 @@ describe('UserService', () => {
     service = new UserService(httpClient);
   });
 
-  // After every test, assert that there are no more pending requests.
+  // After every test check that there are no more pending requests.
   afterEach(() => {
     httpTestingController.verify();
   });

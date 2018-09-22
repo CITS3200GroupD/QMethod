@@ -14,7 +14,8 @@ import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
 
-import { MockUserService } from './mockuser.service'; // mock userdata middleware
+import { MockUserService } from './testing/mockuser.service'; // mock userdata middleware
+import { MockSurveyService } from './testing/mocksurvey.service'; // mock surveydata middleware
 
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
@@ -119,7 +120,13 @@ const routes: Routes = [
     NgbModule,
     Ng2PaginationModule
   ],
-  providers: [SurveyService, UserService, MockUserService, WindowWrap],
+  providers: [
+    SurveyService,
+    UserService,
+    MockSurveyService,
+    MockUserService,
+    WindowWrap
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
