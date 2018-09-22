@@ -61,6 +61,8 @@ export class CreateComponent implements OnInit {
     if ( isDevMode() ) {
       console.log(`SEND => { ${name}, ${range}, [register], [statements], [questionnaire] }`);
     }
+    // TODO: Replace with non-placeholders
+    // TODO: Read statements, registration and questionnaire data from json.
     this.surveyservice.addSurvey(name, range, TestingRegister, TestingStatements, TestingQuestionnaire)
       .subscribe(
         (res) => {

@@ -157,7 +157,7 @@ export const ValidUserList: User[] = [
   },
   {
     _id: '5bg45hdbad',
-    progress: 3,
+    progress: 1,
     register_ans: ['25', 'Female', 'Australia', 'English', 'None'],
     sort_agree: [19, 20, 13, 14, 15, 21, 22],
     sort_neutral: [9, 10, 11, 12, 16, 17, 18],
@@ -247,7 +247,7 @@ export const ValidSurveyList: Survey[] = [
   },
   {
     _id: '0234asd5',
-    publish: true,
+    publish: false,
     name: 'testing2',
     range:  9,
     cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],

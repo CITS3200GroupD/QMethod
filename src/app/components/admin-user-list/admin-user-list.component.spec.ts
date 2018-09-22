@@ -53,4 +53,15 @@ describe('AdminUserListComponent', () => {
   it('delete User', () => {
     component.deleteUser(valid_user_list[0]._id);
   });
+
+  it('table headers', () => {
+    const html_element: HTMLElement = fixture.nativeElement;
+    const rows = html_element.querySelectorAll('tr');
+    const labels = rows[0].querySelectorAll('td');
+    expect(labels.length).toBe(3);
+    expect(rows[1].querySelectorAll('td').length).toBe(4);
+    expect(labels[0].textContent).toContain('#');
+    expect(labels[1].textContent).toContain('Respondent ID');
+    expect(labels[2].textContent).toContain('Actions');
+  });
 });

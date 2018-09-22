@@ -46,4 +46,15 @@ describe('AdminUserViewComponent', () => {
     expect(component.survey_id).toBe(undefined);
     expect(component.user_id).toBe(undefined);
   });
+
+  it('html labels', () => {
+    const html_element: HTMLElement = fixture.nativeElement;
+    const labels = html_element.querySelectorAll('label');
+    expect(labels[0].textContent).toContain('Survey ID');
+    expect(labels[1].textContent).toContain('Survey Name');
+    expect(labels[2].textContent).toContain('User ID');
+    expect(labels[3].textContent).toContain('Grid');
+    expect(labels[4].textContent).toContain('Registration Details');
+    expect(labels[5].textContent).toContain('End of Survey Questionnaire');
+  });
 });
