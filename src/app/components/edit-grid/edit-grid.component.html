@@ -39,11 +39,11 @@
 </table>
 
 <!-- Error Messages for Grid -->
-<div *ngIf="(grid_statements_count != num_statements) && !init" class="alert alert-danger text-center">
+<div *ngIf="(grid_cell_count != num_statements) && !init" class="alert alert-danger text-center">
   <h5 class="alert-heading"> Invalid grid </h5>
-  <p style="font-size: 0.875rem"> Number of statements do not match current grid configuration. Grid Spaces: {{ grid_statements_count }} Statements: {{ num_statements }} </p>
+  <p style="font-size: 0.875rem"> Number of statements do not match current grid configuration. Grid Spaces: {{ grid_cell_count }} Statements: {{ num_statements }} </p>
 </div>
 
-<div *ngIf="(grid_statements_count != num_statements) && disabled && !init" class="alert alert-danger text-center">
+<div *ngIf="(grid_cell_count != num_statements) && disabled && !init" class="alert alert-danger text-center">
   <p style="font-size: 0.875rem"> INVALID/CORRUPT Survey! Please delete/verify database with mongoDB Compass!</p>
 </div>
