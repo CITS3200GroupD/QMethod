@@ -12,6 +12,7 @@
      </ul>
      <div class="buttonHolder">
      <!-- <input value="Agree" id="submit" type="submit"> -->
-     <button class="button" onclick="window.location.href='/v1/registration'">Agree</button>
+     <!-- <button class="button" onclick="window.location.href='/v1/registration'">Agree</button> -->
+     <a [routerLink]="['/registration', survey_id]" class="btn btn-primary"> Agree </a>
      </div>
 </body>

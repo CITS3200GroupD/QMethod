@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
-      this.uri = 'http://localhost:8080/api';   // For local testing
+      this.uri = 'http://localhost:8080/api2';   // For local testing
     } else {
       this.uri = '/api2';      // Production/Deployment
     }
@@ -29,7 +29,7 @@ export class UserService {
   }
 
   addUser(survey_id: string, registration_info: string[]): Observable<Object>  {
-
+    console.log('addUser called');
     const userCreate: UserInput = {
       progress: 1,
       register_ans: registration_info,

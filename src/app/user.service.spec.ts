@@ -10,7 +10,7 @@ describe('UserService', () => {
   let service: UserService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  const uri = 'http://localhost:8080/api';
+  const uri = 'http://localhost:8080/api2';
   const valid_survey_list: Survey[] = ValidSurveyList;
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -68,7 +68,7 @@ describe('UserService', () => {
     const survey_id = valid_survey_list[1]._id;
     const return_val = 'Successfully Updated';
     const test_url = `${uri}/${survey_id}/addUser`;
-    const registration_info = { age: '21', gender: 'Male', main_lang: 'Main Lang', other_lang: 'other'};
+    const registration_info = ['21', 'Australia', 'Male', 'Main Lang', 'other']
 
     // Call function
     service.addUser(survey_id, registration_info).subscribe(res => {

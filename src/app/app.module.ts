@@ -13,7 +13,6 @@ import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
-
 import { MockUserService } from './testing/mockuser.service'; // mock userdata middleware
 import { MockSurveyService } from './testing/mocksurvey.service'; // mock surveydata middleware
 
@@ -64,6 +63,18 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent
+  },
+  {
+    path: 'instructions/:id',
+    component: InstructionsComponent
+  },
+  {
+    path: 'registration/:id',
+    component: RegistrationComponent
+  },
+  {
+    path: 'questionnaire/:id',
+    component: QuestionnaireComponent
   },
   {
     path: 'initial-sort/:id',
