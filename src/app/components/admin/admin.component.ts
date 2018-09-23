@@ -72,8 +72,8 @@ export class AdminComponent implements OnInit {
       this.surveys.forEach( survey => {
         count = 0;
         survey.users.forEach( user => {
-          if(user.progress === 3) {
-            count++
+          if (user.progress === 3) {
+            count++;
           }
         });
         survey.valid_users = count;
