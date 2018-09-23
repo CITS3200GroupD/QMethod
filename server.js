@@ -44,8 +44,8 @@ const express = require('express'),
     app.use('/api', surveyRoutes);
 
     // Routes for RESTful API for User Data
-    // const userRoutes = require('./express/routes/user.route');
-    // app.use('/api2', userRoutes);
+    const userRoutes = require('./express/routes/user.route');
+    app.use('/api2', userRoutes);
 
     // For all GET requests, send back index.html
     // so that PathLocationStrategy can be used

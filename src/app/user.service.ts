@@ -14,7 +14,7 @@ export class UserService {
     if (isDevMode()) {
       this.uri = 'http://localhost:8080/api';   // For local testing
     } else {
-      this.uri = '/api';      // Production/Deployment
+      this.uri = '/api2';      // Production/Deployment
     }
   }
 

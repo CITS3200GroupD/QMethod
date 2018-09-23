@@ -4,8 +4,8 @@ express();
 
 const userRoutes = express.Router();
 
-let User = require('../models/User');
 let Survey = require('../models/Survey');
+let User = require('../models/User');
 
 // Returns User data
 
@@ -110,6 +110,4 @@ userRoutes.route('/:id/user/:user_id').delete((req,res)=>{
   })
 })
 
-
-
-
+module.exports = userRoutes;
