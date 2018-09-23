@@ -26,6 +26,14 @@ const express = require('express'),
       app.use(express.static(__dirname + '/dist'));
     }
     app.use(bodyParser.json());
+    app.use((error, request, response, next) => {
+      if (error !== null) {
+        console.error('Invalid JSON received')
+        return response.json('Invalid JSON');
+      }
+      return next();
+    });
+
     app.use(cors());
     const port = process.env.PORT || 8080;
 

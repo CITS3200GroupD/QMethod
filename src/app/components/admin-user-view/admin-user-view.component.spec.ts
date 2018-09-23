@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { AdminUserViewComponent } from './admin-user-view.component';
 import { WindowWrap } from '../../window-wrapper';
+import { UserService } from '../../user.service';
+import { MockUserService } from '../../testing/mockuser.service';
 
 describe('AdminUserViewComponent', () => {
   let component: AdminUserViewComponent;
@@ -19,7 +21,9 @@ describe('AdminUserViewComponent', () => {
                 Ng2PaginationModule,
                 FormsModule
               ],
-      providers: [ WindowWrap ]
+      providers: [ WindowWrap,
+        {provide: UserService, useClass: MockUserService}
+      ]
     })
     .compileComponents();
   }));

@@ -1,18 +1,43 @@
 <body>
-   <h1 class="h1instructions">Instructions</h1>
-     <ul class ="ul">
-       <li>Instruction 1</li>
-       <li>Instruction 2</li>
-       <li>Instruction 3</li>
-       <li>Instruction 4</li>
-       <li>Instruction 5</li>
-       <li>Instruction 6</li>
-       <li>Instruction 7</li>
-       <li>Instruction 8</li>
+  <h1 class="h1instructions">Instructions</h1>
+    <ul class ="ul">
+      <li>
+        Thank you for agreeing to take part in our study. Please read carefully the following instructions.
+        The program will ask you to follow these steps which will be detailed below.
+      </li>
+      <li>
+        Step 1) Fill out the questions that you will find in the next page.
+      </li>
+      <li>
+        Step 2) You will be given a series of statements. You will be able to read the statements one by one.
+        Once you read a statement, sort it into one of three given groups that you will see on the screen, depending
+        on whether you agree, you don't agree or you are neutral about it. You can always change your mind later.
+      </li>
+       <li>
+         Step 3) You will be shown the statements again, this time divided into the groups you sorted in step 2. Now,
+         sort the statements out on the given graph from a +5 (most agree) to a -5 (least agree) scale.
+       </li>
+       <li>
+         Please remember that you can only sort the statements on the sorting grid by dragging and dropping each statement.
+       </li>
+       <li>
+         You must sort all statements.
+       </li>
+       <li>
+         Any card places in the same column has the same value, and it does not matter if you place it at the top of the bottom
+         of a column.
+       </li>
+       <li>
+         If you place a card under a negative number, it <i>does not mean</i> that you don't agree with it. It means that you
+         simply agree with it less than those on the column to its right and more than those on the column to its left.
+       </li>
+       <li>
+         Thank you so much for your help.
+       </li>
      </ul>
      <div class="buttonHolder">
      <!-- <input value="Agree" id="submit" type="submit"> -->
      <!-- <button class="button" onclick="window.location.href='/v1/registration'">Agree</button> -->
-     <a [routerLink]="['/registration', survey_id]" class="btn btn-primary"> Agree </a>
+     <a [routerLink]="['/registration', survey_id]" class="btn btn-primary btn-block"> Agree </a>
      </div>
 </body>

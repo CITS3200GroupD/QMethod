@@ -26,7 +26,7 @@ export class UserIndexComponent implements OnInit {
   }
   // TODO: Placeholder function
   nextPage(): void {
-    const nextPage = `initial-sort/${this.id}`;
+    const nextPage = `instructions/${this.id}`;
     this.router.navigate([nextPage]);
   }
 

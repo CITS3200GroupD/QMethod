@@ -3,6 +3,7 @@ import { AdminUserListComponent, UserPipe} from './admin-user-list.component';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { ValidSurveyList, MockWindowWrap, ValidUserList } from '../../testing/Testing';
+import { UserService } from '../../user.service';
 import { MockUserService } from '../../testing/mockuser.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2PaginationModule } from 'ng2-pagination';
@@ -26,7 +27,7 @@ describe('AdminUserListComponent', () => {
               ],
       providers: [ AdminUserListComponent,
         {provide: WindowWrap, useClass: MockWindowWrap},
-        {provide: MockUserService, useClass: MockUserService}
+        {provide: UserService, useClass: MockUserService}
       ]
     })
     .compileComponents();

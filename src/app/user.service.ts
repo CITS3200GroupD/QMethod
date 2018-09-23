@@ -1,6 +1,6 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';               // ng<->express client
-import { User, UserInput, Survey, SurveyInput } from './models';
+import { User, Survey, SurveyInput } from './models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -30,14 +30,8 @@ export class UserService {
 
   addUser(survey_id: string, registration_info: string[]): Observable<Object>  {
     console.log('addUser called');
-    const userCreate: UserInput = {
-      progress: 1,
+    const userCreate = {
       register_ans: registration_info,
-      questions_ans: [],
-      sort_disagree: [],
-      sort_neutral: [],
-      sort_agree: [],
-      matrix: []
     };
 
     return this

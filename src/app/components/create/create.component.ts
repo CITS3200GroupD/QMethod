@@ -63,7 +63,7 @@ export class CreateComponent implements OnInit {
     }
     // TODO: Replace with non-placeholders
     // TODO: Read statements, registration and questionnaire data from json.
-    this.surveyservice.addSurvey(name, range, TestingRegister, TestingStatements, TestingQuestionnaire)
+    this.surveyservice.addSurvey(name, range, TestingRegister, /* TestingStatements*/ [], TestingQuestionnaire)
       .subscribe(
         (res) => {
           console.log(`RES <= ${res}`);

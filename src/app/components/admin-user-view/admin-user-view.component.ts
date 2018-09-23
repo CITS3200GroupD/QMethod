@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';                      // @ng core
 import { ActivatedRoute, Router } from '@angular/router';               // @ng router
 import { SurveyService } from '../../survey.service';                   // QMd Survey Service MW
-import { MockUserService } from '../../testing/mockuser.service';       // QMd User Service MW
+import { UserService } from '../../user.service';                       // QMd User Service MW
 import { Survey, User } from '../../models';                            // QMd Models
 import { WindowWrap } from '../../window-wrapper';                      // wrapper for window
 
@@ -44,7 +44,7 @@ export class AdminUserViewComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private userservice: MockUserService,
+    private userservice: UserService,
     private surveyservice: SurveyService,
     private window: WindowWrap) {
       // Load url params into object vars, then retrieve data from services.
@@ -65,7 +65,6 @@ export class AdminUserViewComponent implements OnInit {
         this.user = res;
         this.matrix = this.user.matrix;
         this.offset = Math.floor( this.user.matrix.length / 2 );
-        // If successful, get survey details
         this.getSurveyData();
       }
     );
@@ -77,10 +76,12 @@ export class AdminUserViewComponent implements OnInit {
    * If successful, load data into object and call checkExport() function
    */
   private getSurveyData() {
+    console.log('SurveyData()');
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
         this.survey = res;
         this.survey_name = this.survey.name;
+        console.log(this.survey_name);
         this.register = this.survey.register;
         this.questionnaire = this.survey.questionnaire;
         this.offset = Math.floor( this.user.matrix.length / 2 );
@@ -100,7 +101,7 @@ export class AdminUserViewComponent implements OnInit {
         setTimeout(() => {
           this.print();
         },
-        500);
+        1500);
       }
     });
   }

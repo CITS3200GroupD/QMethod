@@ -23,7 +23,11 @@ export class RegistrationComponent implements OnInit {
 
   addUser(registration_info) {
     this.route.params.subscribe(params => {
-      this.userservice.addUser(params['id'], registration_info);
+      this.userservice.addUser(params['id'], registration_info).subscribe(
+        res => {
+         console.log('Success');
+        }
+      );
       console.log(params['id']);
       console.log(registration_info);
       console.log('user data sent');

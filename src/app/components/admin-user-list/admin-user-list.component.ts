@@ -1,7 +1,7 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';     // @ng core
 import { ActivatedRoute, Router } from '@angular/router';                   // @ng router
 import { User } from '../../models';                                        // QMd Models
-import { MockUserService } from '../../testing/mockuser.service';           // QMd User Service
+import { UserService } from '../../user.service';                           // QMd User Service
 import { WindowWrap } from '../../window-wrapper';                          // wrapper for window
 import * as Settings from '../../../../config/Settings';                    // QMd Settings
 
@@ -33,7 +33,7 @@ export class AdminUserListComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private userservice: MockUserService, // TODO: Replace with real user service
+    private userservice: UserService, // TODO: Replace with real user service
     private router: Router,
     private window: WindowWrap
   ) {
@@ -78,7 +78,10 @@ export class AdminUserListComponent implements OnInit {
 export class UserPipe implements PipeTransform {
   transform(users: User[], user_filter: string): User[] {
     if (!users) { return null; }
-    if (!user_filter) { return users; }
-    return users.filter(n => n._id.indexOf(user_filter) >= 0 );
+    // TODO: Enable toggle of progress filter
+    if (!user_filter) { return users.filter( n => n.progress >= 3); }
+    if (user_filter === 'progress:any') { return users; }
+
+    return users.filter(n => ( n._id.indexOf(user_filter) >= 0 && n.progress >= 3));
   }
 }

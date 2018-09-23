@@ -16,21 +16,24 @@ let User = require('../models/User');
 
 // Add new survey item to database
 surveyRoutes.route('/add').post( (req, res) => {
-  let survey = new Survey(req.body);
-  survey.save()
-    .then(() => {
-      console.log('Added Survey');
-      res.status(200).json('Successfully Updated');
-    })
-    .catch((err) => {
-      console.log(err.message);
-      res.status(400).send(`Unable to update - ${err.message}`);
-    });
-
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+    res.status(400).json('Bad Request');
+    console.error('Bad Request');
+  } else {
+    let survey = new Survey(req.body);
+    survey.save()
+      .then(() => {
+        console.log('Added Survey');
+        res.status(200).json('Successfully Updated');
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).send(`Unable to update - ${err.message}`);
+      });
+  }
 });
 
-// Get data (index or listing)
-
+// Get all survey data
 // TODO: Check that response data is valid before returning to client
 surveyRoutes.route('/').get( (req, res) => {
     Survey.find( (err, surveys) => {
@@ -44,7 +47,6 @@ surveyRoutes.route('/').get( (req, res) => {
 });
 
 // Access existing survey item for editing
-
 // TODO: Check that response data is valid before returning to client
 surveyRoutes.route('/:id').get( (req, res) => {
   // console.log(req.headers);
@@ -60,29 +62,35 @@ surveyRoutes.route('/:id').get( (req, res) => {
 
 // Update survey item and push to database
 surveyRoutes.route('/:id').post( (req, res) => {
-  Survey.findById(req.params.id, (err, survey) => {
-    if (err || !survey) {
-      res.status(400).json(err);
-    }
-    else {
-      // Fields
-      survey.name = req.body.name;
-      survey.range = req.body.range;
-      survey.publish = req.body.publish;
-      survey.cols = req.body.cols;
-      survey.questionnaire = req.body.questionnaire;
-      survey.register = req.body.register;
-      survey.statements = req.body.statements;
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+    res.status(400).json('Bad Request');
+    console.error('Bad Request');
+  } else {
+    Survey.findById(req.params.id, (err, survey) => {
+      if (err || !survey) {
+        res.status(400).json(err);
+      }
+      else {
+        // Fields
+        // TODO: Redo this to be more robust
+        survey.name = req.body.name;
+        survey.range = req.body.range;
+        survey.publish = req.body.publish;
+        survey.cols = req.body.cols;
+        survey.questionnaire = req.body.questionnaire;
+        survey.register = req.body.register;
+        survey.statements = req.body.statements;
 
-      survey.save().then(() => {
-        console.log('Updated Survey');
-        res.status(200).json('Successfully Updated');
-      })
-      .catch((err) => {
-        res.status(400).send(`Unable to update - ${err.message}`);
-      });
-    }
-  });
+        survey.save().then(() => {
+          console.log('Updated Survey');
+          res.status(200).json('Successfully Updated');
+        })
+        .catch((err) => {
+          res.status(400).send(`Unable to update - ${err.message}`);
+        });
+      }
+    });
+  }
 });
 
 // Delete survey item from database
@@ -154,13 +162,5 @@ surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
     }
   });
 });
-
-
-/***
- * Users RESTful API
- * ============================================================================
- * See https://qmethod.gitbook.io/project/documentation/user-api
- * ============================================================================
- */
 
 module.exports = surveyRoutes;
