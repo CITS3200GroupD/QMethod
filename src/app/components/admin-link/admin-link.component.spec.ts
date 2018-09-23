@@ -25,7 +25,6 @@ describe('AdminLinkComponent', () => {
     expect(component).toBeTruthy();
   });
   it('check params', () => {
-    expect(component.survey_id).toBe(undefined);
     expect(component.survey).toBeTruthy();
     expect(typeof component.survey).toBe('object');
     expect(component.angForm).toBeTruthy();

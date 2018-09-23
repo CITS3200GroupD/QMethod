@@ -1,40 +1,63 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../../models';
-import { MockUserService } from '../../testing/mockuser.service';
-import { WindowWrap } from '../../window-wrapper';
-import * as Settings from '../../../../config/Settings';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';     // @ng core
+import { ActivatedRoute, Router } from '@angular/router';                   // @ng router
+import { User } from '../../models';                                        // QMd Models
+import { MockUserService } from '../../testing/mockuser.service';           // QMd User Service
+import { WindowWrap } from '../../window-wrapper';                          // wrapper for window
+import * as Settings from '../../../../config/Settings';                    // QMd Settings
 
 @Component({
   selector: 'app-admin-user-list',
   templateUrl: './admin-user-list.component.html',
   styleUrls: ['./admin-user-list.component.css']
 })
+/**
+ * Component to display list of users for a given survey
+ */
 export class AdminUserListComponent implements OnInit {
-
+  /** The maximum number of users to display per page */
   PAGINATE_TABLES = Settings.PAGINATE_TABLES;
-
+  /** Filter string for UUID */
   user_filter: string;
+  /** Var for pagination - current page */
   page: number;
+  /** Parent Survey ID */
   survey_id: string;
+  /** Userdata array */
   users: User[];
+  /**
+   * Constructor for AdminUserListComponent
+   * @param route @ng ActivatedRoute
+   * @param userservice User Service Middleware to communicate with express RESTful API server
+   * @param router @ng Router
+   * @param window Wrapper for window
+   */
   constructor(
     private route: ActivatedRoute,
     private userservice: MockUserService, // TODO: Replace with real user service
     private router: Router,
     private window: WindowWrap
-  ) {}
+  ) {
+    this.getUserData();
+  }
 
+  /**
+   * Delete (with confirmation) a particular user by UUID from the survey results (sync with database)
+   * @param user_id The UUID corresponding to the user to be deleted
+   */
   deleteUser(user_id: string): void {
     if (this.window.nativeWindow.confirm('Are you sure you wish to delete this user?')) {
       this.userservice.deleteUser(this.survey_id, user_id).subscribe(res => {
-          this.ngOnInit();
+          this.getUserData();
           // console.log(res);
+          // TODO: Error message if not successful
       });
     }
   }
 
-  ngOnInit(): void {
+  /**
+   * Pull user data using Surveyservice MW from database
+   */
+  private getUserData() {
     this.route.params.subscribe(params => {
       this.survey_id = params['id'];
       this.userservice.getAllUsers(this.survey_id).subscribe((data: User[]) => {
@@ -42,6 +65,9 @@ export class AdminUserListComponent implements OnInit {
       });
     });
   }
+
+  /** Function run on init */
+  ngOnInit(): void {}
 
 }
 /**

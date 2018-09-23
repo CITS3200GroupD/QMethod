@@ -263,7 +263,6 @@ export const ValidSurveyList: Survey[] = [
   }
 ];
 
-
 export const InvalidSurveyList: Survey[] = [{
   _id: '0131asfd3',
   publish: false,
@@ -303,3 +302,5 @@ export class MockWindowWrapInner {
     return true;
   }
 }
+
+export class BlankComponent {}

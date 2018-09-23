@@ -10,17 +10,24 @@ import * as Settings from '../../../../config/Settings.js';
   templateUrl: './edit-statements.component.html',
   styleUrls: ['./edit-statements.component.css']
 })
-
+/**
+ * Subcomponent for handling statement editing
+ */
 export class EditStatementsComponent implements OnInit {
-
+  /** Var for current statement page for pagination */
   statements_page: number;
+
+  /** Number of statements */
   statements_length = 0;
-
+  /** Character limit for each statement */
   CHAR_LIMIT = Settings.CHAR_LIMIT || 350;
+  /** Statement limit */
   STATE_LIMIT = Settings.STATE_LIMIT || 80;
-  statements: string[];
-  settings = Settings;
 
+  /** Statements for this survey */
+  statements: string[];
+
+  /** Input statements from parent component */
   @Input() set statements_in(statements_in: string[]) {
     // Fix for calling of input with undefined value
     if (statements_in) {
@@ -28,11 +35,23 @@ export class EditStatementsComponent implements OnInit {
       this.statements_length = this.statements.length;
     }
   }
+  /** Input flag for enabling/disabling editing */
   @Input() disabled: boolean;
+  /** Output statements on update */
   @Output() statements_out = new EventEmitter<string[]>();
 
+  /** @ng reactive form */
   angForm: FormGroup;
+  /** @ng reactive form*/
+  editForm: FormGroup; // TODO: WIP for Statements editing
 
+  /**
+   * Constructor for EditStatementsComponent
+   * @param route @ng ActivatedRoute
+   * @param router @ng Router
+   * @param fb @ng reactive forms
+   * @param window wrapper for window
+   */
   constructor(private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
@@ -40,12 +59,21 @@ export class EditStatementsComponent implements OnInit {
       this.createForm();
     }
 
+  /** @ng reactive forms init */
   private createForm(): void {
     this.angForm = this.fb.group({
       statement: ['', Validators.required ]
     });
+    // TODO: WIP for statements editing
+    this.editForm = this.fb.group({
+      edit_statement: ['', Validators.required ]
+    });
   }
 
+  /**
+   * Throw and catch error to be displayed to user (and console)
+   * @param error Error to be handled
+   */
   private throwError(error): void {
     try {
       throw new Error(error);
@@ -54,6 +82,10 @@ export class EditStatementsComponent implements OnInit {
     }
   }
 
+  /**
+   * Add statement (and sync with database)
+   * @param statement Statement to be added
+   */
   addStatement(statement: string): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
@@ -66,6 +98,10 @@ export class EditStatementsComponent implements OnInit {
     }
   }
 
+  /**
+   * Delete statement (and sync with database)
+   * @param statement_index Index of statement to be deleted
+   */
   deleteStatement(statement_index: number): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
@@ -80,6 +116,7 @@ export class EditStatementsComponent implements OnInit {
     }
   }
 
+  /** Function to be called on init */
   ngOnInit(): void {
   }
 }
