@@ -6,7 +6,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
 
 QMethod Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.0.7a
+Version 0.0.8a
 
 ## What is QMethod?
 
@@ -32,14 +32,14 @@ Please read the following for either [a basic](https://qmethod.gitbook.io/projec
 
 ### Supported Browsers
 
-* Chrome 45+
-* Firefox 38+
+* Chrome 36+
+* Firefox 51+
 * Edge 12+
-* Internet Explorer 10
-* iOS 9+
+* Internet Explorer 10+
 * Safari 9+
-* Android 4.4+
 * Opera 30+
+* iOS 9+
+* Android 4.4+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
 
