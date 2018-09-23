@@ -9,7 +9,7 @@ import { UserService } from '../../user.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  TEMP_response = [ "20", "Australian", "Male", "English", "Chinese" ];
+  TEMP_response = [ '20', 'Australian', 'Male', 'English', 'Chinese' ];
   survey_id: string;
 
   constructor( private route: ActivatedRoute,

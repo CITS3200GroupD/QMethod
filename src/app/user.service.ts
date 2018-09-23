@@ -38,7 +38,7 @@ export class UserService {
       sort_neutral: [],
       sort_agree: [],
       matrix: []
-    }
+    };
 
     return this
               .http

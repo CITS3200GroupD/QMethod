@@ -68,7 +68,7 @@ describe('UserService', () => {
     const survey_id = valid_survey_list[1]._id;
     const return_val = 'Successfully Updated';
     const test_url = `${uri}/${survey_id}/addUser`;
-    const registration_info = ['21', 'Australia', 'Male', 'Main Lang', 'other']
+    const registration_info = ['21', 'Australia', 'Male', 'Main Lang', 'other'];
 
     // Call function
     service.addUser(survey_id, registration_info).subscribe(res => {
