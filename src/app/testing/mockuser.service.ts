@@ -19,12 +19,14 @@ export class MockUserService {
   // https://qmethod.gitbook.io/project/documentation/user-api
   // See user.service.spec.ts for unit tests
 
+  addAuthHeader(auth_key: string): void {}
+
   getAllUsers(survey_id: string): Observable<Object> {
     return of(this.valid_user_list);
   }
 
   addUser(survey_id: string, registration_info: any): Observable<Object>  {
-    return of( 'Successfully Updated');
+    return of( '<new_user_id>');
   }
 
   getUser(survey_id: string, user_id: string): Observable<Object>  {
@@ -37,7 +39,7 @@ export class MockUserService {
     return return_val;
   }
 
-  updateUser(survey_id: string, user: User): Observable<Object>  {
+  updateUser(survey_id: string, user: any): Observable<Object>  {
     let id = survey_id;
     let continue_flag = false;
     let return_val = of(undefined);

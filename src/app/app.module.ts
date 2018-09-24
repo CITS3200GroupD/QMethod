@@ -13,7 +13,6 @@ import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
-
 import { MockUserService } from './testing/mockuser.service'; // mock userdata middleware
 import { MockSurveyService } from './testing/mocksurvey.service'; // mock surveydata middleware
 
@@ -66,25 +65,24 @@ const routes: Routes = [
     component: AdminComponent
   },
   {
+    path: 'instructions/:id',
+    component: InstructionsComponent
+  },
+  {
+    path: 'registration/:id',
+    component: RegistrationComponent
+  },
+  {
     path: 'initial-sort/:id',
     component: InitialSortComponent
   },
   {
-    path: 'q-sort',
+    path: 'q-sort/:id',
     component: QsortComponent
   },
-  // Temporary Paths for v1 files
   {
-    path: 'v1/registration',
-    component: RegistrationComponent
-  },
-  {
-    path: 'v1/questionnaire',
+    path: 'questionnaire/:id',
     component: QuestionnaireComponent
-  },
-  {
-    path: 'v1/instructions',
-    component: InstructionsComponent
   }
 ];
 // Declaring vars for ng

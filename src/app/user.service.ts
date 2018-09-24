@@ -1,5 +1,5 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
-import { HttpClient } from '@angular/common/http';               // ng<->express client
+import { HttpClient, HttpHeaders } from '@angular/common/http';               // ng<->express client
 import { User, Survey, SurveyInput } from './models';
 import { Observable } from 'rxjs';
 
@@ -9,12 +9,24 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   uri: String;
+  // TODO: Replace placeholder header with real Authorisation Header
+  headers = new HttpHeaders();
+
+  addAuthHeader(auth_key: string): void {
+    this.headers = new HttpHeaders({
+      'authorization': auth_key,
+      'qmd': 'ng-client'
+    });
+  }
 
   constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({
+      'qmd': 'ng-client'
+    });
     if (isDevMode()) {
-      this.uri = 'http://localhost:8080/api';   // For local testing
+      this.uri = 'http://localhost:8080/api2';   // For local testing
     } else {
-      this.uri = '/api';      // Production/Deployment
+      this.uri = '/api2';      // Production/Deployment
     }
   }
 
@@ -25,30 +37,34 @@ export class UserService {
   getAllUsers(survey_id: string): Observable<Object> {
     return this
               .http
-              .get(`${this.uri}/${survey_id}/users`);
+              .get(`${this.uri}/${survey_id}/users`, {headers: this.headers});
   }
 
-  addUser(survey_id: string, registration_info: any): Observable<Object>  {
+  addUser(survey_id: string, registration_info: string[]): Observable<Object>  {
+    const userCreate = {
+      register_ans: registration_info,
+    };
+
     return this
               .http
-              .post(`${this.uri}/${survey_id}/addUser`, registration_info);
+              .post(`${this.uri}/${survey_id}/addUser`, userCreate, {headers: this.headers});
   }
 
   getUser(survey_id: string, user_id: string): Observable<Object>  {
     return this
               .http
-              .get(`${this.uri}/${survey_id}/user/${user_id}`);
+              .get(`${this.uri}/${survey_id}/user/${user_id}`, {headers: this.headers});
   }
 
-  updateUser(survey_id: string, user: User): Observable<Object>  {
+  updateUser(survey_id: string, user_id: string, input: any): Observable<Object>  {
     return this
               .http
-              .post(`${this.uri}/${survey_id}/user/${user._id}`, user);
+              .post(`${this.uri}/${survey_id}/user/${user_id}`, input, {headers: this.headers});
   }
 
-  deleteUser(survey_id: string, user_id: string): Observable<Object>  {
+  deleteUser(survey_id: string, user_id: string): Observable<Object> {
     return this
               .http
-              .delete(`${this.uri}/${survey_id}/user/${user_id}`);
+              .delete(`${this.uri}/${survey_id}/user/${user_id}`, {headers: this.headers});
   }
 }

@@ -3,11 +3,11 @@
     <div class="row justify-content-center" style="padding-top:25px">
       <!-- Main Card -->
       <div class="col align-self-center">
-        <div class="card main-card" *ngIf="!statementObjs.length"></div>
-        <div class="card main-card text-center" *ngIf="statementObjs.length" draggable [dragData]="statementObjs[0]">
+        <div class="card main-card" *ngIf="!statements_sort.length"></div>
+        <div class="card main-card text-center" *ngIf="statements_sort.length" draggable [dragData]="statements_sort[0]">
           <div class="card-body">
             <!-- TODO: find and replace "statementObjs[current_index]" with "statementObjs[current_index].string" -->
-            <h3>{{ statementObjs[current_index].string }}</h3>
+            <h3>{{ statements[statements_sort[current_index]] }}</h3>
           </div>
         </div>
       </div>
@@ -18,15 +18,15 @@
       <!-- { < | Current/Total | > } -->
       <div class="btn-group">
         <button class="btn btn-light" (click)="decreaseIndex()" [disabled]="current_index <= 0"><i class="fas fa-chevron-left"></i></button>
-        <div class="btn btn-light disabled"> {{current_index+1}} / {{ statementObjs.length }}</div>
-        <button class="btn btn-light" (click)="increaseIndex()" [disabled]="current_index+1 >= statementObjs.length"><i class="fas fa-chevron-right"></i></button>
+        <div class="btn btn-light disabled"> {{current_index+1}} / {{ statements_sort.length }}</div>
+        <button class="btn btn-light" (click)="increaseIndex()" [disabled]="current_index+1 >= statements_sort.length"><i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
 
     <!-- {          Continue              } -->
     <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
       <!-- TODO: button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
-      <button class="btn btn-block btn-outline-primary" *ngIf="!statementObjs.length" (click)="publishSortContinue()"><h5>continue</h5></button>
+      <button class="btn btn-block btn-outline-primary" *ngIf="!statements_sort.length" (click)="publishSortContinue()"><h5>continue</h5></button>
     </div>
 
     <!-- Row 3 - Agree/Disagree/Neutral Panels -->
@@ -44,8 +44,8 @@
         <div class="list-group scroll-box" droppable (onDrop)="onDisagreeDrop($event)">
           <!-- TODO: find and replace "statement" with "statement.string" -->
           <!-- New list item for each statement -->
-          <li class="list-group-item no-gap" *ngFor="let statement of disagree" draggable [dragData]="statement">
-            <p>{{ statement.string }}</p>
+          <li class="list-group-item no-gap" *ngFor="let disagree_index of disagree" draggable [dragData]="disagree_index">
+            <p>{{ statements[disagree_index] }}</p>
           </li>
         </div>
       </div>
@@ -62,8 +62,8 @@
         <div class="list-group scroll-box" droppable (onDrop)="onNeutralDrop($event)">
           <!-- TODO: find and replace "statement" with "statement.string" -->
           <!-- New list item for each statement -->
-          <li class="list-group-item no-gap" *ngFor="let statement of neutral" draggable [dragData]="statement">
-            <p>{{ statement.string }}</p>
+          <li class="list-group-item no-gap" *ngFor="let neutral_index of neutral" draggable [dragData]="neutral_index">
+            <p>{{ statements[neutral_index] }}</p>
           </li>
         </div>
       </div>
@@ -80,8 +80,8 @@
         <div class="list-group scroll-box" droppable (onDrop)="onAgreeDrop($event)">
           <!-- TODO: find and replace "statement" with "statement.string" -->
           <!-- New list item for each statement -->
-          <li class="list-group-item no-gap" *ngFor="let statement of agree" draggable [dragData]="statement">
-            <p>{{ statement.string }}</p>
+          <li class="list-group-item no-gap" *ngFor="let agree_index of agree" draggable [dragData]="agree_index">
+            <p>{{ statements[agree_index] }}</p>
           </li>
         </div>
       </div>

@@ -21,13 +21,16 @@ describe('AdminLinkComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   it('check params', () => {
     expect(component.survey).toBeTruthy();
     expect(typeof component.survey).toBe('object');
     expect(component.angForm).toBeTruthy();
     // TODO: Better checks
   });
+
 });

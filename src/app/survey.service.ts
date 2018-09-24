@@ -1,5 +1,5 @@
 import { isDevMode, Injectable } from '@angular/core';           // ng core
-import { HttpClient } from '@angular/common/http';    // ng<->express client
+import { HttpClient, HttpHeaders } from '@angular/common/http';    // ng<->express client
 import { Survey, SurveyInput, GridTemplates } from './models';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,20 @@ export class SurveyService {
   private cols_templates = GridTemplates;
   private uri: string;
 
+  // TODO: Replace placeholder header with real Authorisation Header
+  headers: HttpHeaders;
+
+  addAuthHeader(auth_key: string): void {
+    this.headers = new HttpHeaders({
+      'authorization': auth_key,
+      'qmd': 'ng-client'
+    });
+  }
+
   constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({
+      'qmd': 'ng-client'
+    });
     if (isDevMode()) {
       this.uri = 'http://localhost:8080/api';   // For local testing
     } else {
@@ -48,7 +61,9 @@ export class SurveyService {
         questionnaire: questionnaire,
         users: []
       };
-      return this.http.post(`${this.uri}/add`, surveyCreate);
+      return this
+              .http
+              .post(`${this.uri}/add`, surveyCreate, { headers: this.headers });
     }
     return null;
   }
@@ -57,13 +72,13 @@ export class SurveyService {
   getSurveys(): Observable<Object> {
     return this
            .http
-           .get(`${this.uri}`);
+           .get(`${this.uri}`, { headers: this.headers });
   }
 
   getSurvey(id: string): Observable<Object> {
     return this
             .http
-            .get(`${this.uri}/${id}`);
+            .get(`${this.uri}/${id}`, { headers: this.headers });
   }
 
   updateSurvey(survey: Survey): Observable<Object> {
@@ -71,13 +86,13 @@ export class SurveyService {
 
     return this
               .http
-              .post(`${this.uri}/${id}`, survey);
+              .post(`${this.uri}/${id}`, survey, { headers: this.headers });
   }
 
   deleteSurvey(id: string): Observable<Object> {
     return this
               .http
-              .delete(`${this.uri}/${id}`);
+              .delete(`${this.uri}/${id}`, { headers: this.headers });
   }
 
   addStatement(id: string, statement: string): Observable<Object> {
@@ -86,12 +101,12 @@ export class SurveyService {
     };
     return this
               .http
-              .post(`${this.uri}/${id}/addState`, obj);
+              .post(`${this.uri}/${id}/addState`, obj, { headers: this.headers });
   }
 
   deleteStatement(id: string, statement_id: number): Observable<Object> {
     return this
               .http
-              .delete(`${this.uri}/${id}/delState/${statement_id}`);
+              .delete(`${this.uri}/${id}/delState/${statement_id}`, { headers: this.headers });
   }
 }

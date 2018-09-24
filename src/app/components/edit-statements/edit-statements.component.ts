@@ -90,11 +90,9 @@ export class EditStatementsComponent implements OnInit {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
-      this.route.params.subscribe(params => {
-        this.statements.push(statement);
-        this.statements_out.emit(this.statements);
-        this.statements_length = this.statements.length;
-      });
+      this.statements.push(statement);
+      this.statements_out.emit(this.statements);
+      this.statements_length = this.statements.length;
     }
   }
 
@@ -106,13 +104,11 @@ export class EditStatementsComponent implements OnInit {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
-      this.route.params.subscribe(params => {
-        if (this.window.nativeWindow.confirm('Are you sure you wish to delete this statement?')) {
-          this.statements.splice(statement_index, 1);
-          this.statements_out.emit(this.statements);
-          this.statements_length = this.statements.length;
-        }
-      });
+      if (this.window.nativeWindow.confirm('Are you sure you wish to delete this statement?')) {
+        this.statements.splice(statement_index, 1);
+        this.statements_out.emit(this.statements);
+        this.statements_length = this.statements.length;
+      }
     }
   }
 

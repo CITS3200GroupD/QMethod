@@ -19,8 +19,21 @@ const express = require('express'),
 
     // init express
     const app = express();
-    app.use(express.static(__dirname + '/dist'));
+    // For the deployment build, we also want to use the
+    // express server to host our (built and pre-compiled) /dist
+    // files.
+    if (process.argv[2] == 'deploy') {
+      app.use(express.static(__dirname + '/dist'));
+    }
     app.use(bodyParser.json());
+    app.use((error, request, response, next) => {
+      if (error !== null) {
+        console.error('Invalid JSON received')
+        return response.json('Invalid JSON');
+      }
+      return next();
+    });
+
     app.use(cors());
     const port = process.env.PORT || 8080;
 
@@ -44,14 +57,17 @@ const express = require('express'),
     app.use('/api', surveyRoutes);
 
     // Routes for RESTful API for User Data
-    // const userRoutes = require('./express/routes/user.route');
-    // app.use('/api2', userRoutes);
+    const userRoutes = require('./express/routes/user.route');
+    app.use('/api2', userRoutes);
 
+    // For the deployment build
     // For all GET requests, send back index.html
     // so that PathLocationStrategy can be used
-    app.get('/*', function(req, res) {
-      res.sendFile(path.join(__dirname + '/dist/index.html'));
-    });
+    if (process.argv[2] == 'deploy') {
+      app.get('/*', function(req, res) {
+        res.sendFile(path.join(__dirname + '/dist/index.html'));
+      });
+    }
 
     // const server =
     app.listen(port, function(){

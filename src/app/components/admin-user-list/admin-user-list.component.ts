@@ -1,7 +1,7 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';     // @ng core
 import { ActivatedRoute, Router } from '@angular/router';                   // @ng router
 import { User } from '../../models';                                        // QMd Models
-import { MockUserService } from '../../testing/mockuser.service';           // QMd User Service
+import { UserService } from '../../user.service';                           // QMd User Service
 import { WindowWrap } from '../../window-wrapper';                          // wrapper for window
 import * as Settings from '../../../../config/Settings';                    // QMd Settings
 
@@ -24,6 +24,8 @@ export class AdminUserListComponent implements OnInit {
   survey_id: string;
   /** Userdata array */
   users: User[];
+  /** Filter string*/
+  key_string = '{progress:any}';
   /**
    * Constructor for AdminUserListComponent
    * @param route @ng ActivatedRoute
@@ -33,10 +35,11 @@ export class AdminUserListComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private userservice: MockUserService, // TODO: Replace with real user service
+    private userservice: UserService, // TODO: Replace with real user service
     private router: Router,
     private window: WindowWrap
   ) {
+    this.userservice.addAuthHeader('true');
     this.getUserData();
   }
 
@@ -55,7 +58,7 @@ export class AdminUserListComponent implements OnInit {
   }
 
   /**
-   * Pull user data using Surveyservice MW from database
+   * Pull user data using User MW from database
    */
   private getUserData() {
     this.route.params.subscribe(params => {
@@ -64,6 +67,14 @@ export class AdminUserListComponent implements OnInit {
         this.users = data;
       });
     });
+  }
+
+  setComplete() {
+    if (this.user_filter != this.key_string) {
+      this.user_filter = this.key_string;
+    } else {
+      this.user_filter = '';
+    }
   }
 
   /** Function run on init */
@@ -77,8 +88,23 @@ export class AdminUserListComponent implements OnInit {
 @Pipe({name: 'filterUserNames'})
 export class UserPipe implements PipeTransform {
   transform(users: User[], user_filter: string): User[] {
+    const key_string = '{progress:any}';
+    const key_string2 = '{progress:incomplete}';
     if (!users) { return null; }
-    if (!user_filter) { return users; }
-    return users.filter(n => n._id.indexOf(user_filter) >= 0 );
+    // TODO: Enable toggle of progress filter
+    if (!user_filter) {
+      return users.filter( n => n.progress >= 3);
+    }
+    if (user_filter === key_string) {
+      return users;
+    } else if (user_filter.indexOf(key_string) >= 0) {
+      const new_filter = user_filter.replace(key_string, '');
+      return users.filter(n => (n._id.indexOf(new_filter) >= 0));
+    } else if (user_filter.indexOf(key_string2) >= 0) {
+      const new_filter = user_filter.replace(key_string2, '');
+      return users.filter(n => (n._id.indexOf(new_filter) >= 0 && n.progress < 3));
+    } else {
+      return users.filter(n => ( n._id.indexOf(user_filter) >= 0 && n.progress >= 3));
+    }
   }
 }

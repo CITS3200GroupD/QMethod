@@ -3,6 +3,7 @@ import { AdminUserListComponent, UserPipe} from './admin-user-list.component';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { ValidSurveyList, MockWindowWrap, ValidUserList } from '../../testing/Testing';
+import { UserService } from '../../user.service';
 import { MockUserService } from '../../testing/mockuser.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2PaginationModule } from 'ng2-pagination';
@@ -26,7 +27,7 @@ describe('AdminUserListComponent', () => {
               ],
       providers: [ AdminUserListComponent,
         {provide: WindowWrap, useClass: MockWindowWrap},
-        {provide: MockUserService, useClass: MockUserService}
+        {provide: UserService, useClass: MockUserService}
       ]
     })
     .compileComponents();
@@ -52,5 +53,16 @@ describe('AdminUserListComponent', () => {
 
   it('delete User', () => {
     component.deleteUser(valid_user_list[0]._id);
+  });
+
+  it('table headers', () => {
+    const html_element: HTMLElement = fixture.nativeElement;
+    const rows = html_element.querySelectorAll('tr');
+    const labels = rows[0].querySelectorAll('td');
+    expect(labels.length).toBe(4);
+    expect(rows[1].querySelectorAll('td').length).toBe(5);
+    expect(labels[0].textContent).toContain('#');
+    expect(labels[2].textContent).toContain('Respondent ID');
+    expect(labels[3].textContent).toContain('Actions');
   });
 });

@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
   /** Var for storing the current page (pagination) */
   page: number;
   /** Var for storing the array of surveys */
-  surveys: Survey[];
+  surveys: any[];
 
   /**
    * Constructor for AdminComponent
@@ -36,6 +36,8 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private window: WindowWrap
   ) {
+    // TODO: Waiting on proper Authentication
+    this.surveyservice.addAuthHeader('true');
     this.getSurveyData();
   }
 
@@ -68,9 +70,18 @@ export class AdminComponent implements OnInit {
   private getSurveyData() {
     this.surveyservice.getSurveys().subscribe((surveys_data: Survey[]) => {
       this.surveys = surveys_data;
-      // TODO: Error message if not successful
+      let count = 0;
+      this.surveys.forEach( survey => {
+        count = 0;
+        survey.users.forEach( user => {
+          if (user.progress === 3) {
+            count++;
+          }
+        });
+        survey.valid_users = count;
+      });
     });
-
+      // TODO: Error message if not successful
   }
 
   /** Function run on init */
