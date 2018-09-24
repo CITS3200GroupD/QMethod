@@ -60,7 +60,7 @@ describe('AdminUserListComponent', () => {
     const rows = html_element.querySelectorAll('tr');
     const labels = rows[0].querySelectorAll('td');
     expect(labels.length).toBe(4);
-    expect(rows[1].querySelectorAll('td').length).toBe(4);
+    expect(rows[1].querySelectorAll('td').length).toBe(5);
     expect(labels[0].textContent).toContain('#');
     expect(labels[2].textContent).toContain('Respondent ID');
     expect(labels[3].textContent).toContain('Actions');
