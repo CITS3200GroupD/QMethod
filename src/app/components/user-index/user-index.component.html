@@ -1,11 +1,45 @@
-<div *ngIf="valid">
-<!-- Start Survey -->
-<p>
-  <!-- <button class="btn btn-primary btn-block text-center" (click)="nextPage()"><h3>Start Survey</h3></button> -->
-  <button class="btn btn-primary btn-block text-center" onclick="window.location.href='/v1/instructions'"><h3>Start Survey</h3></button>
-</p>
-</div>
-<!--TODO: Need proper error page when invalid statement ID is passed-->
-<div *ngIf="!valid">
-  Error: Invalid Survey
+<!-- MODAL -->
+<ng-template #content let-modal>
+    <!-- Head -->
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-resume-user">Session Resume</h4>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="modal-body">
+      <form [formGroup]="angForm">
+        <!-- Label -->
+        <label>User ID</label>
+          <div class="input-group">
+            <!-- Private Link URL-->
+            <input class="form-control" formControlName="user_id" #user_id>
+          </div>
+      </form>
+    </div>
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="findUser(user_id.value)">Done</button>
+    </div>
+  </ng-template>
+
+
+<div class="card">
+  <div class="card-header">
+    <h4>{{ survey_name }}</h4>
+  </div>
+  <div class="card-body">
+    <div class="justify-content-center">
+      <!-- Start Survey -->
+      <button class="btn btn-primary btn-block text-center" [disabled]="!valid" (click)="nextPage()"><h5>Start Survey</h5></button>
+      <!-- Resume Survey -->
+      <button class="btn btn-outline-primary btn-block text-center" [disabled]="!valid" (click)="open(content)"><h6>Resume Survey</h6></button>
+
+    </div>
+  </div>
+  <!--TODO: Need proper error page when invalid statement ID is passed-->
+  <div class="card-footer alert-danger text-light" *ngIf="!valid">
+    <i class="fas fa-exclamation-circle"></i> Invalid Survey
+  </div>
 </div>

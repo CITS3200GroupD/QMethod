@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';                      // @ng core
 import { ActivatedRoute, Router } from '@angular/router';               // @ng router
 import { SurveyService } from '../../survey.service';                   // QMd Survey Service MW
-import { MockUserService } from '../../testing/mockuser.service';       // QMd User Service MW
+import { UserService } from '../../user.service';                       // QMd User Service MW
 import { Survey, User } from '../../models';                            // QMd Models
 import { WindowWrap } from '../../window-wrapper';                      // wrapper for window
 
@@ -44,9 +44,12 @@ export class AdminUserViewComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private userservice: MockUserService,
+    private userservice: UserService,
     private surveyservice: SurveyService,
     private window: WindowWrap) {
+      // TODO: Waiting on proper Authentication
+      this.userservice.addAuthHeader('true');
+      this.surveyservice.addAuthHeader('true');
       // Load url params into object vars, then retrieve data from services.
       this.route.params.subscribe(params => {
         this.survey_id = params['id'];
@@ -65,7 +68,6 @@ export class AdminUserViewComponent implements OnInit {
         this.user = res;
         this.matrix = this.user.matrix;
         this.offset = Math.floor( this.user.matrix.length / 2 );
-        // If successful, get survey details
         this.getSurveyData();
       }
     );
@@ -100,7 +102,7 @@ export class AdminUserViewComponent implements OnInit {
         setTimeout(() => {
           this.print();
         },
-        500);
+        600);
       }
     });
   }

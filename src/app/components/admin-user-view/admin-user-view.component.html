@@ -53,7 +53,7 @@
           <div id="ques-print">
           <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let field of questionnaire; let i = index">
-                <p class="d-print-none"> {{ questionnaire[i] }} </p> <p> {{user.questions_ans[i]}} </p>
+                <p class="d-print-none"> <i> {{ questionnaire[i] }} </i> </p> <p> {{user.question_ans[i]}} </p>
             </li>
           </ul>
           </div>

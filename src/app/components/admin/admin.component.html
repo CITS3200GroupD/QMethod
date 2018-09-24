@@ -12,7 +12,8 @@
   <!-- Categories -->
   <thead>
   <tr>
-    <td>#</td>
+    <td class="justify-content-center">#</td>
+    <td class="justify-content-center">Status</td>
     <td>Survey</td>
     <td>Statements</td>
     <td>Responses</td>
@@ -26,17 +27,22 @@
     <tr *ngFor="let survey of surveys | filterSurveyNames:filter | paginate: {itemsPerPage: PAGINATE_TABLES, currentPage:page, id: '1'}; let i = index">
       <!-- Display name and number of statements and user count -->
       <td>{{ i+1 }}</td>
+      <td class="justify-content-center">
+        <i *ngIf= "!survey.publish && survey.users.length === 0" class="fas fa-stop-circle text-danger"></i>
+        <i *ngIf= "!survey.publish && survey.users.length > 0" class="fas fa-pause-circle text-warning"></i>
+        <i *ngIf= "survey.publish" class="fas fa-play-circle text-primary"></i>
+      </td>
       <td>{{ survey.name }}</td>
       <td>{{ survey.statements.length }}</td>
-      <td>0</td> <!-- TODO: Replace with actual user count-->
+      <td>{{ survey.valid_users }} </td> <!-- TODO: Replace with actual user count-->
 
       <td>
         <!-- { Results } -->
         <div class="btn-group">
-          <a *ngIf="survey.publish" [routerLink]="['/results', survey._id]" class="btn btn-primary">
+          <a *ngIf="survey.users.length > 0" [routerLink]="['/results', survey._id]" class="btn btn-primary">
             <i class="fa fa-list"></i> <div class="d-none d-lg-inline"> Results</div>
           </a>
-          <button *ngIf="!survey.publish" class="btn btn-outline-light disabled">
+          <button *ngIf="survey.users.length === 0" class="btn btn-outline-light disabled">
             <i class="fa fa-list"></i> <div class="d-none d-lg-inline"> Results</div>
           </button>
         </div>
@@ -50,8 +56,11 @@
             <div *ngIf="survey.publish">
               <i class="fas fa-eye"></i><div class="d-none d-lg-inline"> View</div>
             </div>
-            <div *ngIf="!survey.publish">
+            <div *ngIf="!survey.publish && survey.users.length === 0">
               <i class="fas fa-wrench"></i><div class="d-none d-lg-inline"> Edit</div>
+            </div>
+            <div *ngIf="!survey.publish && survey.users.length > 0">
+              <i class="fas fa-play"></i><div class="d-none d-lg-inline"> Start</div>
             </div>
           </a>
           <!-- Link sub-component -->

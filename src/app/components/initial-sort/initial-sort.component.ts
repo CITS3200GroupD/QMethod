@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { isDevMode, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SurveyService } from '../../survey.service';     // Survey API
-// import { UserService } from '../../user.service';      // User API
+import { SurveyService } from '../../survey.service';           // QMd Survey Service MW
+import { UserService } from '../../user.service';               // QMd User Service MW
+import { Survey, User } from '../../models';
+import { WindowWrap } from '../../window-wrapper';
 
 @Component({
   selector: 'app-initial-sort',
@@ -10,65 +12,92 @@ import { SurveyService } from '../../survey.service';     // Survey API
 })
 export class InitialSortComponent implements OnInit {
 
-  /*statements = [
-    { string: 'I can see myself fostering understanding between Australia and yyy'},
-    { string: 'I can see myself enjoying recreational activities with yyy people'},
-    { string: 'I can see myself speaking yyy better than many other Australians'},
-    { string: 'I can see myself studying in yyy'},
-    { string: 'I can see myself taking the WACE exam in yyy'},
-    { string: 'I can see myself as a more knowledgeable person'},
-    { string: 'I can see myself able to better understand people from any other culture'},
-  ];*/
-
-
   // error = boolean;                     // TODO: Invalid survey message box on invalid survey id
+  id: string;
+  user_id: string;
+  survey: Survey;
+  user: User;
+  statements: string[] = [];
+  statements_sort: number[] = [];
 
-  id: String;
-  survey: any = {};
-
-  // TODO: Change to index display
   current_index = 0;
-  statementObjs: object[] = [];                 // TODO: Store statements as { id: number, string: String }
-
-  disagree: String[] = [];
-  neutral: String[] = [];
-  agree: String[] = [];
-
-  disagree_update: number[] = [];
-  neutral_update: number[] = [];
-  agree_update: number[] = [];
-
-  TEMP_int_disagree: number[] = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  TEMP_int_neutral: number[] = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-  TEMP_int_agree: number[] =  [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42];
+  disagree: number[] = [];
+  neutral: number[] = [];
+  agree: number[] = [];
 
   constructor( private route: ActivatedRoute,
     private router: Router,
     private surveyservice: SurveyService,
-    // private userservice: UserService
-  ) {
+    private userservice: UserService,
+    private window: WindowWrap) {
     this.route.params.subscribe(params => {
-      this.surveyservice.getSurvey(params['id']).subscribe(res => {
-        this.survey = res;
+      this.id = params['id'];
+      this.getSurveyData();
+    });
+  }
 
-        // TODO: Loop over statements array, record index in { id: __ } and string in {string:___ }
-        this.generateStatementsArray();
+  // Get data from survey service
+  private getSurveyData() {
+    this.surveyservice.getSurvey(this.id).subscribe( (res: Survey) => {
+      this.survey = res;
+      this.statements = this.survey.statements;
+      for (let i = 0; i < this.statements.length; i++) {
+        this.statements_sort.push(i);
+      }
+      this.getUserData();
+    });
+  }
+
+  // Get data from user service
+  private getUserData() {
+    this.route.queryParams.subscribe(params => {
+      this.user_id = params['user_id'];
+      this.userservice.getUser(this.id, this.user_id).subscribe( (res: User) => {
+        this.user = res;
+        this.checkRedirect();
+      },
+      (err) => {
+        if (this.window.nativeWindow.confirm(err.message)) {
+          this.router.navigate(['/']);
+        }
       });
     });
   }
 
-  // TODO: Loop over statements array, record index in { id: __ } and string in {string:___ }
-  private generateStatementsArray() {
-    this.survey.statements.forEach( (item, index) => {
-      const temp = {id: index, string: item};
-      this.statementObjs.push(temp);
-    });
-
-    console.log('generateStatementsArray() called');
+  // Automatically redirect if this user is on the wrong page
+  private checkRedirect() {
+    if (this.user.progress != 0) {
+      if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
+        switch (this.user.progress) {
+          case 1:
+            this.router.navigate(['q-sort', this.id],
+            {
+              skipLocationChange: !isDevMode(),
+              queryParams: { user_id: this.user_id }
+            });
+          break;
+          case 2:
+            this.router.navigate(['questionnaire', this.id],
+            {
+              skipLocationChange: !isDevMode(),
+              queryParams: { user_id: this.user_id }
+            });
+          break;
+          case 3:
+            // TODO: Results page
+            this.router.navigate(['questionnaire', this.id],
+            {
+              skipLocationChange: !isDevMode(),
+              queryParams: { user_id: this.user_id }
+            });
+          break;
+        }
+      }
+    }
   }
 
   increaseIndex() {
-    if (this.current_index + 1 < this.statementObjs.length) {
+    if (this.current_index + 1 < this.statements_sort.length) {
       this.current_index++;
     }
   }
@@ -82,7 +111,6 @@ export class InitialSortComponent implements OnInit {
   onDisagreeDrop(e: any) {
     this.removeDisagree(e.dragData);
     this.disagree.push(e.dragData);
-    this.disagree_update.push(e.dragData.id);
     this.removeStatement(e.dragData);
     this.removeNeutral(e.dragData);
     this.removeAgree(e.dragData);
@@ -91,7 +119,6 @@ export class InitialSortComponent implements OnInit {
   onNeutralDrop(e: any) {
     this.removeNeutral(e.dragData);
     this.neutral.push(e.dragData);
-    this.neutral_update.push(e.dragData.id);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeAgree(e.dragData);
@@ -100,63 +127,72 @@ export class InitialSortComponent implements OnInit {
   onAgreeDrop(e: any) {
     this.removeAgree(e.dragData);
     this.agree.push(e.dragData);
-    this.agree_update.push(e.dragData.id);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeNeutral(e.dragData);
   }
 
   removeStatement(e: any) {
-    this.statementObjs.forEach( (item, index) => {
-
-      if (item == e) { this.statementObjs.splice(index, 1); }
+    this.statements_sort.forEach( (item, index) => {
+      if (item == e) { this.statements_sort.splice(index, 1); }
     });
-    if (this.current_index >= this.statementObjs.length) {
+    if (this.current_index >= this.statements_sort.length) {
       --this.current_index;
     }
   }
 
   removeDisagree(e: any) {
-    this.disagree.forEach( (item, index) => {
-
+    this.disagree.forEach((item, index) => {
       if (item == e) {
         this.disagree.splice(index, 1);
-        this.disagree_update.splice(index, 1);
       }
     });
   }
 
   removeNeutral(e: any) {
     this.neutral.forEach( (item, index) => {
-
       if (item == e) {
         this.neutral.splice(index, 1);
-        this.neutral_update.splice(index, 1);
       }
     });
   }
 
   removeAgree(e: any) {
     this.agree.forEach( (item, index) => {
-
       if (item == e) {
         this.agree.splice(index, 1);
-        this.agree_update.splice(index, 1);
       }
     });
   }
 
-  // TODO: button (hidden when arrays are not filled) that
-  // 1) submits userdata to user api
-  // 2) goes to q-sort page
+  /**
+   * Function called when all statements have been removed from the deck.
+   * Submits the collated data => QMd UserService MW
+   * If successful, goes to Q-Sort page.
+   */
   publishSortContinue() {
-    console.log('publishSortContinue()');
-    // this.userservice.updateUser(this.TEMP_int_disagree, this.TEMP_int_neutral, this.TEMP_int_agree, this.id);
-    setTimeout(() => {
-      // this.router.navigate(['q-sort']);
-      this.router.navigate(['q-sort']);
+    if ( isDevMode() ) {
+      console.log(this.agree);
+      console.log(this.neutral);
+      console.log(this.disagree);
+    }
+    const input = {
+      sort_agree: this.agree,
+      sort_neutral: this.neutral,
+      sort_disagree: this.disagree
+    };
+    this.userservice.updateUser(this.id, this.user_id, input).subscribe( res => {
+      this.router.navigate(['q-sort', this.id], {
+        skipLocationChange: !isDevMode(),
+        queryParams: {
+          user_id: this.user_id
+        }
+      });
     },
-    500);
+    err => {
+      console.error(err);
+    });
+      // TODO: Error Messages
   }
 
   ngOnInit() {

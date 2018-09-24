@@ -23,11 +23,12 @@ export interface Survey {
     questionnaire: string[];
     users: User[];
 }
+
 export interface User {
     _id: string;
     register_ans: string[];
     progress: number;
-    questions_ans: string[];
+    question_ans: string[];
     sort_agree: number[];
     sort_neutral: number[];
     sort_disagree: number[];
