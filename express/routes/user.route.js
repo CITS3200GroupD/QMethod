@@ -134,7 +134,7 @@ userRoutes.route('/:id/user/:user_id').get((req,res)=> {
 userRoutes.route('/:id/user/:user_id').post((req,res)=> {
 
   if (req.body.constructor === Object &&
-    Object.keys(req.body).length === 0 || Object.keys(req.body).length > 3) {
+    Object.keys(req.body).length === 0 /* || Object.keys(req.body).length > 3 */) {
     res.status(400).json('Bad Request');
     console.error('Bad Request');
   } else if (!req.headers.qmd) {

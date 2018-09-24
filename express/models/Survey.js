@@ -102,7 +102,7 @@ surveySchema.pre('validate', function(next) {
 
         if (user.progress >= 2) {
           user.matrix.forEach(col => {
-            col.forEach(cell => {
+            col.forEach(function() {
               cell_count++;
             });
           });

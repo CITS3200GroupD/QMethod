@@ -51,7 +51,7 @@ export class InitialSortComponent implements OnInit {
   // Get data from user service
   private getUserData() {
     this.route.queryParams.subscribe(params => {
-      this.user_id = params['user_id']
+      this.user_id = params['user_id'];
       this.userservice.getUser(this.id, this.user_id).subscribe( (res: User) => {
         this.user = res;
         this.checkRedirect();
@@ -68,7 +68,7 @@ export class InitialSortComponent implements OnInit {
   private checkRedirect() {
     if (this.user.progress != 0) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
-        switch(this.user.progress) {
+        switch (this.user.progress) {
           case 1:
             this.router.navigate(['q-sort', this.id],
             {
@@ -176,11 +176,11 @@ export class InitialSortComponent implements OnInit {
       console.log(this.neutral);
       console.log(this.disagree);
     }
-    let input = {
+    const input = {
       sort_agree: this.agree,
       sort_neutral: this.neutral,
       sort_disagree: this.disagree
-    }
+    };
     this.userservice.updateUser(this.id, this.user_id, input).subscribe( res => {
       this.router.navigate(['q-sort', this.id], {
         skipLocationChange: !isDevMode(),
