@@ -67,7 +67,7 @@
 
       <!-- { Update | Publish | Cancel } -->
       <div class="d-flex justify-content-center btn-group form-group">
-        <button class="btn btn-primary" *ngIf="!survey.publish && survey.users == 0" (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid || !valid_grid" >Update</button>
+        <button class="btn btn-primary" *ngIf="!survey.publish && survey.users.length === 0" (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid || !valid_grid" >Update</button>
         <button class="btn btn-danger" *ngIf="!survey.publish" (click)="publishSurvey()" [disabled]="angForm.invalid || !valid_grid" >Publish</button>
         <button class="btn btn-danger" *ngIf="survey.publish" (click)="stopSurvey()" [disabled]="angForm.invalid || !valid_grid" >Pause</button>
         <a class="btn btn-light" [routerLink]="['/admin']" >Cancel</a>
