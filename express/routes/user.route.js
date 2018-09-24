@@ -18,90 +18,128 @@ let User = require('../models/User');
 // TODO: In general this code needs to be a lot more robust
 // and need to add security and authentication.
 
-// Returns User data
+/**
+ * Get All User Data for Survey
+ * Private (Admin) Access
+ * Responds with JSON of Users[] Array
+ */
 userRoutes.route('/:id/users').get((req,res)=> {
-  const id = req.params.id;
-  Survey.findById(id, (err, survey)=> {
-    if (err || !survey) {
-      res.status(400).json(err);
-      console.error('No Survey Found');
-    }
-    else if(survey){
-      res.status(200).json(survey.users);
-      console.log(`${survey._id} userdata returned`);
-    }
-  });
-});
-
-// Add Userdata to a Survey determined by id
-userRoutes.route('/:id/addUser').post((req, res)=> {
-  if (req.body.constructor === Object &&
-    Object.keys(req.body).length === 0) {
-    res.status(400).json('Bad Request');
-    console.error('Bad Request');
+  if (!req.headers.qmd || !req.headers.authorization) {
+    // TODO: Needs Real Auth Checking
+    res.status(400).send('Bad Auth');
+    // console.error('Bad Auth');
   } else {
     const id = req.params.id;
-    Survey.findById(id, (err, survey)=>{
+    Survey.findById(id, (err, survey)=> {
       if (err || !survey) {
         res.status(400).json(err);
-        console.error('No Survey Found');
+        // console.error('No Survey Found');
       }
-      else {
-        let user = new User(req.body);
-        user.progress = 0;      // Force user progress to be 0.
-        survey.users.push(user);
-        console.log(user);
-        user.save()
-        .then(() => {
-          survey.save()
-          .then(() => {
-            res.status(200).json('Successfully Updated');
-            console.log(`Added User with id: ${user._id}`)
-          })
-          .catch((err) =>{
-            res.status(400).json(`Unable to update - ${err.message} `);
-            console.error('Unable to update');
-          });
-        })
-        .catch((err) => {
-          res.status(400).send(`Unable to update - ${err.message}`);
-          console.error('Does not match userSchema');
-        });
+      else if(survey){
+        res.status(200).json(survey.users);
+        // console.log(`${survey._id} userdata returned`);
       }
     });
   }
 });
 
-// TODO: Documentation
-userRoutes.route('/:id/user/:user_id').get((req,res)=> {
-  const id = req.params.id;
-  Survey.findById(id,(err,survey)=>{
-    if( err || !survey ) {
-      res.status(400).json(err);
-      console.error('No Survey Found')
+/**
+ * Add Userdata to a Survey determined by id
+ * Public Access
+ * Responds with user_id of the newly created user.
+ */
+userRoutes.route('/:id/addUser').post((req, res)=> {
+  if (!req.headers.qmd) {
+    res.status(400).send('Bad Auth');
+    // console.error('Bad Auth');
+  } else {
+    if (req.body.constructor === Object &&
+      Object.keys(req.body).length === 0) {
+      res.status(400).send('Bad Request');
+      // console.error('Bad Request');
+    } else {
+      const id = req.params.id;
+      Survey.findById(id, (err, survey)=>{
+        if (err || !survey) {
+          res.status(400).json(err);
+          // console.error('No Survey Found');
+        }
+        else {
+          let user = new User(req.body);
+          user.progress = 0;      // Force user progress to be 0.
+          survey.users.push(user);
+          console.log(user);
+          user.save()
+            .then(() => {
+              survey.save()
+                .then(() => {
+                  res.status(200).json(`${user._id}`);
+                  // console.log(`Added User with id: ${user._id}`)
+                })
+                .catch((err) =>{
+                  // Failed Survey Validation
+                  res.status(400).send(`Unable to update - ${err.message} `);
+                  // console.error('Unable to update');
+                });
+            })
+            .catch((err) => {
+              // Failed User Validation
+              res.status(400).send(`Unable to update - ${err.message}`);
+              // console.error('Does not match userSchema');
+            });
+        }
+      });
     }
-    else {
-      const user_id = req.params.user_id;
-      const curr_user = survey.users.id(user_id);
-      if (!curr_user) {
-        console.error('Error - User not found');
-        res.status(400).json('Error - User not found');
-      }
-      else {
-        console.log('Found User');
-        res.status(200).json(curr_user);
-      }
-    }
-  });
+  }
 });
 
-// TODO: Documentation - Need to test
+/**
+ * Get a User (reference by user_id and survey id)
+ * Public Access
+ * Responds with JSON of desired User
+ */
+userRoutes.route('/:id/user/:user_id').get((req,res)=> {
+  if (!req.headers.qmd) {
+    // TODO: Needs Real Auth Checking
+    res.status(400).send('Bad Auth');
+    // console.error('Bad Auth');
+  } else {
+    const id = req.params.id;
+    Survey.findById(id,(err,survey)=>{
+      if( err || !survey ) {
+        res.status(400).json(err);
+        // console.error('No Survey Found')
+      }
+      else {
+        const user_id = req.params.user_id;
+        const curr_user = survey.users.id(user_id);
+        if (!curr_user) {
+          // console.error('Error - User not found');
+          res.status(400).json('Error - User not found');
+        }
+        else {
+          // console.log('Found User');
+          res.status(200).json(curr_user);
+        }
+      }
+    });
+  }
+});
+
+/**
+ * Update a User (reference by user_id and survey id)
+ * Public Access
+ * Responds with success/failure
+ */
 userRoutes.route('/:id/user/:user_id').post((req,res)=> {
 
   if (req.body.constructor === Object &&
-    Object.keys(req.body).length === 0 || Object.keys(req.body).length > 2) {
+    Object.keys(req.body).length === 0 || Object.keys(req.body).length > 3) {
     res.status(400).json('Bad Request');
     console.error('Bad Request');
+  } else if (!req.headers.qmd) {
+    res.status(400).send('Bad Auth');
+    // console.error('Bad Auth');
   } else {
     const id = req.params.id;
     Survey.findById(id,(err,survey) => {
@@ -110,29 +148,48 @@ userRoutes.route('/:id/user/:user_id').post((req,res)=> {
       }
       else {
         const user_id = req.params.user_id;
-        let curr_user = survey.users.id(user_id);
-        if (!curr_user) {
-          console.error('Error - User not found');
+        let user = survey.users.id(user_id);
+        if (!user) {
+          // console.error('Error - User not found');
           res.status(400).json('Error - User not found');
-        }
-        else {
-          curr_user = new User(req.body);
+        } else if (user.progress >= 3) {
+          // Stop updating of already finished user data
+          // console.error('User Already Finished');
+          res.status(400).json('Unable to update');
+        } else {
+          // Sanity Check - Force coherant progress update
+          switch (user.progress + 1) {
+            case 1:
+              user.sort_agree = req.body.sort_agree;
+              user.sort_disagree = req.body.sort_disagree;
+              user.sort_neutral = req.body.sort_neutral;
+              break;
+            case 2:
+              user.matrix = req.body.matrix;
+              break;
+            case 3:
+              user.question_ans = req.body.question_ans;
+              break;
+          }
+          user.progress++;
           user.save()
-          .then(() => {
-            survey.save()
             .then(() => {
-              res.status(200).json('Successfully Updated');
-              console.log('Updated User');
+              survey.save()
+                .then(() => {
+                  res.status(200).json('Successfully Updated');
+                  // console.log('Updated User');
+                })
+                .catch((err) => {
+                  // Failed Survey Validation
+                  res.status(400).send(`Unable to update - ${err.message}`);
+                  // console.error('Unable to update');
+                });
             })
             .catch((err) => {
+              // Failed User Validation
               res.status(400).send(`Unable to update - ${err.message}`);
-              console.error('Unable to update');
+              // console.error('Does not match userSchema');
             });
-          })
-          .catch((err) => {
-            res.status(400).send(`Unable to update - ${err.message}`);
-            console.error('Does not match userSchema');
-          });
 
         }
       }
@@ -140,32 +197,42 @@ userRoutes.route('/:id/user/:user_id').post((req,res)=> {
   }
 });
 
-// TODO: Documentation - currently not working
+/**
+ * Delete a User (reference by user_id and survey id)
+ * Private (Admin) Access
+ * Responds with success/failure
+ */
 userRoutes.route('/:id/user/:user_id').delete((req,res)=>{
-  const id = req.params.id;
-  Survey.findById(id,(err,survey)=>{
-    if (err || !survey) {
-      res.status(400).json(err);
-    }
-    else {
-      const user_id = req.params.user_id;
-      const curr_user = survey.users.id(user_id);
-      if (!curr_user) {
-        console.error('Error - User not found');
-        res.status(400).json('Error - User not found');
+  if (!req.headers.qmd || !req.headers.authorization) {
+    // TODO: Needs Real Auth Checking
+    res.status(400).send('Bad Auth');
+    // console.error('Bad Auth');
+  } else {
+    const id = req.params.id;
+    Survey.findById(id,(err,survey)=>{
+      if (err || !survey) {
+        res.status(400).json(err);
       }
       else {
-        curr_user.remove();
-        survey.save().then(() => {
-          res.status(200).json('Successfully Removed');
-          console.log('Removed User');
-        })
-        .catch((err) => {
-          res.status(400).send(`Unable to update - ${err.message}`);
-        });
+        const user_id = req.params.user_id;
+        const curr_user = survey.users.id(user_id);
+        if (!curr_user) {
+          console.error('Error - User not found');
+          res.status(400).json('Error - User not found');
+        }
+        else {
+          curr_user.remove();
+          survey.save().then(() => {
+            res.status(200).json('Successfully Removed');
+            console.log('Removed User');
+          })
+          .catch((err) => {
+            res.status(400).send(`Unable to update - ${err.message}`);
+          });
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 module.exports = userRoutes;

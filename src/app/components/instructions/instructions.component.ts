@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -18,6 +18,10 @@ export class InstructionsComponent implements OnInit {
       this.survey_id = params['id'];
       console.log(this.survey_id);
     });
+  }
+
+  goNext() {
+    this.router.navigate(['/registration', this.survey_id], { skipLocationChange: !isDevMode()});
   }
 
   ngOnInit() {

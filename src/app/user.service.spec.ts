@@ -105,7 +105,7 @@ describe('UserService', () => {
     const test_url = `${uri}/${survey_id}/user/${user._id}`;
 
     // Call function
-    service.updateUser(survey_id, user).subscribe(res => {
+    service.updateUser(survey_id, user._id ,user).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 

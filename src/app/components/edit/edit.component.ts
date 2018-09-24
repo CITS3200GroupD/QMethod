@@ -59,6 +59,8 @@ export class EditComponent implements OnInit {
     private surveyservice: SurveyService,
     private fb: FormBuilder,
     private window: WindowWrap) {
+      // TODO: Waiting on proper Authentication
+      this.surveyservice.addAuthHeader('true');
       this.createForm();
       this.cols_templates = GridTemplates;
     }
@@ -194,6 +196,23 @@ export class EditComponent implements OnInit {
         'Are you sure you wish to publish this survey? You can no longer edit this survey once published!'
       )) {
         this.survey.publish = true;
+        this.surveyservice.updateSurvey(this.survey)
+          .subscribe( (res: HttpResponse<Object>) => this.successfulUpdate(res, true) );
+      }
+    }
+  }
+
+  /**
+   * Publish the current survey (and lock editing)
+   */
+  stopSurvey(): void {
+    if (!this.valid_grid) {
+      this.throwError('Invalid Grid');
+    } else {
+      if (this.window.nativeWindow.confirm(
+        'Are you sure you wish to stop this survey?'
+      )) {
+        this.survey.publish = false;
         this.surveyservice.updateSurvey(this.survey)
           .subscribe( (res: HttpResponse<Object>) => this.successfulUpdate(res, true) );
       }

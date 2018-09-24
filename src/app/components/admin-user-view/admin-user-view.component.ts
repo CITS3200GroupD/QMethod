@@ -47,6 +47,9 @@ export class AdminUserViewComponent implements OnInit {
     private userservice: UserService,
     private surveyservice: SurveyService,
     private window: WindowWrap) {
+      // TODO: Waiting on proper Authentication
+      this.userservice.addAuthHeader('true');
+      this.surveyservice.addAuthHeader('true');
       // Load url params into object vars, then retrieve data from services.
       this.route.params.subscribe(params => {
         this.survey_id = params['id'];
@@ -76,12 +79,10 @@ export class AdminUserViewComponent implements OnInit {
    * If successful, load data into object and call checkExport() function
    */
   private getSurveyData() {
-    console.log('SurveyData()');
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
         this.survey = res;
         this.survey_name = this.survey.name;
-        console.log(this.survey_name);
         this.register = this.survey.register;
         this.questionnaire = this.survey.questionnaire;
         this.offset = Math.floor( this.user.matrix.length / 2 );
@@ -101,7 +102,7 @@ export class AdminUserViewComponent implements OnInit {
         setTimeout(() => {
           this.print();
         },
-        1500);
+        600);
       }
     });
   }

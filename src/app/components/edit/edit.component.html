@@ -41,7 +41,7 @@
             <!-- Registration -->
             <div class="form-group">
                 <label class="col-md-4">Registration Fields {{lengths.register}}/{{FIELDS_LIMIT}}</label>
-                <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish" (fields_out)="updateFields('register', $event)"></app-edit-forms>
+                <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
             </div>
           </ng-template>
         </ngb-tab>
@@ -50,7 +50,7 @@
             <!-- End of Survey -->
             <div class="form-group">
                 <label class="col-md-4">End of Survey Questions {{lengths.questionnaire}}/{{FIELDS_LIMIT}}</label>
-                <app-edit-forms [fields_input]="survey.questionnaire" [disabled]="survey.publish" (fields_out)="updateFields('questionnaire', $event)"></app-edit-forms>
+                <app-edit-forms [fields_input]="survey.questionnaire" [disabled]="survey.publish || survey.users > 0" (fields_out)="updateFields('questionnaire', $event)"></app-edit-forms>
             </div>
           </ng-template>
         </ngb-tab>
@@ -59,7 +59,7 @@
                 <!-- Statements -->
                 <div class="form-group">
                     <label class="col-md-4">Statements {{lengths.statements}}/{{STATE_LIMIT}}</label>
-                    <app-edit-statements [statements_in]="survey.statements" [disabled]="survey.publish" (statements_out)="updateStatements($event)" ></app-edit-statements>
+                    <app-edit-statements [statements_in]="survey.statements" [disabled]="survey.publish || survey.users > 0" (statements_out)="updateStatements($event)" ></app-edit-statements>
                 </div>
             </ng-template>
           </ngb-tab>
@@ -67,8 +67,9 @@
 
       <!-- { Update | Publish | Cancel } -->
       <div class="d-flex justify-content-center btn-group form-group">
-        <button class="btn btn-primary" *ngIf="!survey.publish" (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid || !valid_grid" >Update</button>
+        <button class="btn btn-primary" *ngIf="!survey.publish && survey.users == 0" (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid || !valid_grid" >Update</button>
         <button class="btn btn-danger" *ngIf="!survey.publish" (click)="publishSurvey()" [disabled]="angForm.invalid || !valid_grid" >Publish</button>
+        <button class="btn btn-danger" *ngIf="survey.publish" (click)="stopSurvey()" [disabled]="angForm.invalid || !valid_grid" >Pause</button>
         <a class="btn btn-light" [routerLink]="['/admin']" >Cancel</a>
       </div>
 

@@ -34,6 +34,8 @@ export class CreateComponent implements OnInit {
     private fb: FormBuilder,
     private window: WindowWrap
   ) {
+    // TODO: Waiting on proper Authentication
+    this.surveyservice.addAuthHeader('true');
     this.createForm();
     // Set default range to QMd default range setting
     this.angForm.get('survey_range').setValue(Settings.DEFAULT_RANGE);

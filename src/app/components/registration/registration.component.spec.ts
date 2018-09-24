@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { RegistrationComponent } from './registration.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MockWindowWrap } from '../../testing/Testing';
+import { WindowWrap } from '../../window-wrapper';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -9,6 +11,9 @@ describe('RegistrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [ RegistrationComponent,
+        {provide: WindowWrap, useClass: MockWindowWrap}
+      ],
       declarations: [ RegistrationComponent ],
       imports: [ RouterTestingModule, HttpClientModule ]
     })

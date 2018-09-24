@@ -36,6 +36,8 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private window: WindowWrap
   ) {
+    // TODO: Waiting on proper Authentication
+    this.surveyservice.addAuthHeader('true');
     this.getSurveyData();
   }
 

@@ -23,10 +23,12 @@ const surveySchema = new Schema({
   register: {
     type: [String],
     required: [true, 'No register'],
+    // TODO: Validate maximum registration field length
   },
   questionnaire: {
     type: [String],
     required: [true, 'No questionnaire']
+    // TODO: Validate maximum questionnaire field length
   },
   publish: {
     type: Boolean,
@@ -77,33 +79,46 @@ function rangeValidate(range) {
 }
 
 // Validation of userdata
-// TODO: Add Matrix validation
 surveySchema.pre('validate', function(next) {
   const ques_len = this.questionnaire.length;
   const reg_len = this.register.length;
   const state_len = this.statements.length;
+  let cell_count = 0;
 
   if (this.users.length == 0) {
     next();
   } else {
     this.users.forEach( user => {
       if (user.register_ans.length !== reg_len) {
-        console.error('Invalid Registration Data')
+        // console.error('Invalid Registration Data')
         next(new Error('Invalid Registration Data'));
-      } else if (user.progress > 0) {
+      }
+      if (user.progress >= 1) {
         if (user.sort_disagree.length +
           user.sort_neutral.length + user.sort_agree.length !== state_len) {
-            console.error('Invalid Init-Sort Data')
+            // console.error('Invalid Init-Sort Data')
+            next(new Error('Invalid Init-Sort Data'));
+        }
+
+        if (user.progress >= 2) {
+          user.matrix.forEach(col => {
+            col.forEach(cell => {
+              cell_count++;
+            });
+          });
+          if (cell_count != state_len) {
+            // console.error('Invalid Cell Count');
             next(new Error('Invalid Init-Sort Data'));
           }
-      } else if (user.progress > 3) {
-        if (user.question_ans.length !== ques_len) {
-          console.error('Invalid Questionnaire Data')
-          next(new Error('Invalid Questionnaire Data'));
+          if (user.progress >= 3) {
+            if (user.question_ans.length !== ques_len) {
+             // console.error('Invalid Questionnaire Data')
+              next(new Error('Invalid Questionnaire Data'));
+            }
+          }
         }
-      } else {
-        next();
       }
+      next();
     });
   }
 });

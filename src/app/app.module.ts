@@ -73,29 +73,16 @@ const routes: Routes = [
     component: RegistrationComponent
   },
   {
-    path: 'questionnaire/:id',
-    component: QuestionnaireComponent
-  },
-  {
     path: 'initial-sort/:id',
     component: InitialSortComponent
   },
   {
-    path: 'q-sort',
+    path: 'q-sort/:id',
     component: QsortComponent
   },
-  // Temporary Paths for v1 files
   {
-    path: 'v1/registration',
-    component: RegistrationComponent
-  },
-  {
-    path: 'v1/questionnaire',
+    path: 'questionnaire/:id',
     component: QuestionnaireComponent
-  },
-  {
-    path: 'v1/instructions',
-    component: InstructionsComponent
   }
 ];
 // Declaring vars for ng

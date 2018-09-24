@@ -1,5 +1,5 @@
 <body>
-  <h1 class="h1instructions">Instructions</h1>
+  <h1 class="instructions">Instructions</h1>
     <ul class ="ul">
       <li>
         Thank you for agreeing to take part in our study. Please read carefully the following instructions.
@@ -38,6 +38,7 @@
      <div class="buttonHolder">
      <!-- <input value="Agree" id="submit" type="submit"> -->
      <!-- <button class="button" onclick="window.location.href='/v1/registration'">Agree</button> -->
-     <a [routerLink]="['/registration', survey_id]" class="btn btn-primary btn-block"> Agree </a>
+     <!-- <a [routerLink]="['/registration', survey_id]" [skipLocationChange]="true" class="btn btn-primary btn-block"> Agree </a>-->
+     <button class="btn btn-primary btn-block" (click)="goNext()"> Agree </button>
      </div>
 </body>

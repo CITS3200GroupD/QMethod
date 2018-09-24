@@ -52,7 +52,7 @@ export class EditGridComponent implements OnInit {
     if (survey._id != 'BLANK_SURVEY') {
       this.init = false;
     }
-    this.disabled = survey.publish;
+    this.disabled = ( survey.publish || survey.users.length > 0);
 
     this.offset = Math.floor( survey.range / 2 );
     this.max_rows = this.offset + 2;

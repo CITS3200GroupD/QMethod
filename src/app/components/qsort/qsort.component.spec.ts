@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QsortComponent } from './qsort.component';
+import { RouterTestingModule  } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('QsortComponent', () => {
   let component: QsortComponent;
@@ -8,6 +10,7 @@ describe('QsortComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ HttpClientModule, RouterTestingModule ],
       declarations: [ QsortComponent ]
     })
     .compileComponents();
