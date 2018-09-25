@@ -13,8 +13,13 @@ import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
+import { AuthService } from './auth.service';       // Authentication service
 import { MockUserService } from './testing/mockuser.service'; // mock userdata middleware
 import { MockSurveyService } from './testing/mocksurvey.service'; // mock surveydata middleware
+
+// ng guards
+import { AdminGuard } from './guards/admin.guard';
+import { ConfirmDeactivateGuard } from './guards/confirm.guard';
 
 // npm imports
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
@@ -37,52 +42,71 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
   {
-    path: 'create',
-    component: CreateComponent
-  },
-  {
-    path: 'survey/:id',
-    component: UserIndexComponent
-  },
-  {
-    path: 'edit/:id',
-    component: EditComponent
-  },
-  {
-    path: 'results/:id',
-    component: AdminUserListComponent
-  },
-  {
-    path: 'results/:id/users/:user_id',
-    component: AdminUserViewComponent
+    path: 'login',
+    component: AdminLoginComponent
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'create',
+    component: CreateComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'edit/:id',
+    component: EditComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'results/:id',
+    component: AdminUserListComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'results/:id/users/:user_id',
+    component: AdminUserViewComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'survey/:id',
+    component: UserIndexComponent,
+    canActivate: [ 'UserGuard' ]
   },
   {
     path: 'instructions/:id',
-    component: InstructionsComponent
+    component: InstructionsComponent,
+    canActivate: ['UserGuard']
   },
   {
     path: 'registration/:id',
-    component: RegistrationComponent
+    component: RegistrationComponent,
+    canActivate: ['UserGuard']
   },
   {
     path: 'initial-sort/:id',
-    component: InitialSortComponent
+    component: InitialSortComponent,
+    canActivate: ['UserGuard'],
+    // canDeactivate: [ ConfirmDeactivateGuard ]  // TODO: Activate when implemented
   },
   {
     path: 'q-sort/:id',
-    component: QsortComponent
+    component: QsortComponent,
+    canActivate: ['UserGuard'],
+    // canDeactivate: [ ConfirmDeactivateGuard ]
   },
   {
     path: 'questionnaire/:id',
-    component: QuestionnaireComponent
+    component: QuestionnaireComponent,
+    canActivate: ['UserGuard'],
+    // canDeactivate: [ ConfirmDeactivateGuard ]
   }
 ];
 // Declaring vars for ng
@@ -105,7 +129,8 @@ const routes: Routes = [
     RegistrationComponent,
     QuestionnaireComponent,
     EditFormsComponent,
-    AdminUserViewComponent
+    AdminUserViewComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -119,6 +144,15 @@ const routes: Routes = [
     Ng2PaginationModule
   ],
   providers: [
+    AdminGuard,
+    {
+      provide: 'UserGuard',    // placeholder
+      useValue: () => {
+        return true;
+      }
+    },
+    ConfirmDeactivateGuard,
+    AuthService,
     SurveyService,
     UserService,
     MockSurveyService,

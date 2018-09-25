@@ -27,11 +27,13 @@
       </div>
 
       <div class="form-group">
-          <label class="col-md-4">Statements</label>
-          <!-- TODO: Statements component
-          <input type="text" class="form-control" disabled/>
-          -->
-          <input class="form-control-file" id="file_input" type="file">
+          <label class="col-md-4">Configuration</label>
+          <input class="form-control-file" id="file_input" type="file" #file (change)="onUpload(file.files)"/>
+          <br>
+          <div *ngIf="error" class="alert alert-danger"> Failed to load configuration! </div>
+          <div *ngIf="!error && registration.length > 0" class="alert alert-success"> <strong>{{registration.length}}</strong> Registration Fields Loaded! </div>
+          <div *ngIf="!error && statements.length > 0" class="alert alert-success"> <strong>{{statements.length}}</strong> Statements Loaded! </div>
+          <div *ngIf="!error && questionnaire.length > 0" class="alert alert-success"> <strong>{{questionnaire.length}}</strong> Questions Loaded! </div>
       </div>
 
       <div class="form-group">

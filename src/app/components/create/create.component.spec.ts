@@ -44,7 +44,9 @@ describe('CreateComponent', () => {
 
   it('check params', () => {
     expect(component.cols_templates).toBeTruthy();
-    expect(component['statements']).toBe(undefined);
+    expect(component['statements']).toBeTruthy();
+    expect(component['questionnaire']).toBeTruthy();
+    expect(component['registration']).toBeTruthy();
     expect(component.angForm).toBeTruthy();
   });
 
@@ -57,7 +59,7 @@ describe('CreateComponent', () => {
     const labels = html_element.querySelectorAll('label');
     expect(labels[0].textContent).toContain('Survey Name');
     expect(labels[1].textContent).toContain('Range');
-    expect(labels[2].textContent).toContain('Statements');
+    expect(labels[2].textContent).toContain('Configuration');
   });
 
   it('html select', () => {
