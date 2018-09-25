@@ -122,7 +122,7 @@ export class AdminUserViewComponent implements OnInit {
       <html>
         <head>
           <title>QMethod Report for Survey: ${this.survey._id} Respondent: ${this.user._id}</title>
-          <link rel="stylesheet" type="text/css" href="../../../../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+          <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
           </style>
           <style>
             .list-group-item { padding-top: 2px; padding-bottom: 2px; }
