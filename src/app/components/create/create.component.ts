@@ -16,11 +16,11 @@ import * as Settings from '../../../../config/Settings';                        
  */
 export class CreateComponent implements OnInit {
   /** Registration Fields*/
-  private registration: string[] = [];
+  registration: string[] = [];
   /** Statements */
-  private statements: string[] = [];
+  statements: string[] = [];
   /** Questionnaire Questions*/
-  private questionnaire: string[] = [];
+  questionnaire: string[] = [];
   /** Templates for default grid */
   cols_templates = GridTemplates;
   /** Angular reactive form */
