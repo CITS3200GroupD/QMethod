@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminLoginComponent } from './admin-login.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '../../auth.service';
 
 describe('AdminLoginComponent', () => {
   let component: AdminLoginComponent;
@@ -9,6 +10,9 @@ describe('AdminLoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [ AdminLoginComponent,
+        { provide: AuthService, useClass: AuthService }
+      ],
       imports: [ RouterTestingModule ],
       declarations: [ AdminLoginComponent ]
     })
