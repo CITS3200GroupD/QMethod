@@ -1,28 +1,28 @@
 <!-- MODAL -->
 <ng-template #content let-modal>
-    <!-- Head -->
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-resume-user">Session Resume</h4>
-      <button type="button" class="close" (click)="modal.dismiss()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <!-- Body -->
-    <div class="modal-body">
-      <form [formGroup]="angForm">
-        <!-- Label -->
-        <label>User ID</label>
-          <div class="input-group">
-            <!-- Private Link URL-->
-            <input class="form-control" formControlName="user_id" #user_id>
-          </div>
-      </form>
-    </div>
-    <!-- Footer -->
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="findUser(user_id.value)">Done</button>
-    </div>
-  </ng-template>
+  <!-- Head -->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-resume-user">Session Resume</h4>
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- Body -->
+  <div class="modal-body">
+    <form [formGroup]="angForm">
+      <!-- Label -->
+      <label>User ID</label>
+        <div class="input-group">
+          <!-- Private Link URL-->
+          <input class="form-control" formControlName="user_id" #user_id>
+        </div>
+    </form>
+  </div>
+  <!-- Footer -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="findUser(user_id.value)">Done</button>
+  </div>
+</ng-template>
 
 
 <div class="card">

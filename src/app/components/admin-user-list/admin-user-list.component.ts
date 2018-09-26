@@ -4,6 +4,7 @@ import { User } from '../../models';                                        // Q
 import { UserService } from '../../user.service';                           // QMd User Service
 import { WindowWrap } from '../../window-wrapper';                          // wrapper for window
 import * as Settings from '../../../../config/Settings';                    // QMd Settings
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -34,6 +35,7 @@ export class AdminUserListComponent implements OnInit {
    * @param window Wrapper for window
    */
   constructor(
+    private authservice: AuthService,
     private route: ActivatedRoute,
     private userservice: UserService, // TODO: Replace with real user service
     private router: Router,
@@ -69,12 +71,17 @@ export class AdminUserListComponent implements OnInit {
     });
   }
 
-  setComplete() {
+  togComplete() {
     if (this.user_filter != this.key_string) {
       this.user_filter = this.key_string;
     } else {
       this.user_filter = '';
     }
+  }
+
+  logOut() {
+    this.authservice.logOut();
+    this.router.navigate(['/login']);
   }
 
   /** Function run on init */

@@ -1,4 +1,4 @@
-<!-- Just an image -->
+<!-- Nav bar-->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="">
     <img src="../../../favicon.ico" width="30" height="30" alt="">
@@ -23,7 +23,8 @@
     <td class="justify-content-center">Status</td>
     <td>Survey</td>
     <td>Statements</td>
-    <td>Responses</td>
+    <td *ngIf="complete_only" (click)="togComplete()" >Responses</td>
+    <td *ngIf="!complete_only" (click)="togComplete()" >Responses*</td>
     <td>View</td>
     <td>Actions</td>
   </tr>
@@ -41,7 +42,8 @@
       </td>
       <td>{{ survey.name }}</td>
       <td>{{ survey.statements.length }}</td>
-      <td>{{ survey.valid_users }} </td> <!-- TODO: Replace with actual user count-->
+      <td (click)="togComplete()" *ngIf="complete_only">{{ survey.valid_users }} </td>
+      <td (click)="togComplete()" *ngIf="!complete_only">{{ survey.users.length }} </td>
 
       <td>
         <!-- { Results } -->

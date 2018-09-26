@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { isDevMode, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
@@ -13,7 +13,7 @@ export class AuthService {
 
 
   constructor(private cookieservice: CookieService) {
-    console.log('loaded');
+    if (isDevMode()) { console.log('AuthService Init'); }
     this.checkAuth();  // Load authkey from cookie (if it exists)
   }
 
@@ -25,7 +25,7 @@ export class AuthService {
     }
   }
 
-  login(): Observable<boolean> {
+  logIn(): Observable<boolean> {
     return of(true).pipe(
       delay(250),
       tap(() => {
@@ -35,7 +35,7 @@ export class AuthService {
     );
   }
 
-  logout(): void {
+  logOut(): void {
     this.logged_in = false;
     this.cookieservice.remove('SESSION_ID');
   }

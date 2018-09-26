@@ -19,10 +19,10 @@ export class AdminLoginComponent implements OnInit {
     this.message = 'Logged ' + (this.authservice.logged_in ? 'in' : 'out');
   }
 
-  login() {
+  logIn() {
     this.message = 'Trying to log in ...';
 
-    this.authservice.login().subscribe(res => {
+    this.authservice.logIn().subscribe(res => {
       this.setMessage();
       if (this.authservice.logged_in) {
         // Receive redirect URL from authservice. If no redirect has been set, go to admin index
@@ -34,8 +34,8 @@ export class AdminLoginComponent implements OnInit {
     });
   }
 
-  logout() {
-    this.authservice.logout();
+  logOut() {
+    this.authservice.logOut();
     this.setMessage();
   }
 

@@ -321,7 +321,7 @@ export class MockAuthService {
 
   /** Check Session ID (in cookie) vs Auth Server */
 
-  login(): Observable<boolean> {
+  logIn(): Observable<boolean> {
     return of(true).pipe(
       delay(250),
       tap(() => {
@@ -330,7 +330,7 @@ export class MockAuthService {
     );
   }
 
-  logout(): void {
+  logOut(): void {
     this.logged_in = false;
   }
 }

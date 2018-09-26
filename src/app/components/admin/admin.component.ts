@@ -3,7 +3,6 @@ import { Router } from '@angular/router';                                       
 import { Survey } from '../../models';                                             // QMd Models - Survey
 import { SurveyService } from '../../survey.service';                              // QMd Survey Service MW
 import { WindowWrap } from '../../window-wrapper';                                 // wrapper for window
-// import { ValidSurveyList } from '../../testing/Testing';
 import * as Settings from '../../../../config/Settings';                           // QMd Settings
 import { AuthService } from '../../auth.service';
 
@@ -26,6 +25,9 @@ export class AdminComponent implements OnInit {
   page: number;
   /** Var for storing the array of surveys */
   surveys: any[];
+
+  /** Flag for toggling complete/incomplete responses */
+  complete_only = true;
 
   /**
    * Constructor for AdminComponent
@@ -87,9 +89,18 @@ export class AdminComponent implements OnInit {
   }
 
   logOut() {
-    this.authservice.logout();
+    this.authservice.logOut();
     this.router.navigate(['/login']);
     // TODO: Confirmation window for logout
+  }
+
+  /** Toggle complete response view on/off */
+  togComplete() {
+    if (this.complete_only) {
+      this.complete_only = false;
+    } else {
+      this.complete_only = true;
+    }
   }
 
   /** Function run on init */
