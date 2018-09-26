@@ -37,6 +37,10 @@ const express = require('express'),
     app.use(cors());
     const port = process.env.PORT || 8080;
 
+    // Auth route (JWT)
+    const authRoutes = require('./express/routes/auth.route');
+    app.use('/auth', authRoutes);
+
     // Routes for RESTful API for Survey Data
     const surveyRoutes = require('./express/routes/survey.route');
     app.use('/api', surveyRoutes);

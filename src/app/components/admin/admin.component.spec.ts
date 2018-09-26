@@ -7,12 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { Survey } from '../../models';
-import { MockWindowWrap, ValidSurveyList } from '../../testing/Testing';
+import { MockWindowWrap, ValidSurveyList, MockAuthService } from '../../testing/Testing';
 import { SurveyService } from '../../survey.service';
 import { Observable, of } from 'rxjs';
 import { WindowWrap } from '../../window-wrapper';
 import * as Settings from '../../../../config/Settings';
 import { MockSurveyService } from '../../testing/mocksurvey.service';
+import { AuthService } from '../../auth.service';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -24,6 +25,7 @@ describe('AdminComponent', () => {
     TestBed.configureTestingModule({
       providers: [
         AdminComponent,
+        {provide: AuthService, useClass: MockAuthService},
         {provide: SurveyService, useClass: MockSurveyService},
         {provide: WindowWrap, useClass: MockWindowWrap}
       ],

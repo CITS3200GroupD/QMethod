@@ -5,6 +5,7 @@ import { SurveyService } from '../../survey.service';                           
 import { WindowWrap } from '../../window-wrapper';                                 // wrapper for window
 // import { ValidSurveyList } from '../../testing/Testing';
 import * as Settings from '../../../../config/Settings';                           // QMd Settings
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -32,7 +33,8 @@ export class AdminComponent implements OnInit {
    * @param router @ng Router
    * @param window Wrapper for window
    */
-  constructor(private surveyservice: SurveyService,
+  constructor( private authservice: AuthService,
+    private surveyservice: SurveyService,
     private router: Router,
     private window: WindowWrap
   ) {
@@ -82,6 +84,12 @@ export class AdminComponent implements OnInit {
       });
     });
       // TODO: Error message if not successful
+  }
+
+  logOut() {
+    this.authservice.logout();
+    this.router.navigate(['/login']);
+    // TODO: Confirmation window for logout
   }
 
   /** Function run on init */

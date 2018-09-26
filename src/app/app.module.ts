@@ -5,9 +5,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';   // Routing
 import { HttpClientModule } from '@angular/common/http'; // http client for ng<->express
 import { ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
-import { NgDragDropModule } from 'ng-drag-drop';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
-import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 
 // ng services
 import { WindowWrap } from './window-wrapper';
@@ -22,7 +19,13 @@ import { AdminGuard } from './guards/admin.guard';
 import { ConfirmDeactivateGuard } from './guards/confirm.guard';
 
 // npm imports
+import { NgDragDropModule } from 'ng-drag-drop';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
+import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
+import { CookieModule, CookieService } from 'ngx-cookie';
+
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -46,6 +49,11 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 
 // Configuring Routes and linking to components
 const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/admin'
+  },
   {
     path: 'login',
     component: AdminLoginComponent
@@ -141,7 +149,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgDragDropModule.forRoot(),
     NgbModule,
-    Ng2PaginationModule
+    Ng2PaginationModule,
+    CookieModule.forRoot()
   ],
   providers: [
     AdminGuard,
@@ -155,6 +164,7 @@ const routes: Routes = [
     AuthService,
     SurveyService,
     UserService,
+    CookieService,
     MockSurveyService,
     MockUserService,
     WindowWrap

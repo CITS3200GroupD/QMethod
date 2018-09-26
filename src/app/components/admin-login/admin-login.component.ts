@@ -12,7 +12,7 @@ export class AdminLoginComponent implements OnInit {
   message: string;
 
   constructor(public authservice: AuthService, public router: Router) {
-    // this.setMessage();
+    this.setMessage();
   }
 
   setMessage() {
@@ -22,12 +22,11 @@ export class AdminLoginComponent implements OnInit {
   login() {
     this.message = 'Trying to log in ...';
 
-    this.authservice.login().subscribe(() => {
+    this.authservice.login().subscribe(res => {
       this.setMessage();
       if (this.authservice.logged_in) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
-        let redirect = this.authservice.redirect_url ? this.authservice.redirect_url : '/login';
+        // Receive redirect URL from authservice. If no redirect has been set, go to admin index
+        let redirect = this.authservice.redirect_url ? this.authservice.redirect_url : '/admin';
 
         // Redirect the user
         this.router.navigate([redirect]);

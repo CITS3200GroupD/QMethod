@@ -1,4 +1,6 @@
 import { Survey, User } from '../models';
+import { Observable, of } from 'rxjs';
+import { tap, delay } from 'rxjs/operators';
 
 export const TestingRegister = [
   'Age', 'Gender', 'Nationality', 'Main Spoken Language', 'Other Languages'
@@ -300,6 +302,36 @@ export class MockWindowWrap {
 export class MockWindowWrapInner {
   confirm(): boolean {
     return true;
+  }
+}
+
+export class MockCookieService {
+  get(s) { return true; }
+  put(s, token) { return true; }
+  remove(s) { return true; }
+}
+
+export class MockAuthService {
+
+  logged_in = true;
+  redirect_url: string;
+
+  constructor() {
+  }
+
+  /** Check Session ID (in cookie) vs Auth Server */
+
+  login(): Observable<boolean> {
+    return of(true).pipe(
+      delay(250),
+      tap(() => {
+        this.logged_in = true;
+      })
+    );
+  }
+
+  logout(): void {
+    this.logged_in = false;
   }
 }
 

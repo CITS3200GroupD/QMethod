@@ -26,6 +26,7 @@ let User = require('../models/User');
 userRoutes.route('/:id/users').get((req,res)=> {
   if (!req.headers.qmd || !req.headers.authorization) {
     // TODO: Needs Real Auth Checking
+    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {
@@ -101,6 +102,7 @@ userRoutes.route('/:id/addUser').post((req, res)=> {
 userRoutes.route('/:id/user/:user_id').get((req,res)=> {
   if (!req.headers.qmd) {
     // TODO: Needs Real Auth Checking
+    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {
@@ -205,6 +207,7 @@ userRoutes.route('/:id/user/:user_id').post((req,res)=> {
 userRoutes.route('/:id/user/:user_id').delete((req,res)=>{
   if (!req.headers.qmd || !req.headers.authorization) {
     // TODO: Needs Real Auth Checking
+    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {
