@@ -14,16 +14,17 @@ import { WindowWrap } from '../../window-wrapper';                      // wrapp
  * Component for viewing user data
  */
 export class AdminUserViewComponent implements OnInit {
-  /** The survey this user is a participant in */
-  private survey: Survey;
-  /** The current user being viewed*/
-  user: User;
+
   /** Questionnaire field strings */
-  questionnaire: string[];
+  questionnaire: string[] = [];
+  /** Questionnaire answers */
+  question_ans: string[] = [];
   /** Registration field strings */
-  register: string[];
+  register: string[] = [];
+  /** Registration answers */
+  register_ans: string[] = [];
   /** Q-Sort Matrix Post-sort results */
-  matrix: number[][];
+  matrix: number[][] = [];
 
   /** Offset variable (for display) */
   offset = 0;
@@ -54,6 +55,7 @@ export class AdminUserViewComponent implements OnInit {
       this.route.params.subscribe(params => {
         this.survey_id = params['id'];
         this.user_id = params['user_id'];
+        this.getSurveyData();
         this.getUserData();
       });
     }
@@ -62,35 +64,30 @@ export class AdminUserViewComponent implements OnInit {
    * Call User Service Middleware for user data based on object's survey_id and user_id vars.
    * If successful, call getSurveyData() to retreive survey properties.
    */
-  private getUserData() {
+  private getUserData(): void {
     this.userservice.getUser(this.survey_id, this.user_id).subscribe(
       (res: User) => {
-        this.user = res;
-        this.matrix = this.user.matrix;
-        this.offset = Math.floor( this.user.matrix.length / 2 );
-        this.getSurveyData();
+        this.question_ans = res.question_ans;
+        this.register_ans = res.register_ans;
+        this.matrix = res.matrix;
+        this.offset = Math.floor( res.matrix.length / 2 );
+        this.checkExport();
       }
     );
-
   }
 
   /**
    * Call Survey Service Middleware for survey data.
    * If successful, load data into object and call checkExport() function
    */
-  private getSurveyData() {
+  private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
-        this.survey = res;
-        this.survey_name = this.survey.name;
-        this.register = this.survey.register;
-        this.questionnaire = this.survey.questionnaire;
-        this.offset = Math.floor( this.user.matrix.length / 2 );
-        // If successful, check params for ?export=true
-        this.checkExport();
+        this.survey_name = res.name;
+        this.register = res.register;
+        this.questionnaire = res.questionnaire;
       }
     );
-
   }
 
   /**
@@ -121,7 +118,7 @@ export class AdminUserViewComponent implements OnInit {
     popupWin.document.write(`
       <html>
         <head>
-          <title>QMethod Report for Survey: ${this.survey._id} Respondent: ${this.user._id}</title>
+          <title>QMethod Report for Survey: ${this.survey_id} Respondent: ${this.user_id}</title>
           <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
           </style>
           <style>
@@ -133,9 +130,9 @@ export class AdminUserViewComponent implements OnInit {
     <body onload="window.print();window.close()">
     <div class="card">
       <div class="card-header">
-        <p><b>Survey Name</b> ${this.survey.name}</p>
-        <p><b>Survey ID</b> ${this.survey._id}</p>
-        <p><b>Respondent ID</b> ${this.user._id}</p>
+        <p><b>Survey Name</b> ${this.survey_name}</p>
+        <p><b>Survey ID</b> ${this.survey_id}</p>
+        <p><b>Respondent ID</b> ${this.user_id}</p>
       </div>
       <div class="card-body">
         <p><b>Q-Sort Grid</b></p>
@@ -153,6 +150,18 @@ export class AdminUserViewComponent implements OnInit {
       </html>`
     );
     popupWin.document.close();
+  }
+
+  /**
+   * Delete (with confirmation) this user from the survey results (sync with database)
+   */
+  deleteUser(): void {
+    if (this.window.nativeWindow.confirm('Are you sure you wish to delete this user?')) {
+      this.userservice.deleteUser(this.survey_id, this.user_id).subscribe(res => {
+          // console.log(res);
+          this.router.navigate(['results', this.survey_id]);
+      });
+    }
   }
 
   ngOnInit(): void {

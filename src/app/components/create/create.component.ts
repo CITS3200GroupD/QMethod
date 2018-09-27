@@ -92,9 +92,9 @@ export class CreateComponent implements OnInit {
    * @param files Files uploaded
    */
   onUpload(files: FileList) {
-    let reader = new FileReader();
+    const reader = new FileReader();
     try {
-      reader.readAsText(files[0])
+      reader.readAsText(files[0]);
       reader.onload = () => {
         try {
           const input = JSON.parse(reader.result.toString());
@@ -118,8 +118,8 @@ export class CreateComponent implements OnInit {
           console.error(err);
           this.error = true;
         }
-      }
-    } catch(e) {}
+      };
+    } catch(e) { }
   }
 
   /**

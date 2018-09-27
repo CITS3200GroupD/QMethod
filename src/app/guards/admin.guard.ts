@@ -14,7 +14,7 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      let url: string = state.url;
+      const url: string = state.url;
 
     return this.checkLogin(url);
   }
