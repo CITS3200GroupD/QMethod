@@ -26,6 +26,7 @@ surveyRoutes.route('/add').post( (req, res) => {
     res.status(400).send('Bad Request');
   } else if (!req.headers.qmd || !req.headers.authorization) {
     // TODO: Needs Real Auth Checking
+    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
   } else {
     let survey = new Survey(req.body);
@@ -46,6 +47,7 @@ surveyRoutes.route('/add').post( (req, res) => {
  */
 surveyRoutes.route('/').get( (req, res) => {
   // TODO: Needs Real Auth Checking
+  // TODO: Replace with Auth Cookie
   if (!req.headers.qmd || !req.headers.authorization) {
     res.status(400).send('Bad Auth');
   } else {
@@ -75,6 +77,7 @@ surveyRoutes.route('/:id').get( (req, res) => {
       if (err || !survey) {
         res.status(400).json(err);
       } else if (survey) {
+        // TODO: Replace with Auth Cookie
         if (!req.headers.authorization) {
           // Do not show unpublished surveys
           if (!survey.publish) {
@@ -101,6 +104,7 @@ surveyRoutes.route('/:id').post( (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
   } else if (!req.headers.qmd || !req.headers.authorization) {
+    // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
   } else {
@@ -139,6 +143,7 @@ surveyRoutes.route('/:id').post( (req, res) => {
  */
 surveyRoutes.route('/:id').delete( (req, res) => {
   if (!req.headers.qmd || !req.headers.authorization) {
+    // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
   } else {
@@ -161,6 +166,7 @@ surveyRoutes.route('/:id').delete( (req, res) => {
  */
 surveyRoutes.route('/:id/addState').post( (req, res) => {
   if (!req.headers.qmd || !req.headers.authorization) {
+    // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
   } else {
@@ -199,6 +205,7 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
 surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
   if (!req.headers.qmd || !req.headers.authorization) {
     // TODO: Needs Real Auth Checking
+    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
   } else {
     Survey.findById(req.params.id, (err, survey) => {

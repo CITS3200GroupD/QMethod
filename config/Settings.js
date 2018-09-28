@@ -7,7 +7,7 @@ const settings = {
     STATE_LIMIT: 80,
     FIELDS_LIMIT: 10,
     PAGINATE_TABLES: 10,
-    PAGINATE_LISTS: 5
+    PAGINATE_LISTS: 5,
 }
 
 module.exports = settings;
