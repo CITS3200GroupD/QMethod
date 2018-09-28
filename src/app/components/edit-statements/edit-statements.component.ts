@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                    // ng-bootstrap addon
 import { WindowWrap } from '../../window-wrapper';
 import * as Settings from '../../../../config/Settings.js';
 
@@ -15,18 +16,18 @@ import * as Settings from '../../../../config/Settings.js';
  */
 export class EditStatementsComponent implements OnInit {
   /** Var for current statement page for pagination */
-  statements_page: number;
-
+  statements_page = 1;
   /** Number of statements */
   statements_length = 0;
   /** Character limit for each statement */
-  CHAR_LIMIT = Settings.CHAR_LIMIT || 350;
+  CHAR_LIMIT = Settings.CHAR_LIMIT;
   /** Statement limit */
-  STATE_LIMIT = Settings.STATE_LIMIT || 80;
+  STATE_LIMIT = Settings.STATE_LIMIT;
 
   /** Statements for this survey */
   statements: string[];
-
+  /** Edit Index */
+  edit_index: number;
   /** Input statements from parent component */
   @Input() set statements_in(statements_in: string[]) {
     // Fix for calling of input with undefined value
@@ -43,7 +44,7 @@ export class EditStatementsComponent implements OnInit {
   /** @ng reactive form */
   angForm: FormGroup;
   /** @ng reactive form*/
-  editForm: FormGroup; // TODO: WIP for Statements editing
+  editForm: FormGroup;
 
   /**
    * Constructor for EditStatementsComponent
@@ -55,7 +56,8 @@ export class EditStatementsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private window: WindowWrap) {
+    private window: WindowWrap,
+    private modalService: NgbModal) {
       this.createForm();
     }
 
@@ -64,10 +66,20 @@ export class EditStatementsComponent implements OnInit {
     this.angForm = this.fb.group({
       statement: ['', Validators.required ]
     });
-    // TODO: WIP for statements editing
     this.editForm = this.fb.group({
       edit_statement: ['', Validators.required ]
     });
+  }
+
+  /**
+   * Open and display modal
+   * @param content Modal to be displayed
+   * @param index Index of the statement to be modified
+   */
+  open(content, index): void {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-edit-statement'});
+    this.editForm.get('edit_statement').setValue(this.statements[index]);
+    this.edit_index = index;
   }
 
   /**
@@ -90,13 +102,26 @@ export class EditStatementsComponent implements OnInit {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
-      this.route.params.subscribe(params => {
-        this.statements.push(statement);
-        this.statements_out.emit(this.statements);
-        this.statements_length = this.statements.length;
-      });
+      this.statements.push(statement);
+      this.statements_out.emit(this.statements);
+      this.statements_length = this.statements.length;
     }
   }
+
+
+  /**
+   * Delete statement (and sync with database)
+   * @param statement_index Index of statement to be deleted
+   */
+  editStatement(statement: string): void {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server');
+    } else {
+      this.statements[this.edit_index] = statement;
+      this.statements_out.emit(this.statements);
+    }
+  }
+
 
   /**
    * Delete statement (and sync with database)
@@ -106,13 +131,11 @@ export class EditStatementsComponent implements OnInit {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
-      this.route.params.subscribe(params => {
-        if (this.window.nativeWindow.confirm('Are you sure you wish to delete this statement?')) {
-          this.statements.splice(statement_index, 1);
-          this.statements_out.emit(this.statements);
-          this.statements_length = this.statements.length;
-        }
-      });
+      if (this.window.nativeWindow.confirm('Are you sure you wish to delete this statement?')) {
+        this.statements.splice(statement_index, 1);
+        this.statements_out.emit(this.statements);
+        this.statements_length = this.statements.length;
+      }
     }
   }
 

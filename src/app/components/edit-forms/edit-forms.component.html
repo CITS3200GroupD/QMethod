@@ -1,3 +1,31 @@
+<!-- MODAL -->
+<ng-template #content let-modal>
+    <!-- Head -->
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-edit-fields">Edit Field</h4>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="modal-body">
+      <form [formGroup]="editForm">
+        <!-- Label -->
+        <label>Statement</label>
+          <div class="input-group">
+            <!-- Private Link URL-->
+            <input class="form-control" formControlName="edit_field" #edit_field>
+            <div class="input-group-append">
+              <button type="button" class="btn btn-outline-secondary" (click)="editField(edit_field.value)">
+                <i class="fas fa-pen"></i>
+              </button>
+            </div>
+          </div>
+      </form>
+    </div>
+  </ng-template>
+
+
 <!-- List of fields -->
 <ul class="list-group">
     <!-- Create list item for each field -->
@@ -5,6 +33,10 @@
         <p> {{field}}
           <!-- float delete button to right -->
           <span class="btn-group float-right">
+            <!-- Edit field button (only if not published) -->
+            <button *ngIf="!disabled" (click)="open(content, i)" class="btn btn-light btn-sm">
+                <i class="fas fa-pen"></i>
+            </button>
             <!-- Delete field button (only if not published) -->
             <button *ngIf="!disabled" (click)="deleteField(i)" class="btn btn-danger btn-sm">
               <i class="far fa-trash-alt"></i>

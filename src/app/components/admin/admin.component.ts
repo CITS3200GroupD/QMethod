@@ -3,8 +3,8 @@ import { Router } from '@angular/router';                                       
 import { Survey } from '../../models';                                             // QMd Models - Survey
 import { SurveyService } from '../../survey.service';                              // QMd Survey Service MW
 import { WindowWrap } from '../../window-wrapper';                                 // wrapper for window
-// import { ValidSurveyList } from '../../testing/Testing';
 import * as Settings from '../../../../config/Settings';                           // QMd Settings
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -24,18 +24,23 @@ export class AdminComponent implements OnInit {
   /** Var for storing the current page (pagination) */
   page: number;
   /** Var for storing the array of surveys */
-  surveys: Survey[];
-
+  surveys: any[];
+  /** Flag for toggling complete/incomplete responses */
+  complete_only = true;
+  
   /**
    * Constructor for AdminComponent
    * @param surveyservice Survey Service Middleware to communicate with express RESTful API server
    * @param router @ng Router
    * @param window Wrapper for window
    */
-  constructor(private surveyservice: SurveyService,
+  constructor( private authservice: AuthService,
+    private surveyservice: SurveyService,
     private router: Router,
     private window: WindowWrap
   ) {
+    // TODO: Waiting on proper Authentication
+    this.surveyservice.addAuthHeader('true');
     this.getSurveyData();
   }
 
@@ -68,9 +73,33 @@ export class AdminComponent implements OnInit {
   private getSurveyData() {
     this.surveyservice.getSurveys().subscribe((surveys_data: Survey[]) => {
       this.surveys = surveys_data;
-      // TODO: Error message if not successful
+      let count = 0;
+      this.surveys.forEach( survey => {
+        count = 0;
+        survey.users.forEach( user => {
+          if (user.progress === 3) {
+            count++;
+          }
+        });
+        survey.valid_users = count;
+      });
     });
+      // TODO: Error message if not successful
+  }
 
+  logOut() {
+    this.authservice.logOut();
+    this.router.navigate(['/login']);
+    // TODO: Confirmation window for logout
+  }
+
+  /** Toggle complete response view on/off */
+  togComplete() {
+    if (this.complete_only) {
+      this.complete_only = false;
+    } else {
+      this.complete_only = true;
+    }
   }
 
   /** Function run on init */

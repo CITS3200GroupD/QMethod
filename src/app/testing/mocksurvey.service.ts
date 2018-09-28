@@ -22,6 +22,8 @@ export class MockSurveyService {
 
   constructor(private http: HttpClient) {}
 
+  addAuthHeader(auth_key: string): void {}
+
   addSurvey(name: string, range: number, register: string[],
     statements: string[], questionnaire: string[]): Observable<Object> {
     console.log('Received message');

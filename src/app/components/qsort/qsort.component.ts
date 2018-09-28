@@ -12,4 +12,10 @@ export class QsortComponent implements OnInit {
   ngOnInit() {
   }
 
+  /* const text = "blahalhahkanhklanlkanhlanlanhak";
+  const count = 35;
+
+  let result = text.slice(0, count) + (text.length > count ? "..." : ""); */
+
 }
+

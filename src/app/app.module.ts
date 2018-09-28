@@ -5,20 +5,27 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';   // Routing
 import { HttpClientModule } from '@angular/common/http'; // http client for ng<->express
 import { ReactiveFormsModule } from '@angular/forms'; // Reactive Forms
-import { NgDragDropModule } from 'ng-drag-drop';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
-import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 
 // ng services
 import { WindowWrap } from './window-wrapper';
 import { SurveyService } from './survey.service';   // survey middleware
 import { UserService } from './user.service';       // userdata middleware
-
+import { AuthService } from './auth.service';       // Authentication service
 import { MockUserService } from './testing/mockuser.service'; // mock userdata middleware
 import { MockSurveyService } from './testing/mocksurvey.service'; // mock surveydata middleware
 
+// ng guards
+import { AdminGuard } from './guards/admin.guard';
+import { ConfirmDeactivateGuard } from './guards/confirm.guard';
+
 // npm imports
+import { NgDragDropModule } from 'ng-drag-drop';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
+import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
+import { CookieModule, CookieService } from 'ngx-cookie';
+
+
 
 // Components
 import { AppComponent } from './app.component';
@@ -38,53 +45,76 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
   {
-    path: 'create',
-    component: CreateComponent
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/admin'
   },
   {
-    path: 'survey/:id',
-    component: UserIndexComponent
-  },
-  {
-    path: 'edit/:id',
-    component: EditComponent
-  },
-  {
-    path: 'results/:id',
-    component: AdminUserListComponent
-  },
-  {
-    path: 'results/:id/users/:user_id',
-    component: AdminUserViewComponent
+    path: 'login',
+    component: AdminLoginComponent
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'create',
+    component: CreateComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'edit/:id',
+    component: EditComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'results/:id',
+    component: AdminUserListComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'results/:id/users/:user_id',
+    component: AdminUserViewComponent,
+    canActivate: [ AdminGuard ]
+  },
+  {
+    path: 'survey/:id',
+    component: UserIndexComponent,
+    canActivate: [ 'UserGuard' ]
+  },
+  {
+    path: 'instructions/:id',
+    component: InstructionsComponent,
+    canActivate: ['UserGuard']
+  },
+  {
+    path: 'registration/:id',
+    component: RegistrationComponent,
+    canActivate: ['UserGuard']
   },
   {
     path: 'initial-sort/:id',
-    component: InitialSortComponent
+    component: InitialSortComponent,
+    canActivate: ['UserGuard'],
+    // canDeactivate: [ ConfirmDeactivateGuard ]  // TODO: Activate when implemented
   },
   {
-    path: 'q-sort',
-    component: QsortComponent
-  },
-  // Temporary Paths for v1 files
-  {
-    path: 'v1/registration',
-    component: RegistrationComponent
+    path: 'q-sort/:id',
+    component: QsortComponent,
+    canActivate: ['UserGuard'],
+    // canDeactivate: [ ConfirmDeactivateGuard ]
   },
   {
-    path: 'v1/questionnaire',
-    component: QuestionnaireComponent
-  },
-  {
-    path: 'v1/instructions',
-    component: InstructionsComponent
+    path: 'questionnaire/:id',
+    component: QuestionnaireComponent,
+    canActivate: ['UserGuard'],
+    // canDeactivate: [ ConfirmDeactivateGuard ]
   }
 ];
 // Declaring vars for ng
@@ -107,7 +137,8 @@ const routes: Routes = [
     RegistrationComponent,
     QuestionnaireComponent,
     EditFormsComponent,
-    AdminUserViewComponent
+    AdminUserViewComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -118,11 +149,22 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgDragDropModule.forRoot(),
     NgbModule,
-    Ng2PaginationModule
+    Ng2PaginationModule,
+    CookieModule.forRoot()
   ],
   providers: [
+    AdminGuard,
+    {
+      provide: 'UserGuard',    // placeholder
+      useValue: () => {
+        return true;
+      }
+    },
+    ConfirmDeactivateGuard,
+    AuthService,
     SurveyService,
     UserService,
+    CookieService,
     MockSurveyService,
     MockUserService,
     WindowWrap

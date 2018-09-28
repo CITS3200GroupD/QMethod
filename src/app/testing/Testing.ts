@@ -1,11 +1,13 @@
 import { Survey, User } from '../models';
+import { Observable, of } from 'rxjs';
+import { tap, delay } from 'rxjs/operators';
 
 export const TestingRegister = [
-  'Age', 'Gender', 'Nationality', 'Main Language', 'Secondary Languages'
+  'Age', 'Gender', 'Nationality', 'Main Spoken Language', 'Other Languages'
 ];
 
 export const TestingQuestionnaire = [
-  'a', 'Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5'
+  'Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5'
 ];
 
 export const TestingStatements = [
@@ -63,7 +65,7 @@ export const ValidUserList: User[] = [
       [18, 19, 20],
       [21, 22]
     ],
-    questions_ans: ['1', '2', '3', '4', '5'],
+    question_ans: ['1', '2', '3', '4', '5'],
   },
   {
     _id: '5b31AFGfddf1ad',
@@ -81,7 +83,7 @@ export const ValidUserList: User[] = [
       [19, 18, 22],
       [21, 20]
     ],
-    questions_ans: ['1a', '2', '3', '4', '5'],
+    question_ans: ['1a', '2', '3', '4', '5'],
   },
   {
     _id: '5b214poipl-l1ad',
@@ -99,7 +101,7 @@ export const ValidUserList: User[] = [
       [18, 19, 17],
       [0, 22]
     ],
-    questions_ans: ['1a', '2a', '3', '4', '5'],
+    question_ans: ['1a', '2a', '3', '4', '5'],
   },
   {
     _id: '589jpol8ssdf1ad',
@@ -117,7 +119,7 @@ export const ValidUserList: User[] = [
       [18, 7, 3],
       [1, 0]
     ],
-    questions_ans: ['1a', '2a', '3a', '4', '5'],
+    question_ans: ['1a', '2a', '3a', '4', '5'],
   },
   {
     _id: '5b67n4gsdf1ad',
@@ -135,7 +137,7 @@ export const ValidUserList: User[] = [
       [18, 0, 20],
       [22, 21]
     ],
-    questions_ans: ['1a', '2a', '3a', '4a', '5'],
+    question_ans: ['1a', '2a', '3a', '4a', '5'],
   },
   {
     _id: '5b7hdsfgsf1ad',
@@ -153,11 +155,11 @@ export const ValidUserList: User[] = [
       [22, 19, 18],
       [1, 2]
     ],
-    questions_ans: ['1a', '2a', '3a', '4a', '5a'],
+    question_ans: ['1a', '2a', '3a', '4a', '5a'],
   },
   {
     _id: '5bg45hdbad',
-    progress: 3,
+    progress: 1,
     register_ans: ['25', 'Female', 'Australia', 'English', 'None'],
     sort_agree: [19, 20, 13, 14, 15, 21, 22],
     sort_neutral: [9, 10, 11, 12, 16, 17, 18],
@@ -171,7 +173,7 @@ export const ValidUserList: User[] = [
       [18, 19, 20],
       [21, 22]
     ],
-    questions_ans: ['1b', '2a', '3a', '4a', '5a'],
+    question_ans: ['1b', '2a', '3a', '4a', '5a'],
   },
   {
     _id: '45hdfbdsad',
@@ -189,7 +191,7 @@ export const ValidUserList: User[] = [
       [18, 19, 5],
       [1, 22]
     ],
-    questions_ans: ['1b', '2b', '3a', '4a', '5a'],
+    question_ans: ['1b', '2b', '3a', '4a', '5a'],
   },
   {
     _id: '5b6setsgsd1ad',
@@ -207,7 +209,7 @@ export const ValidUserList: User[] = [
       [19, 10, 20],
       [21, 1]
     ],
-    questions_ans: ['1b', '2b', '3b', '4b', '5a'],
+    question_ans: ['1b', '2b', '3b', '4b', '5a'],
   },
   {
     _id: '5s56tdgds1ad',
@@ -225,7 +227,7 @@ export const ValidUserList: User[] = [
       [18, 19, 20],
       [0, 1]
     ],
-    questions_ans: ['1b', '2b', '3b', '4b', '5b'],
+    question_ans: ['1b', '2b', '3b', '4b', '5b'],
   },
 ];
 
@@ -247,7 +249,7 @@ export const ValidSurveyList: Survey[] = [
   },
   {
     _id: '0234asd5',
-    publish: true,
+    publish: false,
     name: 'testing2',
     range:  9,
     cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
@@ -300,6 +302,36 @@ export class MockWindowWrap {
 export class MockWindowWrapInner {
   confirm(): boolean {
     return true;
+  }
+}
+
+export class MockCookieService {
+  get(s) { return true; }
+  put(s, token) { return true; }
+  remove(s) { return true; }
+}
+
+export class MockAuthService {
+
+  logged_in = true;
+  redirect_url: string;
+
+  constructor() {
+  }
+
+  /** Check Session ID (in cookie) vs Auth Server */
+
+  logIn(): Observable<boolean> {
+    return of(true).pipe(
+      delay(250),
+      tap(() => {
+        this.logged_in = true;
+      })
+    );
+  }
+
+  logOut(): void {
+    this.logged_in = false;
   }
 }
 

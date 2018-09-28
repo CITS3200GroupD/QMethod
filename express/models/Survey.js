@@ -12,8 +12,8 @@ const surveySchema = new Schema({
   },
   range: {
     type: Number,
-    enum: settings.RANGE_OFFERED,
-    required: [true, 'No range']
+    required: [true, 'No range'],
+    validate: [ rangeValidate, `{PATH} failed to validate`]
   },
   cols: {
     type: [Number],
@@ -22,12 +22,13 @@ const surveySchema = new Schema({
   },
   register: {
     type: [String],
-    // required: [true, 'No register'],
+    required: [true, 'No register'],
+    // TODO: Validate maximum registration field length
   },
   questionnaire: {
     type: [String],
-    // required: [true, 'No questionnaire'],
-    // validate: [ colValidate, `{PATH} failed to validate`]
+    required: [true, 'No questionnaire']
+    // TODO: Validate maximum questionnaire field length
   },
   publish: {
     type: Boolean,
@@ -39,7 +40,8 @@ const surveySchema = new Schema({
     validate: [statementLimit, `{PATH} exceeds the limit of ${settings.STATE_LIMIT}`]
   },
   users: {
-    type: [Users.schema]
+    type: [Users.schema],
+    required: [true, 'No users']
   }
 },
 {
@@ -70,5 +72,55 @@ function nameLimit(name) {
 function colValidate(array) {
   return (settings.RANGE_OFFERED.indexOf(array.length) > -1);
 }
+
+// Check that range field is within range offered.
+function rangeValidate(range) {
+  return (settings.RANGE_OFFERED.indexOf(range) > -1);
+}
+
+// Validation of userdata
+surveySchema.pre('validate', function(next) {
+  const ques_len = this.questionnaire.length;
+  const reg_len = this.register.length;
+  const state_len = this.statements.length;
+  let cell_count = 0;
+
+  if (this.users.length == 0) {
+    next();
+  } else {
+    this.users.forEach( user => {
+      if (user.register_ans.length !== reg_len) {
+        // console.error('Invalid Registration Data')
+        next(new Error('Invalid Registration Data'));
+      }
+      if (user.progress >= 1) {
+        if (user.sort_disagree.length +
+          user.sort_neutral.length + user.sort_agree.length !== state_len) {
+            // console.error('Invalid Init-Sort Data')
+            next(new Error('Invalid Init-Sort Data'));
+        }
+
+        if (user.progress >= 2) {
+          user.matrix.forEach(col => {
+            col.forEach(function() {
+              cell_count++;
+            });
+          });
+          if (cell_count != state_len) {
+            // console.error('Invalid Cell Count');
+            next(new Error('Invalid Init-Sort Data'));
+          }
+          if (user.progress >= 3) {
+            if (user.question_ans.length !== ques_len) {
+             // console.error('Invalid Questionnaire Data')
+              next(new Error('Invalid Questionnaire Data'));
+            }
+          }
+        }
+      }
+      next();
+    });
+  }
+});
 
 module.exports = mongoose.model('Survey', surveySchema);
