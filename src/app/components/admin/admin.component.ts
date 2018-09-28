@@ -25,10 +25,9 @@ export class AdminComponent implements OnInit {
   page: number;
   /** Var for storing the array of surveys */
   surveys: any[];
-
   /** Flag for toggling complete/incomplete responses */
   complete_only = true;
-
+  
   /**
    * Constructor for AdminComponent
    * @param surveyservice Survey Service Middleware to communicate with express RESTful API server
