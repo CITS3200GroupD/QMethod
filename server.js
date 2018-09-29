@@ -66,7 +66,7 @@ const express = require('express'),
         res.sendFile(path.join(__dirname + '/dist/index.html'));
       });
     }
-
+    /* (?) repeat code
     // Routes for RESTful API for Survey Data
     const surveyRoutes = require('./express/routes/survey.route');
     app.use('/api', surveyRoutes);
@@ -83,7 +83,7 @@ const express = require('express'),
         res.sendFile(path.join(__dirname + '/dist/index.html'));
       });
     }
-
+    */
     // const server =
     app.listen(port, function(){
      console.log('Listening on port ' + port);
