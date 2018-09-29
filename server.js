@@ -67,14 +67,6 @@ const express = require('express'),
       });
     }
 
-    // Routes for RESTful API for Survey Data
-    const surveyRoutes = require('./express/routes/survey.route');
-    app.use('/api', surveyRoutes);
-
-    // Routes for RESTful API for User Data
-    const userRoutes = require('./express/routes/user.route');
-    app.use('/api2', userRoutes);
-
     // For the deployment build
     // For all GET requests, send back index.html
     // so that PathLocationStrategy can be used
@@ -83,7 +75,7 @@ const express = require('express'),
         res.sendFile(path.join(__dirname + '/dist/index.html'));
       });
     }
-
+    
     // const server =
     app.listen(port, function(){
      console.log('Listening on port ' + port);
