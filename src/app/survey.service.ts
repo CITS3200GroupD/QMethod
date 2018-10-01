@@ -22,6 +22,7 @@ export class SurveyService {
   // TODO: Replace placeholder header with real Authorisation Header
   headers: HttpHeaders;
 
+  // To be depreciated
   addAuthHeader(auth_key: string): void {
     this.headers = new HttpHeaders({
       'authorization': auth_key,

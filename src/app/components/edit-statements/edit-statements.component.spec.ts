@@ -15,7 +15,7 @@ describe('EditStatementsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditStatementsComponent ],
-      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, Ng2PaginationModule],
+      imports: [ RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, Ng2PaginationModule ],
       providers: [ EditStatementsComponent,
         {provide: WindowWrap, useClass: MockWindowWrap}
       ]
@@ -34,7 +34,7 @@ describe('EditStatementsComponent', () => {
   });
 
   it('check params', () => {
-    expect(component.statements_page).toBe(undefined);
+    expect(component.statements_page).toBe(1);
     expect(component.statements_length).toBe(0);
     expect(component.statements).toBe(undefined);
   });

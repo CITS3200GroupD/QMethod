@@ -1,10 +1,17 @@
+<!-- Nav bar-->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="">
+    <img src="../../../favicon.ico" width="30" height="30" alt="">
+  </a>
+  <button class="btn btn-outline-primary my-2 my-sm-0" (click)="logOut()">Log Out</button>
+</nav>
 <!-- Search -->
 <div class="row">
   <div class="col-sm-12">
     <div class="input-group stylish-input-group">
       <input type="text" class="form-control" [(ngModel)]="user_filter" placeholder="Search by name or id...">
       <div class="input-group-append">
-        <button class="btn btn-light" (click)="setComplete()"><i class="fas fa-toggle-on"></i> See All </button>
+        <button class="btn btn-light" (click)="togComplete()"><i class="fas fa-toggle-on"></i> See All </button>
       </div>
     </div>
   </div>
@@ -16,7 +23,7 @@
   <thead>
   <tr>
     <td>#</td>
-    <td (click)="setComplete()">Complete</td>
+    <td (click)="togComplete()">Complete</td>
     <td>Respondent ID</td>
     <td>Actions</td>
   </tr>

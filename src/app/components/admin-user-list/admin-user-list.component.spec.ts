@@ -2,13 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdminUserListComponent, UserPipe} from './admin-user-list.component';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule  } from '@angular/router/testing';
-import { ValidSurveyList, MockWindowWrap, ValidUserList } from '../../testing/Testing';
+import { ValidSurveyList, MockWindowWrap, ValidUserList, MockAuthService } from '../../testing/Testing';
 import { UserService } from '../../user.service';
 import { MockUserService } from '../../testing/mockuser.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { WindowWrap } from '../../window-wrapper';
 import * as Settings from '../../../../config/Settings';
+import { AuthService } from '../../auth.service';
 
 describe('AdminUserListComponent', () => {
   let component: AdminUserListComponent;
@@ -26,6 +27,7 @@ describe('AdminUserListComponent', () => {
                 FormsModule
               ],
       providers: [ AdminUserListComponent,
+        {provide: AuthService, useClass: MockAuthService},
         {provide: WindowWrap, useClass: MockWindowWrap},
         {provide: UserService, useClass: MockUserService}
       ]
