@@ -6,6 +6,7 @@
         <div class="card main-card" *ngIf="!statements_sort.length"></div>
         <div class="card main-card text-center" *ngIf="statements_sort.length" draggable [dragData]="statements_sort[0]">
           <div class="card-body">
+            <!-- TODO: find and replace "statementObjs[current_index]" with "statementObjs[current_index].string" -->
             <h3>{{ statements[statements_sort[current_index]] }}</h3>
           </div>
         </div>

@@ -60,6 +60,7 @@ describe('CreateComponent', () => {
     expect(labels[0].textContent).toContain('Survey Name');
     expect(labels[1].textContent).toContain('Range');
     expect(labels[2].textContent).toContain('Configuration');
+    expect(labels[2].textContent).toContain('Statements');
   });
 
   it('html select', () => {
