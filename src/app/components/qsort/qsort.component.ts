@@ -73,7 +73,7 @@ export class QsortComponent implements OnInit {
   }
 
   // Automatically redirect if this user is on the wrong page
-  private checkRedirect() {
+  /*private checkRedirect() {
     if (this.user.progress != 0) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
         switch (this.user.progress) {
@@ -102,7 +102,7 @@ export class QsortComponent implements OnInit {
         }
       }
     }
-  }
+  }*/
 
   drop(e: any, col: number, cell: number){
     //removes from respective array
