@@ -44,7 +44,6 @@
       <td>{{ survey.statements.length }}</td>
       <td (click)="togComplete()" *ngIf="complete_only">{{ survey.valid_users }} </td>
       <td (click)="togComplete()" *ngIf="!complete_only">{{ survey.users.length }} </td>
-      <td>{{ survey.valid_users }} </td> <!-- TODO: Replace with actual user count-->
 
       <td>
         <!-- { Results } -->

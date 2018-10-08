@@ -43,11 +43,11 @@ describe('CreateComponent', () => {
   });
 
   it('check params', () => {
-    expect(component.cols_templates).toBeTruthy();
+    expect(component['cols_templates']).toBeTruthy();
     expect(component['statements']).toBeTruthy();
     expect(component['questionnaire']).toBeTruthy();
     expect(component['registration']).toBeTruthy();
-    expect(component.angForm).toBeTruthy();
+    expect(component['angForm']).toBeTruthy();
   });
 
   it('add survey', () => {
@@ -60,7 +60,6 @@ describe('CreateComponent', () => {
     expect(labels[0].textContent).toContain('Survey Name');
     expect(labels[1].textContent).toContain('Range');
     expect(labels[2].textContent).toContain('Configuration');
-    expect(labels[2].textContent).toContain('Statements');
   });
 
   it('html select', () => {
@@ -78,20 +77,20 @@ describe('CreateComponent', () => {
     const html_element: HTMLElement = fixture.nativeElement;
     const button = html_element.querySelector('button');
     expect(button.attributes['disabled']).toBeTruthy();
-    component.angForm.get('survey_name').markAsDirty();
-    component.angForm.get('survey_name').markAsTouched();
-    component.angForm.get('survey_name').setValue('New Survey');
+    component['angForm'].get('survey_name').markAsDirty();
+    component['angForm'].get('survey_name').markAsTouched();
+    component['angForm'].get('survey_name').setValue('New Survey');
     fixture.detectChanges();
     expect(button.attributes['disabled']).toBeFalsy();
   });
 
   it('html error messages', () => {
     const html_element: HTMLElement = fixture.nativeElement;
-    component.angForm.get('survey_name').markAsDirty();
-    component.angForm.get('survey_name').markAsTouched();
-    component.angForm.get('survey_range').setValue('');
-    component.angForm.get('survey_range').markAsDirty();
-    component.angForm.get('survey_range').markAsTouched();
+    component['angForm'].get('survey_name').markAsDirty();
+    component['angForm'].get('survey_name').markAsTouched();
+    component['angForm'].get('survey_range').setValue('');
+    component['angForm'].get('survey_range').markAsDirty();
+    component['angForm'].get('survey_range').markAsTouched();
     fixture.detectChanges();
     const alerts = html_element.getElementsByClassName('alert');
     expect(alerts[0].textContent).toContain('Survey Name is required.');
