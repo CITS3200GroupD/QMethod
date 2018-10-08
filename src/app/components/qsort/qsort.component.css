@@ -4,9 +4,10 @@
     border-top: 1px solid #dee2e6;
 }
 
-.btn {
+.card {
     height: 70px;
-    border: black;
+    width: 150px;
+    /* border: black; */
 }
 
 .btn-light {

@@ -207,9 +207,9 @@ export class InitialSortComponent implements OnInit {
    */
   publishSortContinue() {
     if ( isDevMode() ) {
-      console.log(this.agree);
-      console.log(this.neutral);
-      console.log(this.disagree);
+      console.log(`Agree: ${this.agree}`);
+      console.log(`Neutral: ${this.neutral}`);
+      console.log(`Disagree: ${this.disagree}`);
     }
     const input = {
       sort_agree: this.agree,

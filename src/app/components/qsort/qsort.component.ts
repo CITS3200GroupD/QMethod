@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { isDevMode, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SurveyService } from '../../survey.service';           // QMd Survey Service MW
-import { UserService } from '../../user.service';               // QMd User Service MW           
+import { UserService } from '../../user.service';               // QMd User Service MW
 import { Survey, User } from '../../models';
 import { WindowWrap } from '../../window-wrapper';
 
@@ -16,16 +16,16 @@ export class QsortComponent implements OnInit {
   survey: Survey;
   user: User;
 
-  disagree: number[] = [11, 12, 13, 19, 20, 21, 22];
-  neutral: number[] = [5, 6, 7, 8, 9, 10, 14, 15, 16, 17, 18];
-  agree: number[] = [0, 1, 2, 3, 4];
+  disagree: number[] = [];
+  neutral: number[] = [];
+  agree: number[] = [];
   statement: string[] = [];
 
+  grid: number[] = [];
   disagree_index: number = 0;
   neutral_index: number = 0;
   agree_index: number = 0;
 
-  grid: number[] = [];
   offset: number;
   rows: number;
   arr = Array;
@@ -47,10 +47,21 @@ export class QsortComponent implements OnInit {
   private getSurveyData() {
     this.surveyservice.getSurvey(this.id).subscribe( (res: Survey) => {
       this.survey = res;
-      this.grid = this.survey.cols;
       this.statement = this.survey.statements;
-      //this.getUserData();
+      this.grid = this.survey.cols;
+      this.initMatrix();
+      this.getUserData();
     });
+  }
+
+  // *NEW* Generate Matrix (fill with -1)
+
+  private initMatrix(): void {
+    this.grid.forEach((col)=> {
+      let cells = Array(col).fill(-1); // new Array(col);
+      this.matrix.push(cells);
+    });
+    console.log(this.matrix);
   }
 
   // Get data from user service
@@ -65,9 +76,12 @@ export class QsortComponent implements OnInit {
         this.disagree = this.user.sort_disagree;
       },
       (err) => {
+        console.error(err);
+        /*
         if (this.window.nativeWindow.confirm(err.message)) {
           this.router.navigate(['/']);
         }
+        */
       });
     });
   }
@@ -107,48 +121,44 @@ export class QsortComponent implements OnInit {
   drop(e: any, col: number, cell: number){
     //removes from respective array
     var array = e.dragData.array;
-    if (array == 'disagree') {
-      this.disagree.forEach( (item, index) => {
-        if (item == e) { this.disagree.splice(index, 1); }
-      });
-      this.disagree_index++;
-    } else if (array == 'neutral') {
-      this.neutral.forEach( (item, index) => {
-        if (item == e) { this.neutral.splice(index, 1); }
-      });
-      this.neutral_index++;
-    } else if (array == "agree") {
-      this.agree.forEach( (item, index) => {
-        if (item == e) { this.agree.splice(index, 1); }
-      });
-      this.agree_index++;
-    }
-    
-    if (this.matrix.length < col+1) {
-      for (var i = 0; i <= col+1; i++) {
-        this.matrix.push([]);
+
+    // Add to matrix if index value is -1
+    if (this.matrix[col][cell] == -1) { // Check that cell is empty
+      if (array == 'disagree') {
+        this.disagree.forEach( (item, index) => {
+          if (item == e) { this.disagree.splice(index, 1); }
+        });
+        this.disagree_index++;
+      } else if (array == 'neutral') {
+        this.neutral.forEach( (item, index) => {
+          if (item == e) { this.neutral.splice(index, 1); }
+        });
+        this.neutral_index++;
+      } else if (array == "agree") {
+        this.agree.forEach( (item, index) => {
+          if (item == e) { this.agree.splice(index, 1); }
+        });
+        this.agree_index++;
       }
-    }
 
-    if(this.matrix[col].length < cell+1) {
-      for (var i = 0; i <= cell+1; i++) {
-        this.matrix[col].push(-1);
+      if (this.matrix.length < col+1) {
+        for (var i = 0; i <= col+1; i++) {
+          this.matrix.push([]);
+        }
       }
+
+      if(this.matrix[col].length < cell+1) {
+        for (var i = 0; i <= cell+1; i++) {
+          this.matrix[col].push(-1);
+        }
+      }
+
+      if (isDevMode()) { console.log(`${e.dragData.index} => ${col}, ${cell}`); }
+      // this.matrix[col].splice(cell, e.dragData.index);
+      this.matrix[col][cell] = e.dragData.index;
     }
-
-    //add to matrix
-    /*if (!this.matrix[col][cell]) { //check that cell is empty
-      this.matrix[col].splice(cell, e.dragData.index);
-    }
-
-    console.log(this.matrix[col][cell]);
-    //this.matrix[col][cell] = e.dragData;*/
-
   }
 
-
-
-
-  ngOnInit() {   
+  ngOnInit() {
   }
 }

@@ -75,7 +75,7 @@ const express = require('express'),
         res.sendFile(path.join(__dirname + '/dist/index.html'));
       });
     }
-    
+
     // const server =
     app.listen(port, function(){
      console.log('Listening on port ' + port);
