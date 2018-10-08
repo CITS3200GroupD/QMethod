@@ -5,8 +5,10 @@
 }
 
 .card {
-    height: 70px;
-    width: 150px;
+    height: 80px;
+    width: 125px;
+    overflow: auto;
+    padding: 5px 10px;
     /* border: black; */
 }
 
