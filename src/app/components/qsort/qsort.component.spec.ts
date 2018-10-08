@@ -1,9 +1,12 @@
-/*
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QsortComponent } from './qsort.component';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { NgDragDropModule } from 'ng-drag-drop';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { WindowWrap } from '../../window-wrapper';
+import { MockWindowWrap } from '../../testing/Testing';
 
 describe('QsortComponent', () => {
   let component: QsortComponent;
@@ -11,8 +14,12 @@ describe('QsortComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientModule, RouterTestingModule ],
-      declarations: [ QsortComponent ]
+      providers: [ QsortComponent,
+        {provide: WindowWrap, useClass: MockWindowWrap}
+      ],
+      imports: [ HttpClientModule, RouterTestingModule, NgDragDropModule.forRoot()],
+      declarations: [ QsortComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
@@ -27,4 +34,3 @@ describe('QsortComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-*/
