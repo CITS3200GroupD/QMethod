@@ -1,6 +1,8 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../user.service';
+import { SurveyService } from '../../survey.service';           // QMd Survey Service MW
+import { UserService } from '../../user.service';               // QMd User Service MW
+import { Survey } from '../../models';
 import { WindowWrap } from '../../window-wrapper';
 
 @Component({
@@ -11,11 +13,15 @@ import { WindowWrap } from '../../window-wrapper';
 export class RegistrationComponent implements OnInit {
 
   TEMP_response = [ '20', 'Australian', 'Male', 'English', 'Chinese' ];
+  TEMP_registration_fields = ['Age', 'Gender', 'Nationality', 'Main Spoken Language', 'Other Languages'];
   survey_id: string;
   user_id: string;
+  id: string;
+  registration_fields: string[] = [];
 
   constructor( private route: ActivatedRoute,
     private router: Router,
+    private surveyservice: SurveyService,
     private userservice: UserService,
     private window: WindowWrap) {
       this.route.params.subscribe( params => {
@@ -39,6 +45,13 @@ export class RegistrationComponent implements OnInit {
             });
         }
       );
+    });
+  }
+
+   // Get data from survey service
+   getRegistrationFields() {
+    this.surveyservice.getSurvey(this.id).subscribe( (res: Survey) => {
+      this.registration_fields = res.register;
     });
   }
 
