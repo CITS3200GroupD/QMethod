@@ -10,6 +10,8 @@
     overflow: auto;
     padding: 5px 10px;
     /* border: black; */
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
 }
 
 .btn-light {
@@ -28,4 +30,8 @@
     max-height: 100%;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
