@@ -1,5 +1,5 @@
 <div [formGroup]="reg_fg">
-  <div formArrayName="fields" *ngFor="let field of reg_fg.get('fields').controls; let i = index;">
+  <div formArrayName="fields" *ngFor="let field of reg_fg.get('fields')['controls']; let i = index;">
     <div [formGroupName]="i">
       <div class="form_attribute">
         <label><h5> {{ reg_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
