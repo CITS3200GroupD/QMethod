@@ -43,7 +43,7 @@ export class RegistrationComponent implements OnInit {
         console.error(err);
         // TODO: Error Message Prompt for UX
       }
-    )
+    );
   }
 
   /** @ng reactive forms init */
@@ -66,7 +66,7 @@ export class RegistrationComponent implements OnInit {
    * A function to extract the necessary information needed to pass onto the user service
    */
   private getResponse(): string[] {
-    let return_array = [];
+    const return_array = [];
     let invalid = false;
     this.reg_fa.value.forEach( (object) => {
       if (object.answer == '') {
@@ -83,7 +83,7 @@ export class RegistrationComponent implements OnInit {
    */
   addUser(): void {
     // Call getResponse
-    let registration_info = this.getResponse();
+    const registration_info = this.getResponse();
     if (registration_info) {
       this.route.params.subscribe(params => {
         this.userservice.addUser(params['id'], registration_info).subscribe(
