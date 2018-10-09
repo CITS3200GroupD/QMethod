@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';  
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';              // @ng reactive forms
 import { WindowWrap } from '../../window-wrapper';                                  // wrapper for window
 import * as Settings from '../../../../config/Settings';                            // QMd Settings
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                              // ngbmodal
 
 @Component({
   selector: 'app-edit-forms',
@@ -38,24 +39,32 @@ export class EditFormsComponent implements OnInit {
   /** Output callback to send to parent component to inform of changes to fields var. */
   @Output() fields_out = new EventEmitter<string[]>();
 
+  /** Edit Index */
+  edit_index: number;
   /** @ng reactive form */
   angForm: FormGroup;
-
+  /** @ng reactive form for edit */
+  editForm: FormGroup;
   /**
    * Constructor for EditFormsComponent
    * @param fb @ng reactive form builder object
    * @param window Wrapper for window
+   * @param modalService Service for ngModal
    */
-  constructor(private fb: FormBuilder, private window: WindowWrap) {
+  constructor(private fb: FormBuilder,
+    private window: WindowWrap,
+    private modalService: NgbModal) {
       this.createForm();
     }
-
   /**
    * @ng reactive form initialisation
    */
   private createForm(): void {
     this.angForm = this.fb.group({
       field: ['', Validators.required ]
+    });
+    this.editForm = this.fb.group({
+      edit_field: ['', Validators.required ]
     });
   }
 
@@ -72,6 +81,18 @@ export class EditFormsComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Open and display modal
+   * @param content Modal to be displayed
+   * @param index Index of the statement to be modified
+   */
+  open(content, index): void {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-edit-statement'});
+    this.editForm.get('edit_field').setValue(this.fields[index]);
+    this.edit_index = index;
+  }
+
   /**
    * Add a field to the current survey and sync with parent component.
    * @param field The string for the field to be added
@@ -85,6 +106,19 @@ export class EditFormsComponent implements OnInit {
       this.throwError('Too many fields');
     } else {
       this.fields.push(field);
+      this.fields_out.emit(this.fields);
+    }
+  }
+
+  /**
+   * Edit field (and sync with database)
+   * @param field Field input to update statement
+   */
+  editField(field: string): void {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server');
+    } else {
+      this.fields[this.edit_index] = field;
       this.fields_out.emit(this.fields);
     }
   }

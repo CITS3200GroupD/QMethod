@@ -36,13 +36,12 @@
       <div class="col-md-4">
         <!-- Header -->
         <div class="list-group">
-          <li class="list-group-item bg-danger">
+          <li class="list-group-item bg-danger" >
             <h5>Disagree</h5>
           </li>
         </div>
         <!-- Body -->
-        <div class="list-group scroll-box" droppable (onDrop)="onDisagreeDrop($event)">
-          <!-- TODO: find and replace "statement" with "statement.string" -->
+        <div class="list-group scroll-box" droppable (click)="onDisagreeClick()" (onDrop)="onDisagreeDrop($event)">
           <!-- New list item for each statement -->
           <li class="list-group-item no-gap" *ngFor="let disagree_index of disagree" draggable [dragData]="disagree_index">
             <p>{{ statements[disagree_index] }}</p>
@@ -59,8 +58,7 @@
           </li>
         </div>
         <!-- Body -->
-        <div class="list-group scroll-box" droppable (onDrop)="onNeutralDrop($event)">
-          <!-- TODO: find and replace "statement" with "statement.string" -->
+        <div class="list-group scroll-box" droppable (click)="onNeutralClick()" (onDrop)="onNeutralDrop($event)">
           <!-- New list item for each statement -->
           <li class="list-group-item no-gap" *ngFor="let neutral_index of neutral" draggable [dragData]="neutral_index">
             <p>{{ statements[neutral_index] }}</p>
@@ -77,8 +75,7 @@
           </li>
         </div>
         <!-- Body -->
-        <div class="list-group scroll-box" droppable (onDrop)="onAgreeDrop($event)">
-          <!-- TODO: find and replace "statement" with "statement.string" -->
+        <div class="list-group scroll-box" droppable (click)="onAgreeClick()" (onDrop)="onAgreeDrop($event)">
           <!-- New list item for each statement -->
           <li class="list-group-item no-gap" *ngFor="let agree_index of agree" draggable [dragData]="agree_index">
             <p>{{ statements[agree_index] }}</p>

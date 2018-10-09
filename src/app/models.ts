@@ -36,9 +36,9 @@ export interface User {
 }
 
 export const GridTemplates = [
-    { label: '+3 to -3', val: '7', default_cols: [2, 3, 4, 5, 4, 3, 2]},
-    { label: '+4 to -4', val: '9', default_cols: [2, 3, 4, 5, 6, 5, 4, 3, 2]},
-    { label: '+5 to -5', val: '11', default_cols: [2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2]}
+    { label: '+3 to -3', val: '7', default_cols: [2, 3, 4, 5, 4, 3, 2], max_statements: 23 },
+    { label: '+4 to -4', val: '9', default_cols: [2, 3, 4, 5, 6, 5, 4, 3, 2], max_statements: 34 },
+    { label: '+5 to -5', val: '11', default_cols: [2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2], max_statements: 47}
 ];
 
 let default_template = 0;

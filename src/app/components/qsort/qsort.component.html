@@ -1,5 +1,74 @@
-<p>
-  This page is WIP
-</p>
+<div class="container">
+  <!-- Gap on top - Row 1-->
+  <div class="row justify-content-center" style="padding-top:25px">
+    <table class="table compress">
+      <tr>
+        <!-- Columns -->
+        <td *ngFor="let col of grid; let i = index">
+            <!-- Cells -->
+            <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
+              <div class ="card" droppable id={{j}} (onDrop)="drop($event, i, j)">
+                <div *ngIf="matrix.length > 0 && matrix[i][j] != -1">
+                  {{ statement[matrix[i][j]] }}
+                </div>
+              </div>
+            </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-<a [routerLink]="['/questionnaire', '']" [skipLocationChange]="true" class="btn btn-primary btn-block"> Continue </a>
+  <div class="row" style="padding-top:10px">
+
+    <!-- Disagree List -->
+    <div class="col-md-4">
+      <!-- Header -->
+      <div class="list-group">
+        <li class="list-group-item bg-danger" >
+          <h5>Disagree</h5>
+        </li>
+      </div>
+      <!-- Body -->
+      <div class="list-group scroll-box">
+        <!-- New list item for each statement -->
+        <li class="list-group-item no-gap" *ngIf="disagree.length" draggable [dragData]="{array: 'disagree', index: disagree[disagree_index]}">
+          <p> {{ statement[disagree[disagree_index]] }}</p>
+        </li>
+      </div>
+    </div>
+
+    <!-- Neutral List -->
+    <div class="col-md-4">
+      <!-- Header -->
+      <div class="list-group">
+        <li class="list-group-item bg-warning">
+          <h5>Neutral</h5>
+        </li>
+      </div>
+      <!-- Body -->
+      <div class="list-group scroll-box">
+        <!-- New list item for each statement -->
+        <li class="list-group-item no-gap" *ngIf="neutral.length" draggable [dragData]="{array: 'neutral', index: neutral[neutral_index]}">
+          <p>{{ statement[neutral[neutral_index]] }}</p>
+        </li>
+      </div>
+    </div>
+
+     <!-- Agree List -->
+    <div class="col-md-4">
+      <!-- Header -->
+      <div class="list-group">
+        <li class="list-group-item bg-success">
+          <h5>Agree</h5>
+        </li>
+      </div>
+      <!-- Body -->
+      <div class="list-group scroll-box">
+        <!-- New list item for each statement -->
+        <li class="list-group-item no-gap" *ngIf="agree.length" draggable [dragData]="{array:'agree', index:agree[agree_index]}">
+          <p>{{ statement[agree[agree_index]] }}</p>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,7 @@ import { NavigationCancel,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'v2';
+  title = 'QMd';
   // Loading Bar
   constructor(private _loadingBar: SlimLoadingBarService, private _router: Router) {
     this._router.events.subscribe((event: Event) => {

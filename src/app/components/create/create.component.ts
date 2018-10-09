@@ -15,12 +15,18 @@ import * as Settings from '../../../../config/Settings';                        
  * Component for handling the create page for admin interface
  */
 export class CreateComponent implements OnInit {
+  /** Registration Fields*/
+  registration: string[] = [];
   /** Statements */
-  private statements: string[];
+  statements: string[] = [];
+  /** Questionnaire Questions*/
+  questionnaire: string[] = [];
   /** Templates for default grid */
   cols_templates = GridTemplates;
   /** Angular reactive form */
   angForm: FormGroup;
+  /** Alert Error flag */
+  error = false;
 
   /**
    * Constructor for CreateComponent
@@ -61,11 +67,11 @@ export class CreateComponent implements OnInit {
     // TODO: Modify function to also send statement, registration and questionnaire list to survey service MW
     let return_val = false;
     if ( isDevMode() ) {
-      console.log(`SEND => { ${name}, ${range}, [register], [statements], [questionnaire] }`);
+      console.log(`SEND => { ${name}, ${range}, [registration], [statements], [questionnaire] }`);
     }
     // TODO: Replace with non-placeholders
     // TODO: Read statements, registration and questionnaire data from json.
-    this.surveyservice.addSurvey(name, range, TestingRegister, /* TestingStatements*/ [], TestingQuestionnaire)
+    this.surveyservice.addSurvey(name, range, this.registration, this.statements, this.questionnaire)
       .subscribe(
         (res) => {
           console.log(`RES <= ${res}`);
@@ -73,12 +79,47 @@ export class CreateComponent implements OnInit {
           this.router.navigate(['admin']);
         },
         (err) => {
-          if (this.window.nativeWindow.confirm(`${err.error}`)) {
+          if (this.window.nativeWindow.confirm(`${err.message}`)) {
             this.ngOnInit();
             return_val = false;
           }
         });
       return return_val;
+  }
+
+  /**
+   * Function called when a file is uploaded.
+   * @param files Files uploaded
+   */
+  onUpload(files: FileList) {
+    const reader = new FileReader();
+    try {
+      reader.readAsText(files[0]);
+      reader.onload = () => {
+        try {
+          const input = JSON.parse(reader.result.toString());
+          if (input.statements && input.statements.length < Settings.STATE_LIMIT) {
+            this.statements = input.statements;
+            for (let i = 1; i < this.cols_templates.length; i++) {
+              if (this.statements.length <= this.cols_templates[i].max_statements) {
+                this.angForm.get('survey_range').setValue(this.cols_templates[i].val);
+                break;
+              }
+            }
+          }
+          if (input.questionnaire && input.questionnaire.length < Settings.FIELDS_LIMIT) {
+            this.questionnaire = input.questionnaire;
+          }
+          if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
+            this.registration = input.registration;
+          }
+          this.error = false;
+        } catch (err) {
+          console.error(err);
+          this.error = true;
+        }
+      };
+    } catch(e) { }
   }
 
   /**

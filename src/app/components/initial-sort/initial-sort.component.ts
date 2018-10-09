@@ -108,6 +108,41 @@ export class InitialSortComponent implements OnInit {
     }
   }
 
+  test() {
+    console.log('test');
+  }
+
+  onDisagreeClick() {
+    console.log('click');
+    const selected = this.statements_sort[this.current_index];
+    this.removeDisagree(selected);
+    this.disagree.push(selected);
+    this.removeStatement(selected);
+    this.removeNeutral(selected);
+    this.removeAgree(selected);
+  }
+
+  onNeutralClick() {
+    console.log('click');
+    const selected = this.statements_sort[this.current_index];
+    this.removeNeutral(selected);
+    this.neutral.push(selected);
+    this.removeStatement(selected);
+    this.removeDisagree(selected);
+    this.removeAgree(selected);
+  }
+
+  onAgreeClick() {
+    console.log('click');
+    const selected = this.statements_sort[this.current_index];
+    this.removeAgree(selected);
+    this.agree.push(selected);
+    this.removeStatement(selected);
+    this.removeDisagree(selected);
+    this.removeNeutral(selected);
+  }
+
+
   onDisagreeDrop(e: any) {
     this.removeDisagree(e.dragData);
     this.disagree.push(e.dragData);
@@ -172,9 +207,9 @@ export class InitialSortComponent implements OnInit {
    */
   publishSortContinue() {
     if ( isDevMode() ) {
-      console.log(this.agree);
-      console.log(this.neutral);
-      console.log(this.disagree);
+      console.log(`Agree: ${this.agree}`);
+      console.log(`Neutral: ${this.neutral}`);
+      console.log(`Disagree: ${this.disagree}`);
     }
     const input = {
       sort_agree: this.agree,
