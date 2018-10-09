@@ -3,11 +3,16 @@
   <div class="row justify-content-center" style="padding-top:25px">
     <table class="table compress">
       <tr>
+        <td *ngFor="let col of grid; let i = index">
+          <div class="cell" style="text-align: center">{{i-offset}}</div>
+        </td>
+      </tr>
+      <tr>
         <!-- Columns -->
         <td *ngFor="let col of grid; let i = index">
             <!-- Cells -->
             <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
-              <div class ="card" droppable id={{j}} (onDrop)="drop($event, i, j)">
+              <div class ="card" droppable id={{j}} (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
                 <div *ngIf="matrix.length > 0 && matrix[i][j] != -1">
                   {{ statement[matrix[i][j]] }}
                 </div>
@@ -16,6 +21,11 @@
         </td>
       </tr>
     </table>
+  </div>
+
+  <!-- {          Continue              } -->
+  <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
+    <button class="btn btn-block btn-outline-primary" *ngIf="disagree_index == disagree.length && neutral_index == neutral.length && agree_index == agree.length" (click)="publishSortContinue()"><h5>continue</h5></button>
   </div>
 
   <div class="row" style="padding-top:10px">
@@ -31,7 +41,7 @@
       <!-- Body -->
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngIf="disagree.length" draggable [dragData]="{array: 'disagree', index: disagree[disagree_index]}">
+        <li class="list-group-item no-gap" *ngIf="disagree_index != disagree.length" draggable [dragData]="{array: 'disagree', index: disagree[disagree_index]}">
           <p> {{ statement[disagree[disagree_index]] }}</p>
         </li>
       </div>
@@ -48,7 +58,7 @@
       <!-- Body -->
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngIf="neutral.length" draggable [dragData]="{array: 'neutral', index: neutral[neutral_index]}">
+        <li class="list-group-item no-gap" *ngIf="neutral_index != neutral.length" draggable [dragData]="{array: 'neutral', index: neutral[neutral_index]}">
           <p>{{ statement[neutral[neutral_index]] }}</p>
         </li>
       </div>
@@ -65,7 +75,7 @@
       <!-- Body -->
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngIf="agree.length" draggable [dragData]="{array:'agree', index:agree[agree_index]}">
+        <li class="list-group-item no-gap" *ngIf="agree_index != agree.length" draggable [dragData]="{array:'agree', index:agree[agree_index]}">
           <p>{{ statement[agree[agree_index]] }}</p>
         </li>
       </div>
