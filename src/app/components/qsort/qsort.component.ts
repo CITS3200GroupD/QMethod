@@ -71,18 +71,16 @@ export class QsortComponent implements OnInit {
       this.user_id = params['user_id'];
       this.userservice.getUser(this.id, this.user_id).subscribe( (res: User) => {
         this.user = res;
-        //this.checkRedirect();
+        // this.checkRedirect();
         this.agree = this.user.sort_agree;
         this.neutral = this.user.sort_neutral;
         this.disagree = this.user.sort_disagree;
       },
       (err) => {
         console.error(err);
-        /*
         if (this.window.nativeWindow.confirm(err.message)) {
           this.router.navigate(['/']);
         }
-        */
       });
     });
   }
@@ -120,15 +118,15 @@ export class QsortComponent implements OnInit {
   }*/
 
   drop(e: any, col: number, cell: number){
-    //removes from respective array
+    // removes from respective array
     var array = e.dragData.array;
 
-    //moving statements in grid
-    if (array == "matrix" && e.dragData.index != undefined) {
+    // moving statements in grid
+    if (array == 'matrix' && e.dragData.index != undefined) {
       console.log(this.matrix[col][cell]);
       if (this.matrix[col][cell] == 1) {
         this.matrix[e.dragData.col][e.dragData.cell] = -1;
-      } else { //swap statements
+      } else { // swap statements
         this.matrix[e.dragData.col][e.dragData.cell] = this.matrix[col][cell];
       }
       this.matrix[col][cell] = e.dragData.index;
@@ -146,12 +144,12 @@ export class QsortComponent implements OnInit {
           if (item == e) { this.neutral.splice(index, 1); }
         });*/
         this.neutral_index++;
-      } else if (array == "agree") {
+      } else if (array == 'agree') {
         /*this.agree.forEach( (item, index) => {
           if (item == e) { this.agree.splice(index, 1);}
         });*/
         this.agree_index++;
-      } else if (array == "matrix") {
+      } else if (array == 'matrix') {
         this.matrix[e.dragData.col][e.dragData.cell] = -1;
       }
 
@@ -167,12 +165,11 @@ export class QsortComponent implements OnInit {
         }
       }
 
-      if (isDevMode()) { console.log(`${e.dragData.index} => ${col}, ${cell}`);}
+      if ( isDevMode() ) { console.log(`${e.dragData.index} => ${col}, ${cell}`); }
       // this.matrix[col].splice(cell, e.dragData.index);
       this.matrix[col][cell] = e.dragData.index;
     }
 
-    
   }
 
   publishSortContinue() {
