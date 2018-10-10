@@ -69,7 +69,7 @@ export class RegistrationComponent implements OnInit {
     const return_array = [];
     let invalid = false;
     this.reg_fa.value.forEach( (object) => {
-      if (object.answer == '') {
+      if (object.answer === '') {
         invalid = true;
       } else {
         return_array.push(object.answer);
