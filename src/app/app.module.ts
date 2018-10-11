@@ -87,40 +87,40 @@ const routes: Routes = [
   {
     path: 'survey/:id',
     component: UserIndexComponent,
-    canActivate: [ 'UserGuard' ]
+    // canActivate: [ 'UserGuard' ]
   },
   {
     path: 'instructions/:id',
     component: InstructionsComponent,
-    canActivate: ['UserGuard']
+    // canActivate: ['UserGuard']
   },
   {
     path: 'registration/:id',
     component: RegistrationComponent,
-    canActivate: ['UserGuard']
+    // canActivate: ['UserGuard']
   },
   {
     path: 'initial-sort/:id',
     component: InitialSortComponent,
     canActivate: ['UserGuard'],
-    // canDeactivate: [ ConfirmDeactivateGuard ]  // TODO: Activate when implemented
+    // canDeactivate: [ ConfirmDeactivateGuard ]
   },
   {
     path: 'q-sort/:id',
     component: QsortComponent,
-    canActivate: ['UserGuard'],
+    // canActivate: ['UserGuard'],
     // canDeactivate: [ ConfirmDeactivateGuard ]
   },
   {
     path: 'questionnaire/:id',
     component: QuestionnaireComponent,
-    canActivate: ['UserGuard'],
+    // canActivate: ['UserGuard'],
     // canDeactivate: [ ConfirmDeactivateGuard ]
   },
   {
     path: 'submission/:id',
     component: SubmissionComponent,
-    canActivate: ['UserGuard'],
+    // canActivate: ['UserGuard'],
   }
 ];
 // Declaring vars for ng

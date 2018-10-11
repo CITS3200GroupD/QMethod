@@ -4,7 +4,7 @@ import { UserService } from '../../user.service';
 import { SurveyService } from 'src/app/survey.service';
 import { WindowWrap } from '../../window-wrapper';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Survey } from 'src/app/models';
+import { Survey, User } from 'src/app/models';
 
 @Component({
   selector: 'app-questionnaire',
@@ -15,9 +15,19 @@ export class QuestionnaireComponent implements OnInit {
 
   survey_id: string;
   user_id: string;
-  reg_fg: FormGroup;
-  reg_fa: FormArray;
+  ques_fg: FormGroup;
+  ques_fa: FormArray;
+  progress: number;
 
+  /**
+   * Constructor for QuestionnaireComponent
+   * @param route @ng ActivatedRoute
+   * @param router @ng router
+   * @param fb @ng reactive form builder
+   * @param surveyservice Survey Service Middleware
+   * @param userservice User Service Middleware
+   * @param window Window Wrapper
+   */
   constructor( private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
@@ -31,28 +41,34 @@ export class QuestionnaireComponent implements OnInit {
       this.createForm();
     }
 
+  /**
+   * Get data from survey service
+   */
   private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
         // Using questionnaire field array as a reference, loop through and init new field objects to the form array
         res.questionnaire.forEach((field) => {
-          this.reg_fa.push(this.createField(field));
+          this.ques_fa.push(this.createField(field));
         });
         this.getUserData();
       },
       err => {
         console.error(err);
-        // TODO: Error Message Prompt for UX
+        if (this.window.nativeWindow.confirm('Invalid Survey/Connection Error')) {
+          if (!isDevMode()) { this.router.navigate(['/']); }
+          else { console.error('Redirect to /'); }
+        }
       }
     );
   }
 
   /** @ng reactive forms init */
   private createForm(): void {
-    this.reg_fg = this.fb.group({
+    this.ques_fg = this.fb.group({
       fields: this.fb.array([])
     });
-    this.reg_fa = this.reg_fg.get('fields') as FormArray;
+    this.ques_fa = this.ques_fg.get('fields') as FormArray;
   }
 
   /** @ng reaction form array init */
@@ -68,6 +84,19 @@ export class QuestionnaireComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.user_id = params['user_id'];
     });
+    this.userservice.getUser(this.survey_id, this.user_id).subscribe(
+      (res: User) => {
+        this.progress = res.progress;
+        this.checkRedirect();
+      },
+      (err) => {
+        console.error(err);
+        if (this.window.nativeWindow.confirm('Invalid/Corrupt User Information')) {
+          if (!isDevMode()) { this.router.navigate(['survey', this.survey_id]); }
+          else { console.error('Redirect to survey/:id'); }
+        }
+      }
+    );
   }
 
   /**
@@ -76,7 +105,7 @@ export class QuestionnaireComponent implements OnInit {
   private getResponse(): string[] {
     const return_array = [];
     let invalid = false;
-    this.reg_fa.value.forEach( (object) => {
+    this.ques_fa.value.forEach( (object) => {
       if (object.answer === '') {
         invalid = true;
       } else {
@@ -106,7 +135,53 @@ export class QuestionnaireComponent implements OnInit {
       },
       err => {
         console.error(err);
+        if (this.window.nativeWindow.confirm('An error occured whilst submitting')) {}
       });
+    }
+  }
+
+  /**
+   * Automatically redirect if this user is on the wrong page
+   */
+  private checkRedirect() {
+    if (this.progress != 3) {
+      if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
+        switch (this.progress) {
+          case 0:
+            if (!isDevMode()) {
+              this.router.navigate(['initial-sort', this.survey_id],
+              {
+                skipLocationChange: true,
+                queryParams: { user_id: this.user_id }
+              });
+            } else {
+              console.error('Redirecting to initial-sort/:id');
+            }
+          break;
+          case 1:
+            if (!isDevMode()) {
+              this.router.navigate(['q-sort', this.survey_id],
+              {
+                skipLocationChange: true,
+                queryParams: { user_id: this.user_id }
+              });
+            } else {
+              console.error('Redirecting to q-sort/:id');
+            }
+          break;
+          case 2:
+            if (!isDevMode()) {
+              this.router.navigate(['questionnaire', this.survey_id],
+              {
+                skipLocationChange: true,
+                queryParams: { user_id: this.user_id }
+              });
+            } else {
+              console.error('Redirecting to questionnaire/:id');
+            }
+          break;
+        }
+      }
     }
   }
 
