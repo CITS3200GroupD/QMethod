@@ -77,7 +77,6 @@ export class AdminLinkComponent implements OnInit {
    * Set ng-reactive form default values
    */
   ngOnInit(): void {
-    // TODO: Undo hard-coding of route, maybe reference to QMd Settings?
     // Vars set during this stage as we need input from the parent component
     if (isDevMode()) {
       this.angForm.get('private_link').setValue( `localhost:4200/survey/${this.survey._id}`);

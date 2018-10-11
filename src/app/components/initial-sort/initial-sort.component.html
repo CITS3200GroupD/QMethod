@@ -6,13 +6,11 @@
         <div class="card main-card" *ngIf="!statements_sort.length"></div>
         <div class="card main-card text-center" *ngIf="statements_sort.length" draggable [dragData]="statements_sort[0]">
           <div class="card-body">
-            <!-- TODO: find and replace "statementObjs[current_index]" with "statementObjs[current_index].string" -->
             <h3>{{ statements[statements_sort[current_index]] }}</h3>
           </div>
         </div>
       </div>
     </div>
-    <!-- TODO: Error message on invalid survey id -->
     <!-- Gap on top - Row 2 -->
     <div class="row justify-content-center" style="padding-top:25px">
       <!-- { < | Current/Total | > } -->
@@ -25,7 +23,7 @@
 
     <!-- {          Continue              } -->
     <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
-      <!-- TODO: button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
+      <!-- Button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
       <button class="btn btn-block btn-outline-primary" *ngIf="!statements_sort.length" (click)="publishSortContinue()"><h5>continue</h5></button>
     </div>
 

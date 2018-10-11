@@ -31,6 +31,9 @@ export class RegistrationComponent implements OnInit {
       this.createForm();
     }
 
+  /**
+   * Get data from survey service
+   */
   private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
@@ -90,7 +93,7 @@ export class RegistrationComponent implements OnInit {
           (res: string) => {
             this.user_id = res;
             // TODO: Modal or element to display user_id to user
-            if (this.window.nativeWindow.confirm(`${this.user_id}`)) {}
+            if (this.window.nativeWindow.confirm(`Your User ID is [ ${this.user_id} ] and Survey ID is [ ${this.survey_id} ]. Please record this for future reference.`)) {}
             this.router.navigate(['initial-sort', this.survey_id],
               {
                 skipLocationChange: !isDevMode(),

@@ -5,8 +5,8 @@ export class ConfirmDeactivateGuard implements CanDeactivate<Component> {
 
   canDeactivate(target: Component) {
     // if(target.has_changes()) {
-        return window.confirm('Do you really want to cancel?');
-    // }
-    // return true;
+      // return window.confirm('Do you really want to cancel?');
+      return true;
+    //}
   }
 }
