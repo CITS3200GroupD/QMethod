@@ -1,30 +1,11 @@
-<h1 class="heading4questionnaire">Questionnaire</h1>
-  <h2>Question 1</h2>
-    <p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur?</p>
-
-    <textarea rows='5' cols='100'></textarea>
-
-  <h2>Question 2</h2>
-    <p> Rerum nemo ex dicta libero nihil. Veritatis ipsa quae eos ut. Consequatur voluptatum ut explicabo. At nesciunt aut non voluptatem.
-    Harum pariatur enim aut aliquid ducimus? </p>
-
-    <textarea rows='5' cols='100'></textarea>
-
-  <h2>Question 3</h2>
-    <p> At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
-    atque corrupti quos dolores et quas molestias excepturi sint occaecati? </p>
-    <textarea rows='5' cols='100'></textarea>
-  <h2>Question 4</h2>
-    <p> Inventore harum dignissimos reprehenderit est sapiente dolor similique modi.
-    Delectus et ullam ipsum delectus aut nihil expedita.</p>
-    <textarea rows='5' cols='100'></textarea>
-  <h2>Question 5</h2>
-    <p> Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident </p>
-    <textarea rows='5' cols='100'></textarea>
-
-<!-- The above HTML is placeholder and will have to be replaced entirely (we will be using ng FormArray and ng reactive forms) -->
-<a [routerLink]="['/']" [skipLocationChange]="true" class="btn btn-primary btn-block"> Submit </a>
+ <div [formGroup]="reg_fg">
+  <div formArrayName="fields" *ngFor="let field of reg_fg.get('fields')['controls']; let i = index;">
+    <div [formGroupName]="i">
+      <div class="form_attribute">
+        <label><h5> {{ reg_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
+        <p> <textarea rows='5' cols='100' formControlName="answer"></textarea> </p>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()">Submit (WIP)</button>
