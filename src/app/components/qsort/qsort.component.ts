@@ -49,6 +49,7 @@ export class QsortComponent implements OnInit {
       this.survey = res;
       this.statement = this.survey.statements;
       this.grid = this.survey.cols;
+      this.offset = Math.floor(this.grid.length / 2);
       this.initMatrix();
       this.getUserData();
     });
@@ -70,18 +71,16 @@ export class QsortComponent implements OnInit {
       this.user_id = params['user_id'];
       this.userservice.getUser(this.id, this.user_id).subscribe( (res: User) => {
         this.user = res;
-        //this.checkRedirect();
+        // this.checkRedirect();
         this.agree = this.user.sort_agree;
         this.neutral = this.user.sort_neutral;
         this.disagree = this.user.sort_disagree;
       },
       (err) => {
         console.error(err);
-        /*
         if (this.window.nativeWindow.confirm(err.message)) {
           this.router.navigate(['/']);
         }
-        */
       });
     });
   }
@@ -119,26 +118,39 @@ export class QsortComponent implements OnInit {
   }*/
 
   drop(e: any, col: number, cell: number){
-    //removes from respective array
+    // removes from respective array
     var array = e.dragData.array;
 
+    // moving statements in grid
+    if (array == 'matrix' && e.dragData.index != undefined) {
+      console.log(this.matrix[col][cell]);
+      if (this.matrix[col][cell] == 1) {
+        this.matrix[e.dragData.col][e.dragData.cell] = -1;
+      } else { // swap statements
+        this.matrix[e.dragData.col][e.dragData.cell] = this.matrix[col][cell];
+      }
+      this.matrix[col][cell] = e.dragData.index;
+    }
+
     // Add to matrix if index value is -1
-    if (this.matrix[col][cell] == -1) { // Check that cell is empty
+    if (this.matrix[col][cell] == -1 && e.dragData.index != undefined) { // Check that cell is empty
       if (array == 'disagree') {
-        this.disagree.forEach( (item, index) => {
+        /*this.disagree.forEach( (item, index) => {
           if (item == e) { this.disagree.splice(index, 1); }
-        });
+        });*/
         this.disagree_index++;
       } else if (array == 'neutral') {
-        this.neutral.forEach( (item, index) => {
+        /*this.neutral.forEach( (item, index) => {
           if (item == e) { this.neutral.splice(index, 1); }
-        });
+        });*/
         this.neutral_index++;
-      } else if (array == "agree") {
-        this.agree.forEach( (item, index) => {
-          if (item == e) { this.agree.splice(index, 1); }
-        });
+      } else if (array == 'agree') {
+        /*this.agree.forEach( (item, index) => {
+          if (item == e) { this.agree.splice(index, 1);}
+        });*/
         this.agree_index++;
+      } else if (array == 'matrix') {
+        this.matrix[e.dragData.col][e.dragData.cell] = -1;
       }
 
       if (this.matrix.length < col+1) {
@@ -153,10 +165,33 @@ export class QsortComponent implements OnInit {
         }
       }
 
-      if (isDevMode()) { console.log(`${e.dragData.index} => ${col}, ${cell}`); }
+      if ( isDevMode() ) { console.log(`${e.dragData.index} => ${col}, ${cell}`); }
       // this.matrix[col].splice(cell, e.dragData.index);
       this.matrix[col][cell] = e.dragData.index;
     }
+
+
+  }
+
+  publishSortContinue() {
+    if ( isDevMode() ) {
+      console.log(`Matrix: ${this.matrix}`);
+    }
+    const input = {
+      matrix: this.matrix
+    };
+    this.userservice.updateUser(this.id, this.user_id, input).subscribe( res => {
+    this.router.navigate(['questionnaire', this.id], {
+      skipLocationChange: !isDevMode(),
+        queryParams: {
+          user_id: this.user_id
+        }
+      });
+    },
+    err => {
+      console.error(err);
+    });
+      // TODO: Error Messages
   }
 
   ngOnInit() {

@@ -46,6 +46,7 @@ import { QuestionnaireComponent } from './components/questionnaire/questionnaire
 import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { SubmissionComponent } from './components/submission/submission.component';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -115,6 +116,11 @@ const routes: Routes = [
     component: QuestionnaireComponent,
     canActivate: ['UserGuard'],
     // canDeactivate: [ ConfirmDeactivateGuard ]
+  },
+  {
+    path: 'submission/:id',
+    component: SubmissionComponent,
+    canActivate: ['UserGuard'],
   }
 ];
 // Declaring vars for ng
@@ -138,7 +144,8 @@ const routes: Routes = [
     QuestionnaireComponent,
     EditFormsComponent,
     AdminUserViewComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    SubmissionComponent
   ],
   imports: [
     BrowserModule,
