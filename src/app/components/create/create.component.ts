@@ -15,6 +15,7 @@ import * as Settings from '../../../../config/Settings';                        
  * Component for handling the create page for admin interface
  */
 export class CreateComponent implements OnInit {
+
   /** Registration Fields*/
   registration: string[] = [];
   /** Statements */
@@ -119,7 +120,7 @@ export class CreateComponent implements OnInit {
           this.error = true;
         }
       };
-    } catch(e) { }
+    } catch (e) { }
   }
 
   /**

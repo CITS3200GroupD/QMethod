@@ -5,9 +5,6 @@ import { FormBuilder, FormGroup , Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { Admin } from 'src/app/models';
 
-
-
-
 @Component({
   selector: 'app-admin-login',
   templateUrl: './admin-login.component.html',
@@ -69,7 +66,7 @@ export class AdminLoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
   }
 
 }
