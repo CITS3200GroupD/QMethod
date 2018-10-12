@@ -1,6 +1,18 @@
-<h2>Login</h2>
-    <p>{{message}}</p>
-    <p>
-      <button (click)="logIn()"  *ngIf="!authservice.logged_in">Login</button>
-      <button (click)="logOut()" *ngIf="authservice.logged_in">Logout</button>
-</p>
+<body>
+<div class = "header">
+<h1>Q Methodology</h1>
+<h4>Admin Login</h4>
+
+<form (ngSubmit) = "logIn()" class ="form">
+    <div class="form-attribute">
+<label for = "Username" >Username</label>
+<input type="text" class ="form-control" formControlName ="name" placeholder = "Enter your Username" [ngModel]="admin.username">
+ </div>
+
+    <label for ="password">Password</label>
+    <input type = "text" class= "form-control" forControlName= "password" placeholder = "Enter Password"
+     [(ngModel)]="admin.password">
+    <button type = "submit" class ="btn btn-default"> login </button>
+</form>
+</div>
+</body>
