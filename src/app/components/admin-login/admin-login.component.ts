@@ -42,14 +42,13 @@ export class AdminLoginComponent implements OnInit {
     }
   }
 
-
-
   logIn() {
     this.message = 'Trying to log in ...';
-    //TODO
-    //Add validation
-    //HotFix collecting input data
-    this.authservice.logIn( this.admin ).subscribe(res => {
+    // TODO
+    // Add validation
+    // HotFix collecting input data
+    // this.authservice.logIn( this.admin ).subscribe(res => {
+    this.authservice.logIn().subscribe(res => {
       this.setMessage();
       if (this.authservice.logged_in) {
         // Receive redirect URL from authservice. If no redirect has been set, go to admin index
