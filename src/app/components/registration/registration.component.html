@@ -1,61 +1,87 @@
-<!-- Note: All this is basically placeholder and will have to be rewritten -->
-<div id="contact-form">
-    <form method="post" action="../page 3/page 3.html">
-
-    <table>
-        <tr>
+<form (submit)="addUser(TEMP_response)">
+    <div *ngFor="let field of TEMP_registration_fields">
+      <div id="contact-form">
+        <table>
+          <tr>
             <td>
-			    <div class="form_atribute">
-                <label for="age">Age: <span class="required">*</span></label>
-				</div>
+              <div class="form_attribute">
+                <label> {{ field }} <span class="required">*</span></label>
+              </div>
             </td>
             <td>
-			 <div class="form_atribute">
-			  <div class ="font_change">
-                <input type="text" id="age" name="age" value="" placeholder="" required="required" />
-            </div>
-			</div>
-			</td>
-        </tr>
-        <tr>
-            <td>
-                <label for="nation">Nationality: <span class="required">*</span></label>
-            </td>
-            <td>
-                <input type="text" id="nation" name="nation" value="" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-			    <div class="form_atribute">
-                <label for="gender">Gender: <span class="required">*</span></label>
+              <div class="form_atribute">
+                <div class ="font_change">
+                  <input type="text" id="age" name="age" value="" placeholder="" required="required" />
                 </div>
+              </div>
             </td>
-            <td>
-                <input type="text" id="gender" name="gender" value="" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-			 <div class="form_atribute">
-                <label for="language1">Main Spoken Language: <span class="required">*</span></label>
-			</div>
-            </td>
-            <td>
-			 <div class="form_atribute">
-                <textarea id="language1" name="language1" placeholder="" required="required" maxlength="50"></textarea>
-            </div>
-			</td>
-        </tr>
-        <tr>
-            <td>
-                <label for="language1">Other Languages: <span class="required">*</span></label>
-            </td>
-            <td>
-                <textarea id="language2" name="language2" placeholder="" required="required"></textarea>
-            </td>
-        </tr>
-    </table>
-    </form>
-<!-- Note: The above is basically placeholder and will have to be rewritten -->
-<button class="button" class="btn btn-primary btn-block" (click)="addUser(TEMP_response)"> Submit (WIP) </button>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <button class="button" class="btn btn-primary btn-block" type="submit">Submit (WIP)</button>
+  </form>
+
+
+    <!-- <button class="button" class="btn btn-primary btn-block" (click)="addUser(TEMP_response)"> Submit (WIP) </button> -->
+
+  <!--
+  <div id="contact-form">
+      <form method="post" action="../page 3/page 3.html">
+
+      <table>
+          <tr>
+              <td>
+            <div class="form_atribute">
+                  <label for="age">Age: <span class="required">*</span></label>
+          </div>
+              </td>
+              <td>
+         <div class="form_atribute">
+          <div class ="font_change">
+                  <input type="text" id="age" name="age" value="" placeholder="" required="required" />
+              </div>
+        </div>
+        </td>
+          </tr>
+          <tr>
+              <td>
+                  <label for="nation">Nationality: <span class="required">*</span></label>
+              </td>
+              <td>
+                  <input type="text" id="nation" name="nation" value="" />
+              </td>
+          </tr>
+          <tr>
+              <td>
+            <div class="form_atribute">
+                  <label for="gender">Gender: <span class="required">*</span></label>
+                  </div>
+              </td>
+              <td>
+                  <input type="text" id="gender" name="gender" value="" />
+              </td>
+          </tr>
+          <tr>
+              <td>
+         <div class="form_atribute">
+                  <label for="language1">Main Spoken Language: <span class="required">*</span></label>
+        </div>
+              </td>
+              <td>
+         <div class="form_atribute">
+                  <textarea id="language1" name="language1" placeholder="" required="required" maxlength="50"></textarea>
+              </div>
+        </td>
+          </tr>
+          <tr>
+              <td>
+                  <label for="language1">Other Languages: <span class="required">*</span></label>
+              </td>
+              <td>
+                  <textarea id="language2" name="language2" placeholder="" required="required"></textarea>
+              </td>
+          </tr>
+      </table>
+      </form>
+  <button class="button" class="btn btn-primary btn-block" (click)="addUser(TEMP_response)"> Submit (WIP) </button> -->
