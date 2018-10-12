@@ -3,7 +3,7 @@ import { CookieService } from 'ngx-cookie';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 import { Admin } from 'src/app/models';
-import {HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -20,10 +20,10 @@ export class AuthService {
     if (isDevMode()) { console.log('AuthService Init'); }
     this.checkAuth();  // Load authkey from cookie (if it exists)
     if (isDevMode()) {
-      this.uri = 'http://localhost:8080/admin';
+      this.uri = 'http://localhost:8080/auth';
 
     } else {
-      this.uri = '/api';
+      this.uri = '/auth';
     }
   }
 
@@ -33,40 +33,33 @@ export class AuthService {
     if (this.cookieservice.get('SESSION_ID')) {
       this.logged_in = true;
     }
-    // TODO: This code is in the wrong place, this function is purely for checking if
-    // an existing session key exists. This should go in logIn().
-    /*
-    const token_authenticate = this.cookieservice.get('SESSION_ID')
-    return this
-           .http
-           .post(this.uri, token_authenticate, { headers: this.headers });
-    */
   }
 
   /**
-   * Send user/password fields to the server, returns token
+   * Send user/password fields to the server, returns cookie with JWT token
    */
-  sendLoginInfo() {
-    return this
-            .http
-            .post(this.uri, )
+  createCookie(username: string, password: string) {
   }
 
   // TODO
   // Fix token_authenticate
-  // logIn(admin: Admin): Observable<boolean> {
-  logIn(): Observable<boolean> {
-    // TODO: Replace with proper login function
-    return of(true).pipe(
-      delay(250),
-      tap(() => {
+  logIn(admin: Admin): Observable<Object> {
+    return this.http.post(this.uri, admin,
+      {
+        headers: this.headers,
+        observe: 'response'
+      }).pipe(
+      tap((res: HttpResponse<string>) => {
         this.logged_in = true;
-        this.cookieservice.put('SESSION_ID', 'valid-token');    // Placeholder function that puts a placeholder cookie
-      })
+        if (isDevMode()) {
+          this.cookieservice.put('SESSION_ID', res.body, { httpOnly: true });    // TODO: replace placeholder cookie with token cookie
+        }
+      },
+      (err) => {})
     );
   }
 
-  /** Function called on log out, removes cookie and sets login flag to false */
+  /** Function called on log out, removes cookie and sets login flag to falsdse */
   logOut(): void {
     this.logged_in = false;
     this.cookieservice.remove('SESSION_ID');

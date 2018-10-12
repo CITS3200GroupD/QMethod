@@ -22,7 +22,7 @@ const express = require('express'),
     // For the deployment build, we also want to use the
     // express server to host our (built and pre-compiled) /dist
     // files.
-    if (process.argv[2] == 'deploy') {
+    if (process.argv[2] === 'deploy') {
       app.use(express.static(__dirname + '/dist'));
     }
     app.use(bodyParser.json());
@@ -56,7 +56,7 @@ const express = require('express'),
      * If an incoming request uses a protocol other than HTTPS,
      * redirect that request to the same url but with HTTPS
      */
-    if (process.argv[2] == 'deploy') {
+    if (process.argv[2] === 'deploy') {
       app.get('/*', function(req, res) {
         if (req.headers['x-forwarded-proto'] !== 'https') {
           return res.redirect(
@@ -70,7 +70,7 @@ const express = require('express'),
     // For the deployment build
     // For all GET requests, send back index.html
     // so that PathLocationStrategy can be used
-    if (process.argv[2] == 'deploy') {
+    if (process.argv[2] === 'deploy') {
       app.get('/*', function(req, res) {
         res.sendFile(path.join(__dirname + '/dist/index.html'));
       });

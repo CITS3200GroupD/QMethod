@@ -47,7 +47,7 @@ export class SurveyService {
     this.cols_templates.forEach( (item) => {
       const value = item.val;
       // Find default grid
-      if (Number(value) == range) {
+      if (Number(value) === range) {
         cols = Array.from(item.default_cols);
       }
     });

@@ -1,7 +1,7 @@
 const express = require('express');
 const authRoutes = express.Router();
-const jwt = require('express-jwt');
-// const jwt = require('jsonwebtoken');
+// const jwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
 express();
 
 const secret_key = `-----BEGIN RSA PRIVATE KEY-----
@@ -28,27 +28,27 @@ const TEMP_password_match = 'password';  // placeholder admin/password
 // Admin.username = 'admin';
 // Admin.password = 'password';
 
-
-const checkIfAuthenticated = jwt({
-  secret: secret_key
-});
-
-
-authRoutes.route('/').post( (req, res) => {
+authRoutes.route('/').post( (req, res,) => {
   // if sent admin = 'admin' and sent password = 'password'
   // generate JWT key (encrypt with secret keys)
-  if (req.body.username == TEMP_username_match && req.body.password === TEMP_password_match) {
-      let token = generate_jwt();
-      // let token = 'generated-token'
-      // Respond with secure cookie
-      // https://www.youtube.com/watch?v=o2RBvg7Bb9A
-      // https://angular-university.io/lesson/server-side-user-identification
-      // https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
-      // http://jasonwatmore.com/post/2018/05/23/angular-6-jwt-authentication-example-tutorial
+  console.log(req.body);
+  if (req.body.username === TEMP_username_match && req.body.password === TEMP_password_match) {
+    let token = generate_jwt();
+    // let token = 'generated-token'
+    // Respond with secure cookie
+    // https://www.youtube.com/watch?v=o2RBvg7Bb9A
+    // https://angular-university.io/lesson/server-side-user-identification
+    // https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+    // http://jasonwatmore.com/post/2018/05/23/angular-6-jwt-authentication-example-tutorial
 
-      console.log(token);
-      res.cookie('SESSION_ID', token, {httpOnly: true, secure: true, sameSite: true});
-      res.status(200).send('Successful Auth');
+    // Note: For production, cookie is only sent over secured (HTTPS) channel.
+    let headers = {};
+    if (process.argv[2] === 'deploy') {
+      headers = { httpOnly: true, secure: true, sameSite: true };
+      res.cookie('SESSION_ID', token, headers).status(200).json('Successful Auth');
+    } else {
+      res.status(200).json(token);
+    }
   }
   // else if req.cookies(), check token and decrypt (with secret keys), check time validity, etc.
   // else return 400
@@ -56,10 +56,6 @@ authRoutes.route('/').post( (req, res) => {
     res.status(400).send('no token'); // Placeholder response
   }
 });
-
-authRoutes.route('/').get(checkIfAuthenticated, (req,res) => {
-  // WIP
-})
 
 function generate_jwt() {
 
