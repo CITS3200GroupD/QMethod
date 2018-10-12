@@ -3,9 +3,17 @@
     <div [formGroupName]="i">
       <div class="form_attribute">
         <label><h5> {{ reg_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
-        <p> <textarea rows='5' cols='100' formControlName="answer"></textarea> </p>
+        <p> <textarea rows='5' cols='100' formControlName="answer" [maxLength]="TEMP_REG_FIELD_CHAR_LIMIT"></textarea> </p>
       </div>
     </div>
+    <!-- reg_fg.controls['fields'].dirty ||  -->
+    <div *ngIf="reg_fg['controls']['fields']['controls'][i].invalid && (reg_fg['controls']['fields']['controls'][i].dirty || reg_fg['controls']['fields']['controls'][i].touched)" class="alert alert-danger">
+      <!-- <div *ngIf="reg_fg['controls']['fields']['controls'][i].errors.required"> -->
+      <div>
+        Field is required.
+     </div>
+    </div>
+
   </div>
 </div>
-<button class="button" class="btn btn-primary btn-block" (click)="addUser()">Submit</button>
+<button class="button" class="btn btn-primary btn-block" (click)="addUser()" [disabled]="reg_fg.pristine || reg_fg.invalid">Submit</button>

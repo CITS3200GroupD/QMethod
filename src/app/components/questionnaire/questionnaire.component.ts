@@ -5,6 +5,7 @@ import { SurveyService } from 'src/app/survey.service';
 import { WindowWrap } from '../../window-wrapper';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Survey, User } from 'src/app/models';
+import * as Settings from '../../../../config/Settings';                // QMd Settings
 
 @Component({
   selector: 'app-questionnaire',
@@ -12,6 +13,8 @@ import { Survey, User } from 'src/app/models';
   styleUrls: ['./questionnaire.component.css']
 })
 export class QuestionnaireComponent implements OnInit {
+
+  TEMP_Q_FIELD_CHAR_LIMIT = Settings.TEMP_Q_FIELD_CHAR_LIMIT || 500;
 
   survey_id: string;
   user_id: string;
@@ -56,8 +59,8 @@ export class QuestionnaireComponent implements OnInit {
       err => {
         console.error(err);
         if (this.window.nativeWindow.confirm('Invalid Survey/Connection Error')) {
-          if (!isDevMode()) { this.router.navigate(['/']); }
-          else { console.error('Redirect to /'); }
+          if (!isDevMode()) { this.router.navigate(['/']);
+          } else { console.error('Redirect to /'); }
         }
       }
     );
@@ -92,8 +95,8 @@ export class QuestionnaireComponent implements OnInit {
       (err) => {
         console.error(err);
         if (this.window.nativeWindow.confirm('Invalid/Corrupt User Information')) {
-          if (!isDevMode()) { this.router.navigate(['survey', this.survey_id]); }
-          else { console.error('Redirect to survey/:id'); }
+          if (!isDevMode()) { this.router.navigate(['survey', this.survey_id]);
+          } else { console.error('Redirect to survey/:id'); }
         }
       }
     );
@@ -144,7 +147,7 @@ export class QuestionnaireComponent implements OnInit {
    * Automatically redirect if this user is on the wrong page
    */
   private checkRedirect() {
-    if (this.progress != 3) {
+    if (this.progress !== 3) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
         switch (this.progress) {
           case 0:
