@@ -37,7 +37,7 @@ const checkIfAuthenticated = jwt({
 authRoutes.route('/').post( (req, res) => {
   // if sent admin = 'admin' and sent password = 'password'
   // generate JWT key (encrypt with secret keys)
-  if (req.body.user == TEMP_username_match && req.body.password === TEMP_password_match) {
+  if (req.body.username == TEMP_username_match && req.body.password === TEMP_password_match) {
       let token = generate_jwt();
       // let token = 'generated-token'
       // Respond with secure cookie

@@ -3,7 +3,7 @@ import { CookieService } from 'ngx-cookie';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 import { Admin } from 'src/app/models';
-import {HttpClient, HttpHeaders } from '@angular/common/http'
+import {HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -41,6 +41,15 @@ export class AuthService {
            .http
            .post(this.uri, token_authenticate, { headers: this.headers });
     */
+  }
+
+  /**
+   * Send user/password fields to the server, returns token
+   */
+  sendLoginInfo() {
+    return this
+            .http
+            .post(this.uri, )
   }
 
   // TODO
