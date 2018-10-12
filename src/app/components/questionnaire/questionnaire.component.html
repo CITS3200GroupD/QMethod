@@ -1,11 +1,11 @@
- <div [formGroup]="reg_fg">
-  <div formArrayName="fields" *ngFor="let field of reg_fg.get('fields')['controls']; let i = index;">
+ <div [formGroup]="ques_fg">
+  <div formArrayName="fields" *ngFor="let field of ques_fg.get('fields')['controls']; let i = index;">
     <div [formGroupName]="i">
       <div class="form_attribute">
-        <label><h5> {{ reg_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
+        <label><h5> {{ ques_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
         <p> <textarea rows='5' cols='100' formControlName="answer"></textarea> </p>
       </div>
     </div>
   </div>
 </div>
-<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()">Submit (WIP)</button>
+<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()">Submit</button>

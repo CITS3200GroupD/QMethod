@@ -1,7 +1,8 @@
 const express = require('express');
-
-express();
 const authRoutes = express.Router();
+const jwt = require('express-jwt');
+express();
+
 const jwt = require('jsonwebtoken');
 const secret_key = `-----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQDhJhGeFs8YqjW2tKcu+oBiG2pnKlhqgdXieUxAUTRQUyiq7QD+
@@ -18,14 +19,22 @@ uKxjjWtafJ9cR43VM+1wNvCSL0Dne9K5wnStNJKvEKJJLdfg01aYpYk2f81zH5N3
 sAws+unnFfwieiTnIwJBAOvjqDPoQlbN1NU6fFOND/wJXU4FwEH3qKXmEozcaZku
 BfDSkhlsFYbIY8YvF3ZAcyn/Cvc5cP3vcHY5n0p/zVk=
 -----END RSA PRIVATE KEY-----`    // placeholder key
-const TEMP_username_match = 'admin'
-const TEMP_password_match = 'password'  // placeholder admin/password
+let Admin = require('../models/Admin')
+
+//Preset username and password
+Admin.username = 'admin'
+Admin.password = 'password'
+
+
+const checkIfAuthenticated = jwt({
+  secret: secret_key
+});
 
 
 authRoutes.route('/').post( (req, res) => {
   // if sent admin = 'admin' and sent password = 'password'
   // generate JWT key (encrypt with secret keys)
-  if (req.body.user == TEMP_username_match && req.body.password === TEMP_password_match) {
+  if (req.body.user == Admin.username && req.body.password === Admin.password) {
       let token = generate_jwt();
       // let token = 'generated-token'
       // Respond with secure cookie
@@ -45,10 +54,15 @@ authRoutes.route('/').post( (req, res) => {
   }
 });
 
+authRoutes.route('/').get(checkIfAuthenticated, (req,res) => {
+
+
+})
+
 function generate_jwt() {
 
   let payload = {
-    user: TEMP_username_match
+    user: Admin.username
   }
   let token = jwt.sign(payload, secret_key, {
     algorithm: 'RS256',

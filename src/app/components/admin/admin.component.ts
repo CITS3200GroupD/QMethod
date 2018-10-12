@@ -27,7 +27,7 @@ export class AdminComponent implements OnInit {
   surveys: any[];
   /** Flag for toggling complete/incomplete responses */
   complete_only = true;
-  
+
   /**
    * Constructor for AdminComponent
    * @param surveyservice Survey Service Middleware to communicate with express RESTful API server
@@ -54,15 +54,21 @@ export class AdminComponent implements OnInit {
       if (isDevMode()) {
         console.log(`SENT => ${id}`);
       }
-      this.surveyservice.deleteSurvey(id).subscribe(res => {
-        if (isDevMode()) {
-          console.log(`RES <= ${res}`);
-          console.log(`Deleted Survey ${id}`);
+      this.surveyservice.deleteSurvey(id).subscribe(
+        (res: string) => {
+          if (isDevMode()) {
+            console.log(`RES <= ${res}`);
+            console.log(`Deleted Survey ${id}`);
+          }
+          status = true;
+          this.getSurveyData();
+        },
+        // TODO: Error message if not successful
+        (err) => {
+          console.error(err);
+          this.window.nativeWindow.confirm('Failed to delete survey');
         }
-        status = true;
-        this.getSurveyData();
-      });
-      // TODO: Error message if not successful
+      );
     }
     return status;
   }
