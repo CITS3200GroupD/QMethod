@@ -34,6 +34,10 @@ export interface User {
     sort_disagree: number[];
     matrix: number[][];
 }
+export interface Admin {
+  username: string;
+  password: string;
+}
 
 export const GridTemplates = [
     { label: '+3 to -3', val: '7', default_cols: [2, 3, 4, 5, 4, 3, 2], max_statements: 23 },
@@ -48,6 +52,10 @@ for (let index = 0; index < GridTemplates.length; index++) {
         default_template = index;
     }
 }
+export const DefaultAdmin: Admin = {
+  username: 'admin',
+  password: 'password'
+};
 
 export const BlankSurvey: Survey = {
     _id: 'BLANK_SURVEY',
