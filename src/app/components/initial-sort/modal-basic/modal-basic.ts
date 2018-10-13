@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
@@ -6,8 +6,11 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   selector: 'ngbd-modal-basic',
   templateUrl: './modal-basic.html'
 })
+
 export class NgbdModalBasic {
   closeResult: string;
+
+  @ViewChild('content') private content;
 
   constructor(private modalService: NgbModal) {}
 
@@ -28,4 +31,9 @@ export class NgbdModalBasic {
       return  `with: ${reason}`;
     }
   }
+
+
+  ngOnInit() {
+    this.open(this.content);
+ }
 }
