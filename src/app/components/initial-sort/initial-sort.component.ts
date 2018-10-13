@@ -4,6 +4,9 @@ import { SurveyService } from '../../survey.service';           // QMd Survey Se
 import { UserService } from '../../user.service';               // QMd User Service MW
 import { Survey, User } from '../../models';
 import { WindowWrap } from '../../window-wrapper';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbdModalBasic} from '../initial-sort/modal-basic/modal-basic'
+
 
 @Component({
   selector: 'app-initial-sort',
@@ -218,6 +221,8 @@ export class InitialSortComponent implements OnInit {
    * Submits the collated data => QMd UserService MW
    * If successful, goes to Q-Sort page.
    */
+
+   
   publishSortContinue() {
     if ( isDevMode() ) {
       console.log(`Agree: ${this.agree}`);
