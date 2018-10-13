@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router , ActivatedRoute} from '@angular/router';
 import { FormBuilder, FormGroup , Validators } from '@angular/forms';
@@ -49,8 +49,10 @@ export class AdminLoginComponent implements OnInit {
       password: this.loginForm.get('password').value
     };
     this.authservice.logIn(input).subscribe((res: HttpResponse<Object>) => {
-      console.log(`res => ${res.body}`);
-      console.log(res.headers);
+      if (isDevMode()) {
+        console.log(`res => ${res.body}`);
+        console.log(res.headers);
+      }
       this.setMessage();
       console.log(this.authservice.logged_in);
       if (this.authservice.logged_in) {

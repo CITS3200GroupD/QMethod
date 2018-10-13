@@ -24,7 +24,7 @@ let Survey = require('../models/Survey');
 surveyRoutes.route('/add').post( (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
-  } else if (!req.headers.qmd || !req.headers.authorization) {
+  } else if (!req.headers.qmd || !req.headers.auth) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
@@ -48,7 +48,7 @@ surveyRoutes.route('/add').post( (req, res) => {
 surveyRoutes.route('/').get( (req, res) => {
   // TODO: Needs Real Auth Checking
   // TODO: Replace with Auth Cookie
-  if (!req.headers.qmd || !req.headers.authorization) {
+  if (!req.headers.qmd || !req.headers.auth) {
     res.status(400).send('Bad Auth');
   } else {
     Survey.find( (err, surveys) => {
@@ -78,7 +78,7 @@ surveyRoutes.route('/:id').get( (req, res) => {
         res.status(400).json(err);
       } else if (survey) {
         // TODO: Replace with Auth Cookie
-        if (!req.headers.authorization) {
+        if (!req.headers.auth) {
           // Do not show unpublished surveys
           if (!survey.publish) {
             res.status(400).send('Bad Request')
@@ -103,7 +103,7 @@ surveyRoutes.route('/:id').get( (req, res) => {
 surveyRoutes.route('/:id').post( (req, res) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
-  } else if (!req.headers.qmd || !req.headers.authorization) {
+  } else if (!req.headers.qmd || !req.headers.auth) {
     // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
@@ -142,7 +142,7 @@ surveyRoutes.route('/:id').post( (req, res) => {
  * Respond with success/failure
  */
 surveyRoutes.route('/:id').delete( (req, res) => {
-  if (!req.headers.qmd || !req.headers.authorization) {
+  if (!req.headers.qmd || !req.headers.auth) {
     // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
@@ -165,7 +165,7 @@ surveyRoutes.route('/:id').delete( (req, res) => {
  * @deprecated Depreciated as of 0.0.8a
  */
 surveyRoutes.route('/:id/addState').post( (req, res) => {
-  if (!req.headers.qmd || !req.headers.authorization) {
+  if (!req.headers.qmd || !req.headers.auth) {
     // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
@@ -203,7 +203,7 @@ surveyRoutes.route('/:id/addState').post( (req, res) => {
  * @deprecated Depreciated as of 0.0.8a
  */
 surveyRoutes.route('/:id/delState/:statement_id').delete( (req, res)=> {
-  if (!req.headers.qmd || !req.headers.authorization) {
+  if (!req.headers.qmd || !req.headers.auth) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');

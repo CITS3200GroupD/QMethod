@@ -18,31 +18,35 @@ export class AuthService {
   constructor(private cookieservice: CookieService,
     private http: HttpClient) {
     if (isDevMode()) { console.log('AuthService Init'); }
-    this.checkAuth();  // Load authkey from cookie (if it exists)
     if (isDevMode()) {
       this.uri = 'http://localhost:8080/auth';
 
     } else {
       this.uri = '/auth';
     }
+    this.checkAuth();  // Load authkey from cookie (if it exists)
   }
 
   /** Check Session ID (in cookie) vs Auth Server */
   checkAuth() {
+    if (isDevMode()) { console.log('checkAuth'); }
     // TODO: CALL Auth API to ensure this is a valid session
-    if (this.cookieservice.get('SESSION_ID')) {
-      this.logged_in = true;
-    }
+    const token = this.cookieservice.get('SESSION_ID');
+    const input = {
+      'SESSION_ID': token
+    };
+    this.http.post(`${this.uri}/check_token`, input).subscribe(
+      res => {
+        this.logged_in = true;
+      },
+      err => {
+        this.logged_in = false;
+        this.logOut();
+      }
+    );
   }
 
-  /**
-   * Send user/password fields to the server, returns cookie with JWT token
-   */
-  createCookie(username: string, password: string) {
-  }
-
-  // TODO
-  // Fix token_authenticate
+  /** Send login data to authentication route */
   logIn(admin: Admin): Observable<Object> {
     return this.http.post(this.uri, admin,
       {
@@ -51,8 +55,10 @@ export class AuthService {
       }).pipe(
       tap((res: HttpResponse<string>) => {
         this.logged_in = true;
+        // Cookie will be imported by browser automatically
         if (isDevMode()) {
-          this.cookieservice.put('SESSION_ID', res.body, { httpOnly: true });    // TODO: replace placeholder cookie with token cookie
+          // For offline testing, we have to manually create the cookie.
+          this.cookieservice.put('SESSION_ID', res.body, { httpOnly: true });
         }
       },
       (err) => {})

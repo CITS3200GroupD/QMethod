@@ -25,7 +25,7 @@ export class SurveyService {
   // To be depreciated
   addAuthHeader(auth_key: string): void {
     this.headers = new HttpHeaders({
-      'authorization': auth_key,
+      'auth': auth_key,
       'qmd': 'ng-client'
     });
   }
