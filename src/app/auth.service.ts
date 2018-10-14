@@ -53,7 +53,7 @@ export class AuthService {
         if (isDevMode()) { console.log(`RES <= ${token.substring(0, 30)}...`); }
       },
       (err) => {
-        this.logOut();
+        // this.logOut();
       })
     );
   }
