@@ -27,11 +27,16 @@ export class AdminGuard implements CanActivate {
     // Call check auth (in auth service), and check for logged_in variable.
     this.authservice.checkAuth().subscribe(
       (res) => {
-        // Logged In = true, no action needed
+        // Logged In = true, no action needed unless at login
+        if (url === '/login') {
+          this.router.navigate(['/admin']);
+        }
       },
       (err) => {
         // Logged In = false, redirect to login page
-        this.authservice.redirect_url = url;
+        if (url !== '/login') {
+          this.authservice.redirect_url = url;
+        }
         this.router.navigate(['/login']);
       }
     );

@@ -50,8 +50,8 @@ export class AdminLoginComponent implements OnInit {
       }
       if (this.authservice.logged_in) {
         // Receive redirect URL from authservice. If no redirect has been set, go to admin index
+        console.log(this.authservice.redirect_url);
         const redirect = this.authservice.redirect_url ? this.authservice.redirect_url : '/admin';
-
         // Redirect the user
         this.router.navigate([redirect]);
       }
