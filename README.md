@@ -6,7 +6,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
 
 QMethod Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.1.2a
+Version 0.1.3a
 
 ## What is QMethod?
 
