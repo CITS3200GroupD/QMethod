@@ -1,6 +1,7 @@
 const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
     cors = require('cors'),
     mongoose = require('mongoose'),
     config = require('./config/DB'),
@@ -23,9 +24,24 @@ const express = require('express'),
 
     // init express
     const app = express();
-    // For the deployment build, we also want to use the
-    // express server to host our (built and pre-compiled) /dist
-    // files.
+    const port = process.env['PORT'] || 8080;
+    const server = require('http').createServer(app);
+    server.listen(port, function(){
+     console.log(`Listening on port ${port}`);
+     console.log(`Host: ${server.address().address}`);
+    });
+    const origin = server.address().address;
+
+    // Options for CORS (cross origin resource sharing)
+    const cors_options = {
+      origin: ['http://localhost:8080', 'N/A', 'localhost', 'http://localhost:4200', origin, '*'],
+      credentials: true
+    }
+    app.use(cors(cors_options)); // init CORS
+    app.use(cookieParser());     // init Cookie-Parser
+    /* For the deployment build, we also want to use the
+     * express server to host our (built and pre-compiled) /dist
+     * files. */
     if (process.argv[2] === 'deploy') {
       app.use(express.static(__dirname + '/dist'));
     }
@@ -39,8 +55,6 @@ const express = require('express'),
       return next();
     });
 
-    app.use(cors());
-    const port = process.env.PORT || 8080;
 
     app.use( (res, req, next) => {
       // Check for authentication
@@ -85,10 +99,6 @@ const express = require('express'),
       });
     }
 
-    app.listen(port, function(){
-     console.log('Listening on port ' + port);
-    });
-
     // Functions
     /**
      * Function to authenticate session cookie and pass as a request attribute
@@ -97,26 +107,15 @@ const express = require('express'),
      * @param {Next} next Next
      */
     function get_req_auth(req, res, next) {
-      if (req.cookies) {
+      // Catch the authentication cookie
+      if (req.cookies && req.cookies['SESSION_ID']) {
         const auth_cookie = req.cookies['SESSION_ID'];
-        handle_cookie(auth_cookie, req)
-          .catch(err => {
-            console.error(err);
-            next();
-        });
-      // For testing
-      } else if (req.body) {
-        const auth_body = req.body['SESSION_ID'];
-        if (auth_body) {
-          handle_cookie(auth_body, req);
+        try {
+          handle_cookie(auth_cookie, req);
+        } catch (err) {
+          console.error(err);
+          next();
         }
-        next();
-      } else if (req.headers) {
-        const auth_header = req.headers['auth'];
-        if (auth_header) {
-          handle_cookie(auth_header, req);
-        }
-        next();
       } else {
         next();
       }
@@ -130,9 +129,7 @@ const express = require('express'),
     function handle_cookie(token, req) {
       try {
         const payload = decode_jwt(token);
-        // TODO: Check timestamp
         req['auth'] = payload['user'];
-        // console.log(req['auth']);
       }
       catch(err) {
         // console.log('Error: Could not extract user', err.message);

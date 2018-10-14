@@ -13,7 +13,6 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class AdminLoginComponent implements OnInit {
 
-  message: string;
   submitted = false;
   loginForm: FormGroup;
   returnUrl: string;
@@ -23,11 +22,6 @@ export class AdminLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
   )   {
-    this.setMessage();
-  }
-
-  setMessage() {
-    this.message = 'Logged ' + (this.authservice.logged_in ? 'in' : 'out');
   }
 
   onSubmit() {
@@ -39,7 +33,6 @@ export class AdminLoginComponent implements OnInit {
   }
 
   logIn() {
-    this.message = 'Trying to log in ...';
     // TODO
     // Add validation
     // HotFix collecting input data
@@ -48,13 +41,13 @@ export class AdminLoginComponent implements OnInit {
       username: this.loginForm.get('username').value,
       password: this.loginForm.get('password').value
     };
-    this.authservice.logIn(input).subscribe((res: HttpResponse<Object>) => {
+    this.authservice.logIn(input).subscribe((res: HttpResponse<string>) => {
       if (isDevMode()) {
-        console.log(`res => ${res.body}`);
+        console.log('-------- admin-login.component.ts.logIn() -----------');
         console.log(res.headers);
+        console.log(`RES <= ${res.body.substring(0, 30)}...`);
+        // console.log(res.headers);
       }
-      this.setMessage();
-      console.log(this.authservice.logged_in);
       if (this.authservice.logged_in) {
         // Receive redirect URL from authservice. If no redirect has been set, go to admin index
         const redirect = this.authservice.redirect_url ? this.authservice.redirect_url : '/admin';
@@ -72,7 +65,6 @@ export class AdminLoginComponent implements OnInit {
 
   logOut() {
     this.authservice.logOut();
-    this.setMessage();
   }
 
   ngOnInit() {
