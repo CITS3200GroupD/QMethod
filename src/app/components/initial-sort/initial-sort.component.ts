@@ -4,8 +4,7 @@ import { SurveyService } from '../../survey.service';           // QMd Survey Se
 import { UserService } from '../../user.service';               // QMd User Service MW
 import { Survey, User } from '../../models';
 import { WindowWrap } from '../../window-wrapper';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {NgbdModalBasic} from '../initial-sort/modal-basic/modal-basic'
+
 
 
 @Component({
