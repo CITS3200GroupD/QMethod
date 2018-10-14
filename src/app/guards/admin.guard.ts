@@ -15,16 +15,28 @@ export class AdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       const url: string = state.url;
-
-    return this.checkLogin(url);
+      this.checkLogin(url);
+    return true;
   }
 
-  checkLogin(url: string): boolean {
-    if (this.authservice.logged_in) { return true; }
-
-    this.authservice.redirect_url = url;
-    this.router.navigate(['/login']);
-    return false;
+  /**
+   * Call auth service's checkAuth method to determine if this route should be allowed
+   * @param url URL
+   */
+  checkLogin(url: string) {
+    // Call check auth (in auth service), and check for logged_in variable.
+    this.authservice.checkAuth().subscribe(
+      (res) => {
+        // Logged In = true, no action needed
+      },
+      (err) => {
+        // Logged In = false, redirect to login page
+        this.authservice.redirect_url = url;
+        this.router.navigate(['/login']);
+      }
+    );
   }
+  // Note that it doesn't matter that this isn't very robust as this is client-side code, which could be maliciously modified anyway.
+  // As long as the routes (for accessing sensitive data) are protected on the express server side this is fine.
 }
 

@@ -51,10 +51,14 @@ export class AdminUserListComponent implements OnInit {
    */
   deleteUser(user_id: string): void {
     if (this.window.nativeWindow.confirm('Are you sure you wish to delete this user?')) {
-      this.userservice.deleteUser(this.survey_id, user_id).subscribe(res => {
-          this.getUserData();
-          // console.log(res);
-          // TODO: Error message if not successful
+      this.userservice.deleteUser(this.survey_id, user_id).subscribe(
+      (res) => {
+        this.getUserData();
+      },
+      (err) => {
+        // TODO: Error message if not successful
+        console.error(err);
+        if (this.window.nativeWindow.confirm(err.message)) { }
       });
     }
   }
@@ -72,7 +76,7 @@ export class AdminUserListComponent implements OnInit {
   }
 
   togComplete() {
-    if (this.user_filter != this.key_string) {
+    if (this.user_filter !== this.key_string) {
       this.user_filter = this.key_string;
     } else {
       this.user_filter = '';

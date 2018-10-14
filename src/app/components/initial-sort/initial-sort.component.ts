@@ -5,6 +5,8 @@ import { UserService } from '../../user.service';               // QMd User Serv
 import { Survey, User } from '../../models';
 import { WindowWrap } from '../../window-wrapper';
 
+
+
 @Component({
   selector: 'app-initial-sort',
   templateUrl: './initial-sort.component.html',
@@ -12,14 +14,13 @@ import { WindowWrap } from '../../window-wrapper';
 })
 export class InitialSortComponent implements OnInit {
 
-  // error = boolean;                     // TODO: Invalid survey message box on invalid survey id
   id: string;
   user_id: string;
   survey: Survey;
-  user: User;
   statements: string[] = [];
   statements_sort: number[] = [];
 
+  progress: number;
   current_index = 0;
   disagree: number[] = [];
   neutral: number[] = [];
@@ -45,6 +46,12 @@ export class InitialSortComponent implements OnInit {
         this.statements_sort.push(i);
       }
       this.getUserData();
+    },
+    (err) => {
+      if (this.window.nativeWindow.confirm('Invalid Survey')) {
+        if (!isDevMode()) { this.router.navigate(['/']); }
+        else { console.error('Redirecting to /'); }
+      }
     });
   }
 
@@ -53,12 +60,13 @@ export class InitialSortComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.user_id = params['user_id'];
       this.userservice.getUser(this.id, this.user_id).subscribe( (res: User) => {
-        this.user = res;
+        this.progress = res.progress;
         this.checkRedirect();
       },
       (err) => {
-        if (this.window.nativeWindow.confirm(err.message)) {
-          this.router.navigate(['/']);
+        if (this.window.nativeWindow.confirm('Invalid User')) {
+          if (!isDevMode()) { this.router.navigate(['survey', this.id ]); }
+          else { console.error('Redirecting to /survey/:id'); }
         }
       });
     });
@@ -66,30 +74,41 @@ export class InitialSortComponent implements OnInit {
 
   // Automatically redirect if this user is on the wrong page
   private checkRedirect() {
-    if (this.user.progress != 0) {
+    if (this.progress != 0) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
-        switch (this.user.progress) {
+        switch (this.progress) {
           case 1:
-            this.router.navigate(['q-sort', this.id],
-            {
-              skipLocationChange: !isDevMode(),
-              queryParams: { user_id: this.user_id }
-            });
+            if (!isDevMode()) {
+              this.router.navigate(['q-sort', this.id],
+              {
+                skipLocationChange: true,
+                queryParams: { user_id: this.user_id }
+              });
+            } else {
+              console.error('Redirecting to q-sort/:id');
+            }
           break;
           case 2:
-            this.router.navigate(['questionnaire', this.id],
-            {
-              skipLocationChange: !isDevMode(),
-              queryParams: { user_id: this.user_id }
-            });
+            if (!isDevMode()) {
+              this.router.navigate(['questionnaire', this.id],
+              {
+                skipLocationChange: true,
+                queryParams: { user_id: this.user_id }
+              });
+            } else {
+              console.error('Redirecting to questionnaire/:id');
+            }
           break;
           case 3:
-            // TODO: Results page
-            this.router.navigate(['questionnaire', this.id],
-            {
-              skipLocationChange: !isDevMode(),
-              queryParams: { user_id: this.user_id }
-            });
+            if (!isDevMode()) {
+              this.router.navigate(['submission', this.id],
+              {
+                skipLocationChange: true,
+                queryParams: { user_id: this.user_id }
+              });
+            } else {
+              console.error('Redirecting to submission/:id');
+            }
           break;
         }
       }
@@ -106,10 +125,6 @@ export class InitialSortComponent implements OnInit {
     if (this.current_index > 0) {
       this.current_index--;
     }
-  }
-
-  test() {
-    console.log('test');
   }
 
   onDisagreeClick() {
@@ -205,6 +220,8 @@ export class InitialSortComponent implements OnInit {
    * Submits the collated data => QMd UserService MW
    * If successful, goes to Q-Sort page.
    */
+
+   
   publishSortContinue() {
     if ( isDevMode() ) {
       console.log(`Agree: ${this.agree}`);
@@ -226,8 +243,8 @@ export class InitialSortComponent implements OnInit {
     },
     err => {
       console.error(err);
+      if (this.window.nativeWindow.confirm('Update Failed. An error has occured.')) {};
     });
-      // TODO: Error Messages
   }
 
   ngOnInit() {

@@ -46,6 +46,9 @@ import { QuestionnaireComponent } from './components/questionnaire/questionnaire
 import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { SubmissionComponent } from './components/submission/submission.component';
+import { NgbdModalBasic } from './components/initial-sort/modal-basic-initialsort/modal-basic-initialsort';
+import { NgbdModalBasicQsort } from './components/qsort/modal-basic-qsort/modal-basic-qsort';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -86,35 +89,40 @@ const routes: Routes = [
   {
     path: 'survey/:id',
     component: UserIndexComponent,
-    canActivate: [ 'UserGuard' ]
+    // canActivate: [ 'UserGuard' ]
   },
   {
     path: 'instructions/:id',
     component: InstructionsComponent,
-    canActivate: ['UserGuard']
+    // canActivate: ['UserGuard']
   },
   {
     path: 'registration/:id',
     component: RegistrationComponent,
-    canActivate: ['UserGuard']
+    // canActivate: ['UserGuard']
   },
   {
     path: 'initial-sort/:id',
     component: InitialSortComponent,
     canActivate: ['UserGuard'],
-    // canDeactivate: [ ConfirmDeactivateGuard ]  // TODO: Activate when implemented
+    // canDeactivate: [ ConfirmDeactivateGuard ]
   },
   {
     path: 'q-sort/:id',
     component: QsortComponent,
-    canActivate: ['UserGuard'],
+    // canActivate: ['UserGuard'],
     // canDeactivate: [ ConfirmDeactivateGuard ]
   },
   {
     path: 'questionnaire/:id',
     component: QuestionnaireComponent,
-    canActivate: ['UserGuard'],
+    // canActivate: ['UserGuard'],
     // canDeactivate: [ ConfirmDeactivateGuard ]
+  },
+  {
+    path: 'submission/:id',
+    component: SubmissionComponent,
+    // canActivate: ['UserGuard'],
   }
 ];
 // Declaring vars for ng
@@ -138,7 +146,10 @@ const routes: Routes = [
     QuestionnaireComponent,
     EditFormsComponent,
     AdminUserViewComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    SubmissionComponent,
+    NgbdModalBasic,
+    NgbdModalBasicQsort
   ],
   imports: [
     BrowserModule,
@@ -149,6 +160,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgDragDropModule.forRoot(),
     NgbModule,
+    NgbModule.forRoot(),
     Ng2PaginationModule,
     CookieModule.forRoot()
   ],
