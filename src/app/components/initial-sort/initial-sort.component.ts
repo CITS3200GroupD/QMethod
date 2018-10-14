@@ -5,6 +5,8 @@ import { UserService } from '../../user.service';               // QMd User Serv
 import { Survey, User } from '../../models';
 import { WindowWrap } from '../../window-wrapper';
 
+
+
 @Component({
   selector: 'app-initial-sort',
   templateUrl: './initial-sort.component.html',
@@ -218,6 +220,8 @@ export class InitialSortComponent implements OnInit {
    * Submits the collated data => QMd UserService MW
    * If successful, goes to Q-Sort page.
    */
+
+   
   publishSortContinue() {
     if ( isDevMode() ) {
       console.log(`Agree: ${this.agree}`);
