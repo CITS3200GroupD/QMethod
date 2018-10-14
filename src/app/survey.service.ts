@@ -64,7 +64,7 @@ export class SurveyService {
       };
       return this
               .http
-              .post(`${this.uri}/add`, surveyCreate, { headers: this.headers });
+              .post(`${this.uri}/add`, surveyCreate, { headers: this.headers, withCredentials: true });
     }
     return null;
   }
@@ -73,13 +73,13 @@ export class SurveyService {
   getSurveys(): Observable<Object> {
     return this
            .http
-           .get(`${this.uri}`, { headers: this.headers });
+           .get(`${this.uri}`, { headers: this.headers, withCredentials: true });
   }
 
   getSurvey(id: string): Observable<Object> {
     return this
             .http
-            .get(`${this.uri}/${id}`, { headers: this.headers });
+            .get(`${this.uri}/${id}`, { headers: this.headers, withCredentials: true});
   }
 
   updateSurvey(survey: Survey): Observable<Object> {
@@ -87,27 +87,12 @@ export class SurveyService {
 
     return this
               .http
-              .post(`${this.uri}/${id}`, survey, { headers: this.headers });
+              .post(`${this.uri}/${id}`, survey, { headers: this.headers, withCredentials: true });
   }
 
   deleteSurvey(id: string): Observable<Object> {
     return this
               .http
-              .delete(`${this.uri}/${id}`, { headers: this.headers });
-  }
-
-  addStatement(id: string, statement: string): Observable<Object> {
-    const obj = {
-      statement: statement
-    };
-    return this
-              .http
-              .post(`${this.uri}/${id}/addState`, obj, { headers: this.headers });
-  }
-
-  deleteStatement(id: string, statement_id: number): Observable<Object> {
-    return this
-              .http
-              .delete(`${this.uri}/${id}/delState/${statement_id}`, { headers: this.headers });
+              .delete(`${this.uri}/${id}`, { headers: this.headers, withCredentials: true });
   }
 }

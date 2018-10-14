@@ -8,6 +8,7 @@ const settings = {
     FIELDS_LIMIT: 10,
     PAGINATE_TABLES: 10,
     PAGINATE_LISTS: 5,
+    EXPIRE_TIME: 7200,
 }
 
 module.exports = settings;
