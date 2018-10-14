@@ -1,5 +1,6 @@
 const express= require('express'),
   userRoutes = express.Router(),
+  cookieParser = require('cookie-parser'),
   Survey = require('../models/Survey'),
   User = require('../models/User'),
   utils = require('../utils/secure.utils');
@@ -15,14 +16,16 @@ express();
 
 // TODO: In general this code needs to be a lot more robust
 
+userRoutes.use(cookieParser());     // init Cookie-Parser
+
 /**
  * Get All User Data for Survey
  * Private (Admin) Access
  * Responds with JSON of Users[] Array
  */
 userRoutes.route('/:id/users').get( ( req, res, next) => {
-  // utils.get_req_auth(req, res, next);
-  if (!req.headers.qmd /* || req.auth !== process.env['USERNAME'] */) {
+  utils.get_req_auth(req, res, next);
+  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
@@ -132,7 +135,6 @@ userRoutes.route('/:id/user/:user_id').get( (req,res) => {
  * Responds with success/failure
  */
 userRoutes.route('/:id/user/:user_id').post( (req,res) => {
-
   if (req.body.constructor === Object &&
     Object.keys(req.body).length === 0 /* || Object.keys(req.body).length > 3 */) {
     res.status(400).json('Bad Request');
@@ -203,8 +205,8 @@ userRoutes.route('/:id/user/:user_id').post( (req,res) => {
  * Responds with success/failure
  */
 userRoutes.route('/:id/user/:user_id').delete( (req, res, next) => {
-  // utils.get_req_auth(req, res, next);
-  if (!req.headers.qmd /* || req.auth !== process.env['USERNAME'] */) {
+  utils.get_req_auth(req, res, next);
+  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');

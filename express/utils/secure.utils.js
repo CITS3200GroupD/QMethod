@@ -3,6 +3,7 @@ const express = require('express'),
   settings = require('../../config/Settings')
 
 const utils = {
+
   // FUNCTIONS
   /**
    * Function to authenticate session cookie and pass as a request attribute
@@ -11,11 +12,10 @@ const utils = {
    */
   get_req_auth: function(req, res, next) {
     // Catch the authentication cookie
-    let return_val = null;
     if (req.cookies && req.cookies['SESSION_ID']) {
       const auth_cookie = req.cookies['SESSION_ID'];
       try {
-        return_val = utils.handle_cookie(auth_cookie);
+        utils.handle_cookie(auth_cookie, req);
       } catch (err) {
         console.error(err);
         next();
@@ -23,22 +23,20 @@ const utils = {
     } else {
       next();
     }
-    return return_val;
   },
 
   /**
    * Function to convert cookie to request
    * @param {string} token
-   * @return user_id of the user
+   * @param {Request} req
    */
-  handle_cookie: function(token) {
+  handle_cookie: function(token, req) {
     try {
       const payload = utils.decode_jwt(token);
-      return payload['user'];
+      req['auth'] = payload['user'];
     }
     catch(err) {
       // console.log('Error: Could not extract user', err.message);
-      return null;
     }
   },
 
