@@ -46,11 +46,15 @@ export class SurveyService {
     let cols: number[];
     this.cols_templates.forEach( (item) => {
       const value = item.val;
+      console.log(value);
+      console.log(typeof value);
       // Find default grid
-      if (Number(value) === range) {
+      if ( Number(value) === range) {
+        console.log('MATCH!');
         cols = Array.from(item.default_cols);
       }
     });
+    console.log(cols);
     if (cols) {
       const surveyCreate: SurveyInput = {
         name: name,

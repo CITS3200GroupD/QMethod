@@ -29,9 +29,7 @@ const express = require('express'),
     const server = require('http').createServer(app);
     server.listen(port, function(){
      console.log(`Listening on port ${port}`);
-     console.log(`Host: ${server.address().address}`);
     });
-    const host = server.address().address;
 
     // Options for CORS (cross origin resource sharing)
     let hosts = ['*'];

@@ -147,7 +147,7 @@ export class QuestionnaireComponent implements OnInit {
    * Automatically redirect if this user is on the wrong page
    */
   private checkRedirect() {
-    if (this.progress !== 3) {
+    if (this.progress !== 2) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
         switch (this.progress) {
           case 0:
@@ -172,15 +172,15 @@ export class QuestionnaireComponent implements OnInit {
               console.error('Redirecting to q-sort/:id');
             }
           break;
-          case 2:
+          case 3:
             if (!isDevMode()) {
-              this.router.navigate(['questionnaire', this.survey_id],
+              this.router.navigate(['submission', this.survey_id],
               {
                 skipLocationChange: true,
                 queryParams: { user_id: this.user_id }
               });
             } else {
-              console.error('Redirecting to questionnaire/:id');
+              console.error('Redirecting to submission/:id');
             }
           break;
         }

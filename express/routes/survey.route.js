@@ -148,7 +148,7 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
  * Private (Admin) Access
  * Respond with success/failure
  */
-surveyRoutes.route('/:id').delete( (req, res) => {
+surveyRoutes.route('/:id').delete( (req, res, next) => {
   utils.get_req_auth(req, res, next);
   if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     // TODO: Replace with Auth Cookie

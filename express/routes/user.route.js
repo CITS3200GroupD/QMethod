@@ -23,7 +23,7 @@ userRoutes.use(cookieParser());     // init Cookie-Parser
  * Private (Admin) Access
  * Responds with JSON of Users[] Array
  */
-userRoutes.route('/:id/users').get( ( req, res, next) => {
+userRoutes.route('/:id/users').get( (req, res, next) => {
   utils.get_req_auth(req, res, next);
   if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     // TODO: Needs Real Auth Checking
@@ -50,7 +50,7 @@ userRoutes.route('/:id/users').get( ( req, res, next) => {
  * Public Access
  * Responds with user_id of the newly created user.
  */
-userRoutes.route('/:id/addUser').post((req, res)=> {
+userRoutes.route('/:id/addUser').post( (req, res, next) => {
   if (!req.headers.qmd) {
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
@@ -100,7 +100,7 @@ userRoutes.route('/:id/addUser').post((req, res)=> {
  * Public Access
  * Responds with JSON of desired User
  */
-userRoutes.route('/:id/user/:user_id').get( (req,res) => {
+userRoutes.route('/:id/user/:user_id').get( (req, res, next) => {
   if (!req.headers.qmd) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
@@ -134,7 +134,7 @@ userRoutes.route('/:id/user/:user_id').get( (req,res) => {
  * Public Access
  * Responds with success/failure
  */
-userRoutes.route('/:id/user/:user_id').post( (req,res) => {
+userRoutes.route('/:id/user/:user_id').post( (req, res, next) => {
   if (req.body.constructor === Object &&
     Object.keys(req.body).length === 0 /* || Object.keys(req.body).length > 3 */) {
     res.status(400).json('Bad Request');
