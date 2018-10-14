@@ -3,8 +3,8 @@ import {Component, ViewChild, OnInit} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'ngbd-modal-basic',
-  templateUrl: './modal-basic.html'
+  selector: 'ngbd-modal-basic-initialsort',
+  templateUrl: './modal-basic-initialsort.html'
 })
 
 export class NgbdModalBasic {
