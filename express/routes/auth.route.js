@@ -19,6 +19,9 @@ express();
 
 authRoutes.use(cookieParser());     // init Cookie-Parser
 
+/**
+ * Authenticate a username/password combination versus server-side environment variables
+ */
 authRoutes.route('/').post( (req, res) => {
   // if sent user = [admin] and sent password = [password] generate JWT key (encrypt with secret keys)
   if (req.body.username === process.env['USERNAME'] && req.body.password === process.env['PASSWORD']) {
@@ -42,8 +45,8 @@ authRoutes.route('/').post( (req, res) => {
 
 /** Check token for validity*/
 authRoutes.route('/token').get( (req, res, next) => {
-  const req_auth = utils.get_req_auth(req, res, next);
-  if (req_auth === process.env['USERNAME']) {
+  utils.get_req_auth(req, res, next);
+  if (req.auth === process.env['USERNAME']) {
     res.status(200).json('Authenticated Token');
   }
   else {

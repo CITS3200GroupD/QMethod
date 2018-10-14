@@ -1,5 +1,6 @@
 const express = require('express'),
   surveyRoutes = express.Router(),
+  cookieParser = require('cookie-parser'),
   utils = require('../utils/secure.utils');
 express();
 
@@ -16,16 +17,18 @@ express();
 // Require Survey model in our routes module
 let Survey = require('../models/Survey');
 
+surveyRoutes.use(cookieParser());     // init Cookie-Parser
+
 /**
  * Add new survey item to database
  * Private (Admin) Access
  * Respond with success/failure
  */
 surveyRoutes.route('/add').post( (req, res, next) => {
-  // utils.get_req_auth(req, res, next);
+  utils.get_req_auth(req, res, next);
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
-  } else if (!req.headers.qmd /* || req.auth !== process.env['USERNAME'] */) {
+  } else if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
@@ -47,10 +50,10 @@ surveyRoutes.route('/add').post( (req, res, next) => {
  * Respond with JSON of Survey[] Array
  */
 surveyRoutes.route('/').get( (req, res, next) => {
-  // const req_auth = utils.get_req_auth(req, res, next);
+  utils.get_req_auth(req, res, next);
   // TODO: Needs Real Auth Checking
   // TODO: Replace with Auth Cookie
-  if (!req.headers.qmd /* || req_auth !== process.env['USERNAME']*/ ) {
+  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     res.status(400).send('Bad Auth');
   } else {
     Survey.find( (err, surveys) => {
@@ -70,7 +73,7 @@ surveyRoutes.route('/').get( (req, res, next) => {
  * Respond with JSON of Survey desired (Sanitised for Public)
  */
 surveyRoutes.route('/:id').get( (req, res, next) => {
-  // utils.get_req_auth(req, res, next);
+  utils.get_req_auth(req, res, next);
   // TODO: Needs Real Auth Checking
   if (!req.headers.qmd) {
     res.status(400).send('Bad Auth');
@@ -81,7 +84,7 @@ surveyRoutes.route('/:id').get( (req, res, next) => {
         res.status(400).json(err);
       } else if (survey) {
         // Check Auth, if not auth...
-        if (!req.headers.auth /* req.auth !== process.env['USERNAME'] */) {
+        if (req.auth !== process.env['USERNAME']) {
           // Do not show unpublished surveys
           if (!survey.publish) {
             res.status(400).send('Bad Request')
@@ -104,10 +107,10 @@ surveyRoutes.route('/:id').get( (req, res, next) => {
  * Respond with success/failure
  */
 surveyRoutes.route('/:id').post( (req, res, next) => {
-  // utils.get_req_auth(req, res, next);
+  utils.get_req_auth(req, res, next);
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
-  } else if (!req.headers.qmd /* || req.auth !== process.env['USERNAME'] */) {
+  } else if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
@@ -146,8 +149,8 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
  * Respond with success/failure
  */
 surveyRoutes.route('/:id').delete( (req, res) => {
-  // utils.get_req_auth(req, res, next);
-  if (!req.headers.qmd /* || req.auth !== process.env['USERNAME'] */) {
+  utils.get_req_auth(req, res, next);
+  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     // TODO: Replace with Auth Cookie
     // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
