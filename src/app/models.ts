@@ -48,7 +48,7 @@ export const GridTemplates = [
 let default_template = 0;
 for (let index = 0; index < GridTemplates.length; index++) {
     const value = GridTemplates[index].val;
-    if (Number(value) == Settings.DEFAULT_RANGE) {
+    if (Number(value) === Settings.DEFAULT_RANGE) {
         default_template = index;
     }
 }

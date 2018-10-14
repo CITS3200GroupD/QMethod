@@ -3,7 +3,7 @@ import { CookieService } from 'ngx-cookie';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 import { Admin } from 'src/app/models';
-import {HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -18,46 +18,54 @@ export class AuthService {
   constructor(private cookieservice: CookieService,
     private http: HttpClient) {
     if (isDevMode()) { console.log('AuthService Init'); }
-    this.checkAuth();  // Load authkey from cookie (if it exists)
     if (isDevMode()) {
-      this.uri = 'http://localhost:8080/admin';
+      this.uri = 'http://localhost:8080/auth';
 
     } else {
-      this.uri = '/api';
+      this.uri = '/auth';
     }
+    this.checkAuth();  // Load authkey from cookie (if it exists)
   }
 
   /** Check Session ID (in cookie) vs Auth Server */
   checkAuth() {
+    if (isDevMode()) { console.log('checkAuth'); }
     // TODO: CALL Auth API to ensure this is a valid session
-    if (this.cookieservice.get('SESSION_ID')) {
-      this.logged_in = true;
-    }
-    // TODO: This code is in the wrong place, this function is purely for checking if
-    // an existing session key exists. This should go in logIn().
-    /*
-    const token_authenticate = this.cookieservice.get('SESSION_ID')
-    return this
-           .http
-           .post(this.uri, token_authenticate, { headers: this.headers });
-    */
-  }
-
-  // TODO
-  // Fix token_authenticate
-  // logIn(admin: Admin): Observable<boolean> {
-  logIn(): Observable<boolean> {
-    // TODO: Replace with proper login function
-    return of(true).pipe(
-      delay(250),
-      tap(() => {
+    const token = this.cookieservice.get('SESSION_ID');
+    const input = {
+      'SESSION_ID': token
+    };
+    this.http.post(`${this.uri}/check_token`, input).subscribe(
+      res => {
         this.logged_in = true;
-        this.cookieservice.put('SESSION_ID', 'valid-token');    // Placeholder function that puts a placeholder cookie
-      })
+      },
+      err => {
+        this.logged_in = false;
+        this.logOut();
+      }
     );
   }
 
-  /** Function called on log out, removes cookie and sets login flag to false */
+  /** Send login data to authentication route */
+  logIn(admin: Admin): Observable<Object> {
+    return this.http.post(this.uri, admin,
+      {
+        headers: this.headers,
+        observe: 'response'
+      }).pipe(
+      tap((res: HttpResponse<string>) => {
+        this.logged_in = true;
+        // Cookie will be imported by browser automatically
+        if (isDevMode()) {
+          // For offline testing, we have to manually create the cookie.
+          this.cookieservice.put('SESSION_ID', res.body, { httpOnly: true });
+        }
+      },
+      (err) => {})
+    );
+  }
+
+  /** Function called on log out, removes cookie and sets login flag to falsdse */
   logOut(): void {
     this.logged_in = false;
     this.cookieservice.remove('SESSION_ID');

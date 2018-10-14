@@ -3,9 +3,15 @@
     <div [formGroupName]="i">
       <div class="form_attribute">
         <label><h5> {{ ques_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
-        <p> <textarea rows='5' cols='100' formControlName="answer"></textarea> </p>
+        <p> <textarea rows='5' cols='100' formControlName="answer" [maxLength]="TEMP_Q_FIELD_CHAR_LIMIT"></textarea> </p>
       </div>
     </div>
+    <div *ngIf="ques_fg['controls']['fields']['controls'][i].invalid && (ques_fg['controls']['fields']['controls'][i].dirty || ques_fg['controls']['fields']['controls'][i].touched)" class="alert alert-danger">
+        <!-- <div *ngIf="reg_fg['controls']['fields']['controls'][i].errors.required"> -->
+        <div>
+          Answer is required.
+       </div>
+      </div>
   </div>
 </div>
-<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()">Submit</button>
+<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()" [disabled]="ques_fg.pristine || ques_fg.invalid">Submit</button>

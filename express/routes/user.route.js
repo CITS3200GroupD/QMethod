@@ -24,7 +24,7 @@ let User = require('../models/User');
  * Responds with JSON of Users[] Array
  */
 userRoutes.route('/:id/users').get((req,res)=> {
-  if (!req.headers.qmd || !req.headers.authorization) {
+  if (!req.headers.qmd || !req.headers.auth) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
@@ -205,7 +205,7 @@ userRoutes.route('/:id/user/:user_id').post((req,res)=> {
  * Responds with success/failure
  */
 userRoutes.route('/:id/user/:user_id').delete((req,res)=>{
-  if (!req.headers.qmd || !req.headers.authorization) {
+  if (!req.headers.qmd || !req.headers.auth) {
     // TODO: Needs Real Auth Checking
     // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');

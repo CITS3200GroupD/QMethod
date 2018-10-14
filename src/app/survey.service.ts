@@ -25,7 +25,7 @@ export class SurveyService {
   // To be depreciated
   addAuthHeader(auth_key: string): void {
     this.headers = new HttpHeaders({
-      'authorization': auth_key,
+      'auth': auth_key,
       'qmd': 'ng-client'
     });
   }
@@ -47,7 +47,7 @@ export class SurveyService {
     this.cols_templates.forEach( (item) => {
       const value = item.val;
       // Find default grid
-      if (Number(value) == range) {
+      if (Number(value) === range) {
         cols = Array.from(item.default_cols);
       }
     });

@@ -58,7 +58,7 @@ export class AdminUserListComponent implements OnInit {
       (err) => {
         // TODO: Error message if not successful
         console.error(err);
-        if (this.window.nativeWindow.confirm(err.message)){}
+        if (this.window.nativeWindow.confirm(err.message)) { }
       });
     }
   }
@@ -76,7 +76,7 @@ export class AdminUserListComponent implements OnInit {
   }
 
   togComplete() {
-    if (this.user_filter != this.key_string) {
+    if (this.user_filter !== this.key_string) {
       this.user_filter = this.key_string;
     } else {
       this.user_filter = '';

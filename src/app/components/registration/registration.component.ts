@@ -5,6 +5,7 @@ import { SurveyService } from 'src/app/survey.service';
 import { WindowWrap } from '../../window-wrapper';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Survey } from 'src/app/models';
+import * as Settings from '../../../../config/Settings';                // QMd Settings
 
 @Component({
   selector: 'app-registration',
@@ -13,10 +14,15 @@ import { Survey } from 'src/app/models';
 })
 export class RegistrationComponent implements OnInit {
 
+  TEMP_REG_FIELD_CHAR_LIMIT = Settings.TEMP_REG_FIELD_CHAR_LIMIT || 100;
+
   survey_id: string;
   user_id: string;
   reg_fg: FormGroup;
   reg_fa: FormArray;
+
+  /** SubmitOnce flag */
+  submitOnce = false;
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -44,7 +50,8 @@ export class RegistrationComponent implements OnInit {
       },
       err => {
         console.error(err);
-        // TODO: Error Message Prompt for UX
+        if (this.window.nativeWindow.confirm('Invalid Survey')) {}
+        // TODO: Redirect
       }
     );
   }
@@ -54,6 +61,7 @@ export class RegistrationComponent implements OnInit {
     this.reg_fg = this.fb.group({
       fields: this.fb.array([])
     });
+    console.log(this.reg_fg);
     this.reg_fa = this.reg_fg.get('fields') as FormArray;
   }
 
@@ -93,7 +101,8 @@ export class RegistrationComponent implements OnInit {
           (res: string) => {
             this.user_id = res;
             // TODO: Modal or element to display user_id to user
-            if (this.window.nativeWindow.confirm(`Your User ID is [ ${this.user_id} ] and Survey ID is [ ${this.survey_id} ]. Please record this for future reference.`)) {}
+            if (this.window.nativeWindow.confirm(`Your User ID is [ ${this.user_id} ] and Survey ID is [ ${this.survey_id} ].
+            Please record this for future reference.`)) {}
             this.router.navigate(['initial-sort', this.survey_id],
               {
                 skipLocationChange: !isDevMode(),
@@ -107,6 +116,7 @@ export class RegistrationComponent implements OnInit {
     } else {
       // TODO: Display Error to User
       console.error('Invalid Response');
+      this.window.nativeWindow.confirm('Invalid Submission');
     }
   }
 
