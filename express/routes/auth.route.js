@@ -26,9 +26,9 @@ authRoutes.route('/').post( (req, res) => {
     let headers = {};
     if (process.argv[2] === 'deploy') {
       headers = { httpOnly: true, secure: true, sameSite: true };
-      res.cookie('SESSION_ID', token, headers).status(200).json('Successful Auth');
+      res.cookie('SESSION_ID', token, headers).status(200).json('User/Password Authenticated');
     } else {
-      res.status(200).json(token);
+      res.cookie('SESSION_ID', token).status(200).json('User/Password Authenticated');
     }
   }
   else {
@@ -42,7 +42,7 @@ authRoutes.route('/check_token').post( (req, res) => {
     res.status(200).json('Authenticated Token');
   }
   else {
-    res.status(400).send('Invalid token'); // Placeholder response
+    res.status(400).json('Invalid token'); // Placeholder response
   }
 });
 
