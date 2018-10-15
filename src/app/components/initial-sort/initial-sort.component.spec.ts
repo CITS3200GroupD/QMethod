@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgDragDropModule } from 'ng-drag-drop';
 import { MockWindowWrap } from '../../testing/Testing';
 import { WindowWrap } from '../../window-wrapper';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('InitialSortComponent', () => {
   let component: InitialSortComponent;
@@ -16,6 +17,7 @@ describe('InitialSortComponent', () => {
       providers: [ InitialSortComponent,
         {provide: WindowWrap, useClass: MockWindowWrap}
       ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       declarations: [ InitialSortComponent ],
       imports: [ RouterTestingModule, HttpClientModule, NgDragDropModule.forRoot()]
     })

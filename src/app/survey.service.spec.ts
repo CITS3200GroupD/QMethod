@@ -15,8 +15,8 @@ describe('SurveyService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [SurveyService]
+      imports: [ HttpClientTestingModule ],
+      providers: [ SurveyService ]
     });
     httpClient = TestBed.get(HttpClient);
     httpTestingController = TestBed.get(HttpTestingController);
@@ -122,39 +122,6 @@ describe('SurveyService', () => {
 
     // Call function
     service.deleteSurvey(id).subscribe(res => {
-      expect(res).toEqual(return_val);
-    });
-
-    // Simulate the response from express server
-    const req = httpTestingController.expectOne(`${test_url}`);
-    expect(req.request.method).toEqual('DELETE');
-    req.flush(return_val);
-  });
-
-  it('addStatement() should return success', () => {
-    const id = valid_survey_list[0]._id;
-    const return_val = 'Successfully Added Statement';
-    const test_url = `${uri}/${id}/addState`;
-
-    // Call function
-    service.addStatement(id, 'new_statement').subscribe(res => {
-      expect(res).toEqual(return_val);
-    });
-
-    // Simulate the response from express server
-    const req = httpTestingController.expectOne(`${test_url}`);
-    expect(req.request.method).toEqual('POST');
-    req.flush(return_val);
-  });
-
-  it('deleteStatement() should return success', () => {
-    const id = valid_survey_list[0]._id;
-    const statement_id = 0;
-    const return_val = 'Successfully Removed Statement';
-    const test_url = `${uri}/${id}/delState/${statement_id}`;
-
-    // Call function
-    service.deleteStatement(id, statement_id).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 
