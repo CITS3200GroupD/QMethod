@@ -47,8 +47,8 @@ import { EditFormsComponent } from './components/edit-forms/edit-forms.component
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { SubmissionComponent } from './components/submission/submission.component';
-import { NgbdModalBasic } from './components/initial-sort/modal-basic-initialsort/modal-basic-initialsort';
-import { NgbdModalBasicQsort } from './components/qsort/modal-basic-qsort/modal-basic-qsort';
+import { NgbdModalBasicInitComponent } from './components/initial-sort/modal-basic-initialsort/modal-basic-initialsort';
+import { NgbdModalBasicQsortComponent } from './components/qsort/modal-basic-qsort/modal-basic-qsort';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -148,8 +148,8 @@ const routes: Routes = [
     AdminUserViewComponent,
     AdminLoginComponent,
     SubmissionComponent,
-    NgbdModalBasic,
-    NgbdModalBasicQsort
+    NgbdModalBasicInitComponent,
+    NgbdModalBasicQsortComponent
   ],
   imports: [
     BrowserModule,

@@ -49,8 +49,8 @@ export class InitialSortComponent implements OnInit {
     },
     (err) => {
       if (this.window.nativeWindow.confirm('Invalid Survey')) {
-        if (!isDevMode()) { this.router.navigate(['/']); }
-        else { console.error('Redirecting to /'); }
+        if (!isDevMode()) { this.router.navigate(['/']);
+        } else { console.error('Redirecting to /'); }
       }
     });
   }
@@ -65,8 +65,8 @@ export class InitialSortComponent implements OnInit {
       },
       (err) => {
         if (this.window.nativeWindow.confirm('Invalid User')) {
-          if (!isDevMode()) { this.router.navigate(['survey', this.id ]); }
-          else { console.error('Redirecting to /survey/:id'); }
+          if (!isDevMode()) { this.router.navigate(['survey', this.id ]);
+          } else { console.error('Redirecting to /survey/:id'); }
         }
       });
     });
@@ -74,7 +74,7 @@ export class InitialSortComponent implements OnInit {
 
   // Automatically redirect if this user is on the wrong page
   private checkRedirect() {
-    if (this.progress != 0) {
+    if (this.progress !== 0) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
         switch (this.progress) {
           case 1:
@@ -128,33 +128,39 @@ export class InitialSortComponent implements OnInit {
   }
 
   onDisagreeClick() {
-    console.log('click');
     const selected = this.statements_sort[this.current_index];
-    this.removeDisagree(selected);
-    this.disagree.push(selected);
-    this.removeStatement(selected);
-    this.removeNeutral(selected);
-    this.removeAgree(selected);
+    console.log(selected);
+    if (selected !== undefined) {
+      this.removeDisagree(selected);
+      this.disagree.push(selected);
+      this.removeStatement(selected);
+      this.removeNeutral(selected);
+      this.removeAgree(selected);
+    }
   }
 
   onNeutralClick() {
-    console.log('click');
     const selected = this.statements_sort[this.current_index];
-    this.removeNeutral(selected);
-    this.neutral.push(selected);
-    this.removeStatement(selected);
-    this.removeDisagree(selected);
-    this.removeAgree(selected);
+    console.log(selected);
+    if (selected !== undefined) {
+      this.removeNeutral(selected);
+      this.neutral.push(selected);
+      this.removeStatement(selected);
+      this.removeDisagree(selected);
+      this.removeAgree(selected);
+    }
   }
 
   onAgreeClick() {
-    console.log('click');
     const selected = this.statements_sort[this.current_index];
-    this.removeAgree(selected);
-    this.agree.push(selected);
-    this.removeStatement(selected);
-    this.removeDisagree(selected);
-    this.removeNeutral(selected);
+    console.log(selected);
+    if (selected !== undefined) {
+      this.removeAgree(selected);
+      this.agree.push(selected);
+      this.removeStatement(selected);
+      this.removeDisagree(selected);
+      this.removeNeutral(selected);
+    }
   }
 
 
@@ -184,7 +190,7 @@ export class InitialSortComponent implements OnInit {
 
   removeStatement(e: any) {
     this.statements_sort.forEach( (item, index) => {
-      if (item == e) { this.statements_sort.splice(index, 1); }
+      if (item === e) { this.statements_sort.splice(index, 1); }
     });
     if (this.current_index >= this.statements_sort.length) {
       --this.current_index;
@@ -193,7 +199,7 @@ export class InitialSortComponent implements OnInit {
 
   removeDisagree(e: any) {
     this.disagree.forEach((item, index) => {
-      if (item == e) {
+      if (item === e) {
         this.disagree.splice(index, 1);
       }
     });
@@ -201,7 +207,7 @@ export class InitialSortComponent implements OnInit {
 
   removeNeutral(e: any) {
     this.neutral.forEach( (item, index) => {
-      if (item == e) {
+      if (item === e) {
         this.neutral.splice(index, 1);
       }
     });
@@ -209,7 +215,7 @@ export class InitialSortComponent implements OnInit {
 
   removeAgree(e: any) {
     this.agree.forEach( (item, index) => {
-      if (item == e) {
+      if (item === e) {
         this.agree.splice(index, 1);
       }
     });
@@ -221,7 +227,6 @@ export class InitialSortComponent implements OnInit {
    * If successful, goes to Q-Sort page.
    */
 
-   
   publishSortContinue() {
     if ( isDevMode() ) {
       console.log(`Agree: ${this.agree}`);
@@ -243,7 +248,7 @@ export class InitialSortComponent implements OnInit {
     },
     err => {
       console.error(err);
-      if (this.window.nativeWindow.confirm('Update Failed. An error has occured.')) {};
+      if (this.window.nativeWindow.confirm('Update Failed. An error has occured.')) {}
     });
   }
 

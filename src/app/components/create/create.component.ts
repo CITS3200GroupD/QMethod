@@ -60,15 +60,21 @@ export class CreateComponent implements OnInit {
   }
 
   /**
-   * Create a survey object and sync with database
-   * @param name Name of survey
-   * @param range Range of survey
+   * Create a survey object based on dynamic form elements and sync with database
    */
-  addSurvey(name: string, range: number): boolean {
+  addSurvey(): boolean {
+
+    const name = this.angForm.get('survey_name').value;
+    const range = Number(this.angForm.get('survey_range').value);
     // TODO: Modify function to also send statement, registration and questionnaire list to survey service MW
     let return_val = false;
     if ( isDevMode() ) {
       console.log(`SEND => { ${name}, ${range}, [registration], [statements], [questionnaire] }`);
+      /*
+      console.log(`Registration: ${this.registration}`);
+      console.log(`Statements: ${this.statements}`);
+      console.log(`Questionnaire: ${this.questionnaire}`);
+      */
     }
     // TODO: Replace with non-placeholders
     // TODO: Read statements, registration and questionnaire data from json.
