@@ -1,4 +1,5 @@
- <div [formGroup]="ques_fg">
+<div class="container">
+<div [formGroup]="ques_fg">
   <div formArrayName="fields" *ngFor="let field of ques_fg.get('fields')['controls']; let i = index;">
     <div [formGroupName]="i">
       <div class="form_attribute">
@@ -15,3 +16,10 @@
   </div>
 </div>
 <button class="button" class="btn btn-primary btn-block" (click)="continueToResults()" [disabled]="ques_fg.pristine || ques_fg.invalid">Submit</button>
+</div>
+<!-- Display User ID -->
+<div class="fixed-bottom d-print-none">
+  <div class="float-left">
+    <div class="text-sm font-italic text-monospace" style="font-size: 8pt;"> ID: {{ user_id }} </div>
+  </div>
+</div>

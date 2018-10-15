@@ -1,5 +1,4 @@
 import { isDevMode, Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 import { Admin } from 'src/app/models';
@@ -16,41 +15,29 @@ export class AuthService {
   private uri: string;
 
 
-  constructor(private cookieservice: CookieService,
-    private http: HttpClient) {
+  constructor( private http: HttpClient) {
     if (isDevMode()) { console.log('auth.service init'); }
     if (isDevMode()) {
       this.uri = 'http://localhost:8080/auth';
-
     } else {
       this.uri = '/auth';
     }
-    this.checkAuth();
+    try {
+      this.checkAuth();
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   /** Check Session ID (in cookie) vs Auth Server */
   checkAuth() {
-    if (isDevMode()) { console.log('---------- auth.service.checkAuth() -----------'); }
-    // TODO: CALL Auth API to ensure this is a valid session
-    const token = this.cookieservice.get('SESSION_ID');
-    if (isDevMode()) {
-      if (token) {
-        console.log(`TOKEN: ${token.substring(0, 30)}...`);
-      } else {
-        console.log('TOKEN: undefined');
-      }
-    }
-    const input = {
-      'SESSION_ID': token
-    };
-    return this.http.post(`${this.uri}/check_token`, input,
+    // Call Auth API to ensure this is a valid session
+    return this.http.get(`${this.uri}/token`,
     {
-      headers: new HttpHeaders({ 'Content-Type' : 'application/json'}),
       withCredentials: true
     }).pipe(
       tap((res: HttpResponse<Object>) => {
         this.logged_in = true;
-        if (isDevMode()) { console.log(`RES <= ${token.substring(0, 30)}...`); }
       },
       (err) => {
         this.logOut();
@@ -62,7 +49,6 @@ export class AuthService {
   logIn(admin: Admin): Observable<Object> {
     return this.http.post(this.uri, admin,
       {
-        headers: new HttpHeaders({ 'Content-Type' : 'application/json'}),
         observe: 'response',
         withCredentials: true
       }).pipe(
@@ -74,9 +60,10 @@ export class AuthService {
     );
   }
 
-  /** Function called on log out, removes cookie and sets login flag to falsdse */
-  logOut(): void {
+  /** Function called on log out, call delete route to override cookie and sets login flag to falsdse */
+  logOut() {
     this.logged_in = false;
-    this.cookieservice.remove('SESSION_ID');
+    // Since cookie is http only, we must get the express server to "Reset" the cookie.
+    this.http.get(`${this.uri}/remove_token`, { withCredentials: true }).subscribe( (res) => {});
   }
 }

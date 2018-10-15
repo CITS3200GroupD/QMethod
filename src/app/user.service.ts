@@ -37,7 +37,7 @@ export class UserService {
   getAllUsers(survey_id: string): Observable<Object> {
     return this
               .http
-              .get(`${this.uri}/${survey_id}/users`, {headers: this.headers});
+              .get(`${this.uri}/${survey_id}/users`, { headers: this.headers, withCredentials: true });
   }
 
   addUser(survey_id: string, registration_info: string[]): Observable<Object>  {
@@ -47,24 +47,24 @@ export class UserService {
 
     return this
               .http
-              .post(`${this.uri}/${survey_id}/addUser`, userCreate, {headers: this.headers});
+              .post(`${this.uri}/${survey_id}/addUser`, userCreate, { headers: this.headers, withCredentials: true });
   }
 
   getUser(survey_id: string, user_id: string): Observable<Object>  {
     return this
               .http
-              .get(`${this.uri}/${survey_id}/user/${user_id}`, {headers: this.headers});
+              .get(`${this.uri}/${survey_id}/user/${user_id}`, { headers: this.headers, withCredentials: true });
   }
 
   updateUser(survey_id: string, user_id: string, input: any): Observable<Object>  {
     return this
               .http
-              .post(`${this.uri}/${survey_id}/user/${user_id}`, input, {headers: this.headers});
+              .post(`${this.uri}/${survey_id}/user/${user_id}`, input, {headers: this.headers, withCredentials: true });
   }
 
   deleteUser(survey_id: string, user_id: string): Observable<Object> {
     return this
               .http
-              .delete(`${this.uri}/${survey_id}/user/${user_id}`, {headers: this.headers});
+              .delete(`${this.uri}/${survey_id}/user/${user_id}`, {headers: this.headers, withCredentials: true });
   }
 }
