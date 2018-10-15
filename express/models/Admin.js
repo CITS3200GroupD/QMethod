@@ -1,4 +1,3 @@
-const settings = require('../../config/Settings')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -18,4 +17,4 @@ const adminSchema = new Schema ({
   collection: 'admin'
 });
 
-module.exports = mongoose.model('Admin',adminSchema);
+module.exports = mongoose.model('Admin', adminSchema);
