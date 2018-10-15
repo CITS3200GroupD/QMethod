@@ -10,7 +10,7 @@ var survey = { cols: [ 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2 ],
     name: 'test',
     range: 11,
     publish: false,
-    users: [] 
+    users: []
 };
 var id;
 var update = survey;
@@ -49,7 +49,7 @@ describe('/GET', function() {
         request.get(params, function(err, res, body) {
             expect(res.statusCode).toBe(200);
             expect(JSON.parse(body)).toMatch(update);
-            done(); 
+            done();
         });
     });
 
@@ -57,7 +57,7 @@ describe('/GET', function() {
         params.url = url + '-1';
         request.get(params, function(err, res, body) {
             expect(res.statusCode).toBe(400);
-            done(); 
+            done();
         });
     });
 
@@ -85,7 +85,7 @@ describe('/POST', function() {
         });
     });
 
-    
+
     it('Should add survey', function(done) {
         params.url = url + 'add';
         params.body = survey;
@@ -155,7 +155,7 @@ describe('/POST', function() {
             expect(res.statusCode).toBe(200);
             expect(res.body).toMatch('Successfully Added Statement');
             done();
-        }); 
+        });
     });
 
     it('Should not add exceeding name limit', function(done) {
@@ -165,7 +165,7 @@ describe('/POST', function() {
             expect(res.statusCode).toBe(400);
             expect(res.body).toMatch('Unable to update');
             done();
-        }); 
+        });
     });
 
     it('Should not update exceeding statement limit', function(done) {
@@ -179,7 +179,7 @@ describe('/POST', function() {
             expect(res.statusCode).toBe(400);
             expect(res.body).toMatch('Unable to update');
             done();
-        }); 
+        });
     });
 
     it('Should not update exceeding questionnaire limit', function(done) {
@@ -193,7 +193,7 @@ describe('/POST', function() {
             expect(res.statusCode).toBe(400);
             expect(res.body).toMatch('Unable to update');
             done();
-        }); 
+        });
     });
 
     it('Should not update exceeding register limit', function(done) {
@@ -207,7 +207,7 @@ describe('/POST', function() {
             expect(res.statusCode).toBe(400);
             expect(res.body).toMatch('Unable to update');
             done();
-        }); 
+        });
     });
 
     it('Should not edit survey with users > 0', function(done) {
@@ -218,7 +218,7 @@ describe('/POST', function() {
             expect(res.statusCode).toBe(400);
             expect(res.body).toMatch('Unable to update');
             done();
-        }); 
+        });
     });
 
     /* check is in edit component

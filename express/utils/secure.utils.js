@@ -1,5 +1,4 @@
-const express = require('express'),
-  jwt = require('jsonwebtoken'),
+const jwt = require('jsonwebtoken'),
   settings = require('../../config/Settings')
 
 const utils = {

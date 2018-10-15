@@ -1,7 +1,6 @@
 const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'),
     fs = require('fs'),
     cors = require('cors'),
     mongoose = require('mongoose'),

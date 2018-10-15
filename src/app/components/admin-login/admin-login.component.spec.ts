@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminLoginComponent } from './admin-login.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { MockAuthService } from '../../testing/Testing';
 
@@ -14,7 +15,7 @@ describe('AdminLoginComponent', () => {
       providers: [ AdminLoginComponent,
         { provide: AuthService, useClass: MockAuthService }
       ],
-      imports: [ RouterTestingModule],
+      imports: [ FormsModule, ReactiveFormsModule, RouterTestingModule ],
       declarations: [ AdminLoginComponent ]
     })
     .compileComponents();
