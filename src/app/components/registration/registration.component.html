@@ -1,3 +1,4 @@
+<div class="container">
 <div [formGroup]="reg_fg">
   <div formArrayName="fields" *ngFor="let field of reg_fg.get('fields')['controls']; let i = index;">
     <div [formGroupName]="i">
@@ -17,3 +18,4 @@
   </div>
 </div>
 <button class="button" class="btn btn-primary btn-block" (click)="addUser()" [disabled]="reg_fg.pristine || reg_fg.invalid">Submit</button>
+</div>

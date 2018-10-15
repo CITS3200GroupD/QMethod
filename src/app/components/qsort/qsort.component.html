@@ -1,18 +1,15 @@
-<ngbd-modal-basic-qsort></ngbd-modal-basic-qsort>
-
-
 <div class="container">
   <!-- Gap on top - Row 1-->
   <div class="row justify-content-center" style="padding-top:25px">
     <table class="table compress">
       <tr>
-        <td *ngFor="let col of grid; let i = index">
+        <td class="justify-content-center" *ngFor="let col of grid; let i = index">
           <div class="cell" style="text-align: center">{{i-offset}}</div>
         </td>
       </tr>
       <tr>
         <!-- Columns -->
-        <td *ngFor="let col of grid; let i = index">
+        <td class="justify-content-center" *ngFor="let col of grid; let i = index">
             <!-- Cells -->
             <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
               <div class ="card" droppable id={{j}} (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
@@ -44,7 +41,7 @@
       <!-- Body -->
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngIf="disagree_index != disagree.length" draggable [dragData]="{array: 'disagree', index: disagree[disagree_index]}">
+        <li class="list-group-item no-gap custom-list" *ngIf="disagree_index != disagree.length" draggable [dragData]="{array: 'disagree', index: disagree[disagree_index]}">
           <p> {{ statement[disagree[disagree_index]] }}</p>
         </li>
       </div>
@@ -61,7 +58,7 @@
       <!-- Body -->
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngIf="neutral_index != neutral.length" draggable [dragData]="{array: 'neutral', index: neutral[neutral_index]}">
+        <li class="list-group-item no-gap custom-list" *ngIf="neutral_index != neutral.length" draggable [dragData]="{array: 'neutral', index: neutral[neutral_index]}">
           <p>{{ statement[neutral[neutral_index]] }}</p>
         </li>
       </div>
@@ -78,10 +75,18 @@
       <!-- Body -->
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngIf="agree_index != agree.length" draggable [dragData]="{array:'agree', index:agree[agree_index]}">
+        <li class="list-group-item no-gap custom-list" *ngIf="agree_index != agree.length" draggable [dragData]="{array:'agree', index:agree[agree_index]}">
           <p>{{ statement[agree[agree_index]] }}</p>
         </li>
       </div>
+    </div>
+    <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
+    <app-ngbd-modal-basic-qsort></app-ngbd-modal-basic-qsort>
+</div>
+<!-- Display User ID -->
+<div class="fixed-bottom d-print-none">
+    <div class="float-left">
+      <div class="text-sm font-italic text-monospace" style="font-size: 8pt;"> ID: {{ user_id }} </div>
     </div>
   </div>
 </div>

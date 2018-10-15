@@ -26,8 +26,6 @@ userRoutes.use(cookieParser());     // init Cookie-Parser
 userRoutes.route('/:id/users').get( (req, res, next) => {
   utils.get_req_auth(req, res, next);
   if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
-    // TODO: Needs Real Auth Checking
-    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {
@@ -50,7 +48,7 @@ userRoutes.route('/:id/users').get( (req, res, next) => {
  * Public Access
  * Responds with user_id of the newly created user.
  */
-userRoutes.route('/:id/addUser').post( (req, res, next) => {
+userRoutes.route('/:id/addUser').post( (req, res) => {
   if (!req.headers.qmd) {
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
@@ -71,23 +69,15 @@ userRoutes.route('/:id/addUser').post( (req, res, next) => {
           user.progress = 0;      // Force user progress to be 0.
           survey.users.push(user);
           // console.log(user);
-          user.save()
+          survey.save()
             .then(() => {
-              survey.save()
-                .then(() => {
-                  res.status(200).json(`${user._id}`);
-                  // console.log(`Added User with id: ${user._id}`)
-                })
-                .catch((err) =>{
-                  // Failed Survey Validation
-                  res.status(400).send(`Unable to update - ${err.message} `);
-                  // console.error('Unable to update');
-                });
+              res.status(200).json(`${user._id}`);
+              // console.log(`Added User with id: ${user._id}`)
             })
-            .catch((err) => {
-              // Failed User Validation
-              res.status(400).send(`Unable to update - ${err.message}`);
-              // console.error('Does not match userSchema');
+            .catch((err) =>{
+              // Failed Survey Validation
+              res.status(400).send(`Unable to update - ${err.message} `);
+              // console.error('Unable to update');
             });
         }
       });
@@ -100,10 +90,8 @@ userRoutes.route('/:id/addUser').post( (req, res, next) => {
  * Public Access
  * Responds with JSON of desired User
  */
-userRoutes.route('/:id/user/:user_id').get( (req, res, next) => {
+userRoutes.route('/:id/user/:user_id').get( (req, res) => {
   if (!req.headers.qmd) {
-    // TODO: Needs Real Auth Checking
-    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {
@@ -134,7 +122,7 @@ userRoutes.route('/:id/user/:user_id').get( (req, res, next) => {
  * Public Access
  * Responds with success/failure
  */
-userRoutes.route('/:id/user/:user_id').post( (req, res, next) => {
+userRoutes.route('/:id/user/:user_id').post( (req, res) => {
   if (req.body.constructor === Object &&
     Object.keys(req.body).length === 0 /* || Object.keys(req.body).length > 3 */) {
     res.status(400).json('Bad Request');
@@ -174,25 +162,16 @@ userRoutes.route('/:id/user/:user_id').post( (req, res, next) => {
               break;
           }
           user.progress++;
-          user.save()
+          survey.save()
             .then(() => {
-              survey.save()
-                .then(() => {
-                  res.status(200).json('Successfully Updated');
-                  // console.log('Updated User');
-                })
-                .catch((err) => {
-                  // Failed Survey Validation
-                  res.status(400).send(`Unable to update - ${err.message}`);
-                  // console.error('Unable to update');
-                });
+              res.status(200).json('Successfully Updated');
+              // console.log('Updated User');
             })
             .catch((err) => {
-              // Failed User Validation
+              // Failed Survey Validation
               res.status(400).send(`Unable to update - ${err.message}`);
-              // console.error('Does not match userSchema');
+              // console.error('Unable to update');
             });
-
         }
       }
     });
@@ -207,8 +186,6 @@ userRoutes.route('/:id/user/:user_id').post( (req, res, next) => {
 userRoutes.route('/:id/user/:user_id').delete( (req, res, next) => {
   utils.get_req_auth(req, res, next);
   if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
-    // TODO: Needs Real Auth Checking
-    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {

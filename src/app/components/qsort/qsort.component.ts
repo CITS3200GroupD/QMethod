@@ -21,9 +21,9 @@ export class QsortComponent implements OnInit {
   statement: string[] = [];
 
   grid: number[] = [];
-  disagree_index: number = 0;
-  neutral_index: number = 0;
-  agree_index: number = 0;
+  disagree_index = 0;
+  neutral_index = 0;
+  agree_index = 0;
 
   offset: number;
   rows: number;
@@ -65,8 +65,8 @@ export class QsortComponent implements OnInit {
       (err) => {
         console.error(err);
         if (this.window.nativeWindow.confirm('Invalid Survey/Connection Error')) {
-          if (!isDevMode()) { this.router.navigate(['/']); }
-          else { console.error('Redirect to /'); }
+          if (!isDevMode()) { this.router.navigate(['/']);
+          } else { console.error('Redirect to /'); }
         }
       }
     );
@@ -76,8 +76,8 @@ export class QsortComponent implements OnInit {
    * Generate Matrix (fill with -1)
    */
   private initMatrix(): void {
-    this.grid.forEach((col)=> {
-      let cells = Array(col).fill(-1);
+    this.grid.forEach((col) => {
+      const cells = Array(col).fill(-1);
       this.matrix.push(cells);
     });
     console.log(this.matrix);
@@ -99,8 +99,8 @@ export class QsortComponent implements OnInit {
       (err) => {
         console.error(err);
         if (this.window.nativeWindow.confirm('Invalid/Corrupt User Information')) {
-          if (!isDevMode()) { this.router.navigate(['survey', this.id]); }
-          else { console.error('Redirecting to survey/:id'); }
+          if (!isDevMode()) { this.router.navigate(['survey', this.id]);
+          } else { console.error('Redirecting to survey/:id'); }
         }
       });
     });
@@ -110,7 +110,7 @@ export class QsortComponent implements OnInit {
    * Automatically redirect if this user is on the wrong page
    */
   private checkRedirect() {
-    if (this.progress != 1) {
+    if (this.progress !== 1) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
         switch (this.progress) {
           case 0:
@@ -151,14 +151,14 @@ export class QsortComponent implements OnInit {
     }
   }
 
-  drop(e: any, col: number, cell: number){
+  drop(e: any, col: number, cell: number) {
     // removes from respective array
-    var array = e.dragData.array;
+    const array = e.dragData.array;
 
     // moving statements in grid
-    if (array == 'matrix' && e.dragData.index != undefined) {
+    if (array === 'matrix' && e.dragData.index !== undefined) {
       console.log(this.matrix[col][cell]);
-      if (this.matrix[col][cell] == 1) {
+      if (this.matrix[col][cell] === 1) {
         this.matrix[e.dragData.col][e.dragData.cell] = -1;
       } else { // swap statements
         this.matrix[e.dragData.col][e.dragData.cell] = this.matrix[col][cell];
@@ -167,34 +167,25 @@ export class QsortComponent implements OnInit {
     }
 
     // Add to matrix if index value is -1
-    if (this.matrix[col][cell] == -1 && e.dragData.index != undefined) { // Check that cell is empty
-      if (array == 'disagree') {
-        /* this.disagree.forEach( (item, index) => {
-          if (item == e) { this.disagree.splice(index, 1); }
-        }); */
+    if (this.matrix[col][cell] === -1 && e.dragData.index !== undefined) { // Check that cell is empty
+      if (array === 'disagree') {
         this.disagree_index++;
-      } else if (array == 'neutral') {
-        /* this.neutral.forEach( (item, index) => {
-          if (item == e) { this.neutral.splice(index, 1); }
-        }); */
+      } else if (array === 'neutral') {
         this.neutral_index++;
-      } else if (array == 'agree') {
-        /* this.agree.forEach( (item, index) => {
-          if (item == e) { this.agree.splice(index, 1);}
-        }); */
+      } else if (array === 'agree') {
         this.agree_index++;
-      } else if (array == 'matrix') {
+      } else if (array === 'matrix') {
         this.matrix[e.dragData.col][e.dragData.cell] = -1;
       }
 
-      if (this.matrix.length < col+1) {
-        for (var i = 0; i <= col+1; i++) {
+      if (this.matrix.length < col + 1) {
+        for (let i = 0; i <= col + 1; i++) {
           this.matrix.push([]);
         }
       }
 
-      if(this.matrix[col].length < cell+1) {
-        for (var i = 0; i <= cell+1; i++) {
+      if (this.matrix[col].length < cell + 1) {
+        for (let i = 0; i <= cell + 1; i++) {
           this.matrix[col].push(-1);
         }
       }

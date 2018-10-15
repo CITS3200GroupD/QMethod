@@ -9,8 +9,24 @@
     width: 125px;
     overflow: auto;
     padding: 5px 10px;
-    /* border: black; */
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
 }
+
+.scroll-box {
+    max-height: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+.custom-list{
+    height: 120px;
+    padding-bottom: 0.1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
 
 .btn-light {
     color:black;
