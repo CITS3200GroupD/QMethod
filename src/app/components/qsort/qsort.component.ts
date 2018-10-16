@@ -151,6 +151,12 @@ export class QsortComponent implements OnInit {
     }
   }
 
+	/**
+	 * Drop statements into respective arrays
+	 * @param e event object
+	 * @param col col number (for matrix)
+	 * @param cell cell number (for matrix)
+	 */
   drop(e: any, col: number, cell: number) {
     // removes from respective array
     const array = e.dragData.array;
@@ -191,13 +197,17 @@ export class QsortComponent implements OnInit {
       }
 
       if ( isDevMode() ) { console.log(`${e.dragData.index} => ${col}, ${cell}`); }
-      // this.matrix[col].splice(cell, e.dragData.index);
+      
       this.matrix[col][cell] = e.dragData.index;
     }
 
   }
 
-  
+  /**
+   * Function called when grid is filled up.
+   * Submits the collated data => QMd UserService MW
+   * If successful, goes to Questionnaire page.
+   */
   publishSortContinue() {
     if ( isDevMode() ) {
       console.log(`Matrix: ${this.matrix}`);
