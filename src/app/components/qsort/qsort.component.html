@@ -1,28 +1,27 @@
-<div class="container">
-  <!-- Gap on top - Row 1-->
-  <div class="row justify-content-center" style="padding-top:25px">
-    <table class="table compress">
-      <tr>
-        <td class="justify-content-center" *ngFor="let col of grid; let i = index">
-          <div class="cell" style="text-align: center">{{i-offset}}</div>
-        </td>
-      </tr>
-      <tr>
-        <!-- Columns -->
-        <td class="justify-content-center" *ngFor="let col of grid; let i = index">
-            <!-- Cells -->
-            <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
-              <div class ="card" droppable id={{j}} (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
-                <div *ngIf="matrix.length > 0 && matrix[i][j] != -1">
-                  {{ statement[matrix[i][j]] }}
-                </div>
+<!-- Gap on top - Row 1-->
+<div class="row justify-content-center" style="padding-top:25px">
+  <table class="table compress">
+    <tr>
+      <td class="justify-content-center" *ngFor="let col of grid; let i = index">
+        <div class="cell" style="text-align: center">{{i-offset}}</div>
+      </td>
+    </tr>
+    <tr>
+      <!-- Columns -->
+      <td class="justify-content-center" *ngFor="let col of grid; let i = index">
+          <!-- Cells -->
+          <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
+            <div class ="card" droppable id={{j}} (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
+              <div *ngIf="matrix.length > 0 && matrix[i][j] != -1">
+                {{ statement[matrix[i][j]] }}
               </div>
             </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-
+          </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="container">
   <!-- {          Continue              } -->
   <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
     <button class="btn btn-block btn-outline-primary" *ngIf="disagree_index == disagree.length && neutral_index == neutral.length && agree_index == agree.length" (click)="publishSortContinue()"><h5>continue</h5></button>

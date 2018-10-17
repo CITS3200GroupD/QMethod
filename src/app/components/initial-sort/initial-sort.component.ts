@@ -14,18 +14,36 @@ import { WindowWrap } from '../../window-wrapper';
 })
 export class InitialSortComponent implements OnInit {
 
-  id: string;
-  user_id: string;
-  survey: Survey;
-  statements: string[] = [];
+	/** Survey id */
+	id: string;
+	/** User id */
+	user_id: string;
+	/** Survey */
+	survey: Survey;
+	/** Statements */
+	statements: string[] = [];
+	/** Statements ids */
   statements_sort: number[] = [];
 
-  progress: number;
-  current_index = 0;
-  disagree: number[] = [];
-  neutral: number[] = [];
+	/** Iniital-sort progress */
+	progress: number;
+	/** Array index (for display) */
+	current_index = 0;
+	/** Disagree statements*/
+	disagree: number[] = [];
+	/** Neutral statements */
+	neutral: number[] = [];
+	/** Agree statements */
   agree: number[] = [];
 
+	/**
+	 * Constructor for Activated Route
+   * @param route @ng router
+   * @param router @ng ActivatedRoute
+	 * @param surveyservice Survey Service Middleware to communicate with express RESTful API server
+   * @param userservice User Service Middleware to communicate with express RESTful API server
+   * @param window wrapper for window
+	 */
   constructor( private route: ActivatedRoute,
     private router: Router,
     private surveyservice: SurveyService,
@@ -37,7 +55,11 @@ export class InitialSortComponent implements OnInit {
     });
   }
 
-  // Get data from survey service
+  /**
+	 * Call Survey Service Middleware for survey data.
+	 * Add statement index as id into statements_sort
+	 * If successful, call getUserData() to retreive user properties.
+	 */
   private getSurveyData() {
     this.surveyservice.getSurvey(this.id).subscribe( (res: Survey) => {
       this.survey = res;
@@ -55,7 +77,10 @@ export class InitialSortComponent implements OnInit {
     });
   }
 
-  // Get data from user service
+  /**
+	 * Call User Service Middleware for user data
+	 * If successful call checkRedirect()
+	 */
   private getUserData() {
     this.route.queryParams.subscribe(params => {
       this.user_id = params['user_id'];
@@ -72,7 +97,9 @@ export class InitialSortComponent implements OnInit {
     });
   }
 
-  // Automatically redirect if this user is on the wrong page
+  /**
+	 *  Automatically redirect if this user is on the wrong page
+	 */
   private checkRedirect() {
     if (this.progress !== 0) {
       if (this.window.nativeWindow.confirm('Error: Wrong Page! Redirecting... ')) {
@@ -115,18 +142,27 @@ export class InitialSortComponent implements OnInit {
     }
   }
 
+	/** 
+	 * Increase current_index (for statement display) 
+	 */
   increaseIndex() {
     if (this.current_index + 1 < this.statements_sort.length) {
       this.current_index++;
     }
   }
 
+	/** 
+	 * Decrease current_index (for statement display) 
+	 */
   decreaseIndex() {
     if (this.current_index > 0) {
       this.current_index--;
     }
   }
 
+	/** 
+	 * Add statement into disagree array on click 
+	 */
   onDisagreeClick() {
     const selected = this.statements_sort[this.current_index];
     console.log(selected);
@@ -139,6 +175,9 @@ export class InitialSortComponent implements OnInit {
     }
   }
 
+	/** 
+	 * Add statement into neutral array on click 
+	 */
   onNeutralClick() {
     const selected = this.statements_sort[this.current_index];
     console.log(selected);
@@ -151,6 +190,9 @@ export class InitialSortComponent implements OnInit {
     }
   }
 
+	/** 
+	 * Add statement into agree array on click 
+	 */
   onAgreeClick() {
     const selected = this.statements_sort[this.current_index];
     console.log(selected);
@@ -163,7 +205,9 @@ export class InitialSortComponent implements OnInit {
     }
   }
 
-
+	/** 
+	 * Add statement into disagree array on drop
+	 */
   onDisagreeDrop(e: any) {
     this.removeDisagree(e.dragData);
     this.disagree.push(e.dragData);
@@ -172,6 +216,9 @@ export class InitialSortComponent implements OnInit {
     this.removeAgree(e.dragData);
   }
 
+	/** 
+	 * Add statement into neutral array on drop
+	 */
   onNeutralDrop(e: any) {
     this.removeNeutral(e.dragData);
     this.neutral.push(e.dragData);
@@ -180,6 +227,9 @@ export class InitialSortComponent implements OnInit {
     this.removeAgree(e.dragData);
   }
 
+	/** 
+	 * Add statement into agree array on drop
+	 */
   onAgreeDrop(e: any) {
     this.removeAgree(e.dragData);
     this.agree.push(e.dragData);
@@ -188,6 +238,10 @@ export class InitialSortComponent implements OnInit {
     this.removeNeutral(e.dragData);
   }
 
+	/**
+	 * Remove statement from statement array
+	 * @param e event object
+	 */
   removeStatement(e: any) {
     this.statements_sort.forEach( (item, index) => {
       if (item === e) { this.statements_sort.splice(index, 1); }
@@ -197,6 +251,10 @@ export class InitialSortComponent implements OnInit {
     }
   }
 
+	/**
+	 * Remove statement from disagree array
+	 * @param e event object
+	 */
   removeDisagree(e: any) {
     this.disagree.forEach((item, index) => {
       if (item === e) {
@@ -205,6 +263,10 @@ export class InitialSortComponent implements OnInit {
     });
   }
 
+	/**
+	 * Remove statement from neutral array
+	 * @param e event object
+	 */
   removeNeutral(e: any) {
     this.neutral.forEach( (item, index) => {
       if (item === e) {
@@ -213,6 +275,10 @@ export class InitialSortComponent implements OnInit {
     });
   }
 
+	/**
+	 * Remove statement from agree array
+	 * @param e event object
+	 */
   removeAgree(e: any) {
     this.agree.forEach( (item, index) => {
       if (item === e) {
@@ -226,7 +292,6 @@ export class InitialSortComponent implements OnInit {
    * Submits the collated data => QMd UserService MW
    * If successful, goes to Q-Sort page.
    */
-
   publishSortContinue() {
     if ( isDevMode() ) {
       console.log(`Agree: ${this.agree}`);
