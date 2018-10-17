@@ -4,7 +4,7 @@
     <div [formGroupName]="i">
       <div class="form_attribute">
         <label><h5> {{ reg_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
-        <p> <textarea rows='5' cols='100' formControlName="answer" [maxLength]="TEMP_REG_FIELD_CHAR_LIMIT"></textarea> </p>
+        <p> <textarea rows='5' cols='100' formControlName="answer" [maxLength]="FIELD_NAME_LIMIT"></textarea> </p>
       </div>
     </div>
     <!-- reg_fg.controls['fields'].dirty ||  -->

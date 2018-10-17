@@ -6,6 +6,7 @@ const settings = {
     NAME_LIMIT: 100,
     STATE_LIMIT: 80,
     FIELDS_LIMIT: 10,
+    FIELD_NAME_LIMIT: 100,
     PAGINATE_TABLES: 10,
     PAGINATE_LISTS: 5,
     EXPIRE_TIME: 7200,

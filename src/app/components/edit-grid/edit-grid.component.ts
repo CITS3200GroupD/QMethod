@@ -49,7 +49,7 @@ export class EditGridComponent implements OnInit {
       } else { throw e; }
     }
 
-    if (survey._id != 'BLANK_SURVEY') {
+    if (survey._id !== 'BLANK_SURVEY') {
       this.init = false;
     }
     this.disabled = ( survey.publish || survey.users.length > 0);
@@ -59,7 +59,7 @@ export class EditGridComponent implements OnInit {
 
     this.cols_templates.forEach( (item) => {
       const value = item.val;
-      if (Number(value) == survey.range) {
+      if (Number(value) === survey.range) {
         this.max_grid = Array.from(item.default_cols);
         this.updateStatementCount();
         // this.ngOnInit();
@@ -79,7 +79,7 @@ export class EditGridComponent implements OnInit {
 
     this.cols_templates.forEach( (item) => {
       const value = item.val;
-      if (Number(value) == range) {
+      if (Number(value) === range) {
         this.max_grid = Array.from(item.default_cols);
         this.grid = Array.from(this.max_grid);
         this.updateStatementCount();
@@ -166,7 +166,7 @@ export class EditGridComponent implements OnInit {
    */
   private updateStatementCount(): void {
     this.grid_cell_count = this.grid.reduce((a, b) => a + b, 0);
-    if (this.grid_cell_count != this.num_statements) {
+    if (this.grid_cell_count !== this.num_statements) {
       this.is_valid.emit(false);
     } else {
       this.is_valid.emit(true);
