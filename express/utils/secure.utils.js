@@ -16,11 +16,9 @@ const utils = {
       try {
         utils.handle_cookie(auth_cookie, req);
       } catch (err) {
+        console.log('error has occured');
         console.error(err);
-        next();
       }
-    } else {
-      next();
     }
   },
 
@@ -35,6 +33,8 @@ const utils = {
       req['auth'] = payload['user'];
     }
     catch(err) {
+      console.log('error has occured');
+      console.error(err);
       // console.log('Error: Could not extract user', err.message);
     }
   },
