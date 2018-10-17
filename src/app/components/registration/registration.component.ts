@@ -14,7 +14,7 @@ import * as Settings from '../../../../config/Settings';                // QMd S
 })
 export class RegistrationComponent implements OnInit {
 
-  TEMP_REG_FIELD_CHAR_LIMIT = Settings.TEMP_REG_FIELD_CHAR_LIMIT || 100;
+  FIELD_NAME_LIMIT = Settings.FIELD_NAME_LIMIT;
 
   survey_id: string;
   user_id: string;
@@ -71,36 +71,6 @@ export class RegistrationComponent implements OnInit {
       question: field,
       answer: ['', Validators.required]
     });
-    return (invalid ? null : return_array);
-  }
-
-  /**
-   * A function to submit the registration information and create a new user.
-   */
-  addUser(): void {
-    // Call getResponse
-    const registration_info = this.getResponse();
-    if (registration_info) {
-      this.route.params.subscribe(params => {
-        this.userservice.addUser(params['id'], registration_info).subscribe(
-          (res: string) => {
-            this.user_id = res;
-            // TODO: Modal or element to display user_id to user
-            if (this.window.nativeWindow.confirm(`${this.user_id}`)) {}
-            this.router.navigate(['initial-sort', this.survey_id],
-              {
-                skipLocationChange: !isDevMode(),
-                queryParams: {
-                  user_id: this.user_id
-                }
-              });
-          }
-        );
-      });
-    } else {
-      // TODO: Display Error to User
-      console.error('Invalid Response');
-    }
   }
 
   /**
@@ -144,7 +114,7 @@ export class RegistrationComponent implements OnInit {
         );
       });
     } else {
-      // TODO: Display Error to User
+      // Display Error to User
       console.error('Invalid Response');
       this.window.nativeWindow.confirm('Invalid Submission');
     }
