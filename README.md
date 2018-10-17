@@ -95,3 +95,7 @@ This application uses Open Source components. You can find the source code of th
 * [rxjs 6.0.0](https://github.com/Reactive-Extensions/RxJS)
 * [rxjs-compat 6.3.1](https://github.com/ReactiveX/rxjs/tree/master/compat)
 * [zone.js 0.8.26](https://github.com/angular/zone.js/)
+* [cookie-parser 1.4.3](https://github.com/expressjs/cookie-parser)
+* [core-js 2.5.4](https://github.com/zloirock/core-js)
+* [cors 2.8.4](https://github.com/expressjs/cors)
+* [jsonwebtoken 8.3.0](https://github.com/auth0/node-jsonwebtoken)
