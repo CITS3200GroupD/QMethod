@@ -50,7 +50,7 @@ export class RegistrationComponent implements OnInit {
       },
       err => {
         console.error(err);
-        if (this.window.nativeWindow.confirm('Invalid Survey')) {}
+        this.window.nativeWindow.confirm('Invalid Survey');
         // TODO: Redirect
       }
     );

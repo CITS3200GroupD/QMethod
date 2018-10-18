@@ -31,8 +31,6 @@ export class MockSurveyService {
     return of(return_val);
   }
 
-  // TODO: Pass private api key along with data for authentication
-  // (if exists) as administrator for full survey list access
   getSurveys(): Observable<Object> {
     const return_val = this.valid_survey_list;
     return of(return_val);
@@ -42,7 +40,7 @@ export class MockSurveyService {
     console.log('Received message');
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
-      if (item._id == id) {
+      if (item._id === id) {
         return_val = of(item);
       }
     });
@@ -54,7 +52,7 @@ export class MockSurveyService {
     const id = survey._id;
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
-      if (item._id == id) {
+      if (item._id === id) {
         return_val = of('Successfully Updated');
       }
     });
@@ -65,7 +63,7 @@ export class MockSurveyService {
     console.log('Received message');
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
-      if (item._id == id) {
+      if (item._id === id) {
         return_val = of('Successfully Updated');
       }
     });

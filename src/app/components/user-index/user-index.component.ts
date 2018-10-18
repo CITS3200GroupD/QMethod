@@ -103,7 +103,6 @@ export class UserIndexComponent implements OnInit {
           });
           break;
         case 3:
-          // TODO: Results page
           if (this.window.nativeWindow.confirm('You have already completed this survey')) {}
           /*
           this.router.navigate(['submission', this.id],

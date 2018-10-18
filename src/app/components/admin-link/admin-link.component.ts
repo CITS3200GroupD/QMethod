@@ -15,7 +15,7 @@ import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';    // @ng
 export class AdminLinkComponent implements OnInit {
 
   /** Input from parent component for survey data */
-  @Input() survey: any = {};      // TODO: Change type to Survey and import QMd Models
+  @Input() survey: any = {};      // TODO: Change type to Survey and import QMd Models?
   /** @ng reactive form */
   angForm: FormGroup;
 

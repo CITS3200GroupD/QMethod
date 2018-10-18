@@ -15,7 +15,7 @@ export class MockUserService {
   constructor(private http: HttpClient) {
   }
 
-  // TODO: Implement functions and write documentation in
+  // Implements functions and write documentation in
   // https://qmethod.gitbook.io/project/documentation/user-api
   // See user.service.spec.ts for unit tests
 
@@ -32,7 +32,7 @@ export class MockUserService {
   getUser(survey_id: string, user_id: string): Observable<Object>  {
     let return_val = of(null);
     this.valid_user_list.forEach( (item) => {
-      if (item._id == user_id) {
+      if (item._id === user_id) {
         return_val = of(item);
       }
     });
@@ -44,14 +44,14 @@ export class MockUserService {
     let continue_flag = false;
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
-      if (item._id == id) {
+      if (item._id === id) {
         continue_flag = true;
       }
     });
     if (continue_flag) {
       id = user._id;
       this.valid_user_list.forEach( (item) => {
-        if (item._id == id) {
+        if (item._id === id) {
           return_val = of('Successfully Updated');
         }
       });
@@ -64,13 +64,13 @@ export class MockUserService {
     let continue_flag = false;
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
-      if (item._id == id) {
+      if (item._id === id) {
         continue_flag = true;
       }
     });
     if (continue_flag) {
       this.valid_user_list.forEach( (item) => {
-        if (item._id == user_id) {
+        if (item._id === user_id) {
           return_val = of('Successfully Updated');
         }
       });

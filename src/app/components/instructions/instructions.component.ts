@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class InstructionsComponent implements OnInit {
 
-  // TODO: Call SurveyService API and ensure that this is actually a valid survey ID
   survey_id: string;
 
   constructor( private route: ActivatedRoute,

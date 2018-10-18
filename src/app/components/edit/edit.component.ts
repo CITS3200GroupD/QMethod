@@ -59,8 +59,9 @@ export class EditComponent implements OnInit {
     private surveyservice: SurveyService,
     private fb: FormBuilder,
     private window: WindowWrap) {
-      // TODO: Waiting on proper Authentication
-      this.surveyservice.addAuthHeader('true');
+      /* Deprecated 0.1.4a
+        this.surveyservice.addAuthHeader('true');
+      */
       this.createForm();
       this.cols_templates = GridTemplates;
     }
@@ -244,7 +245,8 @@ export class EditComponent implements OnInit {
         },
         err => {
           console.error(err);
-          // TODO: Error Message Prompt for UX
+          this.window.nativeWindow.confirm('Invalid survey');
+          // TODO: Better error messages
         }
       );
     });

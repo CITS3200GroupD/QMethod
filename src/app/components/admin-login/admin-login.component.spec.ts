@@ -4,7 +4,8 @@ import { AdminLoginComponent } from './admin-login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AuthService } from '../../auth.service';
-import { MockAuthService } from '../../testing/Testing';
+import { MockAuthService, MockWindowWrap } from '../../testing/Testing';
+import { WindowWrap } from 'src/app/window-wrapper';
 
 describe('AdminLoginComponent', () => {
   let component: AdminLoginComponent;
@@ -13,7 +14,8 @@ describe('AdminLoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [ AdminLoginComponent,
-        { provide: AuthService, useClass: MockAuthService }
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: WindowWrap, useClass: MockWindowWrap }
       ],
       imports: [ FormsModule, ReactiveFormsModule, RouterTestingModule ],
       declarations: [ AdminLoginComponent ]

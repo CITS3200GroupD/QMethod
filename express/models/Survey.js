@@ -23,11 +23,13 @@ const surveySchema = new Schema({
   register: {
     type: [String],
     required: [true, 'No register'],
+    validate: [ formValidate, `{PATH} failed to validate`]
     // TODO: Validate maximum registration field length
   },
   questionnaire: {
     type: [String],
-    required: [true, 'No questionnaire']
+    required: [true, 'No questionnaire'],
+    validate: [ formValidate, `{PATH} failed to validate`]
     // TODO: Validate maximum questionnaire field length
   },
   publish: {
@@ -71,6 +73,11 @@ function nameLimit(name) {
 // Check that cols field is within range offered.
 function colValidate(array) {
   return (settings.RANGE_OFFERED.indexOf(array.length) > -1);
+}
+
+// Check that registration fields do not exceed maximum field limit.
+function formValidate(array) {
+  return (array.length <= FIELDS_LIMIT);
 }
 
 // Check that range field is within range offered.

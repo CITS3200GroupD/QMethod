@@ -48,9 +48,10 @@ export class AdminUserViewComponent implements OnInit {
     private userservice: UserService,
     private surveyservice: SurveyService,
     private window: WindowWrap) {
-      // TODO: Waiting on proper Authentication
-      this.userservice.addAuthHeader('true');
-      this.surveyservice.addAuthHeader('true');
+      /* Deprecated 0.1.4a
+        this.userservice.addAuthHeader('true');
+        this.surveyservice.addAuthHeader('true');
+      */
       // Load url params into object vars, then retrieve data from services.
       this.route.params.subscribe(params => {
         this.survey_id = params['id'];

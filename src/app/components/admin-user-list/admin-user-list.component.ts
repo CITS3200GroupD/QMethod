@@ -37,11 +37,13 @@ export class AdminUserListComponent implements OnInit {
   constructor(
     private authservice: AuthService,
     private route: ActivatedRoute,
-    private userservice: UserService, // TODO: Replace with real user service
+    private userservice: UserService,
     private router: Router,
     private window: WindowWrap
   ) {
-    this.userservice.addAuthHeader('true');
+    /* Deprecated 0.1.4a
+      this.userservice.addAuthHeader('true');
+    */
     this.getUserData();
   }
 
@@ -56,7 +58,7 @@ export class AdminUserListComponent implements OnInit {
         this.getUserData();
       },
       (err) => {
-        // TODO: Error message if not successful
+        // Error message if not successful
         console.error(err);
         if (this.window.nativeWindow.confirm(err.message)) { }
       });
@@ -102,7 +104,6 @@ export class UserPipe implements PipeTransform {
     const key_string = '{progress:any}';
     const key_string2 = '{progress:incomplete}';
     if (!users) { return null; }
-    // TODO: Enable toggle of progress filter
     if (!user_filter) {
       return users.filter( n => n.progress >= 3);
     }
