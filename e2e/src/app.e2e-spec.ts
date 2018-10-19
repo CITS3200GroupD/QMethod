@@ -8,27 +8,23 @@ describe('Login Page', () => {
     page = new AppPage();
   });
 
+
+  /*
   it('should display QMd', () => {
     page.navigateTo();
     expect(page.getParagraphHeader()).toEqual('QMd');
   });
 
   it('should display Admin Login', () => {
-    page.navigateTo();
     expect(page.getParagraphBody()).toEqual('Admin Login');
   });
 
-  it('Button should display login', () => {
-    page.navigateTo();
+  it('should display login button', () => {
     expect(page.getLoginButton().getText()).toEqual('login');
   });
 
 
-
-  
-
-
-
+*/
 
 
 });
