@@ -9,9 +9,13 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   uri: String;
-  // TODO: Replace placeholder header with real Authorisation Header
   headers = new HttpHeaders();
 
+  /**
+   * A function to add mock authentication for testing purposes
+   * @param auth_key the string to pass as the auth token
+   * @deprecated Deprecated as of 0.1.4a
+   */
   addAuthHeader(auth_key: string): void {
     this.headers = new HttpHeaders({
       'auth': auth_key,

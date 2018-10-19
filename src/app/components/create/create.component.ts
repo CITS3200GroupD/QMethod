@@ -41,8 +41,9 @@ export class CreateComponent implements OnInit {
     private fb: FormBuilder,
     private window: WindowWrap
   ) {
-    // TODO: Waiting on proper Authentication
-    this.surveyservice.addAuthHeader('true');
+    /* Deprecated 0.1.4a
+      this.surveyservice.addAuthHeader('true');
+    */
     this.createForm();
     // Set default range to QMd default range setting
     this.angForm.get('survey_range').setValue(Settings.DEFAULT_RANGE);
@@ -66,18 +67,17 @@ export class CreateComponent implements OnInit {
 
     const name = this.angForm.get('survey_name').value;
     const range = Number(this.angForm.get('survey_range').value);
-    // TODO: Modify function to also send statement, registration and questionnaire list to survey service MW
     let return_val = false;
+    /*
+    DEBUG
     if ( isDevMode() ) {
       console.log(`SEND => { ${name}, ${range}, [registration], [statements], [questionnaire] }`);
-      /*
       console.log(`Registration: ${this.registration}`);
       console.log(`Statements: ${this.statements}`);
       console.log(`Questionnaire: ${this.questionnaire}`);
-      */
     }
-    // TODO: Replace with non-placeholders
-    // TODO: Read statements, registration and questionnaire data from json.
+    */
+    // Read statements, registration and questionnaire data from json.
     this.surveyservice.addSurvey(name, range, this.registration, this.statements, this.questionnaire)
       .subscribe(
         (res) => {

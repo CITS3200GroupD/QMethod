@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup , Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { Admin } from 'src/app/models';
 import { HttpResponse } from '@angular/common/http';
+import { WindowWrap } from 'src/app/window-wrapper';
 
 @Component({
   selector: 'app-admin-login',
@@ -20,7 +21,8 @@ export class AdminLoginComponent implements OnInit {
   constructor(public authservice: AuthService,
     public router: Router,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private window: WindowWrap
   )   {
   }
 
@@ -60,7 +62,8 @@ export class AdminLoginComponent implements OnInit {
     (err) => {
       console.error(err);
       console.error('Bad Password');
-      // TODO: Bad password popup for user
+      this.window.nativeWindow('Bad password');
+      // TODO: A better bad password popup for user
     });
   }
 

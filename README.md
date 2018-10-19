@@ -1,18 +1,18 @@
-# QMethod v2
+# QMd v2
 
 [![CodeFactor](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod/badge)](https://www.codefactor.io/repository/github/CITS3200GroupD/QMethod)
 [![Docs Status](https://img.shields.io/badge/docs-ready-orange.svg)](https://qmethod.gitbook.io/project/)
 [![Build Status](https://travis-ci.org/CITS3200GroupD/QMethod.svg?branch=master)](https://travis-ci.org/CITS3200GroupD/QMethod)
 [![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
 
-QMethod Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.1.3a
+QMd Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
+Version 0.1.4a
 
-## What is QMethod?
+## What is QMd?
 
-QMethod is a user friendly MEAN stack powered web data collection application originally developed by a team at the University of Western Australia (UWA) to aid in Q-Sorts to aid in Q-methodology research in the field of social sciences and psychology.
+QMd is a user friendly MEAN stack powered web data collection application originally developed by a team at the University of Western Australia (UWA) to aid in Q-Sorts to aid in Q-methodology research in the field of social sciences and psychology.
 
-QMethod offers a range of features, tailored to suit the needs of the UWA social sciences department, that existing solutions currently do not provide:
+QMd offers a range of features, tailored to suit the needs of the UWA social sciences department, that existing solutions currently do not provide:
 
 * Dynamic adjustment of the display grid (both in terms of Horizontal-X axis scaling as well as adjustment of kurtosis) as well as statements.Drag and drop functionality for sorting statement cards into the Q-sort grid.
 * Handling of multiple Q-sort surveys running simultaneously, with separate personal links (routing) for different surveys.Encrypted cloud-based storage of all data with:Support for Mongo DBaaS (Database as as cloud) cloud database storage providers (Mongo Atlas, mLab, etc.)
@@ -20,7 +20,7 @@ QMethod offers a range of features, tailored to suit the needs of the UWA social
 * The ability to view, export (screenshot) and delete user data through the application
 * A follow-up questionnaire for participants
 
-For a more detailed explanation of the full feature set of QMethod please read our breakdown [here](https://qmethod.gitbook.io/project/about/features).
+For a more detailed explanation of the full feature set of QMd please read our breakdown [here](https://qmethod.gitbook.io/project/about/features).
 
 ## Deployment
 

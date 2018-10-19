@@ -19,10 +19,13 @@ export class SurveyService {
   private cols_templates = GridTemplates;
   private uri: string;
 
-  // TODO: Replace placeholder header with real Authorisation Header
   headers: HttpHeaders;
 
-  // To be depreciated
+  /**
+   * A function to add mock authentication for testing purposes
+   * @param auth_key the string to pass as the auth token
+   * @deprecated Deprecated as of 0.1.4a
+   */
   addAuthHeader(auth_key: string): void {
     this.headers = new HttpHeaders({
       'auth': auth_key,
@@ -73,7 +76,9 @@ export class SurveyService {
     return null;
   }
 
-  // TODO: Pass private api key along with data for authentication (if exists) as administrator for full survey list access
+  // Note: API token (JWT) is passed along as a secure cookie for authentication (if exists)
+  // this denotes administrator access for full survey list (unscrubbed) data
+
   getSurveys(): Observable<Object> {
     return this
            .http

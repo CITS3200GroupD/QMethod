@@ -39,8 +39,6 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private window: WindowWrap
   ) {
-    // TODO: Waiting on proper Authentication
-    this.surveyservice.addAuthHeader('true');
     this.getSurveyData();
   }
 
@@ -63,8 +61,8 @@ export class AdminComponent implements OnInit {
           status = true;
           this.getSurveyData();
         },
-        // TODO: Error message if not successful
         (err) => {
+          // TODO: Better error message
           console.error(err);
           this.window.nativeWindow.confirm('Failed to delete survey');
         }
@@ -89,8 +87,13 @@ export class AdminComponent implements OnInit {
         });
         survey.valid_users = count;
       });
-    });
-      // TODO: Error message if not successful
+    },
+    (err) => {
+      // TODO: Better error message
+      console.error(err);
+      // this.window.nativeWindow.confirm('Failed to get survey');
+      }
+    );
   }
 
   logOut() {

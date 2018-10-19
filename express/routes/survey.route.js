@@ -11,8 +11,7 @@ express();
  * ============================================================================
  */
 
-// TODO: In general this code needs to be a lot more robust
-// and need to add security and authentication.
+// TODO: In general this code could be a bit more robust
 
 // Require Survey model in our routes module
 let Survey = require('../models/Survey');
@@ -29,8 +28,6 @@ surveyRoutes.route('/add').post( (req, res, next) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
   } else if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
-    // TODO: Needs Real Auth Checking
-    // TODO: Replace with Auth Cookie
     res.status(400).send('Bad Auth');
   } else {
     let survey = new Survey(req.body);
@@ -51,8 +48,6 @@ surveyRoutes.route('/add').post( (req, res, next) => {
  */
 surveyRoutes.route('/').get( (req, res, next) => {
   utils.get_req_auth(req, res, next);
-  // TODO: Needs Real Auth Checking
-  // TODO: Replace with Auth Cookie
   if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
     res.status(400).send('Bad Auth');
   } else {
@@ -74,7 +69,6 @@ surveyRoutes.route('/').get( (req, res, next) => {
  */
 surveyRoutes.route('/:id').get( (req, res, next) => {
   utils.get_req_auth(req, res, next);
-  // TODO: Needs Real Auth Checking
   if (!req.headers.qmd) {
     res.status(400).send('Bad Auth');
   } else {
@@ -111,8 +105,6 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
   } else if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
-    // TODO: Replace with Auth Cookie
-    // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
   } else {
     Survey.findById(req.params.id, (err, survey) => {
@@ -120,7 +112,7 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
         res.status(400).json(err);
       } else  {
         // Fields
-        // TODO: Redo this to be more robust
+        // TODO*: Redo this to be more robust
         survey.name = req.body.name;
         survey.publish = req.body.publish;
 
@@ -151,8 +143,6 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
 surveyRoutes.route('/:id').delete( (req, res, next) => {
   utils.get_req_auth(req, res, next);
   if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
-    // TODO: Replace with Auth Cookie
-    // TODO: Needs Real Auth Checking
     res.status(400).send('Bad Auth');
   } else {
     Survey.findByIdAndRemove({_id: req.params.id}, (err) => {
