@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js deploy",
+    "start": "node start.js",
     "build": "ng build",
     "test": "jasmine-node-karma spec/ && ng test",
     "lint": "ng lint",
