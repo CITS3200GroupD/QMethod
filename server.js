@@ -45,6 +45,24 @@ const express = require('express'),
   app.use(cors(cors_options)); // init CORS
 
   /*
+   * For the deployment build, we also want to use the
+   * express server to host our (built and pre-compiled) /dist
+   * files.
+   */
+  if (process.argv[2] === 'deploy') {
+    app.use(express.static(__dirname + '/dist'));
+  }
+  app.use((err, req, res, next) => {
+    console.log(err);
+    // console.log(req);
+    if (err !== null) {
+      console.error('Invalid JSON received')
+      return res.json('Invalid JSON');
+    }
+    return next();
+  });
+
+  /*
    * For the deployment build
    * For all GET requests, send back index.html
    * so that PathLocationStrategy can be used
@@ -61,25 +79,6 @@ const express = require('express'),
       res.sendFile(path.join(__dirname + '/dist/index.html'));
     });
   }
-
-  /*
-   * For the deployment build, we also want to use the
-   * express server to host our (built and pre-compiled) /dist
-   * files.
-   */
-  if (process.argv[2] === 'deploy') {
-    app.use(express.static(__dirname + '/dist'));
-  }
-  app.use((err, req, res, next) => {
-
-    console.log(err);
-    // console.log(req);
-    if (err !== null) {
-      console.error('Invalid JSON received')
-      return res.json('Invalid JSON');
-    }
-    return next();
-  });
 
   // Auth route (JWT)
   const authRoutes = require('./express/routes/auth.route');
