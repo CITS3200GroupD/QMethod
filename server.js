@@ -32,23 +32,6 @@ const express = require('express'),
   });
 
   app.use(bodyParser.json());
-  /**
-   * For the deployment build
-   * For all GET requests, send back index.html
-   * so that PathLocationStrategy can be used
-   * If an incoming request uses a protocol other than HTTPS,
-   * redirect that request to the same url but with HTTPS
-   */
-  if (process.argv[2] === 'deploy') {
-    app.use('*', function(req, res) {
-      if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(
-        ['https://', req.get('Host'), req.url].join('')
-        );
-      }
-      res.sendFile(path.join(__dirname + '/dist/index.html'));
-    });
-  }
 
   // Options for CORS (cross origin resource sharing)
   let hosts = ['*'];
@@ -60,9 +43,30 @@ const express = require('express'),
     credentials: true
   }
   app.use(cors(cors_options)); // init CORS
-  /* For the deployment build, we also want to use the
-    * express server to host our (built and pre-compiled) /dist
-    * files. */
+
+  /*
+   * For the deployment build
+   * For all GET requests, send back index.html
+   * so that PathLocationStrategy can be used
+   * If an incoming request uses a protocol other than HTTPS,
+   * redirect that request to the same url but with HTTPS
+   */
+  if (process.argv[2] === 'deploy') {
+    app.get('*', function(req, res) {
+      if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(
+        ['https://', req.get('Host'), req.url].join('')
+        );
+      }
+      res.sendFile(path.join(__dirname + '/dist/index.html'));
+    });
+  }
+
+  /*
+   * For the deployment build, we also want to use the
+   * express server to host our (built and pre-compiled) /dist
+   * files.
+   */
   if (process.argv[2] === 'deploy') {
     app.use(express.static(__dirname + '/dist'));
   }
