@@ -31,6 +31,7 @@ const express = require('express'),
     console.log(`Listening on port ${port}`);
   });
 
+  app.use(bodyParser.json());
   /**
    * For the deployment build
    * For all GET requests, send back index.html
@@ -65,7 +66,6 @@ const express = require('express'),
   if (process.argv[2] === 'deploy') {
     app.use(express.static(__dirname + '/dist'));
   }
-  app.use(bodyParser.json());
   app.use((err, req, res, next) => {
 
     console.log(err);
