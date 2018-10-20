@@ -6,6 +6,7 @@ const express = require('express'),
   mongoose = require('mongoose'),
   config = require('./config/DB');
 
+
   // For dev builds, use test database
   if (process.argv[2] != 'deploy') {
     process.env['MONGODB_URI'] = config.TEST_DB;
@@ -29,6 +30,8 @@ const express = require('express'),
   server.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
+
+  app.use(bodyParser.json());
 
   // Options for CORS (cross origin resource sharing)
   let hosts = ['*'];

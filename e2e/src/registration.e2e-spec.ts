@@ -8,7 +8,7 @@ describe('Registration Page', () => {
     page = new RegistrationPage();
   });
 
-  
+
 
   it('should Fill up Registration Form', () => {
     page.navigateTo();
@@ -21,13 +21,15 @@ describe('Registration Page', () => {
     expect(page.getSubmitButton().getText()).toEqual('Submit');
   });
 
-  
+
   it('should route to Initial-sort Page', () => {
     page.navigateTo();
     element(by.css('textarea')).sendKeys('Testing');
     page.getSubmitButton().click();
     browser.sleep(1000);
-    browser.switchTo().alert().accept(); //Close Alert
+    browser.switchTo().alert().accept(); // Close Alert
+    browser.sleep(1000);
+    browser.switchTo().alert().accept(); // Close Alert
     expect(browser.getCurrentUrl()).toContain('http://localhost:4200/initial-sort');
   });
 
@@ -35,6 +37,7 @@ describe('Registration Page', () => {
   it('Initial-Sort Page : should Pop-up Instructions', () => {
     expect(page.getOKButton().getText()).toEqual('×');
   });
+
 
   /*it('Initial-Sort Page : should route to Q-sort Page', () => {
 
