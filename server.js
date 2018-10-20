@@ -43,7 +43,7 @@ const express = require('express'),
     credentials: true
   }
   app.use(cors(cors_options)); // init CORS
-
+  app.use(bodyParser.json()); // init body-parser
   /*
    * For the deployment build, we also want to use the
    * express server to host our (built and pre-compiled) /dist

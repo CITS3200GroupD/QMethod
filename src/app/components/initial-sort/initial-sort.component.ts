@@ -36,6 +36,9 @@ export class InitialSortComponent implements OnInit {
   /** Agree statements */
   agree: number[] = [];
 
+  /** Flag to indicate completed submission */
+  submitted = false;
+
   /**
    * Constructor for Activated Route
    * @param route @ng router
@@ -303,23 +306,26 @@ export class InitialSortComponent implements OnInit {
      *   console.log(`Disagree: ${this.disagree}`);
      * }
      */
-    const input = {
-      sort_agree: this.agree,
-      sort_neutral: this.neutral,
-      sort_disagree: this.disagree
-    };
-    this.userservice.updateUser(this.id, this.user_id, input).subscribe( res => {
-      this.router.navigate(['q-sort', this.id], {
-        skipLocationChange: !isDevMode(),
-        queryParams: {
-          user_id: this.user_id
-        }
+    if (!this.submitted) {
+      this.submitted = true;
+      const input = {
+        sort_agree: this.agree,
+        sort_neutral: this.neutral,
+        sort_disagree: this.disagree
+      };
+      this.userservice.updateUser(this.id, this.user_id, input).subscribe( res => {
+        this.router.navigate(['q-sort', this.id], {
+          skipLocationChange: !isDevMode(),
+          queryParams: {
+            user_id: this.user_id
+          }
+        });
+      },
+      err => {
+        console.error(err);
+        if (this.window.nativeWindow.confirm('Update Failed. An error has occured.')) {}
       });
-    },
-    err => {
-      console.error(err);
-      if (this.window.nativeWindow.confirm('Update Failed. An error has occured.')) {}
-    });
+    }
   }
 
   ngOnInit() {

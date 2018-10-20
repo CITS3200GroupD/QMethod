@@ -24,7 +24,7 @@
   <!-- {          Continue              } -->
   <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
     <!-- Button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
-    <button class="btn btn-block btn-outline-primary" *ngIf="!statements_sort.length" (click)="publishSortContinue()"><h5>continue</h5></button>
+    <button class="btn btn-block btn-outline-primary" *ngIf="!statements_sort.length" [disabled]="submitted" (click)="publishSortContinue()"><h5>continue</h5></button>
   </div>
 
   <!-- Row 3 - Agree/Disagree/Neutral Panels -->

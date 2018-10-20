@@ -10,25 +10,46 @@ import { WindowWrap } from '../../window-wrapper';
   templateUrl: './qsort.component.html',
   styleUrls: ['./qsort.component.css']
 })
+/** Component for the Q-Sort Grid page */
 export class QsortComponent implements OnInit {
+  /** ID of the current survey */
   id: string;
+  /** ID of the current user */
   user_id: string;
+  /** Progress of the current user */
   progress: number;
 
+  /** User's sorted disagree list */
   disagree: number[] = [];
+  /** User's sorted neutral list */
   neutral: number[] = [];
+  /** User's sorted agree list */
   agree: number[] = [];
+  /** Statements of this survey */
   statement: string[] = [];
 
+  /** Array of cell counts per column */
   grid: number[] = [];
+  /** Index of disagree */
   disagree_index = 0;
+  /** Index of neutral */
   neutral_index = 0;
+  /** Index of agree */
   agree_index = 0;
 
+  /** Index of the currently selected list (for clicking functionality)
+   * 0 = disagree, 1 = neutral, 2 = agree
+   */
+  selected_list = 0;
+
+  /** Offset variable (for displaying column headers) */
   offset: number;
+  /** Number of rows in the grid */
   rows: number;
+  /** Temporary holding aray */
   arr = Array;
 
+  /** Grid/Matrix to be updated */
   matrix: number[][] = [];
 
   /**
@@ -152,8 +173,67 @@ export class QsortComponent implements OnInit {
     }
   }
 
+  /** Selects a list (for click and place method)
+   * @param list_id ID of the list (0 = disagree, 1 = neutral, 2 = agree)
+  */
+  select_click(list_id: number) {
+    this.selected_list = list_id;
+  }
+
+  /** Update selection to next list */
+  private select_update() {
+    this.selected_list = (this.selected_list + 1) % 3;
+  }
+
   /**
-	 * Drop statements into respective arrays
+	 * Drop statements by clicking into the matrix
+	 * @param col col number (for matrix)
+	 * @param cell cell number (for matrix)
+	 */
+  drop_click(col: number, cell: number) {
+    if (this.matrix[col][cell] === -1) {
+      console.log(`[${col}, ${cell}]`);
+      console.log(this.disagree[this.disagree_index]);
+      console.log(this.neutral[this.neutral_index]);
+      console.log(this.agree[this.agree_index]);
+      switch (this.selected_list) {
+        case 0:
+          console.log(this.disagree[this.disagree_index]);
+          if (this.disagree[this.disagree_index] !== undefined) {
+            this.matrix[col][cell] = this.disagree[this.disagree_index++];
+            if (this.disagree[this.disagree_index] === undefined) {
+              this.select_update();
+            }
+          } else {
+            this.select_update();
+          }
+        break;
+        case 1:
+          if (this.neutral[this.neutral_index] !== undefined) {
+            this.matrix[col][cell] = this.neutral[this.neutral_index++];
+            if (this.neutral[this.neutral_index] === undefined) {
+              this.select_update();
+            }
+          } else {
+            this.select_update();
+          }
+        break;
+        case 2:
+          if (this.agree[this.agree_index] !== undefined) {
+            this.matrix[col][cell] = this.agree[this.agree_index++];
+            if (this.agree[this.agree_index] === undefined) {
+              this.select_update();
+            }
+          } else {
+            this.select_update();
+          }
+        break;
+      }
+    }
+  }
+
+  /**
+	 * Drop statements by dragging into the matrix
 	 * @param e event object
 	 * @param col col number (for matrix)
 	 * @param cell cell number (for matrix)

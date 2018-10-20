@@ -12,17 +12,21 @@ import * as Settings from '../../../../config/Settings';                // QMd S
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
+/** Component for the registration page */
 export class RegistrationComponent implements OnInit {
-
+  /** Maximum field description character limit */
   FIELD_NAME_LIMIT = Settings.FIELD_NAME_LIMIT;
-
+  /** ID of the survey */
   survey_id: string;
+  /** ID of the user */
   user_id: string;
+  /** @ng reactive form group */
   reg_fg: FormGroup;
+  /** @ng reactive form array */
   reg_fa: FormArray;
 
   /** SubmitOnce flag */
-  submitOnce = false;
+  submitted = false;
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -76,6 +80,7 @@ export class RegistrationComponent implements OnInit {
 
   /**
    * A function to extract the necessary information needed to pass onto the user service
+   * @returns array to pass on as input to user service or null if invalid
    */
   private getResponse(): string[] {
     const return_array = [];
@@ -94,30 +99,36 @@ export class RegistrationComponent implements OnInit {
    * A function to submit the registration information and create a new user.
    */
   addUser(): void {
-    // Call getResponse
-    const registration_info = this.getResponse();
-    if (registration_info) {
-      this.route.params.subscribe(params => {
-        this.userservice.addUser(params['id'], registration_info).subscribe(
-          (res: string) => {
-            this.user_id = res;
-            // TODO: Modal or element to display user_id to user
-            if (this.window.nativeWindow.confirm(`Your User ID is [ ${this.user_id} ] and Survey ID is [ ${this.survey_id} ].
-            Please record this for future reference.`)) {}
-            this.router.navigate(['initial-sort', this.survey_id],
-              {
-                skipLocationChange: !isDevMode(),
-                queryParams: {
-                  user_id: this.user_id
+    if (this.window.nativeWindow.confirm(
+      `By clicking OK you acknowledge that you have read all relevant permission forms and agree to their terms and conditions`)) {
+      // Call getResponse
+      if (!this.submitted) {
+        this.submitted = true;
+        const registration_info = this.getResponse();
+        if (registration_info) {
+          this.route.params.subscribe(params => {
+            this.userservice.addUser(params['id'], registration_info).subscribe(
+            (res: string) => {
+              this.user_id = res;
+              // TODO: Modal or element to display user_id to user
+              if (this.window.nativeWindow.confirm(
+              `Your User ID is [ ${this.user_id} ]\nSurvey ID is [ ${this.survey_id} ]\nPlease record this for future reference.`)) {}
+              this.router.navigate(['initial-sort', this.survey_id],
+                {
+                  skipLocationChange: !isDevMode(),
+                  queryParams: {
+                    user_id: this.user_id
+                  }
                 }
-              });
-          }
-        );
-      });
-    } else {
-      // Display Error to User
-      console.error('Invalid Response');
-      this.window.nativeWindow.confirm('Invalid Submission');
+              );
+            });
+          });
+        } else {
+          // Display Error to User
+          console.error('Invalid Response');
+          this.window.nativeWindow.confirm('Invalid Submission');
+        }
+      }
     }
   }
 
