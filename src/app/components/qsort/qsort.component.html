@@ -11,7 +11,7 @@
       <td class="justify-content-center" *ngFor="let col of grid; let i = index">
           <!-- Cells -->
           <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
-            <div class ="card" droppable id={{j}} (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
+            <div class ="card" droppable id={{j}} (click)="drop_click(i, j)" (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
               <div *ngIf="matrix.length > 0 && matrix[i][j] != -1">
                 {{ statement[matrix[i][j]] }}
               </div>
@@ -33,8 +33,10 @@
     <div class="col-md-4">
       <!-- Header -->
       <div class="list-group">
-        <li class="list-group-item bg-danger" >
-          <h5>Disagree</h5>
+        <li class="list-group-item bg-danger" (click)="select_click(0)" >
+          <h5>Disagree
+            <i class="badge badge-pill badge-danger" *ngIf="selected_list === 0"><i class="fas fa-check"></i></i>
+          </h5>
         </li>
       </div>
       <!-- Body -->
@@ -50,8 +52,10 @@
     <div class="col-md-4">
       <!-- Header -->
       <div class="list-group">
-        <li class="list-group-item bg-warning">
-          <h5>Neutral</h5>
+        <li class="list-group-item bg-warning" (click)="select_click(1)">
+          <h5>Neutral
+            <i class="badge badge-pill badge-warning" *ngIf="selected_list === 1"><i class="fas fa-check"></i></i>
+          </h5>
         </li>
       </div>
       <!-- Body -->
@@ -67,8 +71,10 @@
     <div class="col-md-4">
       <!-- Header -->
       <div class="list-group">
-        <li class="list-group-item bg-success">
-          <h5>Agree</h5>
+        <li class="list-group-item bg-success" (click)="select_click(2)">
+          <h5>Agree
+            <i class="badge badge-pill badge-success" *ngIf="selected_list === 2"><i class="fas fa-check"></i></i>
+          </h5>
         </li>
       </div>
       <!-- Body -->
