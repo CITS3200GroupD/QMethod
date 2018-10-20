@@ -22,6 +22,9 @@ export class QuestionnaireComponent implements OnInit {
   ques_fa: FormArray;
   progress: number;
 
+  /** SubmitOnce flag */
+  submitted = false;
+
   /**
    * Constructor for QuestionnaireComponent
    * @param route @ng ActivatedRoute
@@ -124,22 +127,25 @@ export class QuestionnaireComponent implements OnInit {
    * If successful, goes to submission page.
    */
   continueToResults() {
-    const ans = this.getResponse();
-    const input = {
-        question_ans: ans
-    };
-    if (ans) {
-      this.userservice.updateUser(this.survey_id, this.user_id, input).subscribe( res => {
-        this.router.navigate(['submission', this.survey_id], {
-          queryParams: {
-            user_id: this.user_id
-          }
+    if (!this.submitted) {
+      this.submitted = true;
+      const ans = this.getResponse();
+      const input = {
+         question_ans: ans
+      };
+      if (ans) {
+        this.userservice.updateUser(this.survey_id, this.user_id, input).subscribe( res => {
+          this.router.navigate(['submission', this.survey_id], {
+            queryParams: {
+              user_id: this.user_id
+            }
+          });
+        },
+        err => {
+          console.error(err);
+          if (this.window.nativeWindow.confirm('An error occured whilst submitting')) {}
         });
-      },
-      err => {
-        console.error(err);
-        if (this.window.nativeWindow.confirm('An error occured whilst submitting')) {}
-      });
+      }
     }
   }
 

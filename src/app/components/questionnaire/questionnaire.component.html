@@ -14,4 +14,4 @@
       </div>
   </div>
 </div>
-<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()" [disabled]="ques_fg.pristine || ques_fg.invalid">Submit</button>
+<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()" [disabled]="submitted || ques_fg.pristine || ques_fg.invalid">Submit</button>
