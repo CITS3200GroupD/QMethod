@@ -62,6 +62,18 @@ const express = require('express'),
     return next();
   });
 
+  // Auth route (JWT)
+  const authRoutes = require('./express/routes/auth.route');
+  app.use('/auth', authRoutes);
+
+  // Routes for RESTful API for Survey Data
+  const surveyRoutes = require('./express/routes/survey.route');
+  app.use('/api', surveyRoutes);
+
+  // Routes for RESTful API for User Data
+  const userRoutes = require('./express/routes/user.route');
+  app.use('/api2', userRoutes);
+
   /*
    * For the deployment build
    * For all GET requests, send back index.html
@@ -79,15 +91,3 @@ const express = require('express'),
       res.sendFile(path.join(__dirname + '/dist/index.html'));
     });
   }
-
-  // Auth route (JWT)
-  const authRoutes = require('./express/routes/auth.route');
-  app.use('/auth', authRoutes);
-
-  // Routes for RESTful API for Survey Data
-  const surveyRoutes = require('./express/routes/survey.route');
-  app.use('/api', surveyRoutes);
-
-  // Routes for RESTful API for User Data
-  const userRoutes = require('./express/routes/user.route');
-  app.use('/api2', userRoutes);
