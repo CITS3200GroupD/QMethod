@@ -12,17 +12,21 @@ import * as Settings from '../../../../config/Settings';                // QMd S
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
+/** Component for the registration page */
 export class RegistrationComponent implements OnInit {
-
+  /** Maximum field description character limit */
   FIELD_NAME_LIMIT = Settings.FIELD_NAME_LIMIT;
-
+  /** ID of the survey */
   survey_id: string;
+  /** ID of the user */
   user_id: string;
+  /** @ng reactive form group */
   reg_fg: FormGroup;
+  /** @ng reactive form array */
   reg_fa: FormArray;
 
   /** SubmitOnce flag */
-  submitOnce = false;
+  submitted = false;
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -76,6 +80,7 @@ export class RegistrationComponent implements OnInit {
 
   /**
    * A function to extract the necessary information needed to pass onto the user service
+   * @returns array to pass on as input to user service or null if invalid
    */
   private getResponse(): string[] {
     const return_array = [];
@@ -95,10 +100,12 @@ export class RegistrationComponent implements OnInit {
    */
   addUser(): void {
     // Call getResponse
-    const registration_info = this.getResponse();
-    if (registration_info) {
-      this.route.params.subscribe(params => {
-        this.userservice.addUser(params['id'], registration_info).subscribe(
+    if (!this.submitted) {
+      this.submitted = true;
+      const registration_info = this.getResponse();
+      if (registration_info) {
+        this.route.params.subscribe(params => {
+          this.userservice.addUser(params['id'], registration_info).subscribe(
           (res: string) => {
             this.user_id = res;
             // TODO: Modal or element to display user_id to user
@@ -110,14 +117,15 @@ export class RegistrationComponent implements OnInit {
                 queryParams: {
                   user_id: this.user_id
                 }
-              });
-          }
-        );
-      });
-    } else {
-      // Display Error to User
-      console.error('Invalid Response');
-      this.window.nativeWindow.confirm('Invalid Submission');
+              }
+            );
+          });
+        });
+      } else {
+        // Display Error to User
+        console.error('Invalid Response');
+        this.window.nativeWindow.confirm('Invalid Submission');
+      }
     }
   }
 
