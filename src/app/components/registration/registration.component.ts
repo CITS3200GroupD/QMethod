@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
   reg_fa: FormArray;
 
   /** SubmitOnce flag */
-  submitOnce = false;
+  submitted = false;
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -95,10 +95,12 @@ export class RegistrationComponent implements OnInit {
    */
   addUser(): void {
     // Call getResponse
-    const registration_info = this.getResponse();
-    if (registration_info) {
-      this.route.params.subscribe(params => {
-        this.userservice.addUser(params['id'], registration_info).subscribe(
+    if (!this.submitted) {
+      this.submitted = true;
+      const registration_info = this.getResponse();
+      if (registration_info) {
+        this.route.params.subscribe(params => {
+          this.userservice.addUser(params['id'], registration_info).subscribe(
           (res: string) => {
             this.user_id = res;
             // TODO: Modal or element to display user_id to user
