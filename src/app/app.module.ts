@@ -23,7 +23,6 @@ import { NgDragDropModule } from 'ng-drag-drop';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // ng-bootstrap
 import { Ng2PaginationModule } from 'ng2-pagination';   // ng2-pagination
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';  // loading bar
-import { CookieModule, CookieService } from 'ngx-cookie';
 
 
 
@@ -161,8 +160,7 @@ const routes: Routes = [
     NgDragDropModule.forRoot(),
     NgbModule,
     NgbModule.forRoot(),
-    Ng2PaginationModule,
-    CookieModule.forRoot()
+    Ng2PaginationModule
   ],
   providers: [
     AdminGuard,
@@ -176,7 +174,6 @@ const routes: Routes = [
     AuthService,
     SurveyService,
     UserService,
-    CookieService,
     MockSurveyService,
     MockUserService,
     WindowWrap

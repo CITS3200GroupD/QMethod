@@ -55,12 +55,6 @@ Run `nodemon server` and `ng serve` for a dev server. Shell scripts are provided
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-i.e. `ng g c components/<page name> --spec=false`
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
@@ -68,6 +62,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+Run `node.js server & jasmine-node-karma spec/routes_spec.js --autotest` to execute tests for the express server.
 
 ## Running end-to-end tests
 
@@ -99,3 +95,4 @@ This application uses Open Source components. You can find the source code of th
 * [core-js 2.5.4](https://github.com/zloirock/core-js)
 * [cors 2.8.4](https://github.com/expressjs/cors)
 * [jsonwebtoken 8.3.0](https://github.com/auth0/node-jsonwebtoken)
+* [forever-monitor 1.7.2](https://github.com/foreverjs/forever-monitor)
