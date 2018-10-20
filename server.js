@@ -30,13 +30,6 @@ const express = require('express'),
     console.log(`Listening on port ${port}`);
   });
 
-  /* For the deployment build, we also want to use the
-    * express server to host our (built and pre-compiled) /dist
-    * files. */
-  if (process.argv[2] === 'deploy') {
-    app.use(express.static(__dirname + '/dist'));
-  }
-
   /**
    * For the deployment build
    * For all requests, send back index.html
@@ -46,13 +39,20 @@ const express = require('express'),
    */
   if (process.argv[2] === 'deploy') {
     app.use('/*', function(req, res) {
-      if ( !req.secure && req.headers['x-forwarded-proto'] !== 'https') {
+      if ( /*!req.secure && */ req.headers['x-forwarded-proto'] !== 'https') {
         return res.redirect(
         ['https://', req.get('Host'), req.url].join('')
         );
       }
       res.sendFile(path.join(__dirname + '/dist/index.html'));
     });
+  }
+
+  /* For the deployment build, we also want to use the
+    * express server to host our (built and pre-compiled) /dist
+    * files. */
+   if (process.argv[2] === 'deploy') {
+    app.use(express.static(__dirname + '/dist'));
   }
 
   // Options for CORS (cross origin resource sharing)
