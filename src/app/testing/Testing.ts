@@ -229,6 +229,16 @@ export const ValidUserList: User[] = [
     ],
     question_ans: ['1b', '2b', '3b', '4b', '5b'],
   },
+  {
+    _id: '5s345asdfh3s1ad',
+    progress: 1,
+    register_ans: ['21', 'Male', 'Korea', 'English', 'French'],
+    sort_agree: [],
+    sort_neutral: [],
+    sort_disagree: [],
+    matrix: [],
+    question_ans: []
+  },
 ];
 
 export const ValidSurveyList: Survey[] = [
@@ -240,9 +250,9 @@ export const ValidSurveyList: Survey[] = [
     cols: [2, 3, 4, 5, 4, 3, 2],
     register: TestingRegister,
     statements: [
-      '', '', '', '', '', '', '', '', '', '',
-      '', '', '', '', '', '', '', '', '', '',
-      '', '', ''
+      '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+      '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+      '21', '22', '23'
     ],
     questionnaire: TestingQuestionnaire,
     users: ValidUserList
@@ -255,10 +265,10 @@ export const ValidSurveyList: Survey[] = [
     cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
     register: TestingRegister,
     statements:  [
-      '', '', '', '', '', '', '', '', '', '',
-      '', '', '', '', '', '', '', '', '', '',
-      '', '', '', '', '', '', '', '', '', '',
-      '', '', '', ''
+      '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+      '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+      '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+      '31', '32', '33', '34'
     ],
     questionnaire: TestingQuestionnaire,
     users: []

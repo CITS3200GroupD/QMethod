@@ -80,7 +80,8 @@ export class QsortComponent implements OnInit {
       const cells = Array(col).fill(-1);
       this.matrix.push(cells);
     });
-    console.log(this.matrix);
+    // DEBUG
+    // console.log(this.matrix);
   }
 
   /**
@@ -151,7 +152,7 @@ export class QsortComponent implements OnInit {
     }
   }
 
-	/**
+  /**
 	 * Drop statements into respective arrays
 	 * @param e event object
 	 * @param col col number (for matrix)
@@ -163,7 +164,8 @@ export class QsortComponent implements OnInit {
 
     // moving statements in grid
     if (array === 'matrix' && e.dragData.index !== undefined) {
-      console.log(this.matrix[col][cell]);
+      // DEBUG
+      // console.log(this.matrix[col][cell]);
       if (this.matrix[col][cell] === 1) {
         this.matrix[e.dragData.col][e.dragData.cell] = -1;
       } else { // swap statements
@@ -196,8 +198,9 @@ export class QsortComponent implements OnInit {
         }
       }
 
-      if ( isDevMode() ) { console.log(`${e.dragData.index} => ${col}, ${cell}`); }
-      
+      // DEBUG
+      // if ( isDevMode() ) { console.log(`${e.dragData.index} => ${col}, ${cell}`); }
+
       this.matrix[col][cell] = e.dragData.index;
     }
 
@@ -209,9 +212,11 @@ export class QsortComponent implements OnInit {
    * If successful, goes to Questionnaire page.
    */
   publishSortContinue() {
-    if ( isDevMode() ) {
-      console.log(`Matrix: ${this.matrix}`);
-    }
+    /* DEBUG
+     * if ( isDevMode() ) {
+     *  console.log(`Matrix: ${this.matrix}`);
+     * }
+     */
     const input = {
       matrix: this.matrix
     };

@@ -133,8 +133,10 @@ export class EditGridComponent implements OnInit {
       this.throwError('Attempted to update a published server');
     } else {
       this.grid[col] += 1;
-      // console.log(col.toString()+','+row.toString());
-      // console.log(this.grid);
+      /* DEBUG
+       * console.log(col.toString()+','+row.toString());
+       * console.log(this.grid);
+       */
       this.updateStatementCount();
       this.output_grid.emit(this.grid);
       this.ngOnInit();
@@ -152,8 +154,10 @@ export class EditGridComponent implements OnInit {
       this.throwError('Attempted to update a published server');
     } else {
       this.grid[col] -= 1;
-      // console.log(col.toString()+','+row.toString());
-      // console.log(this.grid);
+      /* DEBUG
+       * console.log(col.toString()+','+row.toString());
+       * console.log(this.grid);
+       */
       this.updateStatementCount();
       this.output_grid.emit(this.grid);
       this.ngOnInit();

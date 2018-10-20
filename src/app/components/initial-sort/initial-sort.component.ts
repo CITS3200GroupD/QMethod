@@ -165,7 +165,8 @@ export class InitialSortComponent implements OnInit {
    */
   onDisagreeClick() {
     const selected = this.statements_sort[this.current_index];
-    console.log(selected);
+    // DEBUG
+    // console.log(selected);
     if (selected !== undefined) {
       this.removeDisagree(selected);
       this.disagree.push(selected);
@@ -180,7 +181,8 @@ export class InitialSortComponent implements OnInit {
    */
   onNeutralClick() {
     const selected = this.statements_sort[this.current_index];
-    console.log(selected);
+    // DEBUG
+    // console.log(selected);
     if (selected !== undefined) {
       this.removeNeutral(selected);
       this.neutral.push(selected);
@@ -195,7 +197,8 @@ export class InitialSortComponent implements OnInit {
    */
   onAgreeClick() {
     const selected = this.statements_sort[this.current_index];
-    console.log(selected);
+    // DEBUG
+    // console.log(selected);
     if (selected !== undefined) {
       this.removeAgree(selected);
       this.agree.push(selected);
@@ -293,11 +296,13 @@ export class InitialSortComponent implements OnInit {
    * If successful, goes to Q-Sort page.
    */
   publishSortContinue() {
-    if ( isDevMode() ) {
-      console.log(`Agree: ${this.agree}`);
-      console.log(`Neutral: ${this.neutral}`);
-      console.log(`Disagree: ${this.disagree}`);
-    }
+    /* DEBUG
+     * if ( isDevMode() ) {
+     *   console.log(`Agree: ${this.agree}`);
+     *   console.log(`Neutral: ${this.neutral}`);
+     *   console.log(`Disagree: ${this.disagree}`);
+     * }
+     */
     const input = {
       sort_agree: this.agree,
       sort_neutral: this.neutral,
