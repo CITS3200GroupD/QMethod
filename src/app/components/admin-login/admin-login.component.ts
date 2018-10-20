@@ -79,7 +79,7 @@ export class AdminLoginComponent implements OnInit {
     (err) => {
       console.error(err);
       console.error('Bad Password');
-      this.window.nativeWindow('Bad password');
+      this.window.nativeWindow.confirm('Bad password');
       // TODO: A better bad password popup for user
     });
   }

@@ -30,36 +30,16 @@ const express = require('express'),
     console.log(`Listening on port ${port}`);
   });
 
-  // Options for CORS (cross origin resource sharing)
-  let hosts = ['*'];
-  if (process.argv[2] != 'deploy') {
-    hosts = ['http://localhost:8080', 'http://localhost:4200'];
-  }
-  const cors_options = {
-    origin: hosts,
-    credentials: true
-  }
-  app.use(cors(cors_options)); // init CORS
   /* For the deployment build, we also want to use the
     * express server to host our (built and pre-compiled) /dist
     * files. */
   if (process.argv[2] === 'deploy') {
     app.use(express.static(__dirname + '/dist'));
   }
-  app.use(bodyParser.json());
-  app.use((err, req, res, next) => {
-    console.log(err);
-    // console.log(req);
-    if (err !== null) {
-      console.error('Invalid JSON received')
-      return res.json('Invalid JSON');
-    }
-    return next();
-  });
 
   /**
    * For the deployment build
-   * For all GET requests, send back index.html
+   * For all requests, send back index.html
    * so that PathLocationStrategy can be used
    * If an incoming request uses a protocol other than HTTPS,
    * redirect that request to the same url but with HTTPS
@@ -74,6 +54,27 @@ const express = require('express'),
       res.sendFile(path.join(__dirname + '/dist/index.html'));
     });
   }
+
+  // Options for CORS (cross origin resource sharing)
+  let hosts = ['*'];
+  if (process.argv[2] != 'deploy') {
+    hosts = ['http://localhost:8080', 'http://localhost:4200'];
+  }
+  const cors_options = {
+    origin: hosts,
+    credentials: true
+  }
+  app.use(cors(cors_options)); // init CORS
+  app.use(bodyParser.json()); // init bodyparser
+  app.use((err, req, res, next) => {
+    console.log(err);
+    // console.log(req);
+    if (err !== null) {
+      console.error('Invalid JSON received')
+      return res.json('Invalid JSON');
+    }
+    return next();
+  });
 
   // Auth route (JWT)
   const authRoutes = require('./express/routes/auth.route');
