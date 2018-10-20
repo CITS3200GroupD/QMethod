@@ -8,7 +8,7 @@ describe('Login Page', () => {
     page = new AppPage();
   });
 
-/*
+
   
   it('should display QMd', () => {
     page.navigateTo();
@@ -23,7 +23,7 @@ describe('Login Page', () => {
     expect(page.getLoginButton().getText()).toEqual('login');
   });
 
-*/
+
 
 
 });

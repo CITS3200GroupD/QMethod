@@ -20,9 +20,8 @@ export class RegistrationPage {
   }
 
   getContinueButton() {
-    return element(by.css('button h5'));
+    return element(by.className('btn btn-block btn-outline-primary'));
   }
 
-  
 
 }

@@ -8,7 +8,7 @@ describe('Instructions Page', () => {
     page = new InstructionsPage();
   });
 
- /*
+
   
   it('should display Instructions', () => {
     page.navigateTo();
@@ -28,7 +28,7 @@ describe('Instructions Page', () => {
 
 
 
-*/
+
 
   
   
