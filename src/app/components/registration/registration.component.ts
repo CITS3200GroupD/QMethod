@@ -99,32 +99,35 @@ export class RegistrationComponent implements OnInit {
    * A function to submit the registration information and create a new user.
    */
   addUser(): void {
-    // Call getResponse
-    if (!this.submitted) {
-      this.submitted = true;
-      const registration_info = this.getResponse();
-      if (registration_info) {
-        this.route.params.subscribe(params => {
-          this.userservice.addUser(params['id'], registration_info).subscribe(
-          (res: string) => {
-            this.user_id = res;
-            // TODO: Modal or element to display user_id to user
-            if (this.window.nativeWindow.confirm(`Your User ID is [ ${this.user_id} ] and Survey ID is [ ${this.survey_id} ].
-            Please record this for future reference.`)) {}
-            this.router.navigate(['initial-sort', this.survey_id],
-              {
-                skipLocationChange: !isDevMode(),
-                queryParams: {
-                  user_id: this.user_id
+    if (this.window.nativeWindow.confirm(
+      `By clicking OK you acknowledge that you have read all relevant permission forms and agree to their terms and conditions`)) {
+      // Call getResponse
+      if (!this.submitted) {
+        this.submitted = true;
+        const registration_info = this.getResponse();
+        if (registration_info) {
+          this.route.params.subscribe(params => {
+            this.userservice.addUser(params['id'], registration_info).subscribe(
+            (res: string) => {
+              this.user_id = res;
+              // TODO: Modal or element to display user_id to user
+              if (this.window.nativeWindow.confirm(
+              `Your User ID is [ ${this.user_id} ]\nSurvey ID is [ ${this.survey_id} ]\nPlease record this for future reference.`)) {}
+              this.router.navigate(['initial-sort', this.survey_id],
+                {
+                  skipLocationChange: !isDevMode(),
+                  queryParams: {
+                    user_id: this.user_id
+                  }
                 }
-              }
-            );
+              );
+            });
           });
-        });
-      } else {
-        // Display Error to User
-        console.error('Invalid Response');
-        this.window.nativeWindow.confirm('Invalid Submission');
+        } else {
+          // Display Error to User
+          console.error('Invalid Response');
+          this.window.nativeWindow.confirm('Invalid Submission');
+        }
       }
     }
   }
