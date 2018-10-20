@@ -29,12 +29,11 @@ authRoutes.route('/').post( (req, res) => {
     // Note: For production, cookie is only sent over secured (HTTPS) channel.
     let headers = {};
     const expire_t = settings.EXPIRE_TIME * 1000;
-    if (process.argv[2] === 'deploy') {
-      headers = { httpOnly: true, secure: true, sameSite: true, maxAge: expire_t  };
-      // headers = { httpOnly: true, sameSite: true, maxAge: expire_t };
+    if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
+      headers = { httpOnly: true, sameSite: true, maxAge: expire_t  };
       res.cookie('SESSION_ID', token, headers).status(200).json('User/Password Authenticated');
     } else {
-      headers = { httpOnly: true, sameSite: true, maxAge: expire_t };
+      headers = { httpOnly: true, secure: true, sameSite: true, maxAge: expire_t  };
       res.cookie('SESSION_ID', token, headers).status(200).json('User/Password Authenticated');
     }
   }

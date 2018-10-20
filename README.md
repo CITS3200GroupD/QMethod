@@ -6,7 +6,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
 
 QMd Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.1.4a
+Version 0.1.5a
 
 ## What is QMd?
 
