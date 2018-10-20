@@ -9,7 +9,7 @@ describe('Instructions Page', () => {
   });
 
  /*
-  
+
   it('should display Instructions', () => {
     page.navigateTo();
     expect(page.getParagraphHeader()).toEqual('Instructions');
@@ -30,8 +30,8 @@ describe('Instructions Page', () => {
 
 */
 
-  
-  
+
+
 
 
 });

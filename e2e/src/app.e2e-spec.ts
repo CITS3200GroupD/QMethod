@@ -9,7 +9,7 @@ describe('Login Page', () => {
   });
 
 /*
-  
+
   it('should display QMd', () => {
     page.navigateTo();
     expect(page.getParagraphHeader()).toEqual('QMd');

@@ -5,7 +5,7 @@ export class RegistrationPage {
     return browser.get('/registration/5bcaef5e4650fa2f9a72c897');
   }
 
-  
+
   getParagraphHeader() {
     return element(by.css('app-instructions h1')).getText();
   }
@@ -22,7 +22,5 @@ export class RegistrationPage {
   getContinueButton() {
     return element(by.css('button h5'));
   }
-
-  
 
 }

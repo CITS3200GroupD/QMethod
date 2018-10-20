@@ -5,7 +5,7 @@ export class InstructionsPage {
     return browser.get('/instructions/5bcaef5e4650fa2f9a72c897');
   }
 
-  
+
   getParagraphHeader() {
     return element(by.css('app-instructions h1')).getText();
   }
@@ -14,6 +14,6 @@ export class InstructionsPage {
     return element(by.css('button'));
   }
 
- 
+
 
 }
