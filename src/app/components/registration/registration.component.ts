@@ -61,7 +61,8 @@ export class RegistrationComponent implements OnInit {
     this.reg_fg = this.fb.group({
       fields: this.fb.array([])
     });
-    console.log(this.reg_fg);
+    // DEBUG
+    // console.log(this.reg_fg);
     this.reg_fa = this.reg_fg.get('fields') as FormArray;
   }
 

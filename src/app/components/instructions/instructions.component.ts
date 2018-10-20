@@ -15,7 +15,8 @@ export class InstructionsComponent implements OnInit {
   ) {
     this.route.params.subscribe( params => {
       this.survey_id = params['id'];
-      console.log(this.survey_id);
+      // DEBUG
+      // console.log(this.survey_id);
     });
   }
 

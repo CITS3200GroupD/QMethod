@@ -69,19 +69,20 @@ export class CreateComponent implements OnInit {
     const range = Number(this.angForm.get('survey_range').value);
     let return_val = false;
     /*
-    DEBUG
-    if ( isDevMode() ) {
-      console.log(`SEND => { ${name}, ${range}, [registration], [statements], [questionnaire] }`);
-      console.log(`Registration: ${this.registration}`);
-      console.log(`Statements: ${this.statements}`);
-      console.log(`Questionnaire: ${this.questionnaire}`);
-    }
-    */
+     * DEBUG
+     * if ( isDevMode() ) {
+     *   console.log(`SEND => { ${name}, ${range}, [registration], [statements], [questionnaire] }`);
+     *   console.log(`Registration: ${this.registration}`);
+     *   console.log(`Statements: ${this.statements}`);
+     *   console.log(`Questionnaire: ${this.questionnaire}`);
+     * }
+     */
     // Read statements, registration and questionnaire data from json.
     this.surveyservice.addSurvey(name, range, this.registration, this.statements, this.questionnaire)
       .subscribe(
         (res) => {
-          console.log(`RES <= ${res}`);
+          // DEBUG
+          // console.log(`RES <= ${res}`);
           return_val = true;
           this.router.navigate(['admin']);
         },

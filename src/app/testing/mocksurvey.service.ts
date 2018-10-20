@@ -26,7 +26,8 @@ export class MockSurveyService {
 
   addSurvey(name: string, range: number, register: string[],
     statements: string[], questionnaire: string[]): Observable<Object> {
-    console.log('Received message');
+    // DEBUG
+    // console.log('Received message');
     const return_val = 'Successfully Updated';
     return of(return_val);
   }
@@ -37,7 +38,8 @@ export class MockSurveyService {
   }
 
   getSurvey(id: string): Observable<Object> {
-    console.log('Received message');
+    // DEBUG
+    // console.log('Received message');
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
       if (item._id === id) {
@@ -48,7 +50,8 @@ export class MockSurveyService {
   }
 
   updateSurvey(survey: Survey): Observable<Object> {
-    console.log('Received message');
+    // DEBUG
+    // console.log('Received message');
     const id = survey._id;
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
@@ -60,7 +63,8 @@ export class MockSurveyService {
   }
 
   deleteSurvey(id: string): Observable<Object> {
-    console.log('Received message');
+    // DEBUG
+    // console.log('Received message');
     let return_val = of(undefined);
     this.valid_survey_list.forEach( (item) => {
       if (item._id === id) {

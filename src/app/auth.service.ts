@@ -8,15 +8,17 @@ import { ObjectOrientedRenderer3 } from '@angular/core/src/render3/interfaces/re
 @Injectable()
 export class AuthService {
 
+  /** Current authentication status of the application */
   logged_in = false;
-  valid = false;
-  // store the URL so we can redirect after logging in
+  /** Variable to store the last URL so we can redirect to it after logging in */
   redirect_url: string;
+  /** URL of the authentication api route on the express server */
   private uri: string;
 
 
   constructor( private http: HttpClient) {
-    if (isDevMode()) { console.log('auth.service init'); }
+    // DEBUG
+    // if (isDevMode()) { console.log('auth.service init'); }
     if (isDevMode()) {
       this.uri = 'http://localhost:8080/auth';
     } else {
@@ -29,7 +31,20 @@ export class AuthService {
     }
   }
 
-  /** Check Session ID (in cookie) vs Auth Server */
+  /*
+  * Authentication RESTful API Middleware
+  * ============================================================================
+  * See https://qmethod.gitbook.io/project/documentation/auth-api
+  * ============================================================================
+  * Note: API token (JWT) is passed along as a secure cookie for authentication (if exists)
+  * this denotes administrator access for routes which handle sensitive data.
+  */
+
+  /**
+   * Calls express server to validate SESSION_ID JWT token (in cookie)
+   * Calls logout function if invalid
+   * @returns Observable with success or invalid response
+   */
   checkAuth() {
     // Call Auth API to ensure this is a valid session
     return this.http.get(`${this.uri}/token`,
@@ -45,7 +60,12 @@ export class AuthService {
     );
   }
 
-  /** Send login data to authentication route */
+  /**
+   * Calls express server, sending login data for authentication.
+   * Sets login flag to true if succesful.
+   * @param admin Admin object (username/password) to be authenticated
+   * @returns Observable with either success or invalid response
+   * */
   logIn(admin: Admin): Observable<Object> {
     return this.http.post(this.uri, admin,
       {
@@ -60,8 +80,10 @@ export class AuthService {
     );
   }
 
-  /** Function called on log out, call delete route to override cookie and sets login flag to falsdse */
-  logOut() {
+  /** Function called on log out, calls express server to override cookie
+   * Sets login flag to false
+   */
+  logOut(): void {
     this.logged_in = false;
     // Since cookie is http only, we must get the express server to "Reset" the cookie.
     this.http.get(`${this.uri}/remove_token`, { withCredentials: true }).subscribe( (res) => {});

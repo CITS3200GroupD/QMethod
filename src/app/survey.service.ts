@@ -7,11 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-/***
+/*
  * Survey RESTful API Middleware
  * ============================================================================
  * See https://qmethod.gitbook.io/project/documentation/survey-api
  * ============================================================================
+ * Note: API token (JWT) is passed along as a secure cookie for authentication (if exists)
+ * this denotes administrator access for routes which handle sensitive data.
  */
 
 export class SurveyService {
@@ -33,6 +35,9 @@ export class SurveyService {
     });
   }
 
+  /** Constructor for SurveyService
+   * @param http @ng HttpClient
+  */
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
       'qmd': 'ng-client'
@@ -44,20 +49,33 @@ export class SurveyService {
     }
   }
 
+  /**
+   * Sends a request to the express server to generate a new survey
+   * This route requires authentication credentials (JWT token) to be passed.
+   * @param name Name of the survey
+   * @param range Range of the survey (7 = +3 to -3, 9 = +4 to -4, etc)
+   * @param register Array of registration page fields
+   * @param statements Array of Statement fields
+   * @param questionnaire Array of Questionnaire fields
+   */
   addSurvey(name: string, range: number, register: string[],
     statements: string[], questionnaire: string[]): Observable<Object> {
     let cols: number[];
     this.cols_templates.forEach( (item) => {
       const value = item.val;
-      console.log(value);
-      console.log(typeof value);
+      /* DEBUG
+       * console.log(value);
+       * console.log(typeof value);
+       */
       // Find default grid
       if ( Number(value) === range) {
-        console.log('MATCH!');
+        // DEBUG
+        // console.log('MATCH!');
         cols = Array.from(item.default_cols);
       }
     });
-    console.log(cols);
+    // DEBUG
+    // console.log(cols);
     if (cols) {
       const surveyCreate: SurveyInput = {
         name: name,
@@ -76,21 +94,34 @@ export class SurveyService {
     return null;
   }
 
-  // Note: API token (JWT) is passed along as a secure cookie for authentication (if exists)
-  // this denotes administrator access for full survey list (unscrubbed) data
-
+  /** Calls the express server to get a list of all surveys
+   * This route requires authentication credentials (JWT token) to be passed.
+   * @returns Observable containing the array of survey data
+  */
   getSurveys(): Observable<Object> {
     return this
            .http
            .get(`${this.uri}`, { headers: this.headers, withCredentials: true });
   }
 
+  /**
+   * Calls the express server for the survey data for a specific survey ID
+   * This route is public and does not require authentication.
+   * @param id The id of the survey data to be returned
+   * @returns Observable containing the survey data
+   */
   getSurvey(id: string): Observable<Object> {
     return this
             .http
             .get(`${this.uri}/${id}`, { headers: this.headers, withCredentials: true});
   }
 
+  /**
+   * Calls the express server to update survey data of a specific survey ID
+   * This route requires authentication credentials (JWT token) to be passed.
+   * @param id The id of the survey data to be updated
+   * @returns Observable containing either a successful or invalid response
+   */
   updateSurvey(survey: Survey): Observable<Object> {
     const id = survey._id;
 
@@ -99,6 +130,12 @@ export class SurveyService {
               .post(`${this.uri}/${id}`, survey, { headers: this.headers, withCredentials: true });
   }
 
+  /**
+   * Calls the express server to delete survey data that corresponds to a specific survey ID
+   * This route requires authentication credentials (JWT token) to be passed.
+   * @param id The id of the survey data to be deleted
+   * @returns Observable containing either a successful or invalid response
+   */
   deleteSurvey(id: string): Observable<Object> {
     return this
               .http
