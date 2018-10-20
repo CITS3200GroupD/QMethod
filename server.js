@@ -30,31 +30,6 @@ const express = require('express'),
     console.log(`Listening on port ${port}`);
   });
 
-  /**
-   * For the deployment build
-   * For all requests, send back index.html
-   * so that PathLocationStrategy can be used
-   * If an incoming request uses a protocol other than HTTPS,
-   * redirect that request to the same url but with HTTPS
-   */
-  if (process.argv[2] === 'deploy') {
-    app.use('/*', function(req, res) {
-      if ( /*!req.secure && */ req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(
-        ['https://', req.get('Host'), req.url].join('')
-        );
-      }
-      res.sendFile(path.join(__dirname + '/dist/index.html'));
-    });
-  }
-
-  /* For the deployment build, we also want to use the
-    * express server to host our (built and pre-compiled) /dist
-    * files. */
-   if (process.argv[2] === 'deploy') {
-    app.use(express.static(__dirname + '/dist'));
-  }
-
   // Options for CORS (cross origin resource sharing)
   let hosts = ['*'];
   if (process.argv[2] != 'deploy') {
@@ -65,7 +40,13 @@ const express = require('express'),
     credentials: true
   }
   app.use(cors(cors_options)); // init CORS
-  app.use(bodyParser.json()); // init bodyparser
+  /* For the deployment build, we also want to use the
+    * express server to host our (built and pre-compiled) /dist
+    * files. */
+  if (process.argv[2] === 'deploy') {
+    app.use(express.static(__dirname + '/dist'));
+  }
+  app.use(bodyParser.json());
   app.use((err, req, res, next) => {
     console.log(err);
     // console.log(req);
@@ -87,3 +68,22 @@ const express = require('express'),
   // Routes for RESTful API for User Data
   const userRoutes = require('./express/routes/user.route');
   app.use('/api2', userRoutes);
+
+  /**
+   * For the deployment build
+   * For all GET requests, send back index.html
+   * so that PathLocationStrategy can be used
+   * If an incoming request uses a protocol other than HTTPS,
+   * redirect that request to the same url but with HTTPS
+   */
+  if (process.argv[2] === 'deploy') {
+    app.use('/*', function(req, res) {
+      console.log(req.headers['x-forwarded-proto']);
+      if (req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(
+        ['https://', req.get('Host'), req.url].join('')
+        );
+      }
+      res.sendFile(path.join(__dirname + '/dist/index.html'));
+    });
+  }
