@@ -2,7 +2,7 @@ import { browser, by, element } from 'protractor';
 
 export class RegistrationPage {
   navigateTo() {
-    return browser.get('/registration/5bc5d0e4c50bf317461620aa');
+    return browser.get('/registration/5bcaef5e4650fa2f9a72c897');
   }
 
   
@@ -18,7 +18,6 @@ export class RegistrationPage {
   getOKButton() {
     return element(by.css('ngb-modal-window button'));
   }
-
 
   getContinueButton() {
     return element(by.css('button h5'));

@@ -8,7 +8,7 @@ describe('Registration Page', () => {
     page = new RegistrationPage();
   });
 
-  
+
 
   it('should Fill up Registration Form', () => {
     page.navigateTo();
@@ -35,6 +35,8 @@ describe('Registration Page', () => {
   it('Initial-Sort Page : should Pop-up Instructions', () => {
     expect(page.getOKButton().getText()).toEqual('×');
   });
+
+  
 
   /*it('Initial-Sort Page : should route to Q-sort Page', () => {
 
