@@ -30,7 +30,6 @@ describe('AdminLinkComponent', () => {
     expect(component.survey).toBeTruthy();
     expect(typeof component.survey).toBe('object');
     expect(component.angForm).toBeTruthy();
-    // TODO: Better checks
   });
 
 });

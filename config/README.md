@@ -38,3 +38,15 @@ PAGINATE_TABLES - The maximum number of survey items to display per page (in sur
 PAGINATE_LISTS - The maximum number of registration/questionnaire fields to display per page (in edit). Default is 5.
 
 EXPIRE_TIME - The amount of time that a login token can last before expiring (in seconds). Default is 7200 seconds.
+
+# QMd Configuration
+
+```
+{
+    "registration" : [ <fields> ],
+    "questionnaire" : [ <fields> ],
+    "statements": [ <statements> ]
+}
+```
+
+A format for passing serialised registration, questionnaire and statement data to the application for fast and easy configuration of new surveys. See `example_config.json` for a working example. Please note that your JSON file must contain strictly correct syntax, or the configuration will not load.

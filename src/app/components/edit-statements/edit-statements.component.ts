@@ -23,6 +23,8 @@ export class EditStatementsComponent implements OnInit {
   CHAR_LIMIT = Settings.CHAR_LIMIT;
   /** Statement limit */
   STATE_LIMIT = Settings.STATE_LIMIT;
+  /** Pagination variable */
+  PAGINATE_LISTS = Settings.PAGINATE_LISTS;
 
   /** Statements for this survey */
   statements: string[];
