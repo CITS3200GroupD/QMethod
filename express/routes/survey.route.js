@@ -18,6 +18,8 @@ let Survey = require('../models/Survey');
 
 surveyRoutes.use(cookieParser());     // init Cookie-Parser
 
+const username = process.env['ADMIN_LOGIN_NAME'];
+
 /**
  * Add new survey item to database
  * Private (Admin) Access
@@ -27,7 +29,7 @@ surveyRoutes.route('/add').post( (req, res, next) => {
   utils.get_req_auth(req, res, next);
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
-  } else if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
+  } else if (!req.headers.qmd || req.auth !== username) {
     res.status(400).send('Bad Auth');
   } else {
     let survey = new Survey(req.body);
@@ -48,7 +50,7 @@ surveyRoutes.route('/add').post( (req, res, next) => {
  */
 surveyRoutes.route('/').get( (req, res, next) => {
   utils.get_req_auth(req, res, next);
-  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
+  if (!req.headers.qmd || req.auth !== username) {
     res.status(400).send('Bad Auth');
   } else {
     Survey.find( (err, surveys) => {
@@ -78,7 +80,7 @@ surveyRoutes.route('/:id').get( (req, res, next) => {
         res.status(400).json(err);
       } else if (survey) {
         // Check Auth, if not auth...
-        if (req.auth !== process.env['USERNAME']) {
+        if (req.auth !== username) {
           // Do not show unpublished surveys
           if (!survey.publish) {
             res.status(400).send('Bad Request')
@@ -104,7 +106,7 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
   utils.get_req_auth(req, res, next);
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send('Bad Request');
-  } else if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
+  } else if (!req.headers.qmd || req.auth !== username) {
     res.status(400).send('Bad Auth');
   } else {
     Survey.findById(req.params.id, (err, survey) => {
@@ -142,7 +144,7 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
  */
 surveyRoutes.route('/:id').delete( (req, res, next) => {
   utils.get_req_auth(req, res, next);
-  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
+  if (!req.headers.qmd || req.auth !== username) {
     res.status(400).send('Bad Auth');
   } else {
     Survey.findByIdAndRemove({_id: req.params.id}, (err) => {

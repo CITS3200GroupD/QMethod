@@ -17,6 +17,9 @@ express();
  * http://jasonwatmore.com/post/2018/05/23/angular-6-jwt-authentication-example-tutorial
  */
 
+const username = process.env['ADMIN_LOGIN_NAME'];
+const password = process.env['ADMIN_LOGIN_PASSWORD'];
+
 authRoutes.use(cookieParser());     // init Cookie-Parser
 
 /**
@@ -24,7 +27,7 @@ authRoutes.use(cookieParser());     // init Cookie-Parser
  */
 authRoutes.route('/').post( (req, res) => {
   // if sent user = [admin] and sent password = [password] generate JWT key (encrypt with secret keys)
-  if (req.body.username === process.env['USERNAME'] && req.body.password === process.env['PASSWORD']) {
+  if (req.body.username === username && req.body.password === password) {
     let token = utils.generate_jwt();
     // Note: For production, cookie is only sent over secured (HTTPS) channel.
     let headers = {};
@@ -45,7 +48,7 @@ authRoutes.route('/').post( (req, res) => {
 /** Check token for validity*/
 authRoutes.route('/token').get( (req, res, next) => {
   utils.get_req_auth(req, res, next);
-  if (req.auth === process.env['USERNAME']) {
+  if (req.auth === username) {
     res.status(200).json('Authenticated Token');
   }
   else {
