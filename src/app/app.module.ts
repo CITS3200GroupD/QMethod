@@ -47,6 +47,8 @@ import { EditFormsComponent } from './components/edit-forms/edit-forms.component
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { SubmissionComponent } from './components/submission/submission.component';
+import { NgbdModalBasicRegistrationComponent } from './components/registration/modal-basic';
+
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -145,7 +147,8 @@ const routes: Routes = [
     EditFormsComponent,
     AdminUserViewComponent,
     AdminLoginComponent,
-    SubmissionComponent
+    SubmissionComponent,
+    NgbdModalBasicRegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -156,6 +159,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgDragDropModule.forRoot(),
     NgbModule,
+    NgbModule.forRoot(),
     Ng2PaginationModule,
     CookieModule.forRoot()
   ],

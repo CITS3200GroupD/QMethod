@@ -1,10 +1,12 @@
-import { Component, OnInit, isDevMode } from '@angular/core';
+import { Component, OnInit, isDevMode, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../user.service';
 import { SurveyService } from 'src/app/survey.service';
 import { WindowWrap } from '../../window-wrapper';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Survey } from 'src/app/models';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalBasicRegistrationComponent } from '../registration/modal-basic';
 import * as Settings from '../../../../config/Settings';                // QMd Settings
 
 @Component({
@@ -24,7 +26,12 @@ export class RegistrationComponent implements OnInit {
   /** SubmitOnce flag */
   submitted = false;
 
-  constructor( private route: ActivatedRoute,
+  closeResult: string;
+
+  @ViewChild('content') private content;
+
+  constructor( private modalService: NgbModal,
+    private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
     private surveyservice: SurveyService,
@@ -35,6 +42,24 @@ export class RegistrationComponent implements OnInit {
       });
       this.getSurveyData();
       this.createForm();
+    }
+
+    open(content: any) {
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return  `with: ${reason}`;
+      }
     }
 
   /**
@@ -102,7 +127,7 @@ export class RegistrationComponent implements OnInit {
           this.userservice.addUser(params['id'], registration_info).subscribe(
           (res: string) => {
             this.user_id = res;
-            // TODO: Modal or element to display user_id to user
+            // TODO: add Modal pop up instead
             if (this.window.nativeWindow.confirm(`Your User ID is [ ${this.user_id} ] and Survey ID is [ ${this.survey_id} ].
             Please record this for future reference.`)) {}
             this.router.navigate(['initial-sort', this.survey_id],
