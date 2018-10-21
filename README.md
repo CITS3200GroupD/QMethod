@@ -6,7 +6,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
 
 QMd Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 0.1.5a
+Version 2.0
 
 ## What is QMd?
 
@@ -26,7 +26,7 @@ For a more detailed explanation of the full feature set of QMd please read our b
 
 Please read the following for either [a basic](https://qmethod.gitbook.io/project/installation/basic-deploy) or [advanced](https://qmethod.gitbook.io/project/installation/advanced-deploy) guide to deploying this MEAN stack powered application to the Heroku Cloud.
 
-[![Video Guide](https://i.imgur.com/jG5lEUu.png)](https://streamable.com/zqjls)
+[![Video Guide](https://i.imgur.com/jG5lEUu.png)](https://streamable.com/k1ztc)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/CITS3200GroupD/QMethod/tree/master)
 
@@ -67,7 +67,7 @@ Run `node.js server & jasmine-node-karma spec/routes_spec.js --autotest` to exec
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `node.js server & ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 

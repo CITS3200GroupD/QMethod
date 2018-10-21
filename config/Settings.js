@@ -13,6 +13,3 @@ const settings = {
 }
 
 module.exports = settings;
-
-// TODO: DOCUMENTATION
-// Write documentation for Settings configuration
