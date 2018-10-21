@@ -17,6 +17,7 @@ express();
 // TODO: In general this code could be a lot more robust
 
 userRoutes.use(cookieParser());     // init Cookie-Parser
+const username = process.env['ADMIN_LOGIN_NAME'];
 
 /**
  * Get All User Data for Survey
@@ -25,7 +26,7 @@ userRoutes.use(cookieParser());     // init Cookie-Parser
  */
 userRoutes.route('/:id/users').get( (req, res, next) => {
   utils.get_req_auth(req, res, next);
-  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
+  if (!req.headers.qmd || req.auth !== username) {
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {
@@ -185,7 +186,7 @@ userRoutes.route('/:id/user/:user_id').post( (req, res) => {
  */
 userRoutes.route('/:id/user/:user_id').delete( (req, res, next) => {
   utils.get_req_auth(req, res, next);
-  if (!req.headers.qmd || req.auth !== process.env['USERNAME']) {
+  if (!req.headers.qmd || req.auth !== username) {
     res.status(400).send('Bad Auth');
     // console.error('Bad Auth');
   } else {
