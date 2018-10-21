@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken'),
   settings = require('../../config/Settings')
 
+const username = process.env['ADMIN_LOGIN_NAME'];
+
 const utils = {
 
   // FUNCTIONS
@@ -45,7 +47,7 @@ const utils = {
   generate_jwt: function() {
 
     let payload = {
-      user: process.env['USERNAME']
+      user: username
     }
     let token = jwt.sign(payload, process.env['PRIVATE_KEY'], {
       algorithm: 'RS256',
