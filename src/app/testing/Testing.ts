@@ -239,6 +239,16 @@ export const ValidUserList: User[] = [
     matrix: [],
     question_ans: []
   },
+  {
+    _id: '5s345aDdfh3s652s',
+    progress: 2,
+    register_ans: ['21', 'Male', 'Korea', 'English', 'French'],
+    sort_agree: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    sort_neutral: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+    sort_disagree: [19, 20, 21, 22],
+    matrix: [],
+    question_ans: []
+  }
 ];
 
 export const ValidSurveyList: Survey[] = [

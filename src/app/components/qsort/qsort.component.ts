@@ -192,10 +192,12 @@ export class QsortComponent implements OnInit {
 	 */
   drop_click(col: number, cell: number) {
     if (this.matrix[col][cell] === -1) {
-      console.log(`[${col}, ${cell}]`);
-      console.log(this.disagree[this.disagree_index]);
-      console.log(this.neutral[this.neutral_index]);
-      console.log(this.agree[this.agree_index]);
+      /* DEBUG
+        console.log(`[${col}, ${cell}]`);
+        console.log(this.disagree[this.disagree_index]);
+        console.log(this.neutral[this.neutral_index]);
+        console.log(this.agree[this.agree_index]);
+      */
       switch (this.selected_list) {
         case 0:
           console.log(this.disagree[this.disagree_index]);

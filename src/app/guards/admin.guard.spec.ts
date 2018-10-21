@@ -15,7 +15,7 @@ describe('AdminGuard', () => {
     });
   });
 
-  it('should ...', inject([AdminGuard], (guard: AdminGuard) => {
+  it('should init', inject([AdminGuard], (guard: AdminGuard) => {
     expect(guard).toBeTruthy();
   }));
 });
