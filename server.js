@@ -9,9 +9,9 @@ const express = require('express'),
 
   // For dev builds, use test database
   if (process.argv[2] != 'deploy') {
+    process.env['ADMIN_LOGIN_NAME'] = 'admin';
+    process.env['ADMIN_LOGIN_PASSWORD'] = 'password';
     process.env['MONGODB_URI'] = config.TEST_DB;
-    process.env['USERNAME'] = 'admin';
-    process.env['PASSWORD'] = 'password';
     process.env['PUBLIC_KEY'] = fs.readFileSync('./config/public.key'); // placeholder key
     process.env['PRIVATE_KEY'] = fs.readFileSync('./config/private.key'); // placeholder key
   }

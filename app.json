@@ -5,16 +5,16 @@
   "logo": "https://i.imgur.com/FKClS0X.png",
   "keywords": ["node", "express", "angular", "mongodb"],
   "env": {
-    "MONGODB_URI": {
-      "description": "Driver link for mongoDB database",
-      "value": ""
-    },
-    "USERNAME": {
+    "ADMIN_LOGIN_NAME": {
       "description": "The username for the administrator",
       "value": ""
     },
-    "PASSWORD": {
+    "ADMIN_LOGIN_PASSWORD": {
       "description": "The password for the administrator",
+      "value": ""
+    },
+    "MONGODB_URI": {
+      "description": "Driver link for mongoDB database",
       "value": ""
     },
     "PUBLIC_KEY": {
