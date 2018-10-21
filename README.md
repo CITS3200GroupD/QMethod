@@ -67,7 +67,7 @@ Run `node.js server & jasmine-node-karma spec/routes_spec.js --autotest` to exec
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `node.js server & ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Further help
 
