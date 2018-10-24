@@ -59,7 +59,7 @@ export class EditGridComponent implements OnInit {
 
     this.cols_templates.forEach( (item) => {
       const value = item.val;
-      if (Number(value) === survey.range) {
+      if (Number(value) === Number(survey.range)) {
         this.max_grid = Array.from(item.default_cols);
         this.updateStatementCount();
         // this.ngOnInit();
@@ -79,7 +79,7 @@ export class EditGridComponent implements OnInit {
 
     this.cols_templates.forEach( (item) => {
       const value = item.val;
-      if (Number(value) === range) {
+      if (Number(value) === Number(range)) {
         this.max_grid = Array.from(item.default_cols);
         this.grid = Array.from(this.max_grid);
         this.updateStatementCount();
