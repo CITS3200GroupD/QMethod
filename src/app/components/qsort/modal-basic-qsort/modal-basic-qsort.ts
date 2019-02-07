@@ -15,8 +15,19 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   <div class="modal-body">
 
   <p> You will be shown the statements again, this time divided into the groups you sorted in step 2.
-    <br> Now, sort the statements out on the given graph from a +5 (most agree) to a -5 (least agree) scale.
   </p>
+
+  <p>
+    Click on statements from the three groups, and drag them into empty spaces on the grid with your mouse.
+    You should sort the statements out on the given graph from a +5 (most agree) to a -5 (least agree) scale.
+    You may swap already placed statements in the grid by clicking and dragging.
+  </p>
+
+  <p>
+    Alternatively you may click on one of the statement groups (agree, disagree, neutral) and then click an empty space
+    on the grid to place the top most statement into that empty space. The currently selected group is indicated by the tick.
+  </p>
+
 
 
   </div>

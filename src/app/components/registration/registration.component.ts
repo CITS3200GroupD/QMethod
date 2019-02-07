@@ -99,8 +99,8 @@ export class RegistrationComponent implements OnInit {
    * A function to submit the registration information and create a new user.
    */
   addUser(): void {
-    if (this.window.nativeWindow.confirm(
-      `By clicking OK you acknowledge that you have read all relevant permission forms and agree to their terms and conditions`)) {
+    // if (this.window.nativeWindow.confirm(
+      // `By clicking OK you acknowledge that you have read all relevant permission forms and agree to their terms and conditions`)) {
       // Call getResponse
       if (!this.submitted) {
         this.submitted = true;
@@ -129,7 +129,7 @@ export class RegistrationComponent implements OnInit {
           this.window.nativeWindow.confirm('Invalid Submission');
         }
       }
-    }
+    // }
   }
 
   ngOnInit(): void {
