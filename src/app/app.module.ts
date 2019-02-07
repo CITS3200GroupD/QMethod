@@ -43,6 +43,7 @@ import { InstructionsComponent } from './components/instructions/instructions.co
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
 import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
+import { EditQuesComponent } from './components/edit-ques/edit-ques.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { SubmissionComponent } from './components/submission/submission.component';
@@ -144,6 +145,7 @@ const routes: Routes = [
     RegistrationComponent,
     QuestionnaireComponent,
     EditFormsComponent,
+    EditQuesComponent,
     AdminUserViewComponent,
     AdminLoginComponent,
     SubmissionComponent,

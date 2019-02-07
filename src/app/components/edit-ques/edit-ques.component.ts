@@ -5,14 +5,14 @@ import * as Settings from '../../../../config/Settings';                        
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                              // ngbmodal
 
 @Component({
-  selector: 'app-edit-forms',
-  templateUrl: './edit-forms.component.html',
-  styleUrls: ['./edit-forms.component.css']
+  selector: 'app-edit-ques',
+  templateUrl: './edit-ques.component.html',
+  styleUrls: ['./edit-ques.component.css']
 })
 /**
  * Subcomponent handling forms for EditComponent
  */
-export class EditFormsComponent implements OnInit {
+export class EditQuesComponent implements OnInit {
 
   /** The maximum number of fields*/
   FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
@@ -89,7 +89,6 @@ export class EditFormsComponent implements OnInit {
    */
   open(content, index): void {
     this.modalService.open(content, {ariaLabelledBy: 'modal-edit-statement'});
-    // TODO: Modify to change type of question to enable dropdown selection
     this.editForm.get('edit_field').setValue(this.fields[index]);
     this.edit_index = index;
   }

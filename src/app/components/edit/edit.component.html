@@ -48,7 +48,7 @@
           <ng-template ngbTabContent>
             <!-- Registration -->
             <div class="form-group">
-                <label class="col-md-4">Registration Fields {{lengths.register}}/{{FIELDS_LIMIT}}</label>
+                <label class="col-md-4">Registration  Fields{{lengths.register}}/{{FIELDS_LIMIT}}</label>
                 <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
             </div>
           </ng-template>
@@ -58,7 +58,7 @@
             <!-- End of Survey -->
             <div class="form-group">
                 <label class="col-md-4">End of Survey Questions {{lengths.questionnaire}}/{{FIELDS_LIMIT}}</label>
-                <app-edit-forms [fields_input]="survey.questionnaire" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('questionnaire', $event)"></app-edit-forms>
+                <app-edit-ques [fields_input]="survey.questionnaire" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('questionnaire', $event)"></app-edit-ques>
             </div>
           </ng-template>
         </ngb-tab>

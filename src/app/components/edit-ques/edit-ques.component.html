@@ -11,7 +11,7 @@
     <div class="modal-body">
       <form [formGroup]="editForm">
         <!-- Label -->
-        <label>Registration Field Label</label>
+        <label>Statement</label>
           <div class="input-group">
             <!-- Private Link URL-->
             <input class="form-control" formControlName="edit_field" #edit_field>
@@ -21,12 +21,6 @@
               </button>
             </div>
           </div>
-          <!-- TODO: Implement Dropdown Feature Here -->
-          <label> Response Type </label>
-          <select class="form-control">
-            <option value="normal">Text</option>
-            <option value="normal">Dropdown Options</option>
-          </select>
       </form>
     </div>
   </ng-template>
