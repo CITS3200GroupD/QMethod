@@ -200,7 +200,7 @@ export class QsortComponent implements OnInit {
       */
       switch (this.selected_list) {
         case 0:
-          console.log(this.disagree[this.disagree_index]);
+          // console.log(this.disagree[this.disagree_index]);
           if (this.disagree[this.disagree_index] !== undefined) {
             this.matrix[col][cell] = this.disagree[this.disagree_index++];
             if (this.disagree[this.disagree_index] === undefined) {
@@ -245,14 +245,9 @@ export class QsortComponent implements OnInit {
     const array = e.dragData.array;
 
     // moving statements in grid
-    if (array === 'matrix' && e.dragData.index !== undefined) {
-      // DEBUG
-      // console.log(this.matrix[col][cell]);
-      if (this.matrix[col][cell] === 1) {
-        this.matrix[e.dragData.col][e.dragData.cell] = -1;
-      } else { // swap statements
-        this.matrix[e.dragData.col][e.dragData.cell] = this.matrix[col][cell];
-      }
+    if (array === 'matrix' && e.dragData.index !== -1 && e.dragData.index !== undefined) {
+      // swap statements if not empty cell
+      this.matrix[e.dragData.col][e.dragData.cell] = this.matrix[col][cell];
       this.matrix[col][cell] = e.dragData.index;
     }
 
@@ -285,7 +280,6 @@ export class QsortComponent implements OnInit {
 
       this.matrix[col][cell] = e.dragData.index;
     }
-
   }
 
   /**
