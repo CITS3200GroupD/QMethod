@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';    // @ng core
-import { GridTemplates } from '../../models';                                     // QMd Models
+import { GridTemplates } from 'src/app/models';                                     // QMd Models
 
 @Component({
   selector: 'app-edit-grid',

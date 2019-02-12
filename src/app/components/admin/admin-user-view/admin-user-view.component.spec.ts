@@ -4,9 +4,9 @@ import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { AdminUserViewComponent } from './admin-user-view.component';
-import { WindowWrap } from '../../window-wrapper';
-import { UserService } from '../../user.service';
-import { MockUserService } from '../../testing/mockuser.service';
+import { WindowWrap } from 'src/app/window-wrapper';
+import { UserService } from 'src/app/user.service';
+import { MockUserService } from 'src/app/testing/mockuser.service';
 
 describe('AdminUserViewComponent', () => {
   let component: AdminUserViewComponent;

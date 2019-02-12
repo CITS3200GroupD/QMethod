@@ -1,5 +1,5 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
-import { AuthService } from '../../auth.service';
+import { AuthService } from 'src/app/auth.service';
 import { Router , ActivatedRoute} from '@angular/router';
 import { FormBuilder, FormGroup , Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';

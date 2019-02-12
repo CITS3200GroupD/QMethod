@@ -2,7 +2,7 @@
 <!-- Nav bar-->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="">
-    <img src="../../../favicon.ico" width="30" height="30" alt="">
+    <img src="src/app/favicon.ico" width="30" height="30" alt="">
   </a>
 </nav>
 
@@ -53,6 +53,7 @@
                 <!--
                 <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
                 -->
+                <app-edit-instructions></app-edit-instructions>
             </div>
           </ng-template>
         </ngb-tab>
@@ -62,6 +63,7 @@
             <!-- Registration -->
             <div class="form-group">
                 <label class="col-md-4">Registration  Fields {{lengths.register}}/{{FIELDS_LIMIT}}</label>
+                <!-- WIP for dropdown menu - Need to update method -->
                 <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
             </div>
           </ng-template>

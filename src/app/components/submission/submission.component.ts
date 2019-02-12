@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../user.service';
+import { UserService } from 'src/app/user.service';
 import { SurveyService } from 'src/app/survey.service';
-import { WindowWrap } from '../../window-wrapper';
+import { WindowWrap } from 'src/app/window-wrapper';
 import { Survey } from 'src/app/models';
 
 @Component({

@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditFormsComponent } from './edit-forms.component';
 
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { WindowWrap } from '../../window-wrapper';
-import * as Settings from '../../../../config/Settings';
+import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings';
 
 
 describe('EditFormsComponent', () => {

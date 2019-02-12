@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { GridTemplates } from '../../models';
+import { GridTemplates } from 'src/app/models';
 
 import { EditGridComponent } from './edit-grid.component';
 

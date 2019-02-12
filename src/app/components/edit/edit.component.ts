@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';                      // @ng c
 import { ActivatedRoute, Router } from '@angular/router';               // @ng route
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http'; // @ng HTTP responses
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // @ng reactive forms
-import { GridTemplates, BlankSurvey, Survey } from '../../models';      // QMd Defines - Models
-import * as Settings from '../../../../config/Settings';                // QMd Settings
-import { SurveyService } from '../../survey.service';                   // QMd Survey Service Middleware
+import { GridTemplates, BlankSurvey, Survey } from 'src/app/models';      // QMd Defines - Models
+import * as Settings from 'config/Settings';                // QMd Settings
+import { SurveyService } from 'src/app/survey.service';                   // QMd Survey Service Middleware
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';                 // ng-bootstrap addon
-import { WindowWrap } from '../../window-wrapper';                      // wrapper for window
+import { WindowWrap } from 'src/app/window-wrapper';                      // wrapper for window
 
 @Component({
   selector: 'app-edit',
@@ -126,6 +126,7 @@ export class EditComponent implements OnInit {
   /**
    * Callback method for edit-forms subcomponent to set fields & lengths
    */
+  // WIP - this method will have to be cloned and isolated for drop-down functionality
   updateFields(field: string, item: string[]): void {
     if (!this.survey.publish) {
       this.survey[field] = item;

@@ -1,0 +1,67 @@
+<!-- MODAL -->
+<ng-template #content let-modal>
+  <!-- Head -->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-edit-fields">Edit Field</h4>
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- Body -->
+  <div class="modal-body">
+    <form [formGroup]="editForm">
+      <!-- Label -->
+      <label>Registration Field Label</label>
+        <div class="input-group">
+          <!-- Private Link URL-->
+          <input class="form-control" formControlName="edit_field" #edit_field>
+          <div class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary" (click)="editField(edit_field.value)">
+              <i class="fas fa-pen"></i>
+            </button>
+          </div>
+        </div>
+        <!-- TODO: Implement Dropdown Feature Here -->
+        <label> Response Type </label>
+        <select class="form-control">
+          <option value="normal">Text</option>
+          <option value="normal">Dropdown Options</option>
+        </select>
+    </form>
+  </div>
+</ng-template>
+
+
+<!-- List of fields -->
+<ul class="list-group">
+  <!-- Create list item for each field -->
+  <li class="list-group-item" *ngFor="let field of fields; let i = index" [attr.data-index]="i">
+      <p> {{field}}
+        <!-- float delete button to right -->
+        <span class="btn-group float-right">
+          <!-- Edit field button (only if not published) -->
+          <button *ngIf="!disabled" (click)="open(content, i)" class="btn btn-light btn-sm">
+              <i class="fas fa-pen"></i>
+          </button>
+          <!-- Delete field button (only if not published) -->
+          <button *ngIf="!disabled" (click)="deleteField(i)" class="btn btn-danger btn-sm">
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </span>
+      </p>
+  </li>
+</ul>
+
+<!-- String Input (Only if not published) -->
+<form [formGroup]="angForm" *ngIf="!disabled" >
+  <!-- Text Input (with character limit) -->
+  <div class="input-group">
+    <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="field" #field />
+    <!-- Add button -->
+    <div class="input-group-append">
+        <button *ngIf="!disabled" (click)="addField(field.value)" [disabled]="numFields >= STATE_LIMIT" class="btn btn-secondary">
+          <i class="fas fa-plus"></i> Add
+        </button>
+    </div>
+  </div>
+</form>

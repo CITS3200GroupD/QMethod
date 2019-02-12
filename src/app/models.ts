@@ -1,4 +1,4 @@
-import * as Settings from '../../config/Settings';
+import * as Settings from 'config/Settings';
 
 // WIP these have to be adjusted too
 

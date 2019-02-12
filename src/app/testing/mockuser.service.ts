@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';           // ng core
 import { HttpClient } from '@angular/common/http';               // ng<->express client
-import { User } from '../models';
+import { User } from 'src/app/models';
 import { ValidSurveyList, ValidUserList } from './Testing';
 import { of, Observable } from 'rxjs';
 

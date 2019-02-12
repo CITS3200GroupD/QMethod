@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdminLoginComponent } from './admin-login.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AuthService } from '../../auth.service';
-import { MockAuthService, MockWindowWrap } from '../../testing/Testing';
+import { AuthService } from 'src/app/auth.service';
+import { MockAuthService, MockWindowWrap } from 'src/app/testing/Testing';
 import { WindowWrap } from 'src/app/window-wrapper';
 
 describe('AdminLoginComponent', () => {

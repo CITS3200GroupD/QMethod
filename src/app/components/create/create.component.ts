@@ -1,11 +1,11 @@
 import { Component, OnInit, isDevMode } from '@angular/core';                     // @ng core
 import { Router } from '@angular/router';                                         // @ng router
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';            // @ng reactive forms
-import { SurveyService } from '../../survey.service';                             // QMd SurveyService Middleware
-import { GridTemplates } from '../../models';                                     // QMd Models
-import { TestingRegister, TestingStatements, TestingQuestionnaire } from '../../testing/Testing'; // QMd Testing
-import { WindowWrap } from '../../window-wrapper';                                // Wrapper for window
-import * as Settings from '../../../../config/Settings';                          // QMd Settings
+import { SurveyService } from 'src/app/survey.service';                             // QMd SurveyService Middleware
+import { GridTemplates } from 'src/app/models';                                     // QMd Models
+import { TestingRegister, TestingStatements, TestingQuestionnaire } from 'src/app/testing/Testing'; // QMd Testing
+import { WindowWrap } from 'src/app/window-wrapper';                                // Wrapper for window
+import * as Settings from 'config/Settings';                          // QMd Settings
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',

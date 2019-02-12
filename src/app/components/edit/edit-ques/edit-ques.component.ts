@@ -1,18 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';      // @ng core
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';              // @ng reactive forms
-import { WindowWrap } from '../../window-wrapper';                                  // wrapper for window
-import * as Settings from '../../../../config/Settings';                            // QMd Settings
+import { WindowWrap } from 'src/app/window-wrapper';                                  // wrapper for window
+import * as Settings from 'config/Settings';                            // QMd Settings
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                              // ngbmodal
 
 @Component({
-  selector: 'app-edit-forms',
-  templateUrl: './edit-forms.component.html',
-  styleUrls: ['./edit-forms.component.css']
+  selector: 'app-edit-ques',
+  templateUrl: './edit-ques.component.html',
+  styleUrls: ['./edit-ques.component.css']
 })
 /**
  * Subcomponent handling forms for EditComponent
  */
-export class EditFormsComponent implements OnInit {
+export class EditQuesComponent implements OnInit {
 
   /** The maximum number of fields*/
   FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
@@ -29,7 +29,7 @@ export class EditFormsComponent implements OnInit {
    */
   @Input() set fields_input(fields_input: string[]) {
     // Fix for calling of input with undefined value
-    if (fields_input && fields_input.length < 11) {
+    if (fields_input && fields_input.length < (this.FIELDS_LIMIT + 1)) {
       this.fields = fields_input;
     }
     // TODO: Better checks for >FORMS_LIMIT, error messages thrown, etc.
@@ -89,7 +89,6 @@ export class EditFormsComponent implements OnInit {
    */
   open(content, index): void {
     this.modalService.open(content, {ariaLabelledBy: 'modal-edit-statement'});
-    // TODO: Modify to change type of question to enable dropdown selection
     this.editForm.get('edit_field').setValue(this.fields[index]);
     this.edit_index = index;
   }

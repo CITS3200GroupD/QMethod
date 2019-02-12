@@ -3,15 +3,15 @@ import { InitialSortComponent } from './initial-sort.component';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { NgDragDropModule } from 'ng-drag-drop';
-import { MockWindowWrap } from '../../testing/Testing';
-import { WindowWrap } from '../../window-wrapper';
+import { MockWindowWrap } from 'src/app/testing/Testing';
+import { WindowWrap } from 'src/app/window-wrapper';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SurveyService } from 'src/app/survey.service';
 import { MockSurveyService } from 'src/app/testing/mocksurvey.service';
 import { MockUserService } from 'src/app/testing/mockuser.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { ValidSurveyList, ValidUserList } from '../../testing/Testing';
+import { ValidSurveyList, ValidUserList } from 'src/app/testing/Testing';
 import { UserService } from 'src/app/user.service';
 
 describe('InitialSortComponent', () => {

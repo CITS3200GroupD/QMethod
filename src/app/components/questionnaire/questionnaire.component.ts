@@ -1,11 +1,11 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../user.service';
+import { UserService } from 'src/app/user.service';
 import { SurveyService } from 'src/app/survey.service';
-import { WindowWrap } from '../../window-wrapper';
+import { WindowWrap } from 'src/app/window-wrapper';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Survey, User } from 'src/app/models';
-import * as Settings from '../../../../config/Settings';                // QMd Settings
+import * as Settings from 'config/Settings';                // QMd Settings
 
 @Component({
   selector: 'app-questionnaire',

@@ -1,10 +1,10 @@
 import { isDevMode, Component, OnInit, Pipe, PipeTransform } from '@angular/core'; // ng core
 import { Router } from '@angular/router';                                          // ng router
-import { Survey } from '../../models';                                             // QMd Models - Survey
-import { SurveyService } from '../../survey.service';                              // QMd Survey Service MW
-import { WindowWrap } from '../../window-wrapper';                                 // wrapper for window
-import * as Settings from '../../../../config/Settings';                           // QMd Settings
-import { AuthService } from '../../auth.service';
+import { Survey } from 'src/app/models';                                             // QMd Models - Survey
+import { SurveyService } from 'src/app/survey.service';                              // QMd Survey Service MW
+import { WindowWrap } from 'src/app/window-wrapper';                                 // wrapper for window
+import * as Settings from 'config/Settings';                           // QMd Settings
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-admin',

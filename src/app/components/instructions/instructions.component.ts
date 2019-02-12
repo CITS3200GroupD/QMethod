@@ -1,6 +1,6 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WindowWrap } from '../../window-wrapper';
+import { WindowWrap } from 'src/app/window-wrapper';
 
 @Component({
   selector: 'app-instructions',

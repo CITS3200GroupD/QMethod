@@ -1,4 +1,4 @@
-import { Survey, User } from '../models';
+import { Survey, User } from 'src/app/models';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 

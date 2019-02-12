@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                    // ng-bootstrap addon
-import { WindowWrap } from '../../window-wrapper';
-import * as Settings from '../../../../config/Settings.js';
+import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings.js';
 
 
 @Component({

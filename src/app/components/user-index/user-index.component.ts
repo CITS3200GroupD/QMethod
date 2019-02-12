@@ -2,10 +2,10 @@ import { isDevMode, Component, OnInit } from '@angular/core';             // @ng
 import { ActivatedRoute, Router } from '@angular/router';                 // @ng-router
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';      // @ng forms
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                    // ng-bootstrap addon
-import { SurveyService } from '../../survey.service';                     // QMd Survey Service MW
-import { UserService } from '../../user.service';                         // QMd User Service MW
-import { Survey, User } from '../../models';                              // QMd Models
-import { WindowWrap } from '../../window-wrapper';                        // wrapper for window
+import { SurveyService } from 'src/app/survey.service';                     // QMd Survey Service MW
+import { UserService } from 'src/app/user.service';                         // QMd User Service MW
+import { Survey, User } from 'src/app/models';                              // QMd Models
+import { WindowWrap } from 'src/app/window-wrapper';                        // wrapper for window
 
 @Component({
   selector: 'app-user-index',

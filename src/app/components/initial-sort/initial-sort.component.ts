@@ -1,9 +1,9 @@
 import { isDevMode, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SurveyService } from '../../survey.service';           // QMd Survey Service MW
-import { UserService } from '../../user.service';               // QMd User Service MW
-import { Survey, User } from '../../models';
-import { WindowWrap } from '../../window-wrapper';
+import { SurveyService } from 'src/app/survey.service';           // QMd Survey Service MW
+import { UserService } from 'src/app/user.service';               // QMd User Service MW
+import { Survey, User } from 'src/app/models';
+import { WindowWrap } from 'src/app/window-wrapper';
 
 
 

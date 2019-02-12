@@ -6,15 +6,15 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { WindowWrap } from '../../window-wrapper';
-import { SurveyService } from '../../survey.service';
-import { MockSurveyService } from '../../testing/mocksurvey.service';
-import { MockWindowWrap } from '../../testing/Testing';
+import { WindowWrap } from 'src/app/window-wrapper';
+import { SurveyService } from 'src/app/survey.service';
+import { MockSurveyService } from 'src/app/testing/mocksurvey.service';
+import { MockWindowWrap } from 'src/app/testing/Testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of} from 'rxjs';
-import { ValidSurveyList } from '../../testing/Testing';
-import * as Settings from '../../../../config/Settings';
-import { GridTemplates } from '../../models';
+import { ValidSurveyList } from 'src/app/testing/Testing';
+import * as Settings from 'config/Settings';
+import { GridTemplates } from 'src/app/models';
 
 
 describe('EditComponent', () => {

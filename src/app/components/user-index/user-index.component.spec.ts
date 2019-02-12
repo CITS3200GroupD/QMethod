@@ -4,12 +4,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { UserIndexComponent } from './user-index.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SurveyService } from '../../survey.service';
-import { MockSurveyService } from '../../testing/mocksurvey.service';
-import { UserService } from '../../user.service';
-import { MockUserService } from '../../testing/mockuser.service';
-import { WindowWrap } from '../../window-wrapper';
-import { MockWindowWrap } from '../../testing/Testing';
+import { SurveyService } from 'src/app/survey.service';
+import { MockSurveyService } from 'src/app/testing/mocksurvey.service';
+import { UserService } from 'src/app/user.service';
+import { MockUserService } from 'src/app/testing/mockuser.service';
+import { WindowWrap } from 'src/app/window-wrapper';
+import { MockWindowWrap } from 'src/app/testing/Testing';
 
 describe('UserIndexComponent', () => {
   let component: UserIndexComponent;

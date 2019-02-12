@@ -1,10 +1,10 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';     // @ng core
 import { ActivatedRoute, Router } from '@angular/router';                   // @ng router
-import { User } from '../../models';                                        // QMd Models
-import { UserService } from '../../user.service';                           // QMd User Service
-import { WindowWrap } from '../../window-wrapper';                          // wrapper for window
-import * as Settings from '../../../../config/Settings';                    // QMd Settings
-import { AuthService } from '../../auth.service';
+import { User } from 'src/app/models';                                        // QMd Models
+import { UserService } from 'src/app/user.service';                           // QMd User Service
+import { WindowWrap } from 'src/app/window-wrapper';                          // wrapper for window
+import * as Settings from 'config/Settings';                    // QMd Settings
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-admin-user-list',

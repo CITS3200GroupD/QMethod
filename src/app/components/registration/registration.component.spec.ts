@@ -4,8 +4,8 @@ import { RouterTestingModule  } from '@angular/router/testing';
 import { RegistrationComponent } from './registration.component';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MockWindowWrap } from '../../testing/Testing';
-import { WindowWrap } from '../../window-wrapper';
+import { MockWindowWrap } from 'src/app/testing/Testing';
+import { WindowWrap } from 'src/app/window-wrapper';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;

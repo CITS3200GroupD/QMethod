@@ -4,12 +4,12 @@ import { CreateComponent } from './create.component';
 import { RouterTestingModule  } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { WindowWrap } from '../../window-wrapper';
-import { GridTemplates } from '../../models';
-import * as Settings from '../../../../config/Settings';
-import { MockWindowWrap, BlankComponent } from '../../testing/Testing';
-import { SurveyService } from '../../survey.service';
-import { MockSurveyService } from '../../testing/mocksurvey.service';
+import { WindowWrap } from 'src/app/window-wrapper';
+import { GridTemplates } from 'src/app/models';
+import * as Settings from 'config/Settings';
+import { MockWindowWrap, BlankComponent } from 'src/app/testing/Testing';
+import { SurveyService } from 'src/app/survey.service';
+import { MockSurveyService } from 'src/app/testing/mocksurvey.service';
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
