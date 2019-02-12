@@ -44,11 +44,24 @@
       </div>
 
       <ngb-tabset>
+
+        <!-- WIP NEW -->
+        <ngb-tab title="Instructions">
+          <ng-template ngbTabContent>
+            <!-- Registration -->
+            <div class="form-group">
+                <!--
+                <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
+                -->
+            </div>
+          </ng-template>
+        </ngb-tab>
+
         <ngb-tab title="Registration">
           <ng-template ngbTabContent>
             <!-- Registration -->
             <div class="form-group">
-                <label class="col-md-4">Registration  Fields{{lengths.register}}/{{FIELDS_LIMIT}}</label>
+                <label class="col-md-4">Registration  Fields {{lengths.register}}/{{FIELDS_LIMIT}}</label>
                 <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
             </div>
           </ng-template>

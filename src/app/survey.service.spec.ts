@@ -105,7 +105,7 @@ describe('SurveyService', () => {
     const test_url = `${uri}/add`;
 
     // Call function
-    service.addSurvey(name, range,  register, statements, questionnaire).subscribe(res => {
+    service.addSurvey(name, range, register, statements, questionnaire).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 
