@@ -43,7 +43,8 @@ export class EditComponent implements OnInit {
   lengths = {
     questionnaire: 0,
     register: 0,
-    statements: 0
+    statements: 0,
+    instructions: 0     // WIP Instructions
   };
 
   /**
@@ -120,6 +121,17 @@ export class EditComponent implements OnInit {
     if (!this.survey.publish) {
       this.survey.statements = statements;
       this.lengths.statements = statements.length;
+    }
+  }
+
+
+  /**
+   * Callback method for edit-instructions subcomponent to set instructions
+   */
+  updateInstructions(instructions: string[]): void {
+    if (!this.survey.publish) {
+      this.survey.instructions = instructions;
+      this.lengths.instructions = instructions.length;
     }
   }
 
@@ -235,6 +247,9 @@ export class EditComponent implements OnInit {
           this.lengths.questionnaire = this.survey.questionnaire.length;
           this.lengths.register = this.survey.register.length;
           // We deliberately do NOT want to update this.range on initiation.
+
+          // WIP Instructions
+          this.lengths.instructions = this.survey.instructions.length;
 
           this.angForm.get('survey_id').setValue(this.survey._id);
           this.angForm.get('survey_name').setValue(this.survey.name);

@@ -31,7 +31,7 @@ const surveySchema = new Schema({
     validate: [ formValidate, `{PATH} failed to validate`]
   },
   // WIP NEW ADDITIONS
-  instructions : {
+  instructions: {
     type: [String],
     // required: [true, 'No instructions' ]
   },

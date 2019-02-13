@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';      // @ng core
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';              // @ng reactive forms
 import { WindowWrap } from 'src/app/window-wrapper';                                  // wrapper for window
-import * as Settings from 'config/Settings';                            // QMd Settings
+import * as Settings from 'config/Settings';                                        // QMd Settings
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                              // ngbmodal
 
 @Component({

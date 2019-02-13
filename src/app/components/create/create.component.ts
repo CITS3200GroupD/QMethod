@@ -16,6 +16,8 @@ import * as Settings from 'config/Settings';                          // QMd Set
  */
 export class CreateComponent implements OnInit {
 
+  /** Instructions */
+  instructions: string[] = Settings.DEFAULT_INSTRUCTIONS;
   /** Registration Fields*/
   registration: string[] = [];
   /** Statements */
@@ -78,7 +80,7 @@ export class CreateComponent implements OnInit {
      * }
      */
     // Read statements, registration and questionnaire data from json.
-    this.surveyservice.addSurvey(name, range, this.registration, this.statements, this.questionnaire)
+    this.surveyservice.addSurvey(name, range, this.instructions, this.registration, this.statements, this.questionnaire)
       .subscribe(
         (res) => {
           // DEBUG

@@ -54,11 +54,12 @@ export class SurveyService {
    * This route requires authentication credentials (JWT token) to be passed.
    * @param name Name of the survey
    * @param range Range of the survey (7 = +3 to -3, 9 = +4 to -4, etc)
+   * @param instructions Array of instructions
    * @param register Array of registration page fields
    * @param statements Array of Statement fields
    * @param questionnaire Array of Questionnaire fields
    */
-  addSurvey(name: string, range: number, register: string[],
+  addSurvey(name: string, range: number, instructions: string[], register: string[],
     statements: string[], questionnaire: string[]): Observable<Object> {
     let cols: number[];
     this.cols_templates.forEach( (item) => {
@@ -85,6 +86,7 @@ export class SurveyService {
         statements: statements,
         register: register,
         questionnaire: questionnaire,
+        instructions: instructions,
         users: []
       };
       return this

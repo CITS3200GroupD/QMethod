@@ -13,8 +13,8 @@ export interface SurveyInput {
     questionnaire: string[];
     users: User[];
 
+    instructions: string[];
     // questionnaire_type: number[];
-    // instructions: string[];
 }
 
 export interface Survey {
@@ -28,7 +28,7 @@ export interface Survey {
     questionnaire: string[];
     users: User[];
     // questionnaire_type: number[];
-    // instructions: string[];
+    instructions: string[];
 }
 
 export interface User {
@@ -73,5 +73,7 @@ export const BlankSurvey: Survey = {
     register: [],
     statements: [],
     questionnaire: [],
-    users: []
+    users: [],
+    // questionnaire_type: number[];
+    instructions: []
 };

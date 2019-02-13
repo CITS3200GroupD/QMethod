@@ -265,6 +265,7 @@ export const ValidSurveyList: Survey[] = [
       '21', '22', '23'
     ],
     questionnaire: TestingQuestionnaire,
+    instructions: [],
     users: ValidUserList
   },
   {
@@ -281,6 +282,7 @@ export const ValidSurveyList: Survey[] = [
       '31', '32', '33', '34'
     ],
     questionnaire: TestingQuestionnaire,
+    instructions: [],
     users: []
   }
 ];
@@ -294,6 +296,7 @@ export const InvalidSurveyList: Survey[] = [{
   statements: ['string'],
   register: ['age', 'gender', 'Main Language'],
   questionnaire: ['Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5'],
+  instructions: [],
   users: []
 },
 {
@@ -305,6 +308,7 @@ export const InvalidSurveyList: Survey[] = [{
   statements: ['string'],
   register: ['age', 'gender', 'Main Language'],
   questionnaire: ['Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5'],
+  instructions: [],
   users: []
 }];
 
