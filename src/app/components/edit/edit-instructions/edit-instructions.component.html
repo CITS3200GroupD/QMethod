@@ -1,87 +1,94 @@
-<!-- MODAL -->
-<ng-template #content let-modal>
-    <!-- Head -->
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-edit-fields">Edit Instruction</h4>
-      <button type="button" class="close" (click)="modal.dismiss()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <!-- Body -->
-    <div class="modal-body">
-      <form [formGroup]="editForm">
-        <!-- Label -->
-        <label>Instruction</label>
-          <div class="input-group">
-            <!-- Private Link URL-->
-            <input class="form-control" formControlName="edit_field" #edit_field>
-            <div class="input-group-append">
-              <button type="button" class="btn btn-outline-secondary" (click)="editField(edit_field.value)">
-                <i class="fas fa-pen"></i>
-              </button>
-            </div>
-          </div>
-      </form>
-    </div>
-  </ng-template>
-
-
-<!-- List of fields -->
-<ul class="list-group">
-    <!-- Create list item for each field -->
-    <li class="list-group-item" *ngFor="let in of ins; let i = index" [attr.data-index]="i">
-        <p> {{in}}
-          <!-- float delete button to right -->
-          <span class="btn-group float-right">
-            <!-- Edit field button (only if not published) -->
-            <button *ngIf="!disabled" (click)="open(content, i)" class="btn btn-light btn-sm">
-                <i class="fas fa-pen"></i>
-            </button>
-            <!-- Delete field button (only if not published) -->
-            <button *ngIf="!disabled" (click)="deleteField(i)" class="btn btn-danger btn-sm">
-              <i class="far fa-trash-alt"></i>
-            </button>
-          </span>
-        </p>
-    </li>
-  </ul>
-
-  <!-- String Input (Only if not published) -->
-  <form [formGroup]="angForm" *ngIf="!disabled" >
-    <!-- Text Input (with character limit) -->
-    <div class="input-group">
-      <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="field" #field />
-      <!-- Add button -->
-      <div class="input-group-append">
-          <button *ngIf="!disabled" (click)="addField(field.value)" [disabled]="numFields >= STATE_LIMIT" class="btn btn-secondary">
-            <i class="fas fa-plus"></i> Add
-          </button>
-      </div>
-    </div>
-  </form>
-
-<!--
-<p>
-  <ngb-tabset>
+ <ngb-tabset>
     <ngb-tab title="Main">
       <ng-template ngbTabContent>
-        <div class="card">
+
+        <!-- MODAL -->
+        <ng-template #content let-modal>
+            <!-- Head -->
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-edit-fields">Edit Instruction</h4>
+              <button type="button" class="close" (click)="modal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!-- Body -->
+            <div class="modal-body">
+              <form [formGroup]="editForm">
+                <!-- Label -->
+                <label>Instruction</label>
+                  <div class="input-group">
+                    <!-- Private Link URL-->
+                    <input class="form-control" formControlName="edit_field" #edit_field>
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-outline-secondary" (click)="editIns(edit_field.value)">
+                        <i class="fas fa-pen"></i>
+                      </button>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </ng-template>
+
+
+        <!-- List of fields -->
+        <ul class="list-group">
+            <!-- Create list item for each field -->
+            <li class="list-group-item" *ngFor="let in of ins | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:instructions_page, id: 'ins_paginate'}; let i = index;" [attr.data-index]="i">
+              <span class="badge badge-light">{{ (instructions_page-1)*PAGINATE_LISTS+i+1}}</span>
+                {{in}}
+                <!-- float delete button to right -->
+                <span class="btn-group float-right">
+                  <!-- Edit field button (only if not published) -->
+                  <button *ngIf="!disabled" (click)="open(content, (instructions_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
+                      <i class="fas fa-pen"></i>
+                  </button>
+                  <!-- Delete field button (only if not published) -->
+                  <button *ngIf="!disabled" (click)="deleteIns((instructions_page-1)*PAGINATE_LISTS+i)" class="btn btn-danger btn-sm">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </span>
+            </li>
+          </ul>
+
+          <!-- String Input (Only if not published) -->
+          <form [formGroup]="angForm" *ngIf="!disabled" >
+            <!-- Text Input (with character limit) -->
+            <div class="input-group">
+              <input type="text" class="form-control" [maxlength]="INS_CHAR_LIMIT" formControlName="field" #field />
+              <!-- Add button -->
+              <div class="input-group-append">
+                  <button *ngIf="!disabled" (click)="addIns(field.value)" [disabled]="numFields >= INS_LIMIT" class="btn btn-secondary">
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Pagination Controls -->
+        <div class="row justify-content-center">
+          <pagination-controls class="instructions-pagination" (pageChange)="instructions_page = $event" id="ins_paginate"
+            maxSize="4"
+            directionLinks="true"
+            autoHide="true"
+            previousLabel=""
+            nextLabel="">
+          </pagination-controls>
         </div>
       </ng-template>
     </ngb-tab>
     <ngb-tab title="1">
       <ng-template ngbTabContent>
-
+          <ul class="list-group"> </ul>
       </ng-template>
     </ngb-tab>
     <ngb-tab title="2">
       <ng-template ngbTabContent>
+          <ul class="list-group"> </ul>
       </ng-template>
     </ngb-tab>
     <ngb-tab title="3">
       <ng-template ngbTabContent>
+          <ul class="list-group"> </ul>
       </ng-template>
     </ngb-tab>
   </ngb-tabset>
-</p>
--->

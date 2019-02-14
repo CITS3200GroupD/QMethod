@@ -30,17 +30,17 @@
 <!-- List of statements -->
 <ul class="list-group">
   <!-- Create list item for each statement & Paginate -->
-  <li class="list-group-item" *ngFor="let statement of statements | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:statements_page, id: '1'}; let i = index" [attr.data-index]="i">
-      <span class="badge badge-light">{{ (statements_page-1)*5+i+1}} </span>
+  <li class="list-group-item" *ngFor="let statement of statements | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:statements_page, id: 'state_paginate'}; let i = index" [attr.data-index]="i">
+      <span class="badge badge-light">{{ (statements_page-1)*PAGINATE_LISTS+i+1}} </span>
         {{statement}}
         <!-- float delete button to right -->
         <span class="btn-group float-right">
           <!-- Edit statement button (only if not published) -->
-          <button *ngIf="!disabled" (click)="open(content, (statements_page-1)*5+i)" class="btn btn-light btn-sm">
+          <button *ngIf="!disabled" (click)="open(content, (statements_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
               <i class="fas fa-pen"></i>
           </button>
           <!-- Delete statement button (only if not published) -->
-          <button *ngIf="!disabled" (click)="deleteStatement((statements_page-1)*5+i)" class="btn btn-danger btn-sm">
+          <button *ngIf="!disabled" (click)="deleteStatement((statements_page-1)*PAGINATE_LISTS+i)" class="btn btn-danger btn-sm">
             <i class="far fa-trash-alt"></i>
           </button>
         </span>
@@ -63,7 +63,7 @@
 
 <!-- Pagination Controls -->
 <div class="row justify-content-center">
-  <pagination-controls class="statements-pagination" (pageChange)="statements_page = $event" id="1"
+  <pagination-controls class="statements-pagination" (pageChange)="statements_page = $event" id="state_paginate"
     maxSize="5"
     directionLinks="true"
     autoHide="true"

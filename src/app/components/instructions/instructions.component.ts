@@ -1,5 +1,7 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Survey } from 'src/app/models';
+import { SurveyService } from 'src/app/survey.service';           // QMd Survey Service MW
 import { WindowWrap } from 'src/app/window-wrapper';
 
 @Component({
@@ -10,9 +12,11 @@ import { WindowWrap } from 'src/app/window-wrapper';
 export class InstructionsComponent implements OnInit {
 
   survey_id: string;
+  instructions: String[];
 
   constructor( private route: ActivatedRoute,
     private router: Router,
+    private surveyservice: SurveyService,
     private window: WindowWrap
   ) {
     this.route.params.subscribe( params => {
@@ -20,6 +24,15 @@ export class InstructionsComponent implements OnInit {
       // DEBUG
       // console.log(this.survey_id);
     });
+    this.getSurveyData();
+  }
+
+
+  private getSurveyData(): void {
+    this.surveyservice.getSurvey(this.survey_id).subscribe(
+      (res: Survey) => {
+        this.instructions = res.instructions;
+      });
   }
 
   goNext() {

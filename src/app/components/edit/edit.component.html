@@ -50,9 +50,6 @@
           <ng-template ngbTabContent>
             <!-- Registration -->
             <div class="form-group">
-                <!--
-                <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
-                -->
                 <app-edit-instructions [ins_input]="survey.instructions" [disabled]="survey.publish || survey.users.length > 0" (ins_out)="updateInstructions($event)"></app-edit-instructions>
             </div>
           </ng-template>
@@ -64,7 +61,7 @@
             <div class="form-group">
                 <label class="col-md-4">Registration  Fields {{lengths.register}}/{{FIELDS_LIMIT}}</label>
                 <!-- WIP for dropdown menu - Need to update method -->
-                <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
+                <app-edit-reg [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-reg>
             </div>
           </ng-template>
         </ngb-tab>

@@ -35,20 +35,20 @@
 <!-- List of fields -->
 <ul class="list-group">
   <!-- Create list item for each field -->
-  <li class="list-group-item" *ngFor="let field of fields; let i = index" [attr.data-index]="i">
-      <p> {{field}}
-        <!-- float delete button to right -->
-        <span class="btn-group float-right">
-          <!-- Edit field button (only if not published) -->
-          <button *ngIf="!disabled" (click)="open(content, i)" class="btn btn-light btn-sm">
-              <i class="fas fa-pen"></i>
-          </button>
-          <!-- Delete field button (only if not published) -->
-          <button *ngIf="!disabled" (click)="deleteField(i)" class="btn btn-danger btn-sm">
-            <i class="far fa-trash-alt"></i>
-          </button>
-        </span>
-      </p>
+  <li class="list-group-item" *ngFor="let field of fields | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:registration_page, id: 'res_paginate'}; let i = index" [attr.data-index]="i">
+    <span class="badge badge-light">{{ (registration_page-1)*PAGINATE_LISTS+i+1}}</span>
+      {{field}}
+      <!-- float delete button to right -->
+      <span class="btn-group float-right">
+        <!-- Edit field button (only if not published) -->
+        <button *ngIf="!disabled" (click)="open(content, (registration_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
+            <i class="fas fa-pen"></i>
+        </button>
+        <!-- Delete field button (only if not published) -->
+        <button *ngIf="!disabled" (click)="deleteField((registration_page-1)*PAGINATE_LISTS+i)" class="btn btn-danger btn-sm">
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </span>
   </li>
 </ul>
 
@@ -59,9 +59,20 @@
     <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="field" #field />
     <!-- Add button -->
     <div class="input-group-append">
-        <button *ngIf="!disabled" (click)="addField(field.value)" [disabled]="numFields >= STATE_LIMIT" class="btn btn-secondary">
+        <button *ngIf="!disabled" (click)="addField(field.value)" [disabled]="numFields >= FIELDS_LIMIT" class="btn btn-secondary">
           <i class="fas fa-plus"></i> Add
         </button>
     </div>
   </div>
 </form>
+
+<!-- Pagination Controls -->
+<div class="row justify-content-center">
+  <pagination-controls class="registration-pagination" (pageChange)="registration_page = $event" id="res_paginate"
+    maxSize="5"
+    directionLinks="true"
+    autoHide="true"
+    previousLabel=""
+    nextLabel="">
+  </pagination-controls>
+</div>

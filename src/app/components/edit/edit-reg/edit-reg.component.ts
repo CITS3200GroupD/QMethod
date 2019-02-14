@@ -5,14 +5,17 @@ import * as Settings from 'config/Settings';                            // QMd S
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                              // ngbmodal
 
 @Component({
-  selector: 'app-edit-forms',
-  templateUrl: './edit-forms.component.html',
-  styleUrls: ['./edit-forms.component.css']
+  selector: 'app-edit-reg',
+  templateUrl: './edit-reg.component.html',
+  styleUrls: ['./edit-reg.component.css']
 })
 /**
- * Subcomponent handling forms for EditComponent
+ * Subcomponent handling registration page fields for EditComponent
  */
-export class EditFormsComponent implements OnInit {
+export class EditRegComponent implements OnInit {
+
+  /** Var for current page for pagination */
+  registration_page = 1;
 
   /** The maximum number of fields*/
   FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
@@ -20,6 +23,8 @@ export class EditFormsComponent implements OnInit {
   CHAR_LIMIT = Settings.CHAR_LIMIT || 350;
   /** The maximum number of statements */
   STATE_LIMIT = Settings.STATE_LIMIT || 80;
+  /** Pagination variable */
+  PAGINATE_LISTS = Settings.PAGINATE_LISTS;
   /** Field titles */
   fields: string[] = [];
 
@@ -103,11 +108,15 @@ export class EditFormsComponent implements OnInit {
       this.throwError('Attempted to update a published server');
     } else if (!this.fields) {
       this.throwError('Invalid fields');
-    } else if (this.fields && this.fields.length > 10) {
+    } else if (this.fields && this.fields.length >= this.FIELDS_LIMIT) {
       this.throwError('Too many fields');
     } else {
       this.fields.push(field);
       this.fields_out.emit(this.fields);
+    }
+
+    if ((this.registration_page * this.PAGINATE_LISTS) < this.fields.length) {
+      this.registration_page = Math.ceil(this.fields.length / this.PAGINATE_LISTS);
     }
   }
 

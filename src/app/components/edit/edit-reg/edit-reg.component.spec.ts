@@ -1,18 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { EditFormsComponent } from './edit-forms.component';
+import { EditRegComponent } from './edit-reg.component';
 
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { WindowWrap } from 'src/app/window-wrapper';
 import * as Settings from 'config/Settings';
 
 
-describe('EditFormsComponent', () => {
-  let component: EditFormsComponent;
-  let fixture: ComponentFixture<EditFormsComponent>;
+describe('EditRegComponent', () => {
+  let component: EditRegComponent;
+  let fixture: ComponentFixture<EditRegComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditFormsComponent ],
+      declarations: [ EditRegComponent ],
       imports: [ FormsModule, ReactiveFormsModule ],
       providers: [ WindowWrap ]
     })
@@ -20,7 +20,7 @@ describe('EditFormsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditFormsComponent);
+    fixture = TestBed.createComponent(EditRegComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

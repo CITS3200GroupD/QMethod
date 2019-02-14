@@ -14,12 +14,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                          
  */
 export class EditQuesComponent implements OnInit {
 
+
+  /** Var for current page for pagination */
+  questionnaire_page = 1;
+
   /** The maximum number of fields*/
   FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
   /** The maximum character length of a statement */
   CHAR_LIMIT = Settings.CHAR_LIMIT || 350;
   /** The maximum number of statements */
   STATE_LIMIT = Settings.STATE_LIMIT || 80;
+  /** Pagination variable */
+  PAGINATE_LISTS = Settings.PAGINATE_LISTS;
   /** Field titles */
   fields: string[] = [];
 
@@ -102,11 +108,15 @@ export class EditQuesComponent implements OnInit {
       this.throwError('Attempted to update a published server');
     } else if (!this.fields) {
       this.throwError('Invalid fields');
-    } else if (this.fields && this.fields.length > 10) {
+    } else if (this.fields && this.fields.length >= this.FIELDS_LIMIT) {
       this.throwError('Too many fields');
     } else {
       this.fields.push(field);
       this.fields_out.emit(this.fields);
+    }
+
+    if ((this.questionnaire_page * this.PAGINATE_LISTS) < this.fields.length) {
+      this.questionnaire_page = Math.ceil(this.fields.length / this.PAGINATE_LISTS);
     }
   }
 

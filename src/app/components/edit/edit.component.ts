@@ -28,6 +28,8 @@ export class EditComponent implements OnInit {
 
   /** Pagination variable for current page */
   statements_page: number;
+  /** Pagination variable for current page [instructions] */
+  instructions_page: number;
   /** Flag (set by callback) for grid validity vs number of statements */
   valid_grid: boolean;
   /*** ng form variable */

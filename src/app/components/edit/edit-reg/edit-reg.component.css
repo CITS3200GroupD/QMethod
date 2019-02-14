@@ -4,7 +4,6 @@
 } */
 
 
-
 .list-group-item {
     padding-top: 5px;
     padding-bottom: 5px;
@@ -18,9 +17,9 @@ p {
     display: none;
 }
 
-.instructions-pagination /deep/ .ng2-pagination .current {
+.registration-pagination /deep/ .ng2-pagination .current {
     background: #2c3e50;
 }
-.instructions-pagination {
+.registration-pagination {
     padding-left: 0;
 }

@@ -42,7 +42,7 @@ import { AdminUserListComponent, UserPipe } from './components/admin/admin-user-
 import { InstructionsComponent } from './components/instructions/instructions.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
-import { EditFormsComponent } from './components/edit/edit-forms/edit-forms.component';
+import { EditRegComponent } from './components/edit/edit-reg/edit-reg.component';
 import { EditQuesComponent } from './components/edit/edit-ques/edit-ques.component';
 import { AdminUserViewComponent } from './components/admin/admin-user-view/admin-user-view.component';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
@@ -145,7 +145,7 @@ const routes: Routes = [
     InstructionsComponent,
     RegistrationComponent,
     QuestionnaireComponent,
-    EditFormsComponent,
+    EditRegComponent,
     EditQuesComponent,
     AdminUserViewComponent,
     AdminLoginComponent,

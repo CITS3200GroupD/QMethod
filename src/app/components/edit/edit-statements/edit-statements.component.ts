@@ -97,7 +97,7 @@ export class EditStatementsComponent implements OnInit {
   }
 
   /**
-   * Add statement (and sync with database)
+   * Add statement
    * @param statement Statement to be added
    */
   addStatement(statement: string): void {
@@ -108,11 +108,15 @@ export class EditStatementsComponent implements OnInit {
       this.statements_out.emit(this.statements);
       this.statements_length = this.statements.length;
     }
+
+    if ((this.statements_page * this.PAGINATE_LISTS) < this.statements.length) {
+      this.statements_page = Math.ceil(this.statements.length / this.PAGINATE_LISTS);
+    }
   }
 
 
   /**
-   * Delete statement (and sync with database)
+   * Edit statement
    * @param statement_index Index of statement to be deleted
    */
   editStatement(statement: string): void {
@@ -126,7 +130,7 @@ export class EditStatementsComponent implements OnInit {
 
 
   /**
-   * Delete statement (and sync with database)
+   * Delete statement
    * @param statement_index Index of statement to be deleted
    */
   deleteStatement(statement_index: number): void {

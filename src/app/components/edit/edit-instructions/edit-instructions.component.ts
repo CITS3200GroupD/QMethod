@@ -11,9 +11,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                          
 })
 export class EditInstructionsComponent implements OnInit {
 
+  /** Var for current page for pagination */
+  instructions_page = 1;
 
+  /** Character limit for each statement */
+  INS_CHAR_LIMIT = Settings.INS_CHAR_LIMIT;
   /** The maximum number of ins*/
-  FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
+  INS_LIMIT = Settings.INS_LIMIT || 20;
+  /** Pagination variable */
+  PAGINATE_LISTS = Settings.PAGINATE_LISTS;
 
   /** Field titles */
   ins: string[] = [];
@@ -24,7 +30,7 @@ export class EditInstructionsComponent implements OnInit {
    */
   @Input() set ins_input(ins_input: string[]) {
     // Fix for calling of input with undefined value
-    if (ins_input && ins_input.length < (this.FIELDS_LIMIT + 1)) {
+    if (ins_input && ins_input.length < (this.INS_LIMIT + 1)) {
       this.ins = ins_input;
     }
     // TODO: Better checks for >FORMS_LIMIT, error messages thrown, etc.
@@ -93,16 +99,20 @@ export class EditInstructionsComponent implements OnInit {
    * Add a field to the current survey and sync with parent component.
    * @param field The string for the field to be added
    */
-  addField(field: string): void {
+  addIns(field: string): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else if (!this.ins) {
       this.throwError('Invalid ins');
-    } else if (this.ins && this.ins.length > 10) {
+    } else if (this.ins && this.ins.length > this.INS_LIMIT) {
       this.throwError('Too many ins');
     } else {
       this.ins.push(field);
       this.ins_out.emit(this.ins);
+    }
+
+    if ((this.instructions_page * this.PAGINATE_LISTS) < this.ins.length) {
+      this.instructions_page = Math.ceil(this.ins.length / this.PAGINATE_LISTS);
     }
   }
 
@@ -110,7 +120,7 @@ export class EditInstructionsComponent implements OnInit {
    * Edit field (and sync with database)
    * @param field Field input to update statement
    */
-  editField(field: string): void {
+  editIns(field: string): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
@@ -123,13 +133,13 @@ export class EditInstructionsComponent implements OnInit {
    * Delete a field from the current survey and sync with parent component.
    * @param field The string for the field to be added
    */
-  deleteField(index: number): void {
+  deleteIns(index: number): void {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else if (!this.ins) {
       this.throwError('Invalid ins');
     } else {
-      if (this.window.nativeWindow.confirm('Are you sure you wish to delete this field?')) {
+      if (this.window.nativeWindow.confirm('Are you sure you wish to delete this instruction?')) {
         this.ins.splice(index, 1);
         this.ins_out.emit(this.ins);
       }
