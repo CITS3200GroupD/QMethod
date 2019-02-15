@@ -23,9 +23,9 @@ const settings = {
     sort the statements out on the given graph from a +5 (most agree) to a -5 (least agree) scale.`,
     `Please remember that you can only sort the statements on the sorting grid by dragging and dropping each statement.`,
     `You must sort all statements.`,
-    `Any card places in the same column has the same value, and it does not matter if you place it at the top of the bottom
+    `Any card places in the same column has the same value, and it <i>does not matter</i> if you place it at the top of the bottom
      of a column.`,
-    `If you place a card under a negative number, it <i>does not mean</i> that you don't agree with it. It means that you
+    `If you place a card under a negative number, it does not mean that you don't agree with it. It means that you
     simply agree with it less than those on the column to its right and more than those on the column to its left.`,
     `Thank you so much for your help.`
     ]

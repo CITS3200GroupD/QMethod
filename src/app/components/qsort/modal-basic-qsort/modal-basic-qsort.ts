@@ -37,7 +37,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 </ng-template>
 
-<button class="btn btn-sm btn-outline-secondary" (click)="open(content)">Help</button>
+<button class="btn btn-sm btn-secondary" (click)="open(content)">Instructions</button>
 
 <hr>`
 })

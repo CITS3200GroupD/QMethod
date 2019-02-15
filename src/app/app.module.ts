@@ -50,6 +50,7 @@ import { SubmissionComponent } from './components/submission/submission.componen
 import { NgbdModalBasicInitComponent } from './components/initial-sort/modal-basic-initialsort/modal-basic-initialsort';
 import { NgbdModalBasicQsortComponent } from './components/qsort/modal-basic-qsort/modal-basic-qsort';
 import { EditInstructionsComponent } from './components/edit/edit-instructions/edit-instructions.component';
+import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -142,6 +143,7 @@ const routes: Routes = [
     AdminUserListComponent,
     SurveyPipe,
     UserPipe,
+    EscapeHtmlPipe,
     InstructionsComponent,
     RegistrationComponent,
     QuestionnaireComponent,
@@ -152,7 +154,7 @@ const routes: Routes = [
     SubmissionComponent,
     NgbdModalBasicInitComponent,
     NgbdModalBasicQsortComponent,
-    EditInstructionsComponent
+    EditInstructionsComponent,
   ],
   imports: [
     BrowserModule,

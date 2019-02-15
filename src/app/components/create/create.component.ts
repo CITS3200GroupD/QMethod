@@ -108,7 +108,7 @@ export class CreateComponent implements OnInit {
       reader.onload = () => {
         try {
           const input = JSON.parse(reader.result.toString());
-          if (input.statements && input.statements.length < Settings.STATE_LIMIT) {
+          if (input.statements && input.statements.length <= Settings.STATE_LIMIT) {
             this.statements = input.statements;
             for (let i = 1; i < this.cols_templates.length; i++) {
               if (this.statements.length <= this.cols_templates[i].max_statements) {
@@ -122,6 +122,9 @@ export class CreateComponent implements OnInit {
           }
           if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
             this.registration = input.registration;
+          }
+          if (input.instructions && input.instructions.length < Settings.INS_LIMIT) {
+            this.instructions = input.instructions;
           }
           this.error = false;
         } catch (err) {

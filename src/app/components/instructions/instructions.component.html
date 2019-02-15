@@ -2,9 +2,8 @@
 <body>
   <h1 class="instructions">Instructions</h1>
     <ul class ="ul">
-
       <li *ngFor="let ins of instructions">
-        {{ins}}
+        <div [innerHTML]="ins | keepHtml"></div>
       </li>
      </ul>
      <div class="buttonHolder">

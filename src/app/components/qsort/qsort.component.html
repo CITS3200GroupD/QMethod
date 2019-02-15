@@ -1,9 +1,37 @@
+<!--
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div class="container-fluid">
+    <ul class="navbar-nav">
+      <a class="navbar-brand" href="">
+        <img src="src/app/favicon.ico" width="30" height="30" alt="">
+      </a>
+      <li class="nav-item">
+        <a routerLink="admin" class="nav-link" routerLinkActive="active">Admin Home</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="survey/5ba09effcecbea19b0dbf0a2" class="nav-link" routerLinkActive="active">Landing Page (fixed survey)</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/instructions/5ba09effcecbea19b0dbf0a2" class="nav-link" routerLinkActive="active">Instructions (fixed survey)</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/registration/5ba09effcecbea19b0dbf0a2" class="nav-link" routerLinkActive="active">Registration (fixed survey)</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+-->
+
 <!-- Gap on top - Row 1-->
 <div class="row justify-content-center" style="padding-top:25px">
   <table class="table compress">
     <tr>
       <td class="justify-content-center" *ngFor="let col of grid; let i = index">
-        <div class="cell" style="text-align: center">{{i-offset}}</div>
+        <div *ngIf="i-offset <= 0" class="cell" style="text-align: center">{{i-offset}}</div>
+        <div *ngIf="i-offset > 0" class="cell" style="text-align: center">+{{i-offset}}</div>
+        <div *ngIf="i == 0" class="cell" style="text-align: center">Most Disagree</div>
+        <div *ngIf="i != 0 && i != offset * 2" class="cell" style="text-align: center">&nbsp;</div>
+        <div *ngIf="i == offset * 2" class="cell" style="text-align: center">Most Agree</div>
       </td>
     </tr>
     <tr>
@@ -11,9 +39,12 @@
       <td class="justify-content-center" *ngFor="let col of grid; let i = index">
           <!-- Cells -->
           <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
-            <div class ="card" droppable id={{j}} (click)="drop_click(i, j)" (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
+            <div id = "gridcell" class ="card" droppable id={{j}} (click)="drop_click(i, j)" (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
               <div *ngIf="matrix.length > 0 && matrix[i][j] != -1">
                 {{ statement[matrix[i][j]] }}
+              </div>
+              <div *ngIf="matrix[i][j] != -1">
+                &nbsp;
               </div>
             </div>
           </div>

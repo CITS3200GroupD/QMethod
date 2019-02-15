@@ -11,8 +11,8 @@
 
 .card {
     height: 80px;
-    
     overflow: auto;
+    font-size: 0.9rem;
     padding: 5px 10px;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
