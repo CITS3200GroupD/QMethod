@@ -1,3 +1,7 @@
+.navbar {
+    height:0vh;
+}
+
 .table th, .table td {
     padding: 0.1rem;
     vertical-align: top;
@@ -5,14 +9,14 @@
 }
 
 .table {
-    width:90%;
+    width:95%;
     table-layout: fixed;
 }
 
-.card {
-    height: 80px;
+.gridcell{
+    height: 9vh;
     overflow: auto;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     padding: 5px 10px;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
@@ -26,7 +30,7 @@
 }
 
 .custom-list{
-    height: 120px;
+    height: 10vh;
     padding-bottom: 0.1rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;

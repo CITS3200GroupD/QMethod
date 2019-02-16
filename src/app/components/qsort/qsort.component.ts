@@ -12,6 +12,7 @@ import { WindowWrap } from 'src/app/window-wrapper';
 })
 /** Component for the Q-Sort Grid page */
 export class QsortComponent implements OnInit {
+
   /** ID of the current survey */
   id: string;
   /** ID of the current user */
@@ -58,6 +59,7 @@ export class QsortComponent implements OnInit {
    * @param router @ng router
    * @param surveyservice Survey Service Middleware
    * @param userservice User Service Middleware
+   * @param modalService ngbmodal
    * @param window Window Wrapper
    */
   constructor( private route: ActivatedRoute,
@@ -308,6 +310,10 @@ export class QsortComponent implements OnInit {
       console.error(err);
       if (this.window.nativeWindow.confirm('An error has occured whilst submitting')) {}
     });
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
   ngOnInit() {

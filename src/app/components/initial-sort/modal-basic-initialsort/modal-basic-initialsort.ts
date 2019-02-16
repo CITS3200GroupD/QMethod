@@ -14,12 +14,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   </div>
   <div class="modal-body">
 
-  <p> You will be given a series of statements. </p>
-      <p> Read these statement cards one by one. </p>
-
-      <p> Using your mouse to click and drag, sort the statement cards it
-      into one of three given groups that you will see on the screen,
-      depending on whether you agree, you don't agree or you are neutral about it. </p>
+  <p *ngFor="let ins of instructions">{{ins}}</p>
 
   </div>
   <div class="modal-footer">
@@ -28,10 +23,18 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 </ng-template>
 
-<button class="btn btn-sm btn-outline-secondary" (click)="open(content)">Help</button>`
+<button class="btn btn-sm btn-outline-primary" (click)="open(content)">Instructions</button>`
 })
 
 export class NgbdModalBasicInitComponent implements OnInit {
+
+  instructions = [
+    'You will be given a series of statements.',
+    `Read these statement cards one by one.`,
+    `Using your mouse to click and drag, sort the statement cards it
+    into one of three given groups that you will see on the screen,
+    depending on whether you agree, you don't agree or you are neutral about it.`
+  ];
   closeResult: string;
 
   @ViewChild('content') private content;

@@ -1,18 +1,26 @@
-<div class="container">
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-sm navbar-light bg-transparent">
+    <div class="container-fluid">
+      <app-ngbd-modal-basic-initialsort> </app-ngbd-modal-basic-initialsort>
+      <button class="btn btn-sm btn-outline-danger my-2 my-sm-0"(click)="refresh()">Reset</button>
+    </div>
+  </nav>
+</div>
+<div class="container-fluid">
   <!-- Gap on top - Row 1-->
-  <div class="row justify-content-center" style="padding-top:25px">
+  <div class="row justify-content-center" style="padding-top:1vh">
     <!-- Main Card -->
     <div class="col align-self-center">
       <div class="card main-card" *ngIf="!statements_sort.length"></div>
-      <div class="card main-card text-center" *ngIf="statements_sort.length" draggable [dragData]="statements_sort[0]">
+      <div class="card main-card text-center" title="{{statements[statements_sort[current_index]]}}" *ngIf="statements_sort.length" draggable [dragData]="statements_sort[0]">
         <div class="card-body">
-          <h3>{{ statements[statements_sort[current_index]] }}</h3>
+          <h3>{{statements[statements_sort[current_index]]}}</h3>
         </div>
       </div>
     </div>
   </div>
   <!-- Gap on top - Row 2 -->
-  <div class="row justify-content-center" style="padding-top:25px">
+  <div class="row justify-content-center" style="padding-top:1vh">
     <!-- { < | Current/Total | > } -->
     <div class="btn-group">
       <button class="btn btn-light" (click)="decreaseIndex()" [disabled]="current_index <= 0"><i class="fas fa-chevron-left"></i></button>
@@ -22,13 +30,13 @@
   </div>
 
   <!-- {          Continue              } -->
-  <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
+  <div class="row" style="padding-top:0.5vh; padding-left:15px; padding-right:15px;">
     <!-- Button (hidden when arrays are not filled) that 1) submits userdata to user api 2) goes to q-sort page-->
     <button class="btn btn-block btn-outline-primary" *ngIf="!statements_sort.length" [disabled]="submitted" (click)="publishSortContinue()"><h5>continue</h5></button>
   </div>
 
   <!-- Row 3 - Agree/Disagree/Neutral Panels -->
-  <div class="row" style="padding-top:10px">
+  <div class="row" style="padding-top:0.5vh">
 
     <!-- Disagree List -->
     <div class="col-md-4">
@@ -41,8 +49,8 @@
       <!-- Body -->
       <div class="list-group scroll-box" droppable (click)="onDisagreeClick()" (onDrop)="onDisagreeDrop($event)">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngFor="let disagree_index of disagree" draggable [dragData]="disagree_index">
-          <p>{{ statements[disagree_index] }}</p>
+        <li class="list-group-item no-gap" title="{{statements[disagree_index]}}" *ngFor="let disagree_index of disagree" draggable [dragData]="disagree_index">
+          <p>{{statements[disagree_index]}}</p>
         </li>
       </div>
     </div>
@@ -58,8 +66,8 @@
       <!-- Body -->
       <div class="list-group scroll-box" droppable (click)="onNeutralClick()" (onDrop)="onNeutralDrop($event)">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngFor="let neutral_index of neutral" draggable [dragData]="neutral_index">
-          <p>{{ statements[neutral_index] }}</p>
+        <li class="list-group-item no-gap" title="{{statements[neutral_index]}}" *ngFor="let neutral_index of neutral" draggable [dragData]="neutral_index">
+          <p>{{statements[neutral_index]}}</p>
         </li>
       </div>
     </div>
@@ -75,15 +83,13 @@
       <!-- Body -->
       <div class="list-group scroll-box" droppable (click)="onAgreeClick()" (onDrop)="onAgreeDrop($event)">
         <!-- New list item for each statement -->
-        <li class="list-group-item no-gap" *ngFor="let agree_index of agree" draggable [dragData]="agree_index">
-          <p>{{ statements[agree_index] }}</p>
+        <li class="list-group-item no-gap" title="{{statements[agree_index]}}" *ngFor="let agree_index of agree" draggable [dragData]="agree_index">
+          <p>{{statements[agree_index]}}</p>
         </li>
       </div>
     </div>
   </div>
   <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
-    <app-ngbd-modal-basic-initialsort>
-    </app-ngbd-modal-basic-initialsort>
   </div>
   <!-- Display User ID -->
   <div class="fixed-bottom d-print-none">

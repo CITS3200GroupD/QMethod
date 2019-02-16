@@ -24,6 +24,13 @@ export class CreateComponent implements OnInit {
   statements: string[] = [];
   /** Questionnaire Questions*/
   questionnaire: string[] = [];
+
+  /** Boolean variables for json */
+  ins_load = false;
+  ques_load = false;
+  reg_load = false;
+  statem_load = false;
+
   /** Templates for default grid */
   cols_templates = GridTemplates;
   /** Angular reactive form */
@@ -110,6 +117,7 @@ export class CreateComponent implements OnInit {
           const input = JSON.parse(reader.result.toString());
           if (input.statements && input.statements.length <= Settings.STATE_LIMIT) {
             this.statements = input.statements;
+            this.statem_load = true;
             for (let i = 1; i < this.cols_templates.length; i++) {
               if (this.statements.length <= this.cols_templates[i].max_statements) {
                 this.angForm.get('survey_range').setValue(this.cols_templates[i].val);
@@ -119,12 +127,15 @@ export class CreateComponent implements OnInit {
           }
           if (input.questionnaire && input.questionnaire.length < Settings.FIELDS_LIMIT) {
             this.questionnaire = input.questionnaire;
+            this.ques_load = true;
           }
           if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
             this.registration = input.registration;
+            this.reg_load = true;
           }
           if (input.instructions && input.instructions.length < Settings.INS_LIMIT) {
             this.instructions = input.instructions;
+            this.ins_load = true;
           }
           this.error = false;
         } catch (err) {

@@ -6,44 +6,36 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   selector: 'app-ngbd-modal-basic-qsort',
   template:
   `<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Instructions</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Instructions</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
 
-  <p> You will be shown the statements again, this time divided into the groups you sorted in step 2.
-  </p>
+    <p *ngFor="let ins of instructions">{{ins}}</p>
 
-  <p>
-    Click on statements from the three groups, and drag them into empty spaces on the grid with your mouse.
-    You should sort the statements out on the given graph from a +5 (most agree) to a -5 (least agree) scale.
-    You may swap already placed statements in the grid by clicking and dragging.
-  </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Ok</button>
+    </div>
 
-  <p>
-    Alternatively you may click on one of the statement groups (agree, disagree, neutral) and then click an empty space
-    on the grid to place the top most statement into that empty space. The currently selected group is indicated by the tick.
-  </p>
+  </ng-template>
 
-
-
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Ok</button>
-  </div>
-
-</ng-template>
-
-<button class="btn btn-sm btn-secondary" (click)="open(content)">Instructions</button>
-
-<hr>`
+<button class="btn btn-sm btn-outline-primary" (click)="open(content)">Instructions</button>`
 })
 
 export class NgbdModalBasicQsortComponent implements OnInit {
   closeResult: string;
+  instructions = [
+    'You will be shown the statements again, this time divided into the groups you sorted in step 2.',
+    `Click on statements from the three groups, and drag them into empty spaces on the grid with your mouse.
+    You should sort the statements out on the given graph from a +5 (most agree) to a -5 (least agree) scale.
+    You may swap already placed statements in the grid by clicking and dragging.`,
+    `Alternatively you may click on one of the statement groups (agree, disagree, neutral) and then click an empty space
+    on the grid to place the top most statement into that empty space. The currently selected group is indicated by the tick.`
+  ];
 
   @ViewChild('content') private content;
 

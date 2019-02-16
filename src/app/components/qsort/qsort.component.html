@@ -1,37 +1,23 @@
-<!--
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-sm navbar-light bg-transparent">
   <div class="container-fluid">
-    <ul class="navbar-nav">
-      <a class="navbar-brand" href="">
-        <img src="src/app/favicon.ico" width="30" height="30" alt="">
-      </a>
-      <li class="nav-item">
-        <a routerLink="admin" class="nav-link" routerLinkActive="active">Admin Home</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="survey/5ba09effcecbea19b0dbf0a2" class="nav-link" routerLinkActive="active">Landing Page (fixed survey)</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/instructions/5ba09effcecbea19b0dbf0a2" class="nav-link" routerLinkActive="active">Instructions (fixed survey)</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/registration/5ba09effcecbea19b0dbf0a2" class="nav-link" routerLinkActive="active">Registration (fixed survey)</a>
-      </li>
-    </ul>
+    <app-ngbd-modal-basic-qsort></app-ngbd-modal-basic-qsort>
+    <button class="btn btn-sm btn-outline-danger my-2 my-sm-0"(click)="refresh()">Reset</button>
   </div>
 </nav>
--->
 
 <!-- Gap on top - Row 1-->
 <div class="row justify-content-center" style="padding-top:25px">
   <table class="table compress">
     <tr>
       <td class="justify-content-center" *ngFor="let col of grid; let i = index">
+
+        <div *ngIf="i == 0" class="cell" style="text-align: center">Most Disagree</div>
+        <div *ngIf="i-offset == 0" class="cell" style="text-align: center">Neutral</div>
+        <div *ngIf="i != 0 && i != offset * 2 && i-offset != 0" class="cell" style="text-align: center">&nbsp;</div>
+        <div *ngIf="i == offset * 2" class="cell" style="text-align: center">Most Agree</div>
         <div *ngIf="i-offset <= 0" class="cell" style="text-align: center">{{i-offset}}</div>
         <div *ngIf="i-offset > 0" class="cell" style="text-align: center">+{{i-offset}}</div>
-        <div *ngIf="i == 0" class="cell" style="text-align: center">Most Disagree</div>
-        <div *ngIf="i != 0 && i != offset * 2" class="cell" style="text-align: center">&nbsp;</div>
-        <div *ngIf="i == offset * 2" class="cell" style="text-align: center">Most Agree</div>
+
       </td>
     </tr>
     <tr>
@@ -39,9 +25,9 @@
       <td class="justify-content-center" *ngFor="let col of grid; let i = index">
           <!-- Cells -->
           <div class="cell" *ngFor="let row of arr(col).fill(1); let j = index" id={{i}}>
-            <div id = "gridcell" class ="card" droppable id={{j}} (click)="drop_click(i, j)" (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
+            <div title="{{statement[matrix[i][j]]}}" class ="card gridcell" droppable id={{j}} (click)="drop_click(i, j)" (onDrop)="drop($event, i, j)" draggable [dragData]="{array: 'matrix', col: i, cell: j, index: matrix[i][j]}">
               <div *ngIf="matrix.length > 0 && matrix[i][j] != -1">
-                {{ statement[matrix[i][j]] }}
+                {{statement[matrix[i][j]]}}
               </div>
               <div *ngIf="matrix[i][j] != -1">
                 &nbsp;
@@ -52,13 +38,13 @@
     </tr>
   </table>
 </div>
-<div class="container">
+<div class="container-fluid">
   <!-- {          Continue              } -->
-  <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
+  <div class="row" style="padding-top:0.5vh; padding-left:15px; padding-right:15px;">
     <button class="btn btn-block btn-outline-primary" *ngIf="disagree_index == disagree.length && neutral_index == neutral.length && agree_index == agree.length" (click)="publishSortContinue()"><h5>continue</h5></button>
   </div>
 
-  <div class="row" style="padding-top:10px">
+  <div class="row" style="padding-top:0.5vh">
 
     <!-- Disagree List -->
     <div class="col-md-4">
@@ -66,7 +52,7 @@
       <div class="list-group">
         <li class="list-group-item bg-danger" (click)="select_click(0)" >
           <h5>Disagree
-            <i class="badge badge-pill badge-danger" *ngIf="selected_list === 0"><i class="fas fa-check"></i></i>
+            <i title="Currently Selected: Disagree" class="badge badge-pill badge-danger" *ngIf="selected_list === 0"><i class="fas fa-check"></i></i>
           </h5>
         </li>
       </div>
@@ -74,7 +60,7 @@
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
         <li class="list-group-item no-gap custom-list" *ngIf="disagree_index != disagree.length" draggable [dragData]="{array: 'disagree', index: disagree[disagree_index]}">
-          <p> {{ statement[disagree[disagree_index]] }}</p>
+          <p title="{{statement[disagree[disagree_index]]}}"> {{statement[disagree[disagree_index]]}}</p>
         </li>
       </div>
     </div>
@@ -85,7 +71,7 @@
       <div class="list-group">
         <li class="list-group-item bg-warning" (click)="select_click(1)">
           <h5>Neutral
-            <i class="badge badge-pill badge-warning" *ngIf="selected_list === 1"><i class="fas fa-check"></i></i>
+            <i title="Currently Selected: Neutral" class="badge badge-pill badge-warning" *ngIf="selected_list === 1"><i class="fas fa-check"></i></i>
           </h5>
         </li>
       </div>
@@ -93,7 +79,7 @@
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
         <li class="list-group-item no-gap custom-list" *ngIf="neutral_index != neutral.length" draggable [dragData]="{array: 'neutral', index: neutral[neutral_index]}">
-          <p>{{ statement[neutral[neutral_index]] }}</p>
+          <p title="{{statement[neutral[neutral_index]]}}">{{statement[neutral[neutral_index]]}}</p>
         </li>
       </div>
     </div>
@@ -104,7 +90,7 @@
       <div class="list-group">
         <li class="list-group-item bg-success" (click)="select_click(2)">
           <h5>Agree
-            <i class="badge badge-pill badge-success" *ngIf="selected_list === 2"><i class="fas fa-check"></i></i>
+            <i title="Currently Selected: Agree" class="badge badge-pill badge-success" *ngIf="selected_list === 2"><i class="fas fa-check"></i></i>
           </h5>
         </li>
       </div>
@@ -112,12 +98,12 @@
       <div class="list-group scroll-box">
         <!-- New list item for each statement -->
         <li class="list-group-item no-gap custom-list" *ngIf="agree_index != agree.length" draggable [dragData]="{array:'agree', index:agree[agree_index]}">
-          <p>{{ statement[agree[agree_index]] }}</p>
+          <p title="{{statement[agree[agree_index]]}}">{{statement[agree[agree_index]]}}</p>
         </li>
       </div>
     </div>
-    <div class="row" style="padding-top:10px; padding-left:15px; padding-right:15px;">
-    <app-ngbd-modal-basic-qsort></app-ngbd-modal-basic-qsort>
+    <div class="row" style="padding-top:0.5vh; padding-left:15px; padding-right:15px;">
+
 </div>
 <!-- Display User ID -->
 <div class="fixed-bottom d-print-none">
