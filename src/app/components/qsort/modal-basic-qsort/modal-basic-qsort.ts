@@ -1,52 +1,34 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, Input, OnInit} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-ngbd-modal-basic-qsort',
-  template:
-  `<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Instructions</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-
-    <p *ngFor="let ins of instructions">{{ins}}</p>
-
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Ok</button>
-    </div>
-
-  </ng-template>
-
-<button class="btn btn-sm btn-outline-primary" (click)="open(content)">Instructions</button>`
+  templateUrl: './modal-basic-qsort.html'
 })
 
 export class NgbdModalBasicQsortComponent implements OnInit {
   closeResult: string;
-  instructions = [
-    'You will be shown the statements again, this time divided into the groups you sorted in step 2.',
-    `Click on statements from the three groups, and drag them into empty spaces on the grid with your mouse.
-    You should sort the statements out on the given graph from a +5 (most agree) to a -5 (least agree) scale.
-    You may swap already placed statements in the grid by clicking and dragging.`,
-    `Alternatively you may click on one of the statement groups (agree, disagree, neutral) and then click an empty space
-    on the grid to place the top most statement into that empty space. The currently selected group is indicated by the tick.`
-  ];
+  instructions = [];
+
+  @Input() set ins_in(ins_in: string[]) {
+    // Fix for calling of input with undefined value
+      this.instructions = ins_in;
+    // TODO: Better checks for >FORMS_LIMIT, error messages thrown, etc.
+  }
 
   @ViewChild('content') private content;
 
   constructor(private modalService: NgbModal) {}
 
   open(content: any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    if (this.instructions.length > 0 ) {
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
   }
 
   private getDismissReason(reason: any): string {

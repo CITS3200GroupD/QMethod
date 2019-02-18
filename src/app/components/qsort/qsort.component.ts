@@ -4,6 +4,7 @@ import { SurveyService } from 'src/app/survey.service';           // QMd Survey 
 import { UserService } from 'src/app/user.service';               // QMd User Service MW
 import { Survey, User } from 'src/app/models';
 import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings';
 
 @Component({
   selector: 'app-qsort',
@@ -53,6 +54,8 @@ export class QsortComponent implements OnInit {
   /** Grid/Matrix to be updated */
   matrix: number[][] = [];
 
+  instructions: string[] = [];
+
   /**
    * Constructor for QsortComponent
    * @param route @ng activated route
@@ -80,6 +83,7 @@ export class QsortComponent implements OnInit {
     this.surveyservice.getSurvey(this.id).subscribe(
       (res: Survey) => {
         this.statement = res.statements;
+        this.instructions = res.instructions[Settings.INS_Q_SORT];
         this.grid = res.cols;
         this.offset = Math.floor(this.grid.length / 2);
         this.initMatrix();

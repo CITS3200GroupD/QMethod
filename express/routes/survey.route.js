@@ -124,7 +124,6 @@ surveyRoutes.route('/:id').post( (req, res, next) => {
           survey.questionnaire = req.body.questionnaire;
           survey.register = req.body.register;
           survey.statements = req.body.statements;
-          // WIP Instructions
           survey.instructions = req.body.instructions;
         }
 

@@ -17,8 +17,6 @@ import * as Settings from 'config/Settings.js';
 export class EditStatementsComponent implements OnInit {
   /** Var for current statement page for pagination */
   statements_page = 1;
-  /** Number of statements */
-  statements_length = 0;
   /** Character limit for each statement */
   CHAR_LIMIT = Settings.CHAR_LIMIT;
   /** Statement limit */
@@ -35,7 +33,6 @@ export class EditStatementsComponent implements OnInit {
     // Fix for calling of input with undefined value
     if (statements_in) {
       this.statements = statements_in;
-      this.statements_length = this.statements.length;
     }
   }
   /** Input flag for enabling/disabling editing */
@@ -106,7 +103,6 @@ export class EditStatementsComponent implements OnInit {
     } else {
       this.statements.push(statement);
       this.statements_out.emit(this.statements);
-      this.statements_length = this.statements.length;
     }
 
     if ((this.statements_page * this.PAGINATE_LISTS) < this.statements.length) {
@@ -140,7 +136,6 @@ export class EditStatementsComponent implements OnInit {
       if (this.window.nativeWindow.confirm('Are you sure you wish to delete this statement?')) {
         this.statements.splice(statement_index, 1);
         this.statements_out.emit(this.statements);
-        this.statements_length = this.statements.length;
       }
     }
   }

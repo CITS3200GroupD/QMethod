@@ -32,7 +32,7 @@ const surveySchema = new Schema({
   },
   // WIP NEW ADDITIONS
   instructions: {
-    type: [String],
+    type: [[String]],
     // required: [true, 'No instructions' ]
   },
   register_type: {

@@ -59,7 +59,7 @@ export class SurveyService {
    * @param statements Array of Statement fields
    * @param questionnaire Array of Questionnaire fields
    */
-  addSurvey(name: string, range: number, instructions: string[], register: string[],
+  addSurvey(name: string, range: number, instructions: string[][], register: string[],
     statements: string[], questionnaire: string[]): Observable<Object> {
     let cols: number[];
     this.cols_templates.forEach( (item) => {

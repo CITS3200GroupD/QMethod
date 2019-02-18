@@ -17,7 +17,7 @@ import * as Settings from 'config/Settings';                          // QMd Set
 export class CreateComponent implements OnInit {
 
   /** Instructions */
-  instructions: string[] = Settings.DEFAULT_INSTRUCTIONS;
+  instructions: string[][] = Settings.DEFAULT_INSTRUCTIONS;
   /** Registration Fields*/
   registration: string[] = [];
   /** Statements */
@@ -133,7 +133,7 @@ export class CreateComponent implements OnInit {
             this.registration = input.registration;
             this.reg_load = true;
           }
-          if (input.instructions && input.instructions.length < Settings.INS_LIMIT) {
+          if (input.instructions && input.instructions.length) {
             this.instructions = input.instructions;
             this.ins_load = true;
           }

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Survey } from 'src/app/models';
 import { SurveyService } from 'src/app/survey.service';           // QMd Survey Service MW
 import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings';
 
 @Component({
   selector: 'app-instructions',
@@ -12,7 +13,7 @@ import { WindowWrap } from 'src/app/window-wrapper';
 export class InstructionsComponent implements OnInit {
 
   survey_id: string;
-  instructions: String[];
+  instructions: string[] = [];
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -31,13 +32,12 @@ export class InstructionsComponent implements OnInit {
   private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
-        this.instructions = res.instructions;
+        this.instructions = res.instructions[Settings.INS_INSTRUCTIONS];
       });
   }
 
   goNext() {
-    if (this.window.nativeWindow.confirm(
-      `By clicking OK you acknowledge that you have read all relevant permission forms and agree to their terms and conditions`)) {
+    if (this.window.nativeWindow.confirm(Settings.CONFIRMATION_TNC)) {
         this.router.navigate(['/registration', this.survey_id], { skipLocationChange: !isDevMode()});
       }
   }

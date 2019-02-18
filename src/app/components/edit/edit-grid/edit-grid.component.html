@@ -26,8 +26,7 @@
           <!-- If this is the a cell after the last valid cell of our current grid, create an add button -->
           <div *ngIf="j == grid[i] && j != max_grid[i]">
             <div *ngIf="!disabled" class="btn btn-block btn-outline-light" (click)="addBtn(i, j)"><i class="fas fa-plus"></i></div>
-            <!-- If published, override with disabled button -->
-            <div *ngIf="disabled" class="btn btn-block btn-light disabled"></div>
+            <!-- If published, do not show -->
           </div>
           <!-- else create a disabled button -->
           <div *ngIf="j != max_grid[i]-1 && j != grid[i]-1 && j < grid[i]" class="btn  btn-block btn-light disabled"></div>

@@ -59,7 +59,7 @@
     <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="field" #field />
     <!-- Add button -->
     <div class="input-group-append">
-        <button *ngIf="!disabled" (click)="addField(field.value)" [disabled]="numFields >= FIELDS_LIMIT" class="btn btn-secondary">
+        <button *ngIf="!disabled" (click)="addField(field.value)" [disabled]="fields.length >= FIELDS_LIMIT" class="btn btn-secondary">
           <i class="fas fa-plus"></i> Add
         </button>
     </div>

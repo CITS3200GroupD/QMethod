@@ -137,6 +137,7 @@ const routes: Routes = [
     EditComponent,
     InitialSortComponent,
     EditStatementsComponent,
+    EditInstructionsComponent,
     EditGridComponent,
     AdminLinkComponent,
     UserIndexComponent,
@@ -153,8 +154,7 @@ const routes: Routes = [
     AdminLoginComponent,
     SubmissionComponent,
     NgbdModalBasicInitComponent,
-    NgbdModalBasicQsortComponent,
-    EditInstructionsComponent,
+    NgbdModalBasicQsortComponent
   ],
   imports: [
     BrowserModule,

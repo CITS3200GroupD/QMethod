@@ -4,6 +4,7 @@ import { SurveyService } from 'src/app/survey.service';           // QMd Survey 
 import { UserService } from 'src/app/user.service';               // QMd User Service MW
 import { Survey, User } from 'src/app/models';
 import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings';
 
 
 
@@ -20,6 +21,8 @@ export class InitialSortComponent implements OnInit {
   user_id: string;
   /** Survey */
   survey: Survey;
+  /** Instructions */
+  instructions: string[] = [];
   /** Statements */
   statements: string[] = [];
   /** Statements ids */
@@ -67,6 +70,7 @@ export class InitialSortComponent implements OnInit {
     this.surveyservice.getSurvey(this.id).subscribe( (res: Survey) => {
       this.survey = res;
       this.statements = this.survey.statements;
+      this.instructions = this.survey.instructions[Settings.INS_INIT_SORT];
       for (let i = 0; i < this.statements.length; i++) {
         this.statements_sort.push(i);
       }

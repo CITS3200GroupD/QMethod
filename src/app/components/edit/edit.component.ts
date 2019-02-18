@@ -45,8 +45,7 @@ export class EditComponent implements OnInit {
   lengths = {
     questionnaire: 0,
     register: 0,
-    statements: 0,
-    instructions: 0     // WIP Instructions
+    statements: 0
   };
 
   /**
@@ -111,7 +110,7 @@ export class EditComponent implements OnInit {
    * @param cols The new grid to be set
    */
   updateGrid(cols: number[]): void {
-    if (!this.survey.publish && this.valid_grid) {
+    if (!this.survey.publish) {
       this.survey.cols = cols;
     }
   }
@@ -130,10 +129,9 @@ export class EditComponent implements OnInit {
   /**
    * Callback method for edit-instructions subcomponent to set instructions
    */
-  updateInstructions(instructions: string[]): void {
+  updateInstructions(instructions: string[][]): void {
     if (!this.survey.publish) {
       this.survey.instructions = instructions;
-      this.lengths.instructions = instructions.length;
     }
   }
 
@@ -236,6 +234,66 @@ export class EditComponent implements OnInit {
   }
 
   /**
+   * Print as HTML template
+   * from: https://stackoverflow.com/questions/41379274/print-html-template-in-angular-2-ng-print-in-angular-2#41379912
+   */
+  print(): void {
+    let statements = '';
+    this.survey.statements.forEach( (statement) => {
+      statements += '<li>' + statement + '</li>';
+    });
+    let registration = '';
+    this.survey.register.forEach( (reg) => {
+      registration += '<li>' + reg + '</li>';
+    });
+    let questionnaire = '';
+    this.survey.questionnaire.forEach( (ques) => {
+      questionnaire += '<li>' + ques + '</li>';
+    });
+
+    let popupWin;
+    popupWin = this.window.nativeWindow.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <title>QMethod Report for Survey: ${this.survey._id}</title>
+          <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+          </style>
+          <style>
+            .list-group-item { padding-top: 2px; padding-bottom: 2px; }
+            p { margin-bottom: 2px; }
+          </style>
+        </head>
+
+    <body onload="window.print();window.close()">
+    <div class="card">
+      <div class="card-header">
+        <b>Survey ID</b> ${this.survey._id}
+        <b>Survey Name</b> ${this.survey.name}
+      </div>
+      <div class="card-body">
+        <b>Registration</b>
+        <ol>
+        ${registration}
+        </ol>
+        <b>Statements</b>
+        <ol>
+        ${statements}
+        </ol>
+        <b>Questionnaire</b>
+        <ol>
+        ${questionnaire}
+        </ol>
+      </div>
+    </div>
+    </body>
+    </html>`
+    );
+    popupWin.document.close();
+  }
+
+  /**
    * Function that is run on init
    */
   ngOnInit(): void {
@@ -249,9 +307,6 @@ export class EditComponent implements OnInit {
           this.lengths.questionnaire = this.survey.questionnaire.length;
           this.lengths.register = this.survey.register.length;
           // We deliberately do NOT want to update this.range on initiation.
-
-          // WIP Instructions
-          this.lengths.instructions = this.survey.instructions.length;
 
           this.angForm.get('survey_id').setValue(this.survey._id);
           this.angForm.get('survey_name').setValue(this.survey.name);

@@ -13,7 +13,7 @@ export interface SurveyInput {
     questionnaire: string[];
     users: User[];
 
-    instructions: string[];
+    instructions: string[][];
     // questionnaire_type: number[];
 }
 
@@ -28,7 +28,7 @@ export interface Survey {
     questionnaire: string[];
     users: User[];
     // questionnaire_type: number[];
-    instructions: string[];
+    instructions: string[][];
 }
 
 export interface User {
