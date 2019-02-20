@@ -138,7 +138,6 @@ export class EditComponent implements OnInit {
   /**
    * Callback method for edit-forms subcomponent to set fields & lengths
    */
-  // WIP - this method will have to be cloned and isolated for drop-down functionality
   updateFields(field: string, item: string[]): void {
     if (!this.survey.publish) {
       this.survey[field] = item;

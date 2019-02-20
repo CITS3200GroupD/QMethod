@@ -45,7 +45,6 @@
 
       <ngb-tabset>
 
-        <!-- WIP NEW -->
         <ngb-tab title="Instructions">
           <ng-template ngbTabContent>
             <!-- Registration -->
@@ -60,8 +59,7 @@
             <!-- Registration -->
             <div class="form-group">
                 <label class="col-md-4">Registration  Fields {{lengths.register}}/{{FIELDS_LIMIT}}</label>
-                <!-- WIP for dropdown menu - Need to update method -->
-                <app-edit-reg [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-reg>
+                <app-edit-reg [reg_input]="survey.register" [disabled_in]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-reg>
             </div>
           </ng-template>
         </ngb-tab>
@@ -93,7 +91,6 @@
         <button class="btn btn-danger" *ngIf="survey.publish" (click)="stopSurvey()" [disabled]="angForm.invalid || !valid_grid" >Pause</button>
         <a class="btn btn-light" [routerLink]="['/admin']" >Cancel</a>
       </div>
-
     </form>
   </div>
 </div>

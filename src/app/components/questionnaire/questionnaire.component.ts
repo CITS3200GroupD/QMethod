@@ -22,6 +22,8 @@ export class QuestionnaireComponent implements OnInit {
   ques_fa: FormArray;
   progress: number;
 
+  instructions: string[] = [];
+
   /** SubmitOnce flag */
   submitted = false;
 
@@ -53,9 +55,10 @@ export class QuestionnaireComponent implements OnInit {
   private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
+        this.instructions = res.instructions[Settings.INS_QUESTIONNAIRE];
         // Using questionnaire field array as a reference, loop through and init new field objects to the form array
         res.questionnaire.forEach((field) => {
-          this.ques_fa.push(this.createField(field));
+          this.ques_fa.push(this.createField(field[0]));
         });
         this.getUserData();
       },

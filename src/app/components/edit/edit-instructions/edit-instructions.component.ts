@@ -12,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                          
 export class EditInstructionsComponent implements OnInit {
 
   /** Var for current page for pagination */
-  instructions_page = [1, 1, 1, 1, 1];
+  instructions_page = [1, 1, 1, 1, 1, 1, 1];
   /** Names of pages */
   page_names = Settings.INS_PAGE_NAMES;
 

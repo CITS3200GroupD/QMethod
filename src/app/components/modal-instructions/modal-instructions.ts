@@ -3,18 +3,17 @@ import {Component, ViewChild, Input, OnInit} from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-ngbd-modal-basic-qsort',
-  templateUrl: './modal-basic-qsort.html'
+  selector: 'app-ngbd-modal-instructions',
+  templateUrl: './modal-instructions.html'
 })
 
-export class NgbdModalBasicQsortComponent implements OnInit {
+export class NgbdModalInstructionsComponent implements OnInit {
   closeResult: string;
   instructions = [];
 
   @Input() set ins_in(ins_in: string[]) {
-    // Fix for calling of input with undefined value
       this.instructions = ins_in;
-    // TODO: Better checks for >FORMS_LIMIT, error messages thrown, etc.
+      this.open(this.content);
   }
 
   @ViewChild('content') private content;
@@ -43,6 +42,5 @@ export class NgbdModalBasicQsortComponent implements OnInit {
 
 
   ngOnInit() {
-    this.open(this.content);
  }
 }

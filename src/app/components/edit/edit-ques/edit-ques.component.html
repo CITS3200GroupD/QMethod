@@ -31,7 +31,7 @@
     <!-- Create list item for each field -->
     <li class="list-group-item" *ngFor="let field of fields | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:questionnaire_page, id: 'ques_paginate'}; let i = index" [attr.data-index]="i">
       <span class="badge badge-light">{{ (questionnaire_page-1)*PAGINATE_LISTS+i+1}}</span>
-        {{field}}
+        {{field[0]}}
           <!-- float delete button to right -->
           <span class="btn-group float-right">
             <!-- Edit field button (only if not published) -->

@@ -1,3 +1,4 @@
+<!-- MODAL -->
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-registration">Success!</h4>
@@ -7,7 +8,7 @@
   </div>
   <div class="modal-body">
 
-  <p *ngFor="let ins of instructions">{{ins}}</p>
+  <p *ngFor="let ln of confirm">{{ln}}</p>
 
   <form>
     <div class="input-group input-group-sm">
@@ -38,16 +39,26 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Ok</button>
   </div>
-
 </ng-template>
 
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-sm navbar-light bg-transparent">
+    <div class="container-fluid">
+      <app-ngbd-modal-instructions [ins_in]="instructions"> </app-ngbd-modal-instructions>
+      <button class="btn btn-sm btn-outline-danger my-2 my-sm-0"(click)="refresh()">Reset</button>
+    </div>
+  </nav>
+</div>
 <div class="container">
 <div [formGroup]="reg_fg">
   <div formArrayName="fields" *ngFor="let field of reg_fg.get('fields')['controls']; let i = index;">
     <div [formGroupName]="i">
       <div class="form_attribute">
         <label><h5> {{ reg_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
-        <p> <textarea rows='5' cols='100' formControlName="answer" [maxLength]="FIELD_NAME_LIMIT"></textarea> </p>
+        <p *ngIf="reg_fg['controls']['fields']['controls'][i]['controls'].valid_answers.value.length === 0"> <textarea class="form-control" rows='5' cols='100' formControlName="answer" [maxLength]="FIELD_NAME_LIMIT"></textarea> </p>
+        <select *ngIf="reg_fg['controls']['fields']['controls'][i]['controls'].valid_answers.value.length > 0" class="form-control" formControlName="answer">
+          <option [value]="option" *ngFor="let option of reg_fg['controls']['fields']['controls'][i]['controls'].valid_answers.value">{{option}}</option>
+        </select>
       </div>
     </div>
     <!-- reg_fg.controls['fields'].dirty ||  -->

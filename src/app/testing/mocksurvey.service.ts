@@ -24,8 +24,8 @@ export class MockSurveyService {
 
   addAuthHeader(auth_key: string): void {}
 
-  addSurvey(name: string, range: number, register: string[],
-    statements: string[], questionnaire: string[]): Observable<Object> {
+  addSurvey(name: string, range: number, instructions: string[][], register: string[],
+    register_type: number[], statements: string[], questionnaire: string[], questionnaire_type: number[]): Observable<Object> {
     // DEBUG
     // console.log('Received message');
     const return_val = 'Successfully Updated';

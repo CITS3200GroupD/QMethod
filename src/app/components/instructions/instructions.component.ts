@@ -14,6 +14,7 @@ export class InstructionsComponent implements OnInit {
 
   survey_id: string;
   instructions: string[] = [];
+  prompt: string;
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -33,11 +34,12 @@ export class InstructionsComponent implements OnInit {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
         this.instructions = res.instructions[Settings.INS_INSTRUCTIONS];
+        this.prompt = res.instructions[Settings.PROMPT_ACCEPT][0];
       });
   }
 
   goNext() {
-    if (this.window.nativeWindow.confirm(Settings.CONFIRMATION_TNC)) {
+    if (this.window.nativeWindow.confirm(this.prompt)) {
         this.router.navigate(['/registration', this.survey_id], { skipLocationChange: !isDevMode()});
       }
   }

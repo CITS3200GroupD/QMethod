@@ -16,11 +16,11 @@ import { WindowWrap } from 'src/app/window-wrapper';                      // wra
 export class AdminUserViewComponent implements OnInit {
 
   /** Questionnaire field strings */
-  questionnaire: string[] = [];
+  questionnaire: string[][] = [];
   /** Questionnaire answers */
   question_ans: string[] = [];
   /** Registration field strings */
-  register: string[] = [];
+  register: string[][] = [];
   /** Registration answers */
   register_ans: string[] = [];
   /** Q-Sort Matrix Post-sort results */

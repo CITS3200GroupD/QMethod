@@ -102,14 +102,14 @@ describe('EditComponent', () => {
   it('update registration', () => {
     component.survey.publish = false;
     const old_fields = valid_survey_list[0].register.slice();
-    const new_fields = ['test'];
+    const new_fields = [['test']];
     component.survey.register = new_fields;
     expect(component.survey.register).toBe(new_fields);
-    component.updateFields('register', old_fields);
+    component.updateFields('register', old_fields[0]);
     expect(component.survey.register).toBe(old_fields);
     // Should not work when published
     component.survey.publish = true;
-    component.updateFields('register', new_fields);
+    component.updateFields('register', new_fields[0]);
     expect(component.survey.register).toBe(old_fields);
     component.survey.publish = false;
   });
@@ -117,14 +117,14 @@ describe('EditComponent', () => {
   it('update questionnaire', () => {
     component.survey.publish = false;
     const old_ques = valid_survey_list[0].questionnaire.slice();
-    const new_ques = ['test'];
+    const new_ques = [['test']];
     component.survey.questionnaire = new_ques;
     expect(component.survey.questionnaire).toBe(new_ques);
-    component.updateFields('questionnaire', old_ques);
+    component.updateFields('questionnaire', old_ques[0]);
     expect(component.survey.questionnaire).toBe(old_ques);
     // Should not work when published
     component.survey.publish = true;
-    component.updateFields('questionnaire', new_ques);
+    component.updateFields('questionnaire', new_ques[0]);
     expect(component.survey.questionnaire).toBe(old_ques);
     component.survey.publish = false;
   });

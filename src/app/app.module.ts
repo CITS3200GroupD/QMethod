@@ -47,8 +47,7 @@ import { EditQuesComponent } from './components/edit/edit-ques/edit-ques.compone
 import { AdminUserViewComponent } from './components/admin/admin-user-view/admin-user-view.component';
 import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { SubmissionComponent } from './components/submission/submission.component';
-import { NgbdModalBasicInitComponent } from './components/initial-sort/modal-basic-initialsort/modal-basic-initialsort';
-import { NgbdModalBasicQsortComponent } from './components/qsort/modal-basic-qsort/modal-basic-qsort';
+import { NgbdModalInstructionsComponent } from './components/modal-instructions/modal-instructions';
 import { EditInstructionsComponent } from './components/edit/edit-instructions/edit-instructions.component';
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 
@@ -153,8 +152,7 @@ const routes: Routes = [
     AdminUserViewComponent,
     AdminLoginComponent,
     SubmissionComponent,
-    NgbdModalBasicInitComponent,
-    NgbdModalBasicQsortComponent
+    NgbdModalInstructionsComponent
   ],
   imports: [
     BrowserModule,

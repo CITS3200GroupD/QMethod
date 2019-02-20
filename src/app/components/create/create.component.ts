@@ -19,11 +19,11 @@ export class CreateComponent implements OnInit {
   /** Instructions */
   instructions: string[][] = Settings.DEFAULT_INSTRUCTIONS;
   /** Registration Fields*/
-  registration: string[] = [];
+  registration: string[][] = [];
   /** Statements */
   statements: string[] = [];
   /** Questionnaire Questions*/
-  questionnaire: string[] = [];
+  questionnaire: string[][] = [];
 
   /** Boolean variables for json */
   ins_load = false;
@@ -80,14 +80,15 @@ export class CreateComponent implements OnInit {
     /*
      * DEBUG
      * if ( isDevMode() ) {
-     *   console.log(`SEND => { ${name}, ${range}, [registration], [statements], [questionnaire] }`);
+     *   console.log(`SEND => { ${name}, ${range}, [ins], [reg], [reg_type], [statements], [ques], [ques_type]}`);
      *   console.log(`Registration: ${this.registration}`);
      *   console.log(`Statements: ${this.statements}`);
      *   console.log(`Questionnaire: ${this.questionnaire}`);
      * }
      */
     // Read statements, registration and questionnaire data from json.
-    this.surveyservice.addSurvey(name, range, this.instructions, this.registration, this.statements, this.questionnaire)
+    this.surveyservice.addSurvey(name, range, this.instructions,
+      this.registration, this.statements, this.questionnaire)
       .subscribe(
         (res) => {
           // DEBUG

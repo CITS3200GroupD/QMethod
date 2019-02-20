@@ -17,22 +17,27 @@ export class EditRegComponent implements OnInit {
   /** Var for current page for pagination */
   registration_page = 1;
 
+  /** Var for current page (options) for pagination */
+  opt_page = 1;
+
   /** The maximum number of fields*/
-  FIELDS_LIMIT = Settings.FIELDS_LIMIT || 10;
+  FIELDS_LIMIT = Settings.FIELDS_LIMIT;
   /** The maximum character length of a statement */
-  CHAR_LIMIT = Settings.CHAR_LIMIT || 350;
+  CHAR_LIMIT = Settings.CHAR_LIMIT;
   /** The maximum number of statements */
-  STATE_LIMIT = Settings.STATE_LIMIT || 80;
+  STATE_LIMIT = Settings.STATE_LIMIT;
   /** Pagination variable */
   PAGINATE_LISTS = Settings.PAGINATE_LISTS;
   /** Field titles */
-  fields: string[] = [];
+  fields: string[][] = [];
+  /** Disabled flag */
+  disabled = false;
 
   /**
    * Input function called by parent component to set fields var.
    * @param fields_input A string array of field titles
    */
-  @Input() set fields_input(fields_input: string[]) {
+  @Input() set reg_input(fields_input: string[][]) {
     // Fix for calling of input with undefined value
     if (fields_input && fields_input.length < (this.FIELDS_LIMIT + 1) ) {
       this.fields = fields_input;
@@ -40,9 +45,15 @@ export class EditRegComponent implements OnInit {
     // TODO: Better checks for >FORMS_LIMIT, error messages thrown, etc.
   }
   /** Input called by parent component to set variable to disable editing */
-  @Input() disabled: boolean;
+  @Input() set disabled_in(disabled_in: boolean) {
+    this.disabled = disabled_in;
+    if (this.disabled) {
+      this.angForm.disable();
+      this.editForm.disable();
+    }
+  }
   /** Output callback to send to parent component to inform of changes to fields var. */
-  @Output() fields_out = new EventEmitter<string[]>();
+  @Output() fields_out = new EventEmitter<string[][]>();
 
   /** Edit Index */
   edit_index: number;
@@ -69,7 +80,8 @@ export class EditRegComponent implements OnInit {
       field: ['', Validators.required ]
     });
     this.editForm = this.fb.group({
-      edit_field: ['', Validators.required ]
+      edit_field: ['', Validators.required ],
+      edit_opt: ['', Validators.required ]
     });
   }
 
@@ -94,8 +106,7 @@ export class EditRegComponent implements OnInit {
    */
   open(content, index): void {
     this.modalService.open(content, {ariaLabelledBy: 'modal-edit-statement'});
-    // WIP TODO: Modify to change type of question to enable dropdown selection
-    this.editForm.get('edit_field').setValue(this.fields[index]);
+    this.editForm.get('edit_field').setValue(this.fields[index][0]);
     this.edit_index = index;
   }
 
@@ -104,6 +115,7 @@ export class EditRegComponent implements OnInit {
    * @param field The string for the field to be added
    */
   addField(field: string): void {
+    const field_array = [field];
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else if (!this.fields) {
@@ -111,7 +123,7 @@ export class EditRegComponent implements OnInit {
     } else if (this.fields && this.fields.length >= this.FIELDS_LIMIT) {
       this.throwError('Too many fields');
     } else {
-      this.fields.push(field);
+      this.fields.push(field_array);
       this.fields_out.emit(this.fields);
     }
 
@@ -128,14 +140,14 @@ export class EditRegComponent implements OnInit {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
-      this.fields[this.edit_index] = field;
+      this.fields[this.edit_index][0] = field;
       this.fields_out.emit(this.fields);
     }
   }
 
   /**
    * Delete a field from the current survey and sync with parent component.
-   * @param field The string for the field to be added
+   * @param index The index of the string for the field to be added
    */
   deleteField(index: number): void {
     if (this.disabled) {
@@ -145,6 +157,47 @@ export class EditRegComponent implements OnInit {
     } else {
       if (this.window.nativeWindow.confirm('Are you sure you wish to delete this field?')) {
         this.fields.splice(index, 1);
+        this.fields_out.emit(this.fields);
+      }
+    }
+  }
+
+  /**
+   * Add a valid response for the current field and sync with parent component.
+   * @param opt The string for the field to be added
+   */
+  addOpt(opt: string): void {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server');
+    } else if (!this.fields) {
+      this.throwError('Invalid fields');
+    } else if (this.fields && this.fields.length >= this.FIELDS_LIMIT) {
+      this.throwError('Too many fields');
+    } else {
+      this.fields[this.edit_index].push(opt);
+      this.fields_out.emit(this.fields);
+    }
+
+    if ((this.opt_page * this.PAGINATE_LISTS) < this.fields[this.edit_index].length) {
+      this.opt_page = Math.ceil(this.fields[this.edit_index].length / this.PAGINATE_LISTS);
+    }
+  }
+
+  /**
+   * Delete a field from the current survey and sync with parent component.
+   * @param field The string for the field to be added
+   */
+  deleteOpt(opt_index: number): void {
+    console.log(opt_index);
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server');
+    } else if (!this.fields) {
+      this.throwError('Invalid fields');
+    } else if (opt_index === 0) {
+      this.throwError('Invalid Index 0');
+    } else {
+      if (this.window.nativeWindow.confirm('Are you sure you wish to delete this option?')) {
+        this.fields[this.edit_index].splice(opt_index, 1);
         this.fields_out.emit(this.fields);
       }
     }

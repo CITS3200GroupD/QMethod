@@ -11,23 +11,50 @@
   <div class="modal-body">
     <form [formGroup]="editForm">
       <!-- Label -->
-      <label>Registration Field Label</label>
+      <label>Registration Field</label>
         <div class="input-group">
           <!-- Private Link URL-->
           <input class="form-control" formControlName="edit_field" #edit_field>
           <div class="input-group-append">
-            <button type="button" class="btn btn-outline-secondary" (click)="editField(edit_field.value)">
+            <button *ngIf="!disabled" type="button" class="btn btn-outline-secondary" (click)="editField(edit_field.value)">
               <i class="fas fa-pen"></i>
             </button>
           </div>
         </div>
-        <!-- TODO: Implement Dropdown Feature Here -->
-        <label> Response Type </label>
-        <select class="form-control">
-          <option value="normal">Text</option>
-          <option value="normal">Dropdown Options</option>
-        </select>
+        <label> Valid Responses </label>
+        <ul class="list-group">
+          <li class="list-group-item bg-light text-muted" *ngIf = "fields[edit_index].length == 1"> <i>All Responses Valid</i></li>
+          <li class="list-group-item" *ngFor = "let option of fields[edit_index].slice(1) | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:opt_page, id: 'opt_paginate'}; let i = index">
+            {{option}}
+            <!-- float delete button to right -->
+            <span class="btn-group float-right">
+              <!-- Edit field button (only if not published) -->
+              <!-- Delete field button (only if not published) -->
+              <button *ngIf="!disabled" (click)="deleteOpt(i+1);" class="btn btn-danger btn-sm">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </span>
+          </li>
+        </ul>
+        <div *ngIf="!disabled" class="input-group">
+        <input class="form-control" formControlName="edit_opt" #edit_opt>
+          <div class="input-group-append">
+            <button type="button" class="btn btn-secondary" (click)="addOpt(edit_opt.value)">
+              <i class="fas fa-plus"></i> Add
+            </button>
+          </div>
+        </div>
     </form>
+    <!-- Pagination Controls -->
+    <div class="row justify-content-center">
+      <pagination-controls class="pagination" (pageChange)="opt_page = $event" id="opt_paginate"
+        maxSize="5"
+        directionLinks="true"
+        autoHide="true"
+        previousLabel=""
+        nextLabel="">
+      </pagination-controls>
+    </div>
   </div>
 </ng-template>
 
@@ -37,12 +64,13 @@
   <!-- Create list item for each field -->
   <li class="list-group-item" *ngFor="let field of fields | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:registration_page, id: 'res_paginate'}; let i = index" [attr.data-index]="i">
     <span class="badge badge-light">{{ (registration_page-1)*PAGINATE_LISTS+i+1}}</span>
-      {{field}}
+      {{field[0]}}
       <!-- float delete button to right -->
       <span class="btn-group float-right">
         <!-- Edit field button (only if not published) -->
-        <button *ngIf="!disabled" (click)="open(content, (registration_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
-            <i class="fas fa-pen"></i>
+        <button (click)="open(content, (registration_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
+            <i *ngIf="!disabled" class="fas fa-pen"></i>
+            <i *ngIf="disabled" class="fas fa-eye"></i>
         </button>
         <!-- Delete field button (only if not published) -->
         <button *ngIf="!disabled" (click)="deleteField((registration_page-1)*PAGINATE_LISTS+i)" class="btn btn-danger btn-sm">
@@ -68,7 +96,7 @@
 
 <!-- Pagination Controls -->
 <div class="row justify-content-center">
-  <pagination-controls class="registration-pagination" (pageChange)="registration_page = $event" id="res_paginate"
+  <pagination-controls class="pagination" (pageChange)="registration_page = $event" id="res_paginate"
     maxSize="5"
     directionLinks="true"
     autoHide="true"

@@ -15,7 +15,6 @@ export class AuthService {
   /** URL of the authentication api route on the express server */
   private uri: string;
 
-
   constructor( private http: HttpClient) {
     // DEBUG
     // if (isDevMode()) { console.log('auth.service init'); }

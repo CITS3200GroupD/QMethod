@@ -30,6 +30,7 @@ export class RegistrationComponent implements OnInit {
   submitted = false;
 
   instructions: string[] = [];
+  confirm: string[] = [];
 
   constructor( private route: ActivatedRoute,
     private router: Router,
@@ -51,7 +52,8 @@ export class RegistrationComponent implements OnInit {
   private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
-        this.instructions = res.instructions[Settings.INS_CONFIRM];
+        this.instructions = res.instructions[Settings.INS_REGISTRATION];
+        this.confirm = res.instructions[Settings.PROMPT_ID];
         // Using registration field array as a reference, loop through and init new field objects to the form array
         res.register.forEach((field) => {
           this.reg_fa.push(this.createField(field));
@@ -76,9 +78,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   /** @ng reaction form array init */
-  private createField(field: string): FormGroup {
+  private createField(field: string[]): FormGroup {
     return this.fb.group({
-      question: field,
+      question: field[0],
+      valid_answers: [field.slice(1)],
       answer: ['', Validators.required]
     });
   }

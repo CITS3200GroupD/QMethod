@@ -46,7 +46,7 @@
           <div id="reg-print">
           <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let field of register; let i = index">
-                <p> <b>{{ register[i] }}:</b> {{ register_ans[i]}} </p>
+                <p> <b>{{ field[0] }}:</b> {{ register_ans[i]}} </p>
             </li>
           </ul>
           </div>
@@ -59,7 +59,7 @@
           <div id="ques-print">
           <ul class="list-group list-group-flush">
             <li class="list-group-item" *ngFor="let field of questionnaire; let i = index">
-                <p class="d-print-none"> <i> {{ questionnaire[i] }} </i> </p> <p> {{ question_ans[i]}} </p>
+                <p class="d-print-none"> <i> {{ field[0] }} </i> </p> <p> {{ question_ans[i]}} </p>
             </li>
           </ul>
           </div>

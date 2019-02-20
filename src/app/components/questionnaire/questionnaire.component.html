@@ -1,10 +1,16 @@
+<nav class="navbar navbar-sm navbar-light bg-transparent">
+  <div class="container-fluid">
+    <app-ngbd-modal-instructions [ins_in]="instructions"></app-ngbd-modal-instructions>
+    <button class="btn btn-sm btn-outline-danger my-2 my-sm-0"(click)="refresh()">Reset</button>
+  </div>
+</nav>
 <div class="container">
 <div [formGroup]="ques_fg">
   <div formArrayName="fields" *ngFor="let field of ques_fg.get('fields')['controls']; let i = index;">
     <div [formGroupName]="i">
       <div class="form_attribute">
         <label><h5> {{ ques_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
-        <p> <textarea rows='5' cols='100' formControlName="answer" [maxLength]="TEMP_Q_FIELD_CHAR_LIMIT"></textarea> </p>
+        <p> <textarea class="form-control" rows='5' cols='100' formControlName="answer" [maxLength]="TEMP_Q_FIELD_CHAR_LIMIT"></textarea> </p>
       </div>
     </div>
     <div *ngIf="ques_fg['controls']['fields']['controls'][i].invalid && (ques_fg['controls']['fields']['controls'][i].dirty || ques_fg['controls']['fields']['controls'][i].touched)" class="alert alert-danger">

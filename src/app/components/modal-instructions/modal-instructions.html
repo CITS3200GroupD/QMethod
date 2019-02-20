@@ -6,8 +6,9 @@
     </button>
   </div>
   <div class="modal-body">
-
-  <p *ngFor="let ins of instructions">{{ins}}</p>
+  <div *ngFor="let ins of instructions">
+    <p [innerHTML]="ins | keepHtml"></p>
+  </div>
 
   </div>
   <div class="modal-footer">

@@ -27,13 +27,13 @@ export class EditQuesComponent implements OnInit {
   /** Pagination variable */
   PAGINATE_LISTS = Settings.PAGINATE_LISTS;
   /** Field titles */
-  fields: string[] = [];
+  fields: string[][] = [];
 
   /**
    * Input function called by parent component to set fields var.
    * @param fields_input A string array of field titles
    */
-  @Input() set fields_input(fields_input: string[]) {
+  @Input() set fields_input(fields_input: string[][]) {
     // Fix for calling of input with undefined value
     if (fields_input && fields_input.length < (this.FIELDS_LIMIT + 1)) {
       this.fields = fields_input;
@@ -43,7 +43,7 @@ export class EditQuesComponent implements OnInit {
   /** Input called by parent component to set variable to disable editing */
   @Input() disabled: boolean;
   /** Output callback to send to parent component to inform of changes to fields var. */
-  @Output() fields_out = new EventEmitter<string[]>();
+  @Output() fields_out = new EventEmitter<string[][]>();
 
   /** Edit Index */
   edit_index: number;
@@ -95,7 +95,7 @@ export class EditQuesComponent implements OnInit {
    */
   open(content, index): void {
     this.modalService.open(content, {ariaLabelledBy: 'modal-edit-statement'});
-    this.editForm.get('edit_field').setValue(this.fields[index]);
+    this.editForm.get('edit_field').setValue(this.fields[index][0]);
     this.edit_index = index;
   }
 
@@ -104,6 +104,7 @@ export class EditQuesComponent implements OnInit {
    * @param field The string for the field to be added
    */
   addField(field: string): void {
+    const field_array = [field];
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else if (!this.fields) {
@@ -111,7 +112,7 @@ export class EditQuesComponent implements OnInit {
     } else if (this.fields && this.fields.length >= this.FIELDS_LIMIT) {
       this.throwError('Too many fields');
     } else {
-      this.fields.push(field);
+      this.fields.push(field_array);
       this.fields_out.emit(this.fields);
     }
 
@@ -128,7 +129,7 @@ export class EditQuesComponent implements OnInit {
     if (this.disabled) {
       this.throwError('Attempted to update a published server');
     } else {
-      this.fields[this.edit_index] = field;
+      this.fields[this.edit_index][0] = field;
       this.fields_out.emit(this.fields);
     }
   }
