@@ -332,6 +332,11 @@ export class InitialSortComponent implements OnInit {
     }
   }
 
+  /** Reset the page */
+  refresh(): void {
+    window.location.reload();
+  }
+
   ngOnInit() {
   }
 
