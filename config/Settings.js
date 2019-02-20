@@ -59,7 +59,6 @@ const settings = {
              resume completion later or delete your data from the survey's dataset.`
         ]
     ],
-    CONFIRMATION_TNC: `By clicking OK you acknowledge that you have read all relevant permission forms and agree to their terms and conditions`,
     /* Unless you know what you are doing, don't touch these */
     INS_INSTRUCTIONS: 0,
     INS_REGISTRATION: 1,

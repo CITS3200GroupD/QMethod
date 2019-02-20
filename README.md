@@ -28,7 +28,7 @@ Please read the following for either [a basic](https://qmethod.gitbook.io/projec
 
 [![Video Guide](https://i.imgur.com/jG5lEUu.png)](https://streamable.com/k1ztc)
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/CITS3200GroupD/QMethod/tree/master)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/evanhwk/QMethod/tree/master)
 
 ### Supported Browsers
 
