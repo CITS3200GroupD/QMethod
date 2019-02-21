@@ -176,7 +176,7 @@ export class InitialSortComponent implements OnInit {
     // console.log(selected);
     if (selected !== undefined) {
       this.removeDisagree(selected);
-      this.disagree.push(selected);
+      this.disagree.unshift(selected);
       this.removeStatement(selected);
       this.removeNeutral(selected);
       this.removeAgree(selected);
@@ -192,7 +192,7 @@ export class InitialSortComponent implements OnInit {
     // console.log(selected);
     if (selected !== undefined) {
       this.removeNeutral(selected);
-      this.neutral.push(selected);
+      this.neutral.unshift(selected);
       this.removeStatement(selected);
       this.removeDisagree(selected);
       this.removeAgree(selected);
@@ -208,7 +208,7 @@ export class InitialSortComponent implements OnInit {
     // console.log(selected);
     if (selected !== undefined) {
       this.removeAgree(selected);
-      this.agree.push(selected);
+      this.agree.unshift(selected);
       this.removeStatement(selected);
       this.removeDisagree(selected);
       this.removeNeutral(selected);
@@ -220,7 +220,7 @@ export class InitialSortComponent implements OnInit {
    */
   onDisagreeDrop(e: any) {
     this.removeDisagree(e.dragData);
-    this.disagree.push(e.dragData);
+    this.disagree.unshift(e.dragData);
     this.removeStatement(e.dragData);
     this.removeNeutral(e.dragData);
     this.removeAgree(e.dragData);
@@ -231,7 +231,7 @@ export class InitialSortComponent implements OnInit {
    */
   onNeutralDrop(e: any) {
     this.removeNeutral(e.dragData);
-    this.neutral.push(e.dragData);
+    this.neutral.unshift(e.dragData);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeAgree(e.dragData);
@@ -242,7 +242,7 @@ export class InitialSortComponent implements OnInit {
    */
   onAgreeDrop(e: any) {
     this.removeAgree(e.dragData);
-    this.agree.push(e.dragData);
+    this.agree.unshift(e.dragData);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeNeutral(e.dragData);

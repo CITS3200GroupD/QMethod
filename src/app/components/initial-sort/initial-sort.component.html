@@ -42,7 +42,7 @@
     <div class="col-md-4">
       <!-- Header -->
       <div class="list-group">
-        <li class="list-group-item text-white bg-danger" (click)="onDisagreeClick()">
+        <li class="list-group-item text-white bg-danger" droppable (click)="onDisagreeClick()" (onDrop)="onDisagreeDrop($event)">
           <h5>Disagree</h5>
         </li>
       </div>
@@ -59,7 +59,7 @@
     <div class="col-md-4">
       <!-- Header -->
       <div class="list-group">
-        <li class="list-group-item text-white bg-warning" (click)="onNeutralClick()">
+        <li class="list-group-item text-white bg-warning" droppable (click)="onNeutralClick()" (onDrop)="onNeutralDrop($event)">
           <h5>Neutral</h5>
         </li>
       </div>
@@ -76,7 +76,7 @@
     <div class="col-md-4">
       <!-- Header -->
       <div class="list-group">
-        <li class="list-group-item text-white bg-success" (click)="onAgreeClick()">
+        <li class="list-group-item text-white bg-success" droppable (click)="onAgreeClick()" (onDrop)="onAgreeDrop($event)">
           <h5>Agree</h5>
         </li>
       </div>
