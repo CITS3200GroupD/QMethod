@@ -56,6 +56,8 @@ export class QsortComponent implements OnInit {
 
   instructions: string[] = [];
 
+  drop_count: number;
+
   /**
    * Constructor for QsortComponent
    * @param route @ng activated route
@@ -83,6 +85,7 @@ export class QsortComponent implements OnInit {
     this.surveyservice.getSurvey(this.id).subscribe(
       (res: Survey) => {
         this.statement = res.statements;
+        this.drop_count = res.statements.length;
         this.instructions = res.instructions[Settings.INS_Q_SORT];
         this.grid = res.cols;
         this.offset = Math.floor(this.grid.length / 2);
@@ -204,6 +207,7 @@ export class QsortComponent implements OnInit {
         console.log(this.neutral[this.neutral_index]);
         console.log(this.agree[this.agree_index]);
       */
+      --this.drop_count;
       switch (this.selected_list) {
         case 0:
           // console.log(this.disagree[this.disagree_index]);
@@ -260,10 +264,13 @@ export class QsortComponent implements OnInit {
     // Add to matrix if index value is -1
     if (this.matrix[col][cell] === -1 && e.dragData.index !== undefined) { // Check that cell is empty
       if (array === 'disagree') {
+        --this.drop_count;
         this.disagree_index++;
       } else if (array === 'neutral') {
+        --this.drop_count;
         this.neutral_index++;
       } else if (array === 'agree') {
+        --this.drop_count;
         this.agree_index++;
       } else if (array === 'matrix') {
         this.matrix[e.dragData.col][e.dragData.cell] = -1;
