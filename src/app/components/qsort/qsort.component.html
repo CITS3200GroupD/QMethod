@@ -11,7 +11,7 @@
     <tr>
       <td class="justify-content-center" *ngFor="let col of grid; let i = index">
 
-        <div *ngIf="i == 0" class="cell" style="text-align: center">Most Disagree</div>
+        <div *ngIf="i == 0" class="cell" style="text-align: center">Least Agree</div>
         <div *ngIf="i-offset == 0" class="cell" style="text-align: center">Neutral</div>
         <div *ngIf="i != 0 && i != offset * 2 && i-offset != 0" class="cell" style="text-align: center">&nbsp;</div>
         <div *ngIf="i == offset * 2" class="cell" style="text-align: center">Most Agree</div>
