@@ -2,7 +2,7 @@
 <ng-template #content let-modal>
     <!-- Head -->
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-edit-fields">Edit Field</h4>
+      <h4 class="modal-title" id="modal-edit-fields">Edit Question</h4>
       <button type="button" class="close" (click)="modal.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -11,7 +11,7 @@
     <div class="modal-body">
       <form [formGroup]="editForm">
         <!-- Label -->
-        <label>Statement</label>
+        <label>Question</label>
           <div class="input-group">
             <!-- Private Link URL-->
             <input class="form-control" formControlName="edit_field" #edit_field>
@@ -21,6 +21,12 @@
               </button>
             </div>
           </div>
+          <label>Show Statements?</label>
+          <select class="form-control" formControlName="question_type" (click)="editOpt($event.target.value)">
+            <option [value]="undefined">None</option>
+            <option [value]="'most agree'">Most Agree</option>
+            <option [value]="'least agree'">Least Agree</option>
+          </select>
       </form>
     </div>
   </ng-template>
@@ -32,11 +38,14 @@
     <li class="list-group-item" *ngFor="let field of fields | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:questionnaire_page, id: 'ques_paginate'}; let i = index" [attr.data-index]="i">
       <span class="badge badge-light">{{ (questionnaire_page-1)*PAGINATE_LISTS+i+1}}</span>
         {{field[0]}}
+        <span *ngIf="field[1]==='least agree'" class="badge badge-danger">&nbsp;</span>
+        <span *ngIf="field[1]==='most agree'"class="badge badge-success">&nbsp;</span>
           <!-- float delete button to right -->
           <span class="btn-group float-right">
             <!-- Edit field button (only if not published) -->
-            <button *ngIf="!disabled" (click)="open(content, (questionnaire_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
-                <i class="fas fa-pen"></i>
+            <button (click)="open(content, (questionnaire_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
+                <i *ngIf="!disabled" class="fas fa-pen"></i>
+                <i *ngIf="disabled" class="fas fa-eye"></i>
             </button>
             <!-- Delete field button (only if not published) -->
             <button *ngIf="!disabled" (click)="deleteField((questionnaire_page-1)*PAGINATE_LISTS+i)" class="btn btn-danger btn-sm">

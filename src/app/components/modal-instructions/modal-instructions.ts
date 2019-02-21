@@ -22,11 +22,14 @@ export class NgbdModalInstructionsComponent implements OnInit {
 
   open(content: any) {
     if (this.instructions.length > 0 ) {
-      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-        this.closeResult = `${result}`;
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
+      setTimeout(() => {
+        this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+          this.closeResult = `${result}`;
+        }, (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+      },
+      0);
     }
   }
 
@@ -42,5 +45,5 @@ export class NgbdModalInstructionsComponent implements OnInit {
 
 
   ngOnInit() {
- }
+  }
 }

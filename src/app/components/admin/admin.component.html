@@ -22,7 +22,8 @@
   <tr>
     <td class="justify-content-center">#</td>
     <td class="justify-content-center">Status</td>
-    <td>Survey</td>
+    <td *ngIf="!by_id" (click)="togID()">Survey</td>
+    <td *ngIf="by_id" (click)="togID()">Survey ID*</td>
     <td>Statements</td>
     <td *ngIf="complete_only" (click)="togComplete()" >Responses</td>
     <td *ngIf="!complete_only" (click)="togComplete()" >Responses*</td>
@@ -41,7 +42,8 @@
         <i *ngIf= "!survey.publish && survey.users.length > 0" class="fas fa-pause-circle text-warning"></i>
         <i *ngIf= "survey.publish" class="fas fa-play-circle text-primary"></i>
       </td>
-      <td>{{ survey.name }}</td>
+      <td (click)="togID()" *ngIf="!by_id">{{ survey.name }} </td>
+      <td (click)="togID()" *ngIf="by_id">{{ survey._id }} </td>
       <td>{{ survey.statements.length }}</td>
       <td (click)="togComplete()" *ngIf="complete_only">{{ survey.valid_users }} </td>
       <td (click)="togComplete()" *ngIf="!complete_only">{{ survey.users.length }} </td>

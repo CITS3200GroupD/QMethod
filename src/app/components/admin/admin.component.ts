@@ -27,6 +27,8 @@ export class AdminComponent implements OnInit {
   surveys: any[];
   /** Flag for toggling complete/incomplete responses */
   complete_only = true;
+  /** Flag for listing survey IDs */
+  by_id = false;
 
   /**
    * Constructor for AdminComponent
@@ -112,6 +114,14 @@ export class AdminComponent implements OnInit {
       this.complete_only = false;
     } else {
       this.complete_only = true;
+    }
+  }
+
+  togID() {
+    if (this.by_id) {
+      this.by_id = false;
+    } else {
+      this.by_id = true;
     }
   }
 

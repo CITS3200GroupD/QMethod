@@ -1,46 +1,3 @@
-<!-- MODAL -->
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-registration">Success!</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-
-  <p *ngFor="let ln of confirm">{{ln}}</p>
-
-  <form>
-    <div class="input-group input-group-sm">
-      <div class="input-group-prepend">
-        <span class="input-group-text">UserID</span>
-      </div>
-      <input class="form-control" value="{{user_id}}" disabled #user>
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" (click)="copy(user.value)" type="button">
-          <i class="fas fa-clipboard"></i>
-        </button>
-      </div>
-    </div>
-    <div class="input-group input-group-sm">
-      <div class="input-group-prepend">
-        <span class="input-group-text" >SurveyID</span>
-      </div>
-      <input class="form-control" value="{{survey_id}}" disabled #survey>
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" (click)="copy(survey.value)" type="button">
-          <i class="fas fa-clipboard"></i>
-        </button>
-      </div>
-    </div>
-  </form>
-
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Ok</button>
-  </div>
-</ng-template>
-
 <div class="container-fluid">
   <nav class="navbar navbar-expand-sm navbar-light bg-transparent">
     <div class="container-fluid">
@@ -72,3 +29,47 @@
 </div>
 <button class="button" class="btn btn-primary btn-block" (click)="addUser(content)" [disabled]="submitted || (reg_fg.pristine && reg_fa.length) || ( reg_fg.invalid && reg_fa.length)">Submit</button>
 </div>
+
+<!-- MODAL -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-registration">Success!</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+    <p *ngFor="let ln of confirm">{{ln}}</p>
+
+    <form>
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text">UserID</span>
+        </div>
+        <input class="form-control" value="{{user_id}}" disabled #user>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="copy(user.value)" type="button">
+            <i class="fas fa-clipboard"></i>
+          </button>
+        </div>
+      </div>
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text" >SurveyID</span>
+        </div>
+        <input class="form-control" value="{{survey_id}}" disabled #survey>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="copy(survey.value)" type="button">
+            <i class="fas fa-clipboard"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Ok</button>
+    </div>
+  </ng-template>
+

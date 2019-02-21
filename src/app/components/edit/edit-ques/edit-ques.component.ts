@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';                          
  */
 export class EditQuesComponent implements OnInit {
 
+  disabled = false;
 
   /** Var for current page for pagination */
   questionnaire_page = 1;
@@ -41,7 +42,14 @@ export class EditQuesComponent implements OnInit {
     // TODO: Better checks for >FORMS_LIMIT, error messages thrown, etc.
   }
   /** Input called by parent component to set variable to disable editing */
-  @Input() disabled: boolean;
+  /** Input called by parent component to set variable to disable editing */
+  @Input() set disabled_in(disabled_in: boolean) {
+    this.disabled = disabled_in;
+    if (this.disabled) {
+      this.angForm.disable();
+      this.editForm.disable();
+    }
+  }
   /** Output callback to send to parent component to inform of changes to fields var. */
   @Output() fields_out = new EventEmitter<string[][]>();
 
@@ -70,7 +78,8 @@ export class EditQuesComponent implements OnInit {
       field: ['', Validators.required ]
     });
     this.editForm = this.fb.group({
-      edit_field: ['', Validators.required ]
+      edit_field: ['', Validators.required ],
+      question_type: ['']
     });
   }
 
@@ -96,6 +105,7 @@ export class EditQuesComponent implements OnInit {
   open(content, index): void {
     this.modalService.open(content, {ariaLabelledBy: 'modal-edit-statement'});
     this.editForm.get('edit_field').setValue(this.fields[index][0]);
+    this.editForm.get('question_type').setValue(this.fields[index][1]);
     this.edit_index = index;
   }
 
@@ -130,6 +140,19 @@ export class EditQuesComponent implements OnInit {
       this.throwError('Attempted to update a published server');
     } else {
       this.fields[this.edit_index][0] = field;
+      this.fields_out.emit(this.fields);
+    }
+  }
+
+  /**
+   * Edit opt (and sync with database)
+   * @param opt Field input to update statement
+   */
+  editOpt(opt: string): void {
+    if (this.disabled) {
+      this.throwError('Attempted to update a published server');
+    } else {
+      this.fields[this.edit_index][1] = opt;
       this.fields_out.emit(this.fields);
     }
   }

@@ -65,6 +65,7 @@
   <li class="list-group-item" *ngFor="let field of fields | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:registration_page, id: 'res_paginate'}; let i = index" [attr.data-index]="i">
     <span class="badge badge-light">{{ (registration_page-1)*PAGINATE_LISTS+i+1}}</span>
       {{field[0]}}
+      <span *ngIf="field.length > 1" class="badge badge-primary"><i class="fa fa-list"></i></span>
       <!-- float delete button to right -->
       <span class="btn-group float-right">
         <!-- Edit field button (only if not published) -->

@@ -45,15 +45,6 @@
 
       <ngb-tabset>
 
-        <ngb-tab title="Instructions">
-          <ng-template ngbTabContent>
-            <!-- Registration -->
-            <div class="form-group">
-                <app-edit-instructions [ins_input]="survey.instructions" [disabled]="survey.publish || survey.users.length > 0" (ins_out)="updateInstructions($event)"></app-edit-instructions>
-            </div>
-          </ng-template>
-        </ngb-tab>
-
         <ngb-tab title="Registration">
           <ng-template ngbTabContent>
             <!-- Registration -->
@@ -68,7 +59,7 @@
             <!-- End of Survey -->
             <div class="form-group">
                 <label class="col-md-4">End of Survey Questions {{lengths.questionnaire}}/{{FIELDS_LIMIT}}</label>
-                <app-edit-ques [fields_input]="survey.questionnaire" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('questionnaire', $event)"></app-edit-ques>
+                <app-edit-ques [fields_input]="survey.questionnaire" [disabled_in]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('questionnaire', $event)"></app-edit-ques>
             </div>
           </ng-template>
         </ngb-tab>
@@ -81,7 +72,17 @@
                 </div>
             </ng-template>
           </ngb-tab>
+        <ngb-tab title="Instructions">
+            <ng-template ngbTabContent>
+              <!-- Instructions -->
+              <div class="form-group">
+                  <app-edit-instructions [ins_input]="survey.instructions" [disabled]="survey.publish || survey.users.length > 0" (ins_out)="updateInstructions($event)"></app-edit-instructions>
+              </div>
+            </ng-template>
+          </ngb-tab>
       </ngb-tabset>
+
+
 
       <!-- { Update | Publish | Cancel } -->
       <div class="d-flex justify-content-center btn-group form-group">
