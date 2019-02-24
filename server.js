@@ -82,9 +82,8 @@ const express = require('express'),
    * redirect that request to the same url but with HTTPS
    */
   if (process.argv[2] === 'deploy') {
-    app.get('*', function(req, res) {
-      // if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
-      if (req.headers['x-forwarded-proto'] !== 'https') {
+    app.use(function(req, res) {
+      if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
         return res.redirect(
         ['https://', req.get('Host'), req.url].join('')
         );
