@@ -324,7 +324,7 @@ export class QsortComponent implements OnInit {
   }
 
   refresh(): void {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+    this.router.navigateByUrl(`/survey/${this.id}`, {skipLocationChange: true}).then(() =>
       this.router.navigate(['q-sort', this.id],
       {
         skipLocationChange: !isDevMode(),

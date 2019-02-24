@@ -332,7 +332,7 @@ export class InitialSortComponent implements OnInit {
 
   /** Reset the page */
   refresh(): void {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+    this.router.navigateByUrl(`/survey/${this.id}`, {skipLocationChange: true}).then(() =>
       this.router.navigate(['initial-sort', this.id],
       {
         skipLocationChange: !isDevMode(),

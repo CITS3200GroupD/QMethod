@@ -1,14 +1,11 @@
-<div class="progress">
-  <div class="progress-bar progress-bar-animated" [style.width.%]="-(drop_count - statement.length) / statement.length * 100" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" >{{ -(drop_count - statement.length) / statement.length | percent }}</div>
-</div>
 <nav class="navbar navbar-sm navbar-light bg-transparent">
   <div class="container-fluid">
     <app-ngbd-modal-instructions [ins_in]="instructions"></app-ngbd-modal-instructions>
     <button class="btn btn-sm btn-outline-danger my-2 my-sm-0"(click)="refresh()">Reset</button>
   </div>
 </nav>
-
 <!-- Gap on top - Row 1-->
+
 <div class="row justify-content-center" style="padding-top:25px">
   <table class="table compress">
     <tr>
@@ -41,7 +38,12 @@
     </tr>
   </table>
 </div>
+<div class="progress-container container-fluid">
+</div>
 <div class="container-fluid">
+  <div class="progress">
+    <div class="progress-bar" [style.width.%]="-(drop_count - statement.length) / statement.length * 100" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" >{{ -(drop_count - statement.length) / statement.length | percent }}</div>
+  </div>
   <!-- {          Continue              } -->
   <div class="row" style="padding-top:0.5vh; padding-left:15px; padding-right:15px;">
     <button class="btn btn-block btn-outline-primary" *ngIf="disagree_index == disagree.length && neutral_index == neutral.length && agree_index == agree.length" (click)="publishSortContinue()"><h5>continue</h5></button>

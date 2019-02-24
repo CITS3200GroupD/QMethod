@@ -1,5 +1,5 @@
 .navbar {
-    height:0vh;
+    height: 0vh;
 }
 
 .table th, .table td {
@@ -20,6 +20,7 @@
     padding: 0.5vh 1vh;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
+    scrollbar-width: none;
 }
 
 .scroll-box {
@@ -27,6 +28,7 @@
     overflow-y: scroll;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
+    scrollbar-width: none;
 }
 
 .custom-list{
