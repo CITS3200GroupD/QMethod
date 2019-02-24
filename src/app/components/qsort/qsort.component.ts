@@ -324,15 +324,13 @@ export class QsortComponent implements OnInit {
   }
 
   refresh(): void {
-    if (!isDevMode()) {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['q-sort', this.id],
       {
-        skipLocationChange: true,
+        skipLocationChange: !isDevMode(),
         queryParams: { user_id: this.user_id }
-      });
-    } else {
-      window.location.reload();
-    }
+      })
+    );
   }
 
   ngOnInit() {

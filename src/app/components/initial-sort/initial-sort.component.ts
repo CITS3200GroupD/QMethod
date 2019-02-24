@@ -332,15 +332,13 @@ export class InitialSortComponent implements OnInit {
 
   /** Reset the page */
   refresh(): void {
-    if (!isDevMode()) {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['initial-sort', this.id],
       {
-        skipLocationChange: true,
+        skipLocationChange: !isDevMode(),
         queryParams: { user_id: this.user_id }
-      });
-    } else {
-      window.location.reload();
-    }
+      })
+    );
   }
 
   ngOnInit() {

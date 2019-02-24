@@ -158,7 +158,7 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
     SlimLoadingBarModule,
     ReactiveFormsModule,
     NgDragDropModule.forRoot(),
