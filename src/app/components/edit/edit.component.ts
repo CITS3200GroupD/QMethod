@@ -243,11 +243,11 @@ export class EditComponent implements OnInit {
     });
     let registration = '';
     this.survey.register.forEach( (reg) => {
-      registration += '<li>' + reg + '</li>';
+      registration += '<li>' + reg[0] + '</li>';
     });
     let questionnaire = '';
     this.survey.questionnaire.forEach( (ques) => {
-      questionnaire += '<li>' + ques + '</li>';
+      questionnaire += '<li>' + ques[0] + '</li>';
     });
 
     let popupWin;

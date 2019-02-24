@@ -83,7 +83,7 @@ const express = require('express'),
    */
   if (process.argv[2] === 'deploy') {
     app.get('*', function(req, res) {
-      if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
+      if (!req.secure || req.headers['x-forwarded-proto'] !== 'https') {
         return res.redirect(
         ['https://', req.get('Host'), req.url].join('')
         );

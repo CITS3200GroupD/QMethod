@@ -6,8 +6,6 @@ import { Survey, User } from 'src/app/models';
 import { WindowWrap } from 'src/app/window-wrapper';
 import * as Settings from 'config/Settings';
 
-
-
 @Component({
   selector: 'app-initial-sort',
   templateUrl: './initial-sort.component.html',
@@ -334,7 +332,15 @@ export class InitialSortComponent implements OnInit {
 
   /** Reset the page */
   refresh(): void {
-    window.location.reload();
+    if (!isDevMode()) {
+      this.router.navigate(['initial-sort', this.id],
+      {
+        skipLocationChange: true,
+        queryParams: { user_id: this.user_id }
+      });
+    } else {
+      window.location.reload();
+    }
   }
 
   ngOnInit() {
