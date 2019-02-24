@@ -41,12 +41,12 @@ export class EditComponent implements OnInit {
   cols_templates = GridTemplates;
   /** variable for survey's current Horizontal-X range */
   range = this.DEFAULT_RANGE;
-  /** Length variables for display */
-  lengths = {
-    questionnaire: 0,
-    register: 0,
-    statements: 0
-  };
+  /** Boolean flags */
+  statem_load = false;
+  ques_load = false;
+  reg_load = false;
+  ins_load = false;
+  error = false;
 
   /**
    * Constructor for EditComponent
@@ -116,12 +116,11 @@ export class EditComponent implements OnInit {
   }
 
   /**
-   * Callback method for edit-statements subcomponent to set statements & lengths
+   * Callback method for edit-statements subcomponent to set statements
    */
   updateStatements(statements: string[]): void {
     if (!this.survey.publish) {
       this.survey.statements = statements;
-      this.lengths.statements = statements.length;
     }
   }
 
@@ -136,12 +135,11 @@ export class EditComponent implements OnInit {
   }
 
   /**
-   * Callback method for edit-forms subcomponent to set fields & lengths
+   * Callback method for edit-forms subcomponent to set fields
    */
   updateFields(field: string, item: string[]): void {
     if (!this.survey.publish) {
       this.survey[field] = item;
-      this.lengths[field] = item.length;
     }
   }
 
@@ -293,6 +291,43 @@ export class EditComponent implements OnInit {
   }
 
   /**
+   * Function called when a file is uploaded.
+   * @param files Files uploaded
+   */
+  onUpload(files: FileList) {
+    const reader = new FileReader();
+    try {
+      reader.readAsText(files[0]);
+      reader.onload = () => {
+        try {
+          const input = JSON.parse(reader.result.toString());
+          if (input.statements && input.statements.length <= Settings.STATE_LIMIT) {
+            this.survey.statements = input.statements;
+            this.statem_load = true;
+          }
+          if (input.questionnaire && input.questionnaire.length < Settings.FIELDS_LIMIT) {
+            this.survey.questionnaire = input.questionnaire;
+            this.ques_load = true;
+          }
+          if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
+            this.survey.register = input.registration;
+            this.reg_load = true;
+          }
+          if (input.instructions && input.instructions.length) {
+            this.survey.instructions = input.instructions;
+            this.ins_load = true;
+          }
+          this.error = false;
+          console.log(this.survey);
+        } catch (err) {
+          console.error(err);
+          this.error = true;
+        }
+      };
+    } catch (e) { }
+  }
+
+  /**
    * Function that is run on init
    */
   ngOnInit(): void {
@@ -302,9 +337,6 @@ export class EditComponent implements OnInit {
         // Survey ID => survey service mw getSurvey() => this.survey
         (res: Survey) => {
           this.survey = res;
-          this.lengths.statements = this.survey.statements.length;
-          this.lengths.questionnaire = this.survey.questionnaire.length;
-          this.lengths.register = this.survey.register.length;
           // We deliberately do NOT want to update this.range on initiation.
 
           this.angForm.get('survey_id').setValue(this.survey._id);

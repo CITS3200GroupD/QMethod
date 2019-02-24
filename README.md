@@ -6,7 +6,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/CITS3200GroupD/QMethod.svg?style=social&label=Fork)](https://github.com/CITS3200GroupD/QMethod)
 
 QMd Survey - MEAN Stack Powered Q-Sort Methodology Survey Application
-Version 2.0
+Version 2.1
 
 ## What is QMd?
 
@@ -35,7 +35,6 @@ Please read the following for either [a basic](https://qmethod.gitbook.io/projec
 * Chrome 36+
 * Firefox 51+
 * Edge 12+
-* Internet Explorer 10+
 * Safari 9+
 * Opera 30+
 * iOS 9+

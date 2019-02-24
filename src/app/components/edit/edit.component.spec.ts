@@ -61,9 +61,6 @@ describe('EditComponent', () => {
     expect(component.STATE_LIMIT).toBe(Settings.STATE_LIMIT);
     expect(component.cols_templates).toBe(GridTemplates);
     expect(component.angForm).toBeTruthy();
-    expect(component.lengths.questionnaire).toBe(valid_survey_list[0].questionnaire.length);
-    expect(component.lengths.statements).toBe(valid_survey_list[0].statements.length);
-    expect(component.lengths.register).toBe(valid_survey_list[0].register.length);
   });
 
   it('update survey', () => {
