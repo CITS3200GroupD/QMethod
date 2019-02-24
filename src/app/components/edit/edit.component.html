@@ -81,7 +81,7 @@
           </ng-template>
         </ngb-tab>
 
-        <ngb-tab title="Import Config">
+        <ngb-tab *ngIf="!survey.publish && survey.users.length === 0" title="Import Config">
           <ng-template ngbTabContent>
               <!-- Upload -->
               <div class="form-group">
