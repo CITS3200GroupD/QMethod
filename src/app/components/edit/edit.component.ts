@@ -295,36 +295,39 @@ export class EditComponent implements OnInit {
    * @param files Files uploaded
    */
   onUpload(files: FileList) {
-    const reader = new FileReader();
-    try {
-      reader.readAsText(files[0]);
-      reader.onload = () => {
-        try {
-          const input = JSON.parse(reader.result.toString());
-          if (input.statements && input.statements.length <= Settings.STATE_LIMIT) {
-            this.survey.statements = input.statements;
-            this.statem_load = true;
+    if (!this.survey.publish && this.survey.users.length === 0) {
+      const reader = new FileReader();
+      try {
+        reader.readAsText(files[0]);
+        reader.onload = () => {
+          try {
+            const input = JSON.parse(reader.result.toString());
+            if (input.statements && input.statements.length <= Settings.STATE_LIMIT) {
+              this.survey.statements = input.statements;
+              this.statem_load = true;
+            }
+            if (input.questionnaire && input.questionnaire.length < Settings.FIELDS_LIMIT) {
+              this.survey.questionnaire = input.questionnaire;
+              this.ques_load = true;
+            }
+            if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
+              this.survey.register = input.registration;
+              this.reg_load = true;
+            }
+            if (input.instructions && input.instructions.length) {
+              this.survey.instructions = input.instructions;
+              this.ins_load = true;
+            }
+            this.error = false;
+          } catch (err) {
+            console.error(err);
+            this.error = true;
           }
-          if (input.questionnaire && input.questionnaire.length < Settings.FIELDS_LIMIT) {
-            this.survey.questionnaire = input.questionnaire;
-            this.ques_load = true;
-          }
-          if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
-            this.survey.register = input.registration;
-            this.reg_load = true;
-          }
-          if (input.instructions && input.instructions.length) {
-            this.survey.instructions = input.instructions;
-            this.ins_load = true;
-          }
-          this.error = false;
-          console.log(this.survey);
-        } catch (err) {
-          console.error(err);
-          this.error = true;
-        }
-      };
-    } catch (e) { }
+        };
+      } catch (e) { }
+    } else {
+      this.error = true;
+    }
   }
 
   /**
