@@ -13,6 +13,7 @@
         <label><h5> {{ reg_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
         <p *ngIf="reg_fg['controls']['fields']['controls'][i]['controls'].valid_answers.value.length === 0"> <textarea class="form-control" rows='5' cols='100' formControlName="answer" [maxLength]="FIELD_NAME_LIMIT"></textarea> </p>
         <select *ngIf="reg_fg['controls']['fields']['controls'][i]['controls'].valid_answers.value.length > 0" class="form-control" formControlName="answer">
+          <option style="display:none"></option>
           <option [value]="option" *ngFor="let option of reg_fg['controls']['fields']['controls'][i]['controls'].valid_answers.value">{{option}}</option>
         </select>
       </div>
