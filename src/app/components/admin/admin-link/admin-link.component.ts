@@ -81,7 +81,7 @@ export class AdminLinkComponent implements OnInit {
     if (isDevMode()) {
       this.angForm.get('private_link').setValue( `http://localhost:4200/survey/${this.survey._id}`);
     } else {
-      this.angForm.get('private_link').setValue( `${window.location.hostname}/survey/${this.survey._id}`);
+      this.angForm.get('private_link').setValue( `https://${window.location.hostname}/survey/${this.survey._id}`);
     }
   }
 }
