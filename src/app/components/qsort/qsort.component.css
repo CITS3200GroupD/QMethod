@@ -29,6 +29,12 @@
     -ms-user-select: none;
 }
 
+.pbar {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
 .scroll-title {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -58,6 +64,12 @@
 }
 .box {
     border: 1px solid grey;
+}
+
+.useridbox {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 ::-webkit-scrollbar {
