@@ -42,7 +42,7 @@
 </div>
 <div class="container-fluid">
   <div class="progress">
-    <div class="progress-bar" [style.width.%]="-(drop_count - statement.length) / statement.length * 100" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" >{{ -(drop_count - statement.length) / statement.length | percent }}</div>
+    <div class="pbar progress-bar" [style.width.%]="-(drop_count - statement.length) / statement.length * 100" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" >{{ -(drop_count - statement.length) / statement.length | percent }}</div>
   </div>
   <!-- {          Continue              } -->
   <div class="row" style="padding-top:0.5vh; padding-left:15px; padding-right:15px;">
@@ -111,7 +111,7 @@
 
 </div>
 <!-- Display User ID -->
-<div class="fixed-bottom d-print-none">
+<div class="useridbox fixed-bottom d-print-none">
     <div class="float-left">
       <div class="text-sm font-italic text-monospace" style="font-size: 8pt;"> ID: {{ user_id }} </div>
     </div>
