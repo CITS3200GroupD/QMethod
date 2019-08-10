@@ -1,11 +1,12 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../user.service';
+import { UserService } from 'src/app/user.service';
 import { SurveyService } from 'src/app/survey.service';
-import { WindowWrap } from '../../window-wrapper';
+import { WindowWrap } from 'src/app/window-wrapper';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Survey } from 'src/app/models';
-import * as Settings from '../../../../config/Settings';                // QMd Settings
+import * as Settings from 'config/Settings';                // QMd Settings
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-registration',
@@ -28,12 +29,16 @@ export class RegistrationComponent implements OnInit {
   /** SubmitOnce flag */
   submitted = false;
 
+  instructions: string[] = [];
+  confirm: string[] = [];
+
   constructor( private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
     private surveyservice: SurveyService,
     private userservice: UserService,
-    private window: WindowWrap) {
+    private window: WindowWrap,
+    private modalService: NgbModal) {
       this.route.params.subscribe( params => {
         this.survey_id = params['id'];
       });
@@ -47,6 +52,8 @@ export class RegistrationComponent implements OnInit {
   private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
+        this.instructions = res.instructions[Settings.INS_REGISTRATION];
+        this.confirm = res.instructions[Settings.PROMPT_ID];
         // Using registration field array as a reference, loop through and init new field objects to the form array
         res.register.forEach((field) => {
           this.reg_fa.push(this.createField(field));
@@ -71,9 +78,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   /** @ng reaction form array init */
-  private createField(field: string): FormGroup {
+  private createField(field: string[]): FormGroup {
     return this.fb.group({
-      question: field,
+      question: field[0],
+      valid_answers: [field.slice(1)],
       answer: ['', Validators.required]
     });
   }
@@ -98,38 +106,64 @@ export class RegistrationComponent implements OnInit {
   /**
    * A function to submit the registration information and create a new user.
    */
-  addUser(): void {
-    if (this.window.nativeWindow.confirm(
-      `By clicking OK you acknowledge that you have read all relevant permission forms and agree to their terms and conditions`)) {
-      // Call getResponse
-      if (!this.submitted) {
-        this.submitted = true;
-        const registration_info = this.getResponse();
-        if (registration_info) {
-          this.route.params.subscribe(params => {
-            this.userservice.addUser(params['id'], registration_info).subscribe(
-            (res: string) => {
-              this.user_id = res;
-              // TODO: Modal or element to display user_id to user
-              if (this.window.nativeWindow.confirm(
-              `Your User ID is [ ${this.user_id} ]\nSurvey ID is [ ${this.survey_id} ]\nPlease record this for future reference.`)) {}
-              this.router.navigate(['initial-sort', this.survey_id],
-                {
-                  skipLocationChange: !isDevMode(),
-                  queryParams: {
-                    user_id: this.user_id
-                  }
-                }
-              );
+  addUser(content: any): void {
+    // Call getResponse
+    if (!this.submitted) {
+      this.submitted = true;
+      const registration_info = this.getResponse();
+      if (registration_info) {
+        this.route.params.subscribe(params => {
+          this.userservice.addUser(params['id'], registration_info).subscribe(
+          (res: string) => {
+            this.user_id = res;
+            this.modalService.open(content, {ariaLabelledBy: 'modal-registation'}).result.then(
+              (result) => {
+                this.nextPage();
+            }, (reason) => {
+                this.nextPage();
             });
           });
-        } else {
-          // Display Error to User
-          console.error('Invalid Response');
-          this.window.nativeWindow.confirm('Invalid Submission');
-        }
+        });
+      } else {
+        // Display Error to User
+        console.error('Invalid Response');
+        this.window.nativeWindow.confirm('Invalid Submission');
       }
     }
+  }
+
+  nextPage() {
+    this.router.navigate(['initial-sort', this.survey_id],
+      {
+        skipLocationChange: !isDevMode(),
+        queryParams: {
+          user_id: this.user_id
+        }
+      }
+    );
+  }
+
+  /**
+   * Copy input to clipboard
+   * Sourced from: https://stackoverflow.com/questions/36328159/how-do-i-copy-to-clipboard-in-angular-2-typescript
+   * @param input String input to be copied to clipboard
+   */
+  copy(input: string): void {
+
+    const selBox = document.createElement('textarea');
+
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = input;
+
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 
   ngOnInit(): void {

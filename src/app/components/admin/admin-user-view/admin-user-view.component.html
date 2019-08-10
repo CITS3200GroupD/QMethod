@@ -1,0 +1,77 @@
+<div class="container">
+<!-- Nav bar-->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="">
+    <img src="src/app/favicon.ico" width="30" height="30" alt="">
+  </a>
+</nav>
+<div class="card">
+  <div class="card-body">
+    <form class="form-horizontal">
+      <!-- Show Survey ID -->
+      <div class="form-group">
+        <label class="col-sm-4">Survey ID</label>
+        <input type="text" [value]="survey_id" class="form-control" disabled>
+      </div>
+      <!-- Show Survey Name -->
+      <div class="form-group">
+        <label class="col-sm-4">Survey Name</label>
+        <input type="text" [value]="survey_name" class="form-control" disabled>
+      </div>
+      <!-- Show User ID -->
+      <div class="form-group">
+        <label class="col-sm-4">User ID</label>
+        <input type="text" [value]="user_id" class="form-control" disabled>
+      </div>
+
+        <!-- Survey Grid -->
+        <label class="col-sm-4">Grid</label>
+        <!-- Grid -->
+        <div class= "container" id="grid-print">
+          <div class="row justify-content-center">
+            <!-- Columns -->
+            <div class="col-sm-1" *ngFor="let col of matrix; let i = index">
+              <div class="text-center"> <u> {{ i - offset }} </u>
+                <!-- Cells -->
+                <div class="card" *ngFor="let cell of col; let j = index"> <i>{{matrix[i][j] + 1}}</i> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Registration -->
+        <div class="form-group">
+          <label class="col-md-4">Registration Details </label>
+          <!-- List of fields -->
+          <div id="reg-print">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let field of register; let i = index">
+                <p> <b>{{ field[0] }}:</b> {{ register_ans[i]}} </p>
+            </li>
+          </ul>
+          </div>
+        </div>
+
+        <!-- End of Survey -->
+        <div class="form-group">
+          <label class="col-md-4">End of Survey Questionnaire </label>
+          <!-- List of fields -->
+          <div id="ques-print">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let field of questionnaire; let i = index">
+                <p class="d-print-none"> <i> {{ field[0] }} </i> </p> <p> {{ question_ans[i]}} </p>
+            </li>
+          </ul>
+          </div>
+        </div>
+        <!-- { Update | Publish | Cancel } -->
+        <div class="d-flex justify-content-center btn-group form-group">
+          <button class="btn btn-secondary d-print-none" (click)="print()"><i class="fas fa-file-export"></i> Export</button>
+          <button class="btn btn-danger d-print-none" (click)="deleteUser()">
+            <i class="far fa-trash-alt"></i> Delete</button>
+          <button class="btn btn-light d-print-none" [routerLink]="['/results', survey_id]">Cancel</button>
+        </div>
+    </form>
+  </div>
+</div>
+</div>

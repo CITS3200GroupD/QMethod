@@ -6,14 +6,14 @@ import { RouterTestingModule  } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Ng2PaginationModule } from 'ng2-pagination';
-import { Survey } from '../../models';
-import { MockWindowWrap, ValidSurveyList, MockAuthService } from '../../testing/Testing';
-import { SurveyService } from '../../survey.service';
+import { Survey } from 'src/app/models';
+import { MockWindowWrap, ValidSurveyList, MockAuthService } from 'src/app/testing/Testing';
+import { SurveyService } from 'src/app/survey.service';
 import { Observable, of } from 'rxjs';
-import { WindowWrap } from '../../window-wrapper';
-import * as Settings from '../../../../config/Settings';
-import { MockSurveyService } from '../../testing/mocksurvey.service';
-import { AuthService } from '../../auth.service';
+import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings';
+import { MockSurveyService } from 'src/app/testing/mocksurvey.service';
+import { AuthService } from 'src/app/auth.service';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;

@@ -34,20 +34,22 @@ import { AdminComponent, SurveyPipe } from './components/admin/admin.component';
 import { QsortComponent } from './components/qsort/qsort.component';
 import { EditComponent } from './components/edit/edit.component';
 import { InitialSortComponent } from './components/initial-sort/initial-sort.component';
-import { EditStatementsComponent } from './components/edit-statements/edit-statements.component';
-import { EditGridComponent } from './components/edit-grid/edit-grid.component';
-import { AdminLinkComponent } from './components/admin-link/admin-link.component';
+import { EditStatementsComponent } from './components/edit/edit-statements/edit-statements.component';
+import { EditGridComponent } from './components/edit/edit-grid/edit-grid.component';
+import { AdminLinkComponent } from './components/admin/admin-link/admin-link.component';
 import { UserIndexComponent } from './components/user-index/user-index.component';
-import { AdminUserListComponent, UserPipe } from './components/admin-user-list/admin-user-list.component';
+import { AdminUserListComponent, UserPipe } from './components/admin/admin-user-list/admin-user-list.component';
 import { InstructionsComponent } from './components/instructions/instructions.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { QuestionnaireComponent } from './components/questionnaire/questionnaire.component';
-import { EditFormsComponent } from './components/edit-forms/edit-forms.component';
-import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { EditRegComponent } from './components/edit/edit-reg/edit-reg.component';
+import { EditQuesComponent } from './components/edit/edit-ques/edit-ques.component';
+import { AdminUserViewComponent } from './components/admin/admin-user-view/admin-user-view.component';
+import { AdminLoginComponent } from './components/admin/admin-login/admin-login.component';
 import { SubmissionComponent } from './components/submission/submission.component';
-import { NgbdModalBasicInitComponent } from './components/initial-sort/modal-basic-initialsort/modal-basic-initialsort';
-import { NgbdModalBasicQsortComponent } from './components/qsort/modal-basic-qsort/modal-basic-qsort';
+import { NgbdModalInstructionsComponent } from './components/modal-instructions/modal-instructions';
+import { EditInstructionsComponent } from './components/edit/edit-instructions/edit-instructions.component';
+import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 
 // Configuring Routes and linking to components
 const routes: Routes = [
@@ -134,27 +136,29 @@ const routes: Routes = [
     EditComponent,
     InitialSortComponent,
     EditStatementsComponent,
+    EditInstructionsComponent,
     EditGridComponent,
     AdminLinkComponent,
     UserIndexComponent,
     AdminUserListComponent,
     SurveyPipe,
     UserPipe,
+    EscapeHtmlPipe,
     InstructionsComponent,
     RegistrationComponent,
     QuestionnaireComponent,
-    EditFormsComponent,
+    EditRegComponent,
+    EditQuesComponent,
     AdminUserViewComponent,
     AdminLoginComponent,
     SubmissionComponent,
-    NgbdModalBasicInitComponent,
-    NgbdModalBasicQsortComponent
+    NgbdModalInstructionsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
     SlimLoadingBarModule,
     ReactiveFormsModule,
     NgDragDropModule.forRoot(),

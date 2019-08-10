@@ -1,13 +1,13 @@
-import { Survey, User } from '../models';
+import { Survey, User } from 'src/app/models';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 
 export const TestingRegister = [
-  'Age', 'Gender', 'Nationality', 'Main Spoken Language', 'Other Languages'
+  ['Age'], ['Gender'], ['Nationality'], ['Main Spoken Language'], ['Other Languages']
 ];
 
 export const TestingQuestionnaire = [
-  'Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5'
+  ['Question 1'], ['Question 2'], ['Question 3'], ['Question 4'], ['Question 5']
 ];
 
 export const TestingStatements = [
@@ -265,6 +265,7 @@ export const ValidSurveyList: Survey[] = [
       '21', '22', '23'
     ],
     questionnaire: TestingQuestionnaire,
+    instructions: [],
     users: ValidUserList
   },
   {
@@ -281,6 +282,7 @@ export const ValidSurveyList: Survey[] = [
       '31', '32', '33', '34'
     ],
     questionnaire: TestingQuestionnaire,
+    instructions: [],
     users: []
   }
 ];
@@ -292,8 +294,9 @@ export const InvalidSurveyList: Survey[] = [{
   range:  7,
   cols: [3, 4, 5, 4, 3, 2],
   statements: ['string'],
-  register: ['age', 'gender', 'Main Language'],
-  questionnaire: ['Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5'],
+  register: [['age'], ['gender'], ['Main Language']],
+  questionnaire: [['Question 1'], ['Question 2'], ['Question 3'], ['Question 4'], ['Question 5']],
+  instructions: [],
   users: []
 },
 {
@@ -303,8 +306,9 @@ export const InvalidSurveyList: Survey[] = [{
   range:  8,
   cols: [2, 3, 4, 5, 6, 5, 4, 3, 2],
   statements: ['string'],
-  register: ['age', 'gender', 'Main Language'],
-  questionnaire: ['Question 1', 'Question 2', 'Question 3', 'Question 4', 'Question 5'],
+  register: [['age'], ['gender'], ['Main Language']],
+  questionnaire: [['Question 1'], ['Question 2'], ['Question 3'], ['Question 4'], ['Question 5']],
+  instructions: [],
   users: []
 }];
 

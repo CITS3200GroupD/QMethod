@@ -1,0 +1,24 @@
+/* .list-group {
+    height:420px;
+    overflow-y: scroll;
+} */
+
+.list-group-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.questionnaire-pagination /deep/ .ng2-pagination .current {
+    background: #2c3e50;
+}
+.questionnaire-pagination {
+    padding-left: 0;
+}

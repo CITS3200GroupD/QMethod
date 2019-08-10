@@ -1,9 +1,10 @@
 import { isDevMode, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SurveyService } from '../../survey.service';           // QMd Survey Service MW
-import { UserService } from '../../user.service';               // QMd User Service MW
-import { Survey, User } from '../../models';
-import { WindowWrap } from '../../window-wrapper';
+import { SurveyService } from 'src/app/survey.service';           // QMd Survey Service MW
+import { UserService } from 'src/app/user.service';               // QMd User Service MW
+import { Survey, User } from 'src/app/models';
+import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings';
 
 @Component({
   selector: 'app-qsort',
@@ -12,6 +13,7 @@ import { WindowWrap } from '../../window-wrapper';
 })
 /** Component for the Q-Sort Grid page */
 export class QsortComponent implements OnInit {
+
   /** ID of the current survey */
   id: string;
   /** ID of the current user */
@@ -52,12 +54,17 @@ export class QsortComponent implements OnInit {
   /** Grid/Matrix to be updated */
   matrix: number[][] = [];
 
+  instructions: string[] = [];
+
+  drop_count: number;
+
   /**
    * Constructor for QsortComponent
    * @param route @ng activated route
    * @param router @ng router
    * @param surveyservice Survey Service Middleware
    * @param userservice User Service Middleware
+   * @param modalService ngbmodal
    * @param window Window Wrapper
    */
   constructor( private route: ActivatedRoute,
@@ -78,6 +85,8 @@ export class QsortComponent implements OnInit {
     this.surveyservice.getSurvey(this.id).subscribe(
       (res: Survey) => {
         this.statement = res.statements;
+        this.drop_count = res.statements.length;
+        this.instructions = res.instructions[Settings.INS_Q_SORT];
         this.grid = res.cols;
         this.offset = Math.floor(this.grid.length / 2);
         this.initMatrix();
@@ -198,9 +207,10 @@ export class QsortComponent implements OnInit {
         console.log(this.neutral[this.neutral_index]);
         console.log(this.agree[this.agree_index]);
       */
+      --this.drop_count;
       switch (this.selected_list) {
         case 0:
-          console.log(this.disagree[this.disagree_index]);
+          // console.log(this.disagree[this.disagree_index]);
           if (this.disagree[this.disagree_index] !== undefined) {
             this.matrix[col][cell] = this.disagree[this.disagree_index++];
             if (this.disagree[this.disagree_index] === undefined) {
@@ -245,24 +255,22 @@ export class QsortComponent implements OnInit {
     const array = e.dragData.array;
 
     // moving statements in grid
-    if (array === 'matrix' && e.dragData.index !== undefined) {
-      // DEBUG
-      // console.log(this.matrix[col][cell]);
-      if (this.matrix[col][cell] === 1) {
-        this.matrix[e.dragData.col][e.dragData.cell] = -1;
-      } else { // swap statements
-        this.matrix[e.dragData.col][e.dragData.cell] = this.matrix[col][cell];
-      }
+    if (array === 'matrix' && e.dragData.index !== -1 && e.dragData.index !== undefined) {
+      // swap statements if not empty cell
+      this.matrix[e.dragData.col][e.dragData.cell] = this.matrix[col][cell];
       this.matrix[col][cell] = e.dragData.index;
     }
 
     // Add to matrix if index value is -1
     if (this.matrix[col][cell] === -1 && e.dragData.index !== undefined) { // Check that cell is empty
       if (array === 'disagree') {
+        --this.drop_count;
         this.disagree_index++;
       } else if (array === 'neutral') {
+        --this.drop_count;
         this.neutral_index++;
       } else if (array === 'agree') {
+        --this.drop_count;
         this.agree_index++;
       } else if (array === 'matrix') {
         this.matrix[e.dragData.col][e.dragData.cell] = -1;
@@ -285,7 +293,6 @@ export class QsortComponent implements OnInit {
 
       this.matrix[col][cell] = e.dragData.index;
     }
-
   }
 
   /**
@@ -314,6 +321,16 @@ export class QsortComponent implements OnInit {
       console.error(err);
       if (this.window.nativeWindow.confirm('An error has occured whilst submitting')) {}
     });
+  }
+
+  refresh(): void {
+    this.router.navigateByUrl(`/survey/${this.id}`, {skipLocationChange: true}).then(() =>
+      this.router.navigate(['q-sort', this.id],
+      {
+        skipLocationChange: !isDevMode(),
+        queryParams: { user_id: this.user_id }
+      })
+    );
   }
 
   ngOnInit() {

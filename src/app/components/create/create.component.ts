@@ -1,11 +1,11 @@
 import { Component, OnInit, isDevMode } from '@angular/core';                     // @ng core
 import { Router } from '@angular/router';                                         // @ng router
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';            // @ng reactive forms
-import { SurveyService } from '../../survey.service';                             // QMd SurveyService Middleware
-import { GridTemplates } from '../../models';                                     // QMd Models
-import { TestingRegister, TestingStatements, TestingQuestionnaire } from '../../testing/Testing'; // QMd Testing
-import { WindowWrap } from '../../window-wrapper';                                // Wrapper for window
-import * as Settings from '../../../../config/Settings';                          // QMd Settings
+import { SurveyService } from 'src/app/survey.service';                             // QMd SurveyService Middleware
+import { GridTemplates } from 'src/app/models';                                     // QMd Models
+import { TestingRegister, TestingStatements, TestingQuestionnaire } from 'src/app/testing/Testing'; // QMd Testing
+import { WindowWrap } from 'src/app/window-wrapper';                                // Wrapper for window
+import * as Settings from 'config/Settings';                          // QMd Settings
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -16,12 +16,21 @@ import * as Settings from '../../../../config/Settings';                        
  */
 export class CreateComponent implements OnInit {
 
+  /** Instructions */
+  instructions: string[][] = Settings.DEFAULT_INSTRUCTIONS;
   /** Registration Fields*/
-  registration: string[] = [];
+  registration: string[][] = [];
   /** Statements */
   statements: string[] = [];
   /** Questionnaire Questions*/
-  questionnaire: string[] = [];
+  questionnaire: string[][] = [];
+
+  /** Boolean variables for json */
+  ins_load = false;
+  ques_load = false;
+  reg_load = false;
+  statem_load = false;
+
   /** Templates for default grid */
   cols_templates = GridTemplates;
   /** Angular reactive form */
@@ -71,14 +80,15 @@ export class CreateComponent implements OnInit {
     /*
      * DEBUG
      * if ( isDevMode() ) {
-     *   console.log(`SEND => { ${name}, ${range}, [registration], [statements], [questionnaire] }`);
+     *   console.log(`SEND => { ${name}, ${range}, [ins], [reg], [reg_type], [statements], [ques], [ques_type]}`);
      *   console.log(`Registration: ${this.registration}`);
      *   console.log(`Statements: ${this.statements}`);
      *   console.log(`Questionnaire: ${this.questionnaire}`);
      * }
      */
     // Read statements, registration and questionnaire data from json.
-    this.surveyservice.addSurvey(name, range, this.registration, this.statements, this.questionnaire)
+    this.surveyservice.addSurvey(name, range, this.instructions,
+      this.registration, this.statements, this.questionnaire)
       .subscribe(
         (res) => {
           // DEBUG
@@ -106,8 +116,9 @@ export class CreateComponent implements OnInit {
       reader.onload = () => {
         try {
           const input = JSON.parse(reader.result.toString());
-          if (input.statements && input.statements.length < Settings.STATE_LIMIT) {
+          if (input.statements && input.statements.length <= Settings.STATE_LIMIT) {
             this.statements = input.statements;
+            this.statem_load = true;
             for (let i = 1; i < this.cols_templates.length; i++) {
               if (this.statements.length <= this.cols_templates[i].max_statements) {
                 this.angForm.get('survey_range').setValue(this.cols_templates[i].val);
@@ -117,9 +128,15 @@ export class CreateComponent implements OnInit {
           }
           if (input.questionnaire && input.questionnaire.length < Settings.FIELDS_LIMIT) {
             this.questionnaire = input.questionnaire;
+            this.ques_load = true;
           }
           if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
             this.registration = input.registration;
+            this.reg_load = true;
+          }
+          if (input.instructions && input.instructions.length) {
+            this.instructions = input.instructions;
+            this.ins_load = true;
           }
           this.error = false;
         } catch (err) {

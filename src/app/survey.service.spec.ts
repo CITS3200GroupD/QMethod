@@ -98,6 +98,7 @@ describe('SurveyService', () => {
   it('addSurvey() should return success', () => {
     const name = valid_survey_list[1].name;
     const range = valid_survey_list[1].range;
+    const instructions = valid_survey_list[1].instructions;
     const register = valid_survey_list[1].register;
     const statements = valid_survey_list[1].statements;
     const questionnaire = valid_survey_list[1].questionnaire;
@@ -105,7 +106,8 @@ describe('SurveyService', () => {
     const test_url = `${uri}/add`;
 
     // Call function
-    service.addSurvey(name, range,  register, statements, questionnaire).subscribe(res => {
+    service.addSurvey(name, range, instructions, register,
+      statements, questionnaire).subscribe(res => {
       expect(res).toEqual(return_val);
     });
 

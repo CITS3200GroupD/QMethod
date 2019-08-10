@@ -1,10 +1,10 @@
 import { isDevMode, Component, OnInit, Pipe, PipeTransform } from '@angular/core'; // ng core
 import { Router } from '@angular/router';                                          // ng router
-import { Survey } from '../../models';                                             // QMd Models - Survey
-import { SurveyService } from '../../survey.service';                              // QMd Survey Service MW
-import { WindowWrap } from '../../window-wrapper';                                 // wrapper for window
-import * as Settings from '../../../../config/Settings';                           // QMd Settings
-import { AuthService } from '../../auth.service';
+import { Survey } from 'src/app/models';                                             // QMd Models - Survey
+import { SurveyService } from 'src/app/survey.service';                              // QMd Survey Service MW
+import { WindowWrap } from 'src/app/window-wrapper';                                 // wrapper for window
+import * as Settings from 'config/Settings';                           // QMd Settings
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -27,6 +27,8 @@ export class AdminComponent implements OnInit {
   surveys: any[];
   /** Flag for toggling complete/incomplete responses */
   complete_only = true;
+  /** Flag for listing survey IDs */
+  by_id = false;
 
   /**
    * Constructor for AdminComponent
@@ -112,6 +114,14 @@ export class AdminComponent implements OnInit {
       this.complete_only = false;
     } else {
       this.complete_only = true;
+    }
+  }
+
+  togID() {
+    if (this.by_id) {
+      this.by_id = false;
+    } else {
+      this.by_id = true;
     }
   }
 

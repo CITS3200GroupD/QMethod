@@ -21,15 +21,30 @@ const surveySchema = new Schema({
     validate: [ colValidate, `{PATH} failed to validate`]
   },
   register: {
-    type: [String],
+    type: [[String]],
     required: [true, 'No register'],
     validate: [ formValidate, `{PATH} failed to validate`]
   },
   questionnaire: {
-    type: [String],
+    type: [[String]],
     required: [true, 'No questionnaire'],
     validate: [ formValidate, `{PATH} failed to validate`]
   },
+  instructions: {
+    type: [[String]],
+    // required: [true, 'No instructions' ]
+  },
+  /*
+  register_type: {
+    type: [[String]],
+    // required: [true, 'No register_types' ]
+  },
+
+  questionnaire_type: {
+    type: [Number],
+    // required: [true, 'No questionnaire_types' ]
+  },
+  */
   publish: {
     type: Boolean,
     required: [true, 'No publish']

@@ -1,21 +1,93 @@
-<div class="container">
-<div [formGroup]="ques_fg">
-  <div formArrayName="fields" *ngFor="let field of ques_fg.get('fields')['controls']; let i = index;">
-    <div [formGroupName]="i">
-      <div class="form_attribute">
-        <label><h5> {{ ques_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
-        <p> <textarea rows='5' cols='100' formControlName="answer" [maxLength]="TEMP_Q_FIELD_CHAR_LIMIT"></textarea> </p>
+<nav class="navbar navbar-sm navbar-light bg-transparent">
+  <div class="container-fluid">
+    <app-ngbd-modal-instructions [ins_in]="instructions"></app-ngbd-modal-instructions>
+  </div>
+</nav>
+<!--
+<div *ngIf="matrix.length > 0" class="container">
+  <label><h5> Most Agree </h5></label>
+  <div class="row">
+    <div *ngFor="let s_i of matrix[matrix.length-1]" class="col-sm">
+      <div class="card">
+        <div class="card-header text-white bg-success">
+        </div>
+        <div class="card-body">
+            {{statements[s_i]}}
+        </div>
       </div>
     </div>
-    <div *ngIf="ques_fg['controls']['fields']['controls'][i].invalid && (ques_fg['controls']['fields']['controls'][i].dirty || ques_fg['controls']['fields']['controls'][i].touched)" class="alert alert-danger">
-        <!-- <div *ngIf="reg_fg['controls']['fields']['controls'][i].errors.required"> -->
-        <div>
-          Answer is required.
-       </div>
-      </div>
   </div>
+  <div class="row" style="padding-top:2vh; padding-left:15px; padding-right:15px;"></div>
+  <label><h5> Least Agree </h5></label>
+  <div class="row">
+    <div *ngFor="let s_i of matrix[0]" class="col-sm">
+      <div class="card">
+        <div class="card-header text-white bg-danger">
+        </div>
+        <div class="card-body">
+          {{statements[s_i]}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="padding-top:5vh; padding-left:15px; padding-right:15px;"></div>
 </div>
-<button class="button" class="btn btn-primary btn-block" (click)="continueToResults()" [disabled]="ques_fg.pristine || ques_fg.invalid">Submit</button>
+-->
+<div class="container">
+  <div [formGroup]="ques_fg">
+    <div formArrayName="fields" *ngFor="let field of ques_fg.get('fields')['controls']; let i = index;">
+      <div [formGroupName]="i">
+        <div class="form_attribute">
+            <!-- Show Most/Least Agree based on -->
+            <div *ngIf="matrix.length > 0" class="container">
+              <div *ngIf="ques_fg['controls']['fields']['controls'][i]['controls'].question_type.value === 'most agree'">
+                <label><h5> Most Agree (+{{ most_agree - offset}})</h5></label>
+                <div class="row">
+                  <div *ngFor="let s_i of matrix[most_agree]" class="col-sm">
+                    <div class="card">
+                      <div class="card-header text-white bg-success">
+                          <!-- {{s_i}} -->
+                      </div>
+                      <div class="card-body">
+                          {{statements[s_i]}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="padding-top:2vh; padding-left:15px; padding-right:15px;"></div>
+              </div>
+              <div *ngIf="ques_fg['controls']['fields']['controls'][i]['controls'].question_type.value === 'least agree'">
+                <label><h5> Least Agree ({{ least_agree - offset}})</h5></label>
+                <div class="row">
+                  <div *ngFor="let s_i of matrix[least_agree]" class="col-sm">
+                    <div class="card">
+                      <div class="card-header text-white bg-danger">
+                          <!-- {{s_i}} -->
+                      </div>
+                      <div class="card-body">
+                        {{statements[s_i]}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="padding-top:5vh; padding-left:15px; padding-right:15px;"></div>
+              </div>
+            </div>
+          <!-- Question Label -->
+          <label><h5> {{ ques_fg['controls']['fields']['controls'][i]['controls'].question.value }} <span class="required">*</span> </h5></label>
+          <!-- Text Response -->
+          <p> <textarea class="form-control" rows='5' cols='100' formControlName="answer" [maxLength]="TEMP_Q_FIELD_CHAR_LIMIT"></textarea> </p>
+        </div>
+      </div>
+      <div *ngIf="ques_fg['controls']['fields']['controls'][i].invalid && (ques_fg['controls']['fields']['controls'][i].dirty || ques_fg['controls']['fields']['controls'][i].touched)" class="alert alert-danger">
+          <!-- <div *ngIf="reg_fg['controls']['fields']['controls'][i].errors.required"> -->
+          <div>
+            Answer is required.
+        </div>
+        </div>
+    </div>
+  </div>
+  <button class="button" class="btn btn-primary btn-block" (click)="continueToResults()" [disabled]="ques_fg.pristine || ques_fg.invalid">Submit</button>
 </div>
 <!-- Display User ID -->
 <div class="fixed-bottom d-print-none">

@@ -1,11 +1,11 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../user.service';
+import { UserService } from 'src/app/user.service';
 import { SurveyService } from 'src/app/survey.service';
-import { WindowWrap } from '../../window-wrapper';
+import { WindowWrap } from 'src/app/window-wrapper';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Survey, User } from 'src/app/models';
-import * as Settings from '../../../../config/Settings';                // QMd Settings
+import * as Settings from 'config/Settings';                // QMd Settings
 
 @Component({
   selector: 'app-questionnaire',
@@ -21,6 +21,15 @@ export class QuestionnaireComponent implements OnInit {
   ques_fg: FormGroup;
   ques_fa: FormArray;
   progress: number;
+
+  instructions: string[] = [];
+  statements: string[] = [];
+  matrix: number[][] = [];
+
+  most_agree: number;
+  least_agree: number;
+
+  offset: number;
 
   /** SubmitOnce flag */
   submitted = false;
@@ -53,6 +62,8 @@ export class QuestionnaireComponent implements OnInit {
   private getSurveyData(): void {
     this.surveyservice.getSurvey(this.survey_id).subscribe(
       (res: Survey) => {
+        this.statements = res.statements;
+        this.instructions = res.instructions[Settings.INS_QUESTIONNAIRE];
         // Using questionnaire field array as a reference, loop through and init new field objects to the form array
         res.questionnaire.forEach((field) => {
           this.ques_fa.push(this.createField(field));
@@ -78,9 +89,12 @@ export class QuestionnaireComponent implements OnInit {
   }
 
   /** @ng reaction form array init */
-  private createField(field: string): FormGroup {
+  private createField(field: string[]): FormGroup {
+    let q_type = field[1];
+    if (!q_type) { q_type = '0'; }
     return this.fb.group({
-      question: field,
+      question: field[0],
+      question_type: field[1],
       answer: ['', Validators.required]
     });
   }
@@ -93,6 +107,16 @@ export class QuestionnaireComponent implements OnInit {
     this.userservice.getUser(this.survey_id, this.user_id).subscribe(
       (res: User) => {
         this.progress = res.progress;
+        this.matrix = res.matrix;
+        this.most_agree = this.matrix.length - 1;
+        while (this.matrix[this.most_agree].length === 0 && this.most_agree > 0) {
+          --this.most_agree;
+        }
+        this.least_agree = 0;
+        while (this.matrix[this.least_agree].length === 0 && this.least_agree < (this.matrix.length - 1)) {
+          ++this.least_agree;
+        }
+        this.offset = Math.floor(res.matrix.length / 2);
         this.checkRedirect();
       },
       (err) => {

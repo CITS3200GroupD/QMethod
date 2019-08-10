@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';                      // @ng c
 import { ActivatedRoute, Router } from '@angular/router';               // @ng route
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http'; // @ng HTTP responses
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';  // @ng reactive forms
-import { GridTemplates, BlankSurvey, Survey } from '../../models';      // QMd Defines - Models
-import * as Settings from '../../../../config/Settings';                // QMd Settings
-import { SurveyService } from '../../survey.service';                   // QMd Survey Service Middleware
+import { GridTemplates, BlankSurvey, Survey } from 'src/app/models';      // QMd Defines - Models
+import * as Settings from 'config/Settings';                // QMd Settings
+import { SurveyService } from 'src/app/survey.service';                   // QMd Survey Service Middleware
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';                 // ng-bootstrap addon
-import { WindowWrap } from '../../window-wrapper';                      // wrapper for window
+import { WindowWrap } from 'src/app/window-wrapper';                      // wrapper for window
 
 @Component({
   selector: 'app-edit',
@@ -28,6 +28,8 @@ export class EditComponent implements OnInit {
 
   /** Pagination variable for current page */
   statements_page: number;
+  /** Pagination variable for current page [instructions] */
+  instructions_page: number;
   /** Flag (set by callback) for grid validity vs number of statements */
   valid_grid: boolean;
   /*** ng form variable */
@@ -39,12 +41,12 @@ export class EditComponent implements OnInit {
   cols_templates = GridTemplates;
   /** variable for survey's current Horizontal-X range */
   range = this.DEFAULT_RANGE;
-  /** Length variables for display */
-  lengths = {
-    questionnaire: 0,
-    register: 0,
-    statements: 0
-  };
+  /** Boolean flags */
+  statem_load = false;
+  ques_load = false;
+  reg_load = false;
+  ins_load = false;
+  error = false;
 
   /**
    * Constructor for EditComponent
@@ -108,28 +110,36 @@ export class EditComponent implements OnInit {
    * @param cols The new grid to be set
    */
   updateGrid(cols: number[]): void {
-    if (!this.survey.publish && this.valid_grid) {
+    if (!this.survey.publish) {
       this.survey.cols = cols;
     }
   }
 
   /**
-   * Callback method for edit-statements subcomponent to set statements & lengths
+   * Callback method for edit-statements subcomponent to set statements
    */
   updateStatements(statements: string[]): void {
     if (!this.survey.publish) {
       this.survey.statements = statements;
-      this.lengths.statements = statements.length;
+    }
+  }
+
+
+  /**
+   * Callback method for edit-instructions subcomponent to set instructions
+   */
+  updateInstructions(instructions: string[][]): void {
+    if (!this.survey.publish) {
+      this.survey.instructions = instructions;
     }
   }
 
   /**
-   * Callback method for edit-forms subcomponent to set fields & lengths
+   * Callback method for edit-forms subcomponent to set fields
    */
   updateFields(field: string, item: string[]): void {
     if (!this.survey.publish) {
       this.survey[field] = item;
-      this.lengths[field] = item.length;
     }
   }
 
@@ -221,6 +231,106 @@ export class EditComponent implements OnInit {
   }
 
   /**
+   * Print as HTML template
+   * from: https://stackoverflow.com/questions/41379274/print-html-template-in-angular-2-ng-print-in-angular-2#41379912
+   */
+  print(): void {
+    let statements = '';
+    this.survey.statements.forEach( (statement) => {
+      statements += '<li>' + statement + '</li>';
+    });
+    let registration = '';
+    this.survey.register.forEach( (reg) => {
+      registration += '<li>' + reg[0] + '</li>';
+    });
+    let questionnaire = '';
+    this.survey.questionnaire.forEach( (ques) => {
+      questionnaire += '<li>' + ques[0] + '</li>';
+    });
+
+    let popupWin;
+    popupWin = this.window.nativeWindow.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <title>QMethod Report for Survey: ${this.survey._id}</title>
+          <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+          </style>
+          <style>
+            .list-group-item { padding-top: 2px; padding-bottom: 2px; }
+            p { margin-bottom: 2px; }
+          </style>
+        </head>
+
+    <body onload="window.print();window.close()">
+    <div class="card">
+      <div class="card-header">
+        <b>Survey ID</b> ${this.survey._id}
+        <b>Survey Name</b> ${this.survey.name}
+      </div>
+      <div class="card-body">
+        <b>Registration</b>
+        <ol>
+        ${registration}
+        </ol>
+        <b>Statements</b>
+        <ol>
+        ${statements}
+        </ol>
+        <b>Questionnaire</b>
+        <ol>
+        ${questionnaire}
+        </ol>
+      </div>
+    </div>
+    </body>
+    </html>`
+    );
+    popupWin.document.close();
+  }
+
+  /**
+   * Function called when a file is uploaded.
+   * @param files Files uploaded
+   */
+  onUpload(files: FileList) {
+    if (!this.survey.publish && this.survey.users.length === 0) {
+      const reader = new FileReader();
+      try {
+        reader.readAsText(files[0]);
+        reader.onload = () => {
+          try {
+            const input = JSON.parse(reader.result.toString());
+            if (input.statements && input.statements.length <= Settings.STATE_LIMIT) {
+              this.survey.statements = input.statements;
+              this.statem_load = true;
+            }
+            if (input.questionnaire && input.questionnaire.length < Settings.FIELDS_LIMIT) {
+              this.survey.questionnaire = input.questionnaire;
+              this.ques_load = true;
+            }
+            if (input.registration && input.registration.length < Settings.FIELDS_LIMIT) {
+              this.survey.register = input.registration;
+              this.reg_load = true;
+            }
+            if (input.instructions && input.instructions.length) {
+              this.survey.instructions = input.instructions;
+              this.ins_load = true;
+            }
+            this.error = false;
+          } catch (err) {
+            console.error(err);
+            this.error = true;
+          }
+        };
+      } catch (e) { }
+    } else {
+      this.error = true;
+    }
+  }
+
+  /**
    * Function that is run on init
    */
   ngOnInit(): void {
@@ -230,9 +340,6 @@ export class EditComponent implements OnInit {
         // Survey ID => survey service mw getSurvey() => this.survey
         (res: Survey) => {
           this.survey = res;
-          this.lengths.statements = this.survey.statements.length;
-          this.lengths.questionnaire = this.survey.questionnaire.length;
-          this.lengths.register = this.survey.register.length;
           // We deliberately do NOT want to update this.range on initiation.
 
           this.angForm.get('survey_id').setValue(this.survey._id);

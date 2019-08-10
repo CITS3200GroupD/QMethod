@@ -6,15 +6,15 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { WindowWrap } from '../../window-wrapper';
-import { SurveyService } from '../../survey.service';
-import { MockSurveyService } from '../../testing/mocksurvey.service';
-import { MockWindowWrap } from '../../testing/Testing';
+import { WindowWrap } from 'src/app/window-wrapper';
+import { SurveyService } from 'src/app/survey.service';
+import { MockSurveyService } from 'src/app/testing/mocksurvey.service';
+import { MockWindowWrap } from 'src/app/testing/Testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of} from 'rxjs';
-import { ValidSurveyList } from '../../testing/Testing';
-import * as Settings from '../../../../config/Settings';
-import { GridTemplates } from '../../models';
+import { ValidSurveyList } from 'src/app/testing/Testing';
+import * as Settings from 'config/Settings';
+import { GridTemplates } from 'src/app/models';
 
 
 describe('EditComponent', () => {
@@ -61,9 +61,6 @@ describe('EditComponent', () => {
     expect(component.STATE_LIMIT).toBe(Settings.STATE_LIMIT);
     expect(component.cols_templates).toBe(GridTemplates);
     expect(component.angForm).toBeTruthy();
-    expect(component.lengths.questionnaire).toBe(valid_survey_list[0].questionnaire.length);
-    expect(component.lengths.statements).toBe(valid_survey_list[0].statements.length);
-    expect(component.lengths.register).toBe(valid_survey_list[0].register.length);
   });
 
   it('update survey', () => {
@@ -102,14 +99,14 @@ describe('EditComponent', () => {
   it('update registration', () => {
     component.survey.publish = false;
     const old_fields = valid_survey_list[0].register.slice();
-    const new_fields = ['test'];
+    const new_fields = [['test']];
     component.survey.register = new_fields;
     expect(component.survey.register).toBe(new_fields);
-    component.updateFields('register', old_fields);
+    component.updateFields('register', old_fields[0]);
     expect(component.survey.register).toBe(old_fields);
     // Should not work when published
     component.survey.publish = true;
-    component.updateFields('register', new_fields);
+    component.updateFields('register', new_fields[0]);
     expect(component.survey.register).toBe(old_fields);
     component.survey.publish = false;
   });
@@ -117,14 +114,14 @@ describe('EditComponent', () => {
   it('update questionnaire', () => {
     component.survey.publish = false;
     const old_ques = valid_survey_list[0].questionnaire.slice();
-    const new_ques = ['test'];
+    const new_ques = [['test']];
     component.survey.questionnaire = new_ques;
     expect(component.survey.questionnaire).toBe(new_ques);
-    component.updateFields('questionnaire', old_ques);
+    component.updateFields('questionnaire', old_ques[0]);
     expect(component.survey.questionnaire).toBe(old_ques);
     // Should not work when published
     component.survey.publish = true;
-    component.updateFields('questionnaire', new_ques);
+    component.updateFields('questionnaire', new_ques[0]);
     expect(component.survey.questionnaire).toBe(old_ques);
     component.survey.publish = false;
   });

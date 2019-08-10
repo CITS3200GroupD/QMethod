@@ -1,0 +1,73 @@
+<!-- @Input() => [survey] -->
+
+<!-- MODAL -->
+<ng-template #content let-modal>
+  <!-- Head -->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-edit-statement">Edit Statement</h4>
+    <button type="button" class="close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- Body -->
+  <div class="modal-body">
+    <form [formGroup]="editForm">
+      <!-- Label -->
+      <label>Statement</label>
+        <div class="input-group">
+          <!-- Private Link URL-->
+          <input class="form-control" formControlName="edit_statement" #edit_statement>
+          <div class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary" (click)="editStatement(edit_statement.value)">
+              <i class="fas fa-pen"></i>
+            </button>
+          </div>
+        </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- List of statements -->
+<ul class="list-group">
+  <!-- Create list item for each statement & Paginate -->
+  <li class="list-group-item" *ngFor="let statement of statements | paginate: {itemsPerPage: PAGINATE_LISTS, currentPage:statements_page, id: 'state_paginate'}; let i = index" [attr.data-index]="i">
+      <span class="badge badge-light">{{ (statements_page-1)*PAGINATE_LISTS+i+1}} </span>
+        {{statement}}
+        <!-- float delete button to right -->
+        <span class="btn-group float-right">
+          <!-- Edit statement button (only if not published) -->
+          <button *ngIf="!disabled" (click)="open(content, (statements_page-1)*PAGINATE_LISTS+i)" class="btn btn-light btn-sm">
+              <i class="fas fa-pen"></i>
+          </button>
+          <!-- Delete statement button (only if not published) -->
+          <button *ngIf="!disabled" (click)="deleteStatement((statements_page-1)*PAGINATE_LISTS+i)" class="btn btn-danger btn-sm">
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </span>
+  </li>
+</ul>
+
+<!-- Statement Input (Only if not published) -->
+<form [formGroup]="angForm" *ngIf="!disabled" >
+  <!-- Text Input (with character limit) -->
+  <div class="input-group">
+    <input type="text" class="form-control" [maxlength]="CHAR_LIMIT" formControlName="statement" #statement />
+    <!-- Add button -->
+    <div class="input-group-append">
+        <button *ngIf="!disabled" (click)="addStatement(statement.value)" [disabled]="statements.length >= STATE_LIMIT" class="btn btn-secondary">
+          <i class="fas fa-plus"></i> Add
+        </button>
+    </div>
+  </div>
+</form>
+
+<!-- Pagination Controls -->
+<div class="row justify-content-center">
+  <pagination-controls class="statements-pagination" (pageChange)="statements_page = $event" id="state_paginate"
+    maxSize="5"
+    directionLinks="true"
+    autoHide="true"
+    previousLabel=""
+    nextLabel="">
+  </pagination-controls>
+</div>

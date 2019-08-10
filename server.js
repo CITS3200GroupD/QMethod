@@ -90,4 +90,12 @@ const express = require('express'),
       }
       res.sendFile(path.join(__dirname + '/dist/index.html'));
     });
+    app.get('/', function(req, res) {
+      if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(
+        ['https://', req.get('Host'), req.url].join('')
+        );
+      }
+      res.sendFile(path.join(__dirname + '/dist/index.html'));
+    });
   }

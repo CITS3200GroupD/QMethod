@@ -1,6 +1,6 @@
 // Components Core import
 import { Component } from '@angular/core';
-import '../../config/Settings';
+import 'config/Settings';
 
 // Navigation elements import
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';

@@ -1,11 +1,10 @@
 import { isDevMode, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SurveyService } from '../../survey.service';           // QMd Survey Service MW
-import { UserService } from '../../user.service';               // QMd User Service MW
-import { Survey, User } from '../../models';
-import { WindowWrap } from '../../window-wrapper';
-
-
+import { SurveyService } from 'src/app/survey.service';           // QMd Survey Service MW
+import { UserService } from 'src/app/user.service';               // QMd User Service MW
+import { Survey, User } from 'src/app/models';
+import { WindowWrap } from 'src/app/window-wrapper';
+import * as Settings from 'config/Settings';
 
 @Component({
   selector: 'app-initial-sort',
@@ -20,6 +19,8 @@ export class InitialSortComponent implements OnInit {
   user_id: string;
   /** Survey */
   survey: Survey;
+  /** Instructions */
+  instructions: string[] = [];
   /** Statements */
   statements: string[] = [];
   /** Statements ids */
@@ -67,6 +68,7 @@ export class InitialSortComponent implements OnInit {
     this.surveyservice.getSurvey(this.id).subscribe( (res: Survey) => {
       this.survey = res;
       this.statements = this.survey.statements;
+      this.instructions = this.survey.instructions[Settings.INS_INIT_SORT];
       for (let i = 0; i < this.statements.length; i++) {
         this.statements_sort.push(i);
       }
@@ -172,7 +174,7 @@ export class InitialSortComponent implements OnInit {
     // console.log(selected);
     if (selected !== undefined) {
       this.removeDisagree(selected);
-      this.disagree.push(selected);
+      this.disagree.unshift(selected);
       this.removeStatement(selected);
       this.removeNeutral(selected);
       this.removeAgree(selected);
@@ -188,7 +190,7 @@ export class InitialSortComponent implements OnInit {
     // console.log(selected);
     if (selected !== undefined) {
       this.removeNeutral(selected);
-      this.neutral.push(selected);
+      this.neutral.unshift(selected);
       this.removeStatement(selected);
       this.removeDisagree(selected);
       this.removeAgree(selected);
@@ -204,7 +206,7 @@ export class InitialSortComponent implements OnInit {
     // console.log(selected);
     if (selected !== undefined) {
       this.removeAgree(selected);
-      this.agree.push(selected);
+      this.agree.unshift(selected);
       this.removeStatement(selected);
       this.removeDisagree(selected);
       this.removeNeutral(selected);
@@ -216,7 +218,7 @@ export class InitialSortComponent implements OnInit {
    */
   onDisagreeDrop(e: any) {
     this.removeDisagree(e.dragData);
-    this.disagree.push(e.dragData);
+    this.disagree.unshift(e.dragData);
     this.removeStatement(e.dragData);
     this.removeNeutral(e.dragData);
     this.removeAgree(e.dragData);
@@ -227,7 +229,7 @@ export class InitialSortComponent implements OnInit {
    */
   onNeutralDrop(e: any) {
     this.removeNeutral(e.dragData);
-    this.neutral.push(e.dragData);
+    this.neutral.unshift(e.dragData);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeAgree(e.dragData);
@@ -238,7 +240,7 @@ export class InitialSortComponent implements OnInit {
    */
   onAgreeDrop(e: any) {
     this.removeAgree(e.dragData);
-    this.agree.push(e.dragData);
+    this.agree.unshift(e.dragData);
     this.removeStatement(e.dragData);
     this.removeDisagree(e.dragData);
     this.removeNeutral(e.dragData);
@@ -326,6 +328,17 @@ export class InitialSortComponent implements OnInit {
         if (this.window.nativeWindow.confirm('Update Failed. An error has occured.')) {}
       });
     }
+  }
+
+  /** Reset the page */
+  refresh(): void {
+    this.router.navigateByUrl(`/survey/${this.id}`, {skipLocationChange: true}).then(() =>
+      this.router.navigate(['initial-sort', this.id],
+      {
+        skipLocationChange: !isDevMode(),
+        queryParams: { user_id: this.user_id }
+      })
+    );
   }
 
   ngOnInit() {

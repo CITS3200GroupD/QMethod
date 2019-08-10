@@ -40,47 +40,78 @@
       <div class="form-group">
         <label class="col-sm-4">Grid</label>
           <!-- edit-grid subcomponent -->
-          <app-edit-grid [survey]="survey" [range]="range" [statements_length]="lengths.statements" (output_grid)="updateGrid($event)" (is_valid)="isInvalidGrid($event)"></app-edit-grid>
+          <app-edit-grid [survey]="survey" [range]="range" [statements_length]="survey.statements.length" (output_grid)="updateGrid($event)" (is_valid)="isInvalidGrid($event)"></app-edit-grid>
       </div>
 
       <ngb-tabset>
+
+        <ngb-tab title="Statements">
+          <ng-template ngbTabContent>
+              <!-- Statements -->
+              <div class="form-group">
+                  <label class="col-md-4">Statements {{survey.statements.length}}/{{STATE_LIMIT}}</label>
+                  <app-edit-statements [statements_in]="survey.statements" [disabled]="survey.publish || survey.users.length > 0" (statements_out)="updateStatements($event)" ></app-edit-statements>
+              </div>
+          </ng-template>
+        </ngb-tab>
         <ngb-tab title="Registration">
           <ng-template ngbTabContent>
             <!-- Registration -->
             <div class="form-group">
-                <label class="col-md-4">Registration Fields {{lengths.register}}/{{FIELDS_LIMIT}}</label>
-                <app-edit-forms [fields_input]="survey.register" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-forms>
+                <label class="col-md-4">Registration Fields {{survey.register.length}}/{{FIELDS_LIMIT}}</label>
+                <app-edit-reg [reg_input]="survey.register" [disabled_in]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('register', $event)"></app-edit-reg>
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="Questionnaire">
+        <ngb-tab title="End of Survey Questions">
           <ng-template ngbTabContent>
             <!-- End of Survey -->
             <div class="form-group">
-                <label class="col-md-4">End of Survey Questions {{lengths.questionnaire}}/{{FIELDS_LIMIT}}</label>
-                <app-edit-forms [fields_input]="survey.questionnaire" [disabled]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('questionnaire', $event)"></app-edit-forms>
+                <label class="col-md-4">End of Survey Questions {{survey.questionnaire.length}}/{{FIELDS_LIMIT}}</label>
+                <app-edit-ques [fields_input]="survey.questionnaire" [disabled_in]="survey.publish || survey.users.length > 0" (fields_out)="updateFields('questionnaire', $event)"></app-edit-ques>
             </div>
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="Statements">
-            <ng-template ngbTabContent>
-                <!-- Statements -->
-                <div class="form-group">
-                    <label class="col-md-4">Statements {{lengths.statements}}/{{STATE_LIMIT}}</label>
-                    <app-edit-statements [statements_in]="survey.statements" [disabled]="survey.publish || survey.users.length > 0" (statements_out)="updateStatements($event)" ></app-edit-statements>
+        <ngb-tab title="Instructions">
+          <ng-template ngbTabContent>
+            <!-- Instructions -->
+            <div class="form-group">
+                <app-edit-instructions [ins_input]="survey.instructions" [disabled]="survey.publish || survey.users.length > 0" (ins_out)="updateInstructions($event)"></app-edit-instructions>
+            </div>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab *ngIf="!survey.publish && survey.users.length === 0" title="Import Config">
+          <ng-template ngbTabContent>
+              <!-- Upload -->
+              <div class="form-group">
+                <div class="container">
+                  <p>Import a configuration JSON text file, as defined by the format in <a href="https://qmethod.gitbook.io/project/help/guide-for-admin#step-3-importing-data-2-methods">example_json_v2.json</a></p>
+                  <input class="form-control form-control-file" id="file_input" type="file" #file (change)="onUpload(file.files)"/>
+                  <br>
+                  <div *ngIf="error" class="alert alert-danger"> Failed to load configuration! </div>
+                  <div *ngIf="!error && survey.register.length > 0 && reg_load" class="alert alert-success"> <strong>{{survey.register.length}}</strong> Registration Fields Loaded! </div>
+                  <div *ngIf="!error && survey.statements.length > 0 && statem_load" class="alert alert-success"> <strong>{{survey.statements.length}}</strong> Statements Loaded! </div>
+                  <div *ngIf="!error && survey.questionnaire.length > 0 && ques_load" class="alert alert-success"> <strong>{{survey.questionnaire.length}}</strong> Questions Loaded! </div>
+                  <div *ngIf="!error && survey.instructions.length > 0 && ins_load" class="alert alert-success"> Instructions Loaded! </div>
                 </div>
-            </ng-template>
-          </ngb-tab>
+              </div>
+          </ng-template>
+        </ngb-tab>
+
+
       </ngb-tabset>
+
+
 
       <!-- { Update | Publish | Cancel } -->
       <div class="d-flex justify-content-center btn-group form-group">
+        <button class="btn btn-secondary" (click)="print()">Export</button>
         <button class="btn btn-primary" *ngIf="!survey.publish && survey.users.length === 0" (click)="updateSurvey(survey_name.value, survey_range.value)" [disabled]="angForm.invalid || !valid_grid" >Update</button>
         <button class="btn btn-danger" *ngIf="!survey.publish" (click)="publishSurvey()" [disabled]="angForm.invalid || !valid_grid" >Publish</button>
         <button class="btn btn-danger" *ngIf="survey.publish" (click)="stopSurvey()" [disabled]="angForm.invalid || !valid_grid" >Pause</button>
         <a class="btn btn-light" [routerLink]="['/admin']" >Cancel</a>
       </div>
-
     </form>
   </div>
 </div>
