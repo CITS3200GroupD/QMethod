@@ -32,7 +32,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "forever-monitor": "^1.7.1",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.2.12",
     "ng-drag-drop": "^5.0.0",
     "ng2-pagination": "^2.0.2",
